@@ -13,6 +13,8 @@ namespace Smash.Player
 		[SerializeField] private PlayerMotor m_motor;
 		[SerializeField] private PlayerPropertiesSO m_properties;
 
+		public Vector3 Direction { get; set; }
+
 		private Transform m_tr;
 		private StateMachine m_stateMachine;
 
@@ -20,6 +22,8 @@ namespace Smash.Player
 		private float m_airControlRate;
 		private float m_gravity;
 		private float m_maxFallSpeed;
+		private float m_deceleration;
+		private float m_airDeceleration;
 		private bool m_useLocalVelocity;
 		private Vector3 m_velocity, m_savedVelocity, m_savedInputVelocity;
 
@@ -32,6 +36,8 @@ namespace Smash.Player
 			m_airControlRate = m_properties.AirControlRate;
 			m_gravity = m_properties.Gravity;
 			m_maxFallSpeed = m_properties.MaxFallSpeed;
+			m_deceleration = m_properties.GroundDeceleration;
+			m_airDeceleration = m_properties.AirDeceleration;
 		}
 
 		private void Start()
@@ -41,8 +47,10 @@ namespace Smash.Player
 
 		private void FixedUpdate()
 		{
-			HandleVelocity();
-			
+			m_motor.CheckForGround();
+			m_motor.SetVelocity(Vector3.zero);
+			/*HandleVelocity();
+			m_motor.CheckForGround();
 			Vector3 velocity = m_motor.IsGrounded() ? CalculateMovementVelocity() : Vector3.zero;
 			
 			velocity += m_useLocalVelocity ? m_tr.localToWorldMatrix * m_velocity : m_velocity;
@@ -51,10 +59,10 @@ namespace Smash.Player
 			m_motor.SetVelocity(velocity);
 
 			m_savedVelocity = velocity;
-			m_savedInputVelocity = CalculateMovementVelocity();
+			m_savedInputVelocity = CalculateMovementVelocity();*/
 		}
 
-		private void HandleVelocity()
+		/*private void HandleVelocity()
 		{
 			if (m_useLocalVelocity) m_velocity = m_tr.localToWorldMatrix * m_velocity;
 			
@@ -101,6 +109,6 @@ namespace Smash.Player
 		
 		public Vector3 GetVelocity() => m_useLocalVelocity ? m_tr.localToWorldMatrix * m_velocity : m_velocity;
 
-		private Vector3 CalculateMovementVelocity() => m_tr.right * (m_input.Direction.x * m_speed);
+		private Vector3 CalculateMovementVelocity() => m_tr.right * (m_input.Direction.x * m_speed);*/
 	}
 }

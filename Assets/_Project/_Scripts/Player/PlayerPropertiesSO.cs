@@ -12,6 +12,8 @@ namespace Smash
         [SerializeField] private float m_airControlRate = 5f;
         [SerializeField] private float m_gravity = 30f;
         [SerializeField] private float m_maxFallSpeed = 10f;
+        [SerializeField] private float m_groundDeceleration = 10f;
+        [SerializeField] private float m_airDeceleration = 5f;
         
         #endregion
 
@@ -21,6 +23,8 @@ namespace Smash
         public float AirControlRate => m_airControlRate;
         public float Gravity => m_gravity;
         public float MaxFallSpeed => m_maxFallSpeed;
+        public float GroundDeceleration => m_groundDeceleration;
+        public float AirDeceleration => m_airDeceleration;
 
         #endregion
     }

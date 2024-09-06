@@ -1,4 +1,5 @@
 ﻿using Smash.Player.StructsAndEnums;
+using TripleA.Extensions;
 using UnityEngine;
 
 namespace Smash.Player
@@ -23,6 +24,7 @@ namespace Smash.Player
 		private Vector3 m_rayCastDirection;
 
 		private RaycastHit m_hitInfo;
+		private Vector3 m_center;
 
 		public CapsuleCastSensor(Transform playerTR, CastDirection rayCastDirection, float playerHeight,
 			float playerRadius)
@@ -51,6 +53,21 @@ namespace Smash.Player
 				layerMask: layerMask,
 				hitInfo: out m_hitInfo,
 				queryTriggerInteraction: QueryTriggerInteraction.Ignore);
+			
+			/* Debug Info
+			 if (HasDetectedHit())
+				Debug.Log($"Hit point: {m_hitInfo.point}\n" +
+					      $"Current Transform: {m_tr.position}\n" +
+					      $"Hit Distance: {m_hitInfo.distance}\n" +
+					      $"b:{m_bottom} ,c: {m_center}, t: {m_top}\n" +
+					      $"World Bottom: {m_worldBottom}\n" +
+					      $"World Top: {m_worldTop}\n" +
+					      $"bottom: {m_worldBottom.Add(y: -m_playerRadius)}\n" +
+					      $"top: {m_worldTop.Add(y: m_playerRadius)}\n" +
+					      $"World Direction: {m_worldDirection}\n" +
+					      $"Cast Direction: {m_rayCastDirection}\n" +
+					      $"Cast Distance: {castDistance}\n");
+			*/
 		}
 
 		public bool HasDetectedHit() => m_hitInfo.collider != null;
@@ -59,6 +76,8 @@ namespace Smash.Player
 		public Vector3 GetHitPoint() => m_hitInfo.point;
 		public Collider GetHitCollider() => m_hitInfo.collider;
 		public Transform GetHitTransform() => m_hitInfo.transform;
+		
+		public float GetHitAngle() => Vector3.Angle(m_hitInfo.normal, m_tr.right);
 
 		public void SetCastDirection(Vector3 rayCastDirection)
 		{
@@ -70,8 +89,11 @@ namespace Smash.Player
 
 		public void SetCastOrigin(Vector3 castOrigin)
 		{
-			m_bottom = m_tr.InverseTransformPoint(castOrigin);
-			m_top = m_bottom + m_playerHeight * m_tr.up;
+			m_center = m_tr.InverseTransformPoint(castOrigin);
+			float halfHeight = m_playerHeight * 0.5f;
+			float sphereCenterDistance = halfHeight - m_playerRadius;
+			m_bottom = (m_center - sphereCenterDistance * m_tr.up) * (1f + k_safetyOffset);
+			m_top = (m_center + sphereCenterDistance * m_tr.up) * (1f + k_safetyOffset);
 		}
 
 		public Vector3 GetCastDirection() => m_rayCastDirection;

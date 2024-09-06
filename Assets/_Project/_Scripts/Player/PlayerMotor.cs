@@ -63,8 +63,8 @@ namespace Smash.Player
 		    m_isGrounded = m_sensor.HasDetectedHit();
 		    
 		    if (!m_isGrounded) return;
-
-		    m_currentGroundAdjustmentVelocity = m_tr.up * (m_sensor.GetHitDistance() / Time.fixedDeltaTime);
+		    
+		    m_currentGroundAdjustmentVelocity = m_tr.up * (-m_sensor.GetHitDistance() / Time.fixedDeltaTime);
 	    }
 
 	    public bool IsGrounded() => m_isGrounded;
