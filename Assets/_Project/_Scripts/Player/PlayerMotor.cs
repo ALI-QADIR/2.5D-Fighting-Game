@@ -12,6 +12,7 @@ namespace Smash.Player
 	    [SerializeField] private float m_height = 1.8f;
 	    [SerializeField] private float m_radius = 0.35f;
 	    [SerializeField] private float m_stepHeight = 0.35f;
+	    [SerializeField, Range(0, 90)] private float m_slopeLimit = 45f;
 
 	    private Rigidbody m_rb;
 	    private Transform m_tr;
@@ -63,6 +64,10 @@ namespace Smash.Player
 		    m_isGrounded = m_sensor.HasDetectedHit();
 		    
 		    if (!m_isGrounded) return;
+		    
+		    float hitAngle = m_sensor.GetHitAngle();
+		    
+		    if (hitAngle <= m_slopeLimit || hitAngle >= 180 - m_slopeLimit) return;
 		    
 		    m_currentGroundAdjustmentVelocity = m_tr.up * (-m_sensor.GetHitDistance() / Time.fixedDeltaTime);
 	    }

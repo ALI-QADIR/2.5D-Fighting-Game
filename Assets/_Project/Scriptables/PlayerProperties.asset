@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3639f2aa628f17742b9f7a9e5d7d2881, type: 3}
   m_Name: PlayerProperties
   m_EditorClassIdentifier: 
-  m_groundSpeed: 0
+  m_movementSpeed: 10
+  m_airControlRate: 5
+  m_gravity: 100
+  m_maxFallSpeed: 50
+  m_groundAcceleration: 50
+  m_airAcceleration: 30

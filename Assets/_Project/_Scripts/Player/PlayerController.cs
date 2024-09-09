@@ -22,8 +22,8 @@ namespace Smash.Player
 		private float m_airControlRate;
 		private float m_gravity;
 		private float m_maxFallSpeed;
-		private float m_deceleration;
-		private float m_airDeceleration;
+		private float m_acceleration;
+		private float m_airAcceleration;
 		private bool m_useLocalVelocity;
 		private Vector3 m_velocity, m_savedVelocity, m_savedInputVelocity;
 
@@ -36,8 +36,8 @@ namespace Smash.Player
 			m_airControlRate = m_properties.AirControlRate;
 			m_gravity = m_properties.Gravity;
 			m_maxFallSpeed = m_properties.MaxFallSpeed;
-			m_deceleration = m_properties.GroundDeceleration;
-			m_airDeceleration = m_properties.AirDeceleration;
+			m_acceleration = m_properties.GroundAcceleration;
+			m_airAcceleration = m_properties.AirAcceleration;
 		}
 
 		private void Start()
@@ -47,8 +47,14 @@ namespace Smash.Player
 
 		private void FixedUpdate()
 		{
+			// Todo: snap to ground on slopes??
+			// Todo: jump
+			// Todo: slope slide when above slope limit
 			m_motor.CheckForGround();
-			m_motor.SetVelocity(Vector3.zero);
+
+			HandleVelocity();
+			
+			m_motor.SetVelocity(m_savedVelocity);
 			/*HandleVelocity();
 			m_motor.CheckForGround();
 			Vector3 velocity = m_motor.IsGrounded() ? CalculateMovementVelocity() : Vector3.zero;
@@ -61,6 +67,44 @@ namespace Smash.Player
 			m_savedVelocity = velocity;
 			m_savedInputVelocity = CalculateMovementVelocity();*/
 		}
+
+		private void HandleVelocity()
+		{
+			Vector3 horizontalVelocity = Vector3Math.ExtractDotVector(m_savedVelocity, m_tr.right);
+			Vector3 verticalVelocity = m_savedVelocity - horizontalVelocity;
+			
+			AdjustHorizontalVelocity(ref horizontalVelocity);
+			AdjustVerticalVelocity(ref verticalVelocity);
+			
+			m_savedVelocity = horizontalVelocity + verticalVelocity;
+		}
+
+		private void AdjustVerticalVelocity(ref Vector3 verticalVelocity)
+		{
+			verticalVelocity = Vector3.MoveTowards(verticalVelocity, m_tr.up * -m_maxFallSpeed,
+				m_gravity * Time.fixedDeltaTime);
+			
+			if (m_motor.IsGrounded() && Vector3Math.GetDotProduct(verticalVelocity, m_tr.up) < 0f)
+			{
+				verticalVelocity = Vector3.zero;
+			}
+		}
+
+		private void AdjustHorizontalVelocity(ref Vector3 horizontalVelocity)
+		{
+			float acceleration = m_motor.IsGrounded() ? m_acceleration : m_airAcceleration;
+			
+			m_velocity = GetMovementVelocity();
+
+			horizontalVelocity = Vector3.MoveTowards(horizontalVelocity, m_velocity, 
+				acceleration * Time.fixedDeltaTime);
+		}
+
+		private Vector3 GetMovementVelocity()
+		{
+			return Direction * m_speed;
+		}
+		
 
 		/*private void HandleVelocity()
 		{

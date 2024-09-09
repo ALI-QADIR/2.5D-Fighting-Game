@@ -39,7 +39,7 @@ namespace Smash.Player.Input
         private void OnMove(InputAction.CallbackContext context)
         {
             m_controller.Direction = context.ReadValue<Vector2>();
-            Debug.Log(context.ReadValue<Vector2>());
+            // Debug.Log(context.ReadValue<Vector2>());
         }
 
         private void OnPrimaryAttack(InputAction.CallbackContext context)
