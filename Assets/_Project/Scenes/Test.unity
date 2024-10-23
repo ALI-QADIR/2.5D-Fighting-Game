@@ -42,7 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -1119,7 +1120,7 @@ Transform:
   m_GameObject: {fileID: 925529464}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.7, z: 0}
+  m_LocalPosition: {x: 11.1, y: 13.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1168,7 +1169,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &925529468
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1204,7 +1205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d620cb71cab46978cbdee79764fe1ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_input: {fileID: 11400000, guid: 3f54d36041f1fd64e9224341f92947f9, type: 2}
   m_motor: {fileID: 925529466}
   m_properties: {fileID: 11400000, guid: b269f71dd16356745947ddfe21ba67d5, type: 2}
 --- !u!114 &925529470
@@ -1219,7 +1219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e364487f9d0638545a325f487789217d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_controller: {fileID: 0}
+  m_controller: {fileID: 925529469}
 --- !u!1001 &1038544692
 PrefabInstance:
   m_ObjectHideFlags: 0

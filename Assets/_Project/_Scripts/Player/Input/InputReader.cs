@@ -52,6 +52,7 @@ namespace Smash.Player.Input
 
         private void OnJump(InputAction.CallbackContext context)
         {
+            m_controller.HandleJumpInput();
         }
 
         private void OnDash(InputAction.CallbackContext context)

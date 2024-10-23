@@ -3,7 +3,7 @@ using Smash.Player.StructsAndEnums;
 
 namespace Smash.Player
 {
-	public class CapsuleCastSensor : ICastSensor
+	public class SphereCastSensor : ICastSensor
 	{
 		public float castDistance;
 		public LayerMask layerMask = 255;
@@ -25,7 +25,7 @@ namespace Smash.Player
 		private RaycastHit m_hitInfo;
 		private Vector3 m_center;
 
-		public CapsuleCastSensor(Transform playerTR, CastDirection rayCastDirection, float playerHeight,
+		public SphereCastSensor(Transform playerTR, CastDirection rayCastDirection, float playerHeight,
 			float playerRadius)
 		{
 			m_tr = playerTR;

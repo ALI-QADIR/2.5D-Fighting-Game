@@ -1,5 +1,5 @@
-using Smash.Player.StructsAndEnums;
 using UnityEngine;
+using Smash.Player.StructsAndEnums;
 
 namespace Smash.Player
 {
@@ -22,6 +22,7 @@ namespace Smash.Player
 	    private bool m_useExtendedSensor = false;
 	    
 	    private bool m_isGrounded;
+	    private bool m_isSliding;
 	    private Vector3 m_currentGroundAdjustmentVelocity;
 	    private int m_currentLayer;
 	    private float m_baseSensorRange;
@@ -62,20 +63,24 @@ namespace Smash.Player
 		    m_sensor.Cast();
 		    
 		    m_isGrounded = m_sensor.HasDetectedHit();
+		    // Debug.Log(m_sensor.GetHitAngle());
 		    
 		    if (!m_isGrounded) return;
 		    
-		    float hitAngle = m_sensor.GetHitAngle();
+		    /*float hitAngle = m_sensor.GetHitAngle();
 		    
-		    if (hitAngle <= m_slopeLimit || hitAngle >= 180 - m_slopeLimit) return;
+		    if (hitAngle <= m_slopeLimit || hitAngle >= 180 - m_slopeLimit) return;*/
 		    
 		    m_currentGroundAdjustmentVelocity = m_tr.up * (-m_sensor.GetHitDistance() / Time.fixedDeltaTime);
 	    }
 
 	    public bool IsGrounded() => m_isGrounded;
+
+	    public bool IsGroundTooSteep() =>
+		    m_sensor.GetHitAngle() >= m_slopeLimit && m_sensor.GetHitAngle() <= 180 - m_slopeLimit;
 	    
 	    public Vector3 GetGroundNormal() => m_sensor.GetHitNormal();
-	    
+
 	    public void SetVelocity(Vector3 velocity) => m_rb.linearVelocity = velocity + m_currentGroundAdjustmentVelocity;
 
 	    public void SetExtendedSensor(bool useExtendedSensor) => m_useExtendedSensor = useExtendedSensor;
