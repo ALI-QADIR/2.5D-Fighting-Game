@@ -8,30 +8,14 @@ namespace Smash.Player.States
 		protected PlayerSubStateMachine(PlayerController controller) : base(controller)
 		{
 		}
-	}
-	
-	public class Grounded : PlayerSubStateMachine
-	{
-		protected Grounded(PlayerController controller) : base(controller)
-		{
-			SetUpStateMachine();
-		}
-
-		private void SetUpStateMachine()
-		{
-			_stateMachine = new StateMachine();
-		}
-	}
-	
-	public class Airborne : PlayerSubStateMachine
-	{
-		protected Airborne(PlayerController controller) : base(controller)
-		{
-		}
 		
-		private void SetUpStateMachine()
-		{
-			_stateMachine = new StateMachine();
-		}
+		protected virtual void CreateAndAddTransitions() {}
+		
+		protected virtual void CreateStates() {}
+		
+		protected void AddTransition(IState from, IState to, IPredicate condition) =>
+			_stateMachine.AddTransition(from, to, condition);
+		
+		protected void AddAnyTransition(IState to, IPredicate condition) => _stateMachine.AddAnyTransition(to, condition);
 	}
 }

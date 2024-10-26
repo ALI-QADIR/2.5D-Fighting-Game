@@ -1,5 +1,4 @@
 using TripleA.FSM;
-using UnityEngine;
 
 namespace Smash.Player.States
 {
@@ -10,6 +9,14 @@ namespace Smash.Player.States
         protected PlayerBaseState(PlayerController controller)
         {
             _controller = controller;
+        }
+    }
+
+    public class PlayerInit : BaseState
+    {
+
+        public PlayerInit()
+        {
         }
     }
 }

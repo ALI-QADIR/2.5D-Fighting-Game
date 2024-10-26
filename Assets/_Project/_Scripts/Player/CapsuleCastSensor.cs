@@ -34,7 +34,7 @@ namespace Smash.Player
 			m_playerRadius = playerRadius;
 
 			m_bottom = Vector3.zero + m_tr.up * (m_playerRadius + k_safetyOffset);
-			m_top = m_bottom + (m_playerHeight - (m_playerRadius + k_safetyOffset)) * m_tr.up;
+			m_top = Vector3.zero + (m_playerHeight - (m_playerRadius + k_safetyOffset)) * m_tr.up;
 		}
 
 		public void Cast()
