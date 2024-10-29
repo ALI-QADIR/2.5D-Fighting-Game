@@ -361,13 +361,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 6, z: -12}
+  m_LocalRotation: {x: 0.059927594, y: -0, z: -0, w: 0.9982028}
+  m_LocalPosition: {x: 0, y: 8.73, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 6.871, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1120,7 +1120,7 @@ Transform:
   m_GameObject: {fileID: 925529464}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.1, y: 13.2, z: 0}
+  m_LocalPosition: {x: -11.87, y: 34.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1167,7 +1167,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!136 &925529468
@@ -1177,7 +1177,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 925529464}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6daec3202ea980d4cb6cfb60d77b13ec, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1207,6 +1207,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_motor: {fileID: 925529466}
   m_properties: {fileID: 11400000, guid: b269f71dd16356745947ddfe21ba67d5, type: 2}
+  m_jumpBufferTime: 0.1
+  m_coyoteTime: 0.1
+  m_numberOfJumps: 0
 --- !u!114 &925529470
 MonoBehaviour:
   m_ObjectHideFlags: 0

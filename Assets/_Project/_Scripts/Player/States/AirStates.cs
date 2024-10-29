@@ -25,6 +25,12 @@
 		public Falling(PlayerController controller) : base(controller)
 		{
 		}
+
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_controller.CheckForCoyote();
+		}
 	}
     
 	public class AirExit : PlayerBaseState

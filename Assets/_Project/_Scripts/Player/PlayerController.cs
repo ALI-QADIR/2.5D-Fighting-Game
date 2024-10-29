@@ -1,5 +1,4 @@
-﻿using System;
-using Smash.Player.States;
+﻿using Smash.Player.States;
 using TripleA.Extensions;
 using TripleA.FSM;
 using TripleA.ImprovedTimer.Timers;
@@ -14,6 +13,8 @@ namespace Smash.Player
 
 		[SerializeField] private PlayerMotor m_motor;
 		[SerializeField] private PlayerPropertiesSO m_properties;
+		[SerializeField] private float m_jumpBufferTime = 0.1f;
+		[SerializeField] private float m_coyoteTime = 0.1f;
 
 		private float m_speed;
 		private float m_jumpPower;
@@ -21,11 +22,13 @@ namespace Smash.Player
 		private float m_maxFallSpeed;
 		private float m_acceleration;
 		private int m_numberOfJumps;
-		private bool m_useLocalVelocity;
+		private bool m_isJumping;
 		private Vector3 m_velocity, m_savedVelocity;
 
 		private Transform m_tr;
 		private StateMachine m_stateMachine;
+		private CountDownTimer m_jumpBufferTimer;
+		private CountDownTimer m_coyoteTimer;
 
 		private GroundedSubStateMachine m_groundedState;
 		private AirborneSubStateMachine m_airborneState;
@@ -52,6 +55,12 @@ namespace Smash.Player
 			m_acceleration = m_properties.GroundAcceleration;
 			m_numberOfJumps = m_properties.NumberOfJumps;
 			m_jumpPower = m_properties.JumpPower;
+
+			m_jumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
+			m_coyoteTimer = new CountDownTimer(m_coyoteTime);
+
+			m_coyoteTimer.onTimerStart += () => Debug.Log("Coyote Started");
+			m_coyoteTimer.onTimerEnd += () => Debug.Log("Coyote Done");
 			
 			SetUpStateMachine();
 		}
@@ -64,8 +73,6 @@ namespace Smash.Player
 		private void FixedUpdate()
 		{
 			m_stateMachine.OnFixedUpdate();
-			// Todo: Jump Buffer
-			// Todo: Coyote Time
 			// Todo: Ledge Grab
 			// Todo: Dash
 			// Todo: Wall Jump
@@ -86,10 +93,19 @@ namespace Smash.Player
 
 		public void HandleJumpInput()
 		{
-			if (m_numberOfJumps <= 0) return;
+			if (m_numberOfJumps <= 0)
+			{
+				if (m_jumpBufferTimer.IsRunning) m_jumpBufferTimer.Reset();	
+				m_jumpBufferTimer.Start();
+				return;
+			}
+			if (!m_coyoteTimer.IsRunning && !m_isJumping && m_stateMachine.CurrentState is AirborneSubStateMachine) 
+				m_numberOfJumps--;
+			
 			m_numberOfJumps--;
+			m_isJumping = true;
 			HandleJump();
-			Debug.Log($"Jumping {m_numberOfJumps}");
+			// Debug.Log($"Jumping {m_numberOfJumps}");
 		}
 
 		public void SetInAir()
@@ -108,6 +124,18 @@ namespace Smash.Player
 			m_acceleration = m_properties.GroundAcceleration;
 			m_maxFallSpeed = 0f;
 			RemoveVerticalVelocity();
+			m_coyoteTimer.Reset();
+			m_isJumping = false;
+			
+			if (!m_jumpBufferTimer.IsRunning) return;
+			m_jumpBufferTimer.Reset();
+			HandleJumpInput();
+		}
+
+		public void CheckForCoyote()
+		{
+			if (m_isJumping) return;
+			m_coyoteTimer.Start();
 		}
 		
 		public bool IsRising() => 
@@ -127,7 +155,7 @@ namespace Smash.Player
 			Vector3 verticalVelocity = m_tr.up * m_jumpPower;
 			m_savedVelocity = Vector3Math.RemoveDotVector(m_savedVelocity, m_tr.up);
 			m_savedVelocity += verticalVelocity;
-			Debug.Log(m_savedVelocity);
+			// Debug.Log(m_savedVelocity);
 		}
 
 		private void HandleVelocity()
@@ -145,12 +173,6 @@ namespace Smash.Player
 		{
 			verticalVelocity = Vector3.MoveTowards(verticalVelocity, m_tr.up * -m_maxFallSpeed,
 				m_gravity * Time.fixedDeltaTime);
-			
-			// if (m_stateMachine.CurrentState is PlayerIdleGrounded && Vector3Math.GetDotProduct(verticalVelocity, m_tr.up) < 0f)
-			/*if (m_motor.IsGrounded() )
-			{
-				verticalVelocity = Vector3.zero;
-			}*/
 		}
 
 		private void AdjustHorizontalVelocity(ref Vector3 horizontalVelocity)

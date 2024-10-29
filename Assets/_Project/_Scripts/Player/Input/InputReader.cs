@@ -11,7 +11,7 @@ namespace Smash.Player.Input
         private void Awake()
         {
             m_input = new PlayerInputActions();
-            if (m_controller == null) m_controller = GetComponent<PlayerController>();
+            m_controller ??= GetComponent<PlayerController>();
         }
 
         private void OnEnable()
@@ -19,9 +19,8 @@ namespace Smash.Player.Input
             m_input.Player.Move.performed += OnMove;
             m_input.Player.Move.canceled += OnMove;
             m_input.Player.PrimaryAttack.performed += OnPrimaryAttack;
-            m_input.Player.Crouch.performed += OnCrouch;
+            m_input.Player.PrimaryAttack.performed += OnSecondaryAttack;
             m_input.Player.Jump.performed += OnJump;
-            m_input.Player.Dash.performed += OnDash;
             m_input.Player.Enable();
         }
 
@@ -30,9 +29,8 @@ namespace Smash.Player.Input
             m_input.Player.Move.performed -= OnMove;
             m_input.Player.Move.canceled -= OnMove;
             m_input.Player.PrimaryAttack.performed -= OnPrimaryAttack;
-            m_input.Player.Crouch.performed -= OnCrouch;
+            m_input.Player.PrimaryAttack.performed -= OnSecondaryAttack;
             m_input.Player.Jump.performed -= OnJump;
-            m_input.Player.Dash.performed -= OnDash;
             m_input.Player.Disable();
         }
 
@@ -45,18 +43,18 @@ namespace Smash.Player.Input
         private void OnPrimaryAttack(InputAction.CallbackContext context)
         {
         }
+        
+        private void OnSecondaryAttack(InputAction.CallbackContext context)
+        {
+        }
 
-        private void OnCrouch(InputAction.CallbackContext context)
+        private void OnShield(InputAction.CallbackContext context)
         {
         }
 
         private void OnJump(InputAction.CallbackContext context)
         {
             m_controller.HandleJumpInput();
-        }
-
-        private void OnDash(InputAction.CallbackContext context)
-        {
         }
     }
 }
