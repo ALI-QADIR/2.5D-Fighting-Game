@@ -16,7 +16,7 @@ namespace Smash.Player
 	    [SerializeField] private float m_groundAcceleration = 10f;
         [SerializeField] private float m_airAcceleration = 5f;
         [SerializeField] private float m_jumpPower = 10f;
-        // [SerializeField] private float m_mass = 10f;
+        [SerializeField] private int m_numberOfDashes = 1;
         [SerializeField] private int m_numberOfJumps = 2;
         
         #endregion
@@ -25,13 +25,14 @@ namespace Smash.Player
 
         public float GroundSpeed => m_groundSpeed;
         public float AirSpeed => m_airSpeed;
-        public float AirGravity => m_airGravity;
         public float GroundGravity => m_groundGravity;
+        public float AirGravity => m_airGravity;
         public float MaxFallSpeed => m_maxFallSpeed;
         public float GroundAcceleration => m_groundAcceleration;
         public float AirAcceleration => m_airAcceleration;
-        public int NumberOfJumps => m_numberOfJumps;
         public float JumpPower => m_jumpPower;
+        public int NumberOfJumps => m_numberOfJumps;
+        public int NumberOfDashes => m_numberOfDashes;
 
         #endregion
     }

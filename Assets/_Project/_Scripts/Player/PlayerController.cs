@@ -22,13 +22,15 @@ namespace Smash.Player
 		private float m_maxFallSpeed;
 		private float m_acceleration;
 		private int m_numberOfJumps;
+		private int m_numberOfDashes;
 		private bool m_isJumping;
+		private bool m_isDashing;
+		private bool m_canCoyote;
 		private Vector3 m_velocity, m_savedVelocity;
 
 		private Transform m_tr;
 		private StateMachine m_stateMachine;
 		private CountDownTimer m_jumpBufferTimer;
-		private CountDownTimer m_coyoteTimer;
 
 		private GroundedSubStateMachine m_groundedState;
 		private AirborneSubStateMachine m_airborneState;
@@ -37,7 +39,8 @@ namespace Smash.Player
 		#endregion Fields
 
 		#region Properties
-		
+
+		public float CoyoteTime => m_coyoteTime;
 		public Vector3 Direction { get; set; }
 
 		#endregion
@@ -55,12 +58,9 @@ namespace Smash.Player
 			m_acceleration = m_properties.GroundAcceleration;
 			m_numberOfJumps = m_properties.NumberOfJumps;
 			m_jumpPower = m_properties.JumpPower;
+			m_numberOfDashes = m_properties.NumberOfDashes;
 
 			m_jumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
-			m_coyoteTimer = new CountDownTimer(m_coyoteTime);
-
-			m_coyoteTimer.onTimerStart += () => Debug.Log("Coyote Started");
-			m_coyoteTimer.onTimerEnd += () => Debug.Log("Coyote Done");
 			
 			SetUpStateMachine();
 		}
@@ -99,7 +99,7 @@ namespace Smash.Player
 				m_jumpBufferTimer.Start();
 				return;
 			}
-			if (!m_coyoteTimer.IsRunning && !m_isJumping && m_stateMachine.CurrentState is AirborneSubStateMachine) 
+			if (!m_canCoyote && !m_isJumping && m_stateMachine.CurrentState is AirborneSubStateMachine) 
 				m_numberOfJumps--;
 			
 			m_numberOfJumps--;
@@ -111,6 +111,7 @@ namespace Smash.Player
 		public void SetInAir()
 		{
 			m_speed = m_properties.AirSpeed;
+			m_numberOfDashes = m_properties.NumberOfDashes;
 			m_gravity = m_properties.AirGravity;
 			m_acceleration = m_properties.AirAcceleration;
 			m_maxFallSpeed = m_properties.MaxFallSpeed;
@@ -119,12 +120,13 @@ namespace Smash.Player
 		public void SetOnGround()
 		{
 			m_numberOfJumps = m_properties.NumberOfJumps;
+			m_numberOfDashes = m_properties.NumberOfDashes;
 			m_speed = m_properties.GroundSpeed;
 			m_gravity = m_properties.GroundGravity;
 			m_acceleration = m_properties.GroundAcceleration;
 			m_maxFallSpeed = 0f;
 			RemoveVerticalVelocity();
-			m_coyoteTimer.Reset();
+			m_canCoyote = false;
 			m_isJumping = false;
 			
 			if (!m_jumpBufferTimer.IsRunning) return;
@@ -132,10 +134,9 @@ namespace Smash.Player
 			HandleJumpInput();
 		}
 
-		public void CheckForCoyote()
+		public void SetCoyote(bool canCoyote)
 		{
-			if (m_isJumping) return;
-			m_coyoteTimer.Start();
+			m_canCoyote = canCoyote;
 		}
 		
 		public bool IsRising() => 
