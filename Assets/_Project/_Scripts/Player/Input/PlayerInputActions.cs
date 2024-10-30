@@ -71,6 +71,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TempDash"",
+                    ""type"": ""Button"",
+                    ""id"": ""e069078d-c403-42f7-bc1b-d3f64ba457e5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -302,6 +311,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Shield"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5fd83e47-8a59-48ee-a8fc-3209c2aa2b7d"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""TempDash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""419c86e4-433d-41fd-8431-d58e0539ff86"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""TempDash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -894,6 +925,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_SecondaryAttack = m_Player.FindAction("SecondaryAttack", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Shield = m_Player.FindAction("Shield", throwIfNotFound: true);
+        m_Player_TempDash = m_Player.FindAction("TempDash", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -978,6 +1010,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SecondaryAttack;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Shield;
+    private readonly InputAction m_Player_TempDash;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -987,6 +1020,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @SecondaryAttack => m_Wrapper.m_Player_SecondaryAttack;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Shield => m_Wrapper.m_Player_Shield;
+        public InputAction @TempDash => m_Wrapper.m_Player_TempDash;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1011,6 +1045,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Shield.started += instance.OnShield;
             @Shield.performed += instance.OnShield;
             @Shield.canceled += instance.OnShield;
+            @TempDash.started += instance.OnTempDash;
+            @TempDash.performed += instance.OnTempDash;
+            @TempDash.canceled += instance.OnTempDash;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1030,6 +1067,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Shield.started -= instance.OnShield;
             @Shield.performed -= instance.OnShield;
             @Shield.canceled -= instance.OnShield;
+            @TempDash.started -= instance.OnTempDash;
+            @TempDash.performed -= instance.OnTempDash;
+            @TempDash.canceled -= instance.OnTempDash;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1217,6 +1257,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnSecondaryAttack(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnShield(InputAction.CallbackContext context);
+        void OnTempDash(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

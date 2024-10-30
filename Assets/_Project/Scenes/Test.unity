@@ -1120,7 +1120,7 @@ Transform:
   m_GameObject: {fileID: 925529464}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.87, y: 34.3, z: 0}
+  m_LocalPosition: {x: -11.87, y: 4.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1208,8 +1208,7 @@ MonoBehaviour:
   m_motor: {fileID: 925529466}
   m_properties: {fileID: 11400000, guid: b269f71dd16356745947ddfe21ba67d5, type: 2}
   m_jumpBufferTime: 0.1
-  m_coyoteTime: 0.1
-  m_numberOfJumps: 0
+  m_coyoteTime: 0.3
 --- !u!114 &925529470
 MonoBehaviour:
   m_ObjectHideFlags: 0

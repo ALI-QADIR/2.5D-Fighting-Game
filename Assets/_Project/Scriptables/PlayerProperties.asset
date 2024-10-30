@@ -14,10 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_groundSpeed: 10
   m_airSpeed: 10
+  m_dashSpeed: 30
   m_groundGravity: 200
   m_airGravity: 200
   m_maxFallSpeed: 50
   m_groundAcceleration: 200
   m_airAcceleration: 200
   m_jumpPower: 50
+  m_dashDuration: 0.1
+  m_numberOfDashes: 1
   m_numberOfJumps: 2

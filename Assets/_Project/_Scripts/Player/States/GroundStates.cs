@@ -18,12 +18,24 @@
 		public Idle(PlayerController controller) : base(controller)
 		{
 		}
+
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_controller.CurrentState = this;
+		}
 	}
 	
 	public class Moving : PlayerBaseState
 	{
 		public Moving(PlayerController controller) : base(controller)
 		{
+		}
+		
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_controller.CurrentState = this;
 		}
 	}
     

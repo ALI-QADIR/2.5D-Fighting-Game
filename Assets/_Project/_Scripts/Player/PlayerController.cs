@@ -1,4 +1,5 @@
-﻿using Smash.Player.States;
+﻿using System;
+using Smash.Player.States;
 using TripleA.Extensions;
 using TripleA.FSM;
 using TripleA.ImprovedTimer.Timers;
@@ -24,8 +25,6 @@ namespace Smash.Player
 		private int m_numberOfJumps;
 		private int m_numberOfDashes;
 		private bool m_isJumping;
-		private bool m_isDashing;
-		private bool m_canCoyote;
 		private Vector3 m_velocity, m_savedVelocity;
 
 		private Transform m_tr;
@@ -39,11 +38,15 @@ namespace Smash.Player
 		#endregion Fields
 
 		#region Properties
-
+		
 		public float CoyoteTime => m_coyoteTime;
+		public float DashDuration => m_properties.DashDuration; 
 		public Vector3 Direction { get; set; }
+		public IState CurrentState{ get; set; }
 
 		#endregion
+		
+		public event Action<bool> OnDash; 
 		
 		#region Unity Methods
 
@@ -73,8 +76,9 @@ namespace Smash.Player
 		private void FixedUpdate()
 		{
 			m_stateMachine.OnFixedUpdate();
+			// Todo: Refine Dash
+			// Todo: Float
 			// Todo: Ledge Grab
-			// Todo: Dash
 			// Todo: Wall Jump
 			// Todo: Slopes??
 			// Todo: Wall Clipping
@@ -99,13 +103,21 @@ namespace Smash.Player
 				m_jumpBufferTimer.Start();
 				return;
 			}
-			if (!m_canCoyote && !m_isJumping && m_stateMachine.CurrentState is AirborneSubStateMachine) 
+			if (CurrentState is not Coyote && !m_isJumping && m_stateMachine.CurrentState is AirborneSubStateMachine) 
 				m_numberOfJumps--;
 			
 			m_numberOfJumps--;
 			m_isJumping = true;
 			HandleJump();
 			// Debug.Log($"Jumping {m_numberOfJumps}");
+		}
+
+		public void HandleDashInput()
+		{
+			if (m_numberOfDashes <= 0 || Direction == Vector3.zero) return;
+			OnDash?.Invoke(true);
+			if (CurrentState is Coyote) return;
+			m_numberOfDashes--;
 		}
 
 		public void SetInAir()
@@ -126,7 +138,6 @@ namespace Smash.Player
 			m_acceleration = m_properties.GroundAcceleration;
 			m_maxFallSpeed = 0f;
 			RemoveVerticalVelocity();
-			m_canCoyote = false;
 			m_isJumping = false;
 			
 			if (!m_jumpBufferTimer.IsRunning) return;
@@ -134,9 +145,29 @@ namespace Smash.Player
 			HandleJumpInput();
 		}
 
-		public void SetCoyote(bool canCoyote)
+		public void SetDashStart()
 		{
-			m_canCoyote = canCoyote;
+			RemoveVerticalVelocity();
+			Debug.Log("Dashing");
+			m_gravity = 0f;
+			Vector3 velocity = Direction * m_properties.DashSpeed;
+			m_savedVelocity = Vector3Math.RemoveDotVector(m_savedVelocity, Direction);
+			m_savedVelocity += velocity;
+		}
+
+		public void SetDashEnd()
+		{
+			Debug.Log("Dash Ended");
+			if (m_motor.IsGrounded())
+			{
+				m_gravity = m_properties.GroundGravity;
+				m_speed = m_properties.GroundSpeed;
+			}
+			else
+			{
+				m_gravity = m_properties.AirGravity;
+				m_speed = m_properties.AirSpeed;
+			}
 		}
 		
 		public bool IsRising() => 
@@ -144,7 +175,7 @@ namespace Smash.Player
 		public bool IsFalling() => 
 			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.up) < 0f && !m_motor.IsGrounded();
 		public bool IsMoving() => 
-			Vector3Math.RemoveDotVector(m_savedVelocity, m_tr.up).sqrMagnitude > 0.01f && m_motor.IsGrounded(); 
+			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.right) != 0f && m_motor.IsGrounded(); 
 		public bool IsGroundTooSteep() => m_motor.IsGroundTooSteep();
 
 		#endregion Public Methods
@@ -178,8 +209,9 @@ namespace Smash.Player
 
 		private void AdjustHorizontalVelocity(ref Vector3 horizontalVelocity)
 		{
+			if (CurrentState is Dash) return;
+			
 			m_velocity = GetMovementVelocity();
-
 			horizontalVelocity = Vector3.MoveTowards(horizontalVelocity, m_velocity, 
 				m_acceleration * Time.fixedDeltaTime);
 		}
@@ -202,14 +234,17 @@ namespace Smash.Player
 			m_airborneState = new AirborneSubStateMachine(this);
 			m_initState = new PlayerInit();
 			
+			FuncPredicate groundToAirborne = new(() => 
+				m_stateMachine.CurrentState is GroundedSubStateMachine && !m_motor.IsGrounded());
+			FuncPredicate airborneToGround = new(() => 
+				m_stateMachine.CurrentState is AirborneSubStateMachine && m_motor.IsGrounded());
+			
 			AddTransition(m_initState, m_groundedState, 
 				new FuncPredicate(() => m_stateMachine.CurrentState is PlayerInit && m_motor.IsGrounded()));
 			AddTransition(m_initState, m_airborneState,
 				new FuncPredicate(() => m_stateMachine.CurrentState is PlayerInit && !m_motor.IsGrounded()));
-			AddTransition(m_groundedState, m_airborneState, 
-				new FuncPredicate(() => m_stateMachine.CurrentState is GroundedSubStateMachine && !m_motor.IsGrounded()));
-			AddTransition(m_airborneState, m_groundedState,
-				new FuncPredicate(() => m_stateMachine.CurrentState is AirborneSubStateMachine && m_motor.IsGrounded()));
+			AddTransition(m_groundedState, m_airborneState, groundToAirborne);
+			AddTransition(m_airborneState, m_groundedState, airborneToGround);
 			
 			m_stateMachine.SetState(m_initState);
 		}

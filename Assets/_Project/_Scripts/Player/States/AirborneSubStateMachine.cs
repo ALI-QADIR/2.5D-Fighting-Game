@@ -9,32 +9,57 @@ namespace Smash.Player.States
 		private Rising m_rising;
 		private Falling m_falling;
 		private Coyote m_coyote;
-
-		private bool m_isExiting;
-
-		private readonly FuncPredicate m_entryToRising;
-		private readonly FuncPredicate m_entryToCoyote;
-		private readonly FuncPredicate m_risingToFalling;
-		private readonly FuncPredicate m_fallingToRising;
-		private readonly FuncPredicate m_coyoteToRising;
-		private readonly FuncPredicate m_coyoteToFalling;
+		private Dash m_dash;
 		
+		private bool m_dashPressed;
+
+		private readonly FuncPredicate m_entryToRisingCondition;
+		private readonly FuncPredicate m_entryToCoyoteCondition;
+		
+		private readonly FuncPredicate m_risingToFallingCondition;
+		private readonly FuncPredicate m_risingToDashCondition;
+		private readonly FuncPredicate m_fallingToRisingCondition;
+		private readonly FuncPredicate m_fallingToDashCondition;
+		
+		private readonly FuncPredicate m_coyoteToRisingCondition;
+		private readonly FuncPredicate m_coyoteToFallingCondition;
+		private readonly FuncPredicate m_coyoteToDashCondition;
+		
+		private readonly FuncPredicate m_dashToCoyoteCondition;
+
 		public AirborneSubStateMachine(PlayerController controller) : base(controller)
 		{
 			_stateMachine = new StateMachine();
 			
 			CreateStates();
 			
-			m_entryToRising = new FuncPredicate(() => _stateMachine.CurrentState is AirEntry && _controller.IsRising());
-			m_entryToCoyote = new FuncPredicate(() => _stateMachine.CurrentState is AirEntry && _controller.IsFalling());
-			m_risingToFalling = new FuncPredicate(() => _stateMachine.CurrentState is Rising && _controller.IsFalling());
-			m_fallingToRising = new FuncPredicate(() => _stateMachine.CurrentState is Falling && _controller.IsRising());
-			m_coyoteToRising = new FuncPredicate(() => _stateMachine.CurrentState is Coyote && _controller.IsRising());
-			m_coyoteToFalling = new FuncPredicate(() =>
+			m_entryToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is AirEntry && _controller.IsRising());
+			m_entryToCoyoteCondition = new FuncPredicate(() => _stateMachine.CurrentState is AirEntry && _controller.IsFalling());
+			
+			m_risingToFallingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Rising && _controller.IsFalling());
+			m_fallingToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Falling && _controller.IsRising());
+			
+			m_risingToDashCondition = new FuncPredicate(Predicate<Rising>);
+			m_fallingToDashCondition = new FuncPredicate(Predicate<Falling>);
+			
+			m_dashToCoyoteCondition = new FuncPredicate(() => 
+				_stateMachine.CurrentState is Dash && m_dash.IsFinished);
+			
+			m_coyoteToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Coyote && _controller.IsRising());
+			m_coyoteToDashCondition = new FuncPredicate(() => _stateMachine.CurrentState is Coyote && m_dashPressed);
+			m_coyoteToFallingCondition = new FuncPredicate(() =>
 				_stateMachine.CurrentState is Coyote && _controller.IsFalling() &&
 				m_coyote.ElapsedTime >= _controller.CoyoteTime);
 			
 			CreateAndAddTransitions();
+			
+			return;
+			bool Predicate<T>()
+			{
+				bool flag = _stateMachine.CurrentState is T && m_dashPressed;
+				m_dashPressed = false;
+				return flag;
+			}
 		}
 
 		#region State Machine Methods
@@ -42,8 +67,8 @@ namespace Smash.Player.States
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			
-			m_isExiting = false;
+			_controller.CurrentState = this;
+			_controller.OnDash += ControllerOnOnDash;
 			_stateMachine.SetState(m_airEntry);
 		}
 
@@ -68,11 +93,17 @@ namespace Smash.Player.States
 		public override void OnExit()
 		{
 			base.OnExit();
-			m_isExiting = true;
+			_controller.OnDash -= ControllerOnOnDash;
+			_stateMachine.SetState(m_airExit);
 		}
 
 		#endregion State Machine Methods
-
+		
+		private void ControllerOnOnDash(bool value)
+		{
+			m_dashPressed = value;
+		}
+		
 		protected override void CreateStates()
 		{
 			m_airEntry = new AirEntry(_controller);
@@ -80,20 +111,27 @@ namespace Smash.Player.States
 			m_rising = new Rising(_controller);
 			m_falling = new Falling(_controller);
 			m_coyote = new Coyote(_controller);
+			m_dash = new Dash(_controller, _controller.DashDuration);
 		}
 
 		protected override void CreateAndAddTransitions()
 		{
-			// Entry
-			AddTransition(m_airEntry, m_rising, m_entryToRising);
-			AddTransition(m_airEntry, m_coyote, m_entryToCoyote);
-			AddTransition(m_rising, m_falling, m_risingToFalling);
-			AddTransition(m_falling, m_rising, m_fallingToRising);
-			AddTransition(m_coyote, m_falling, m_coyoteToFalling);
-			AddTransition(m_coyote, m_rising, m_coyoteToRising);
+			AddTransition(m_airEntry, m_rising, m_entryToRisingCondition);
+			AddTransition(m_airEntry, m_coyote, m_entryToCoyoteCondition);
 			
-			// Exit
-			AddAnyTransition(m_airExit, new FuncPredicate(() => m_isExiting));
+			AddTransition(m_rising, m_falling, m_risingToFallingCondition);
+			AddTransition(m_falling, m_rising, m_fallingToRisingCondition);
+			
+			AddTransition(m_rising, m_dash, m_risingToDashCondition);
+			AddTransition(m_falling, m_dash, m_fallingToDashCondition);
+			
+			AddTransition(m_dash, m_coyote, m_dashToCoyoteCondition);
+			
+			AddTransition(m_coyote, m_falling, m_coyoteToFallingCondition);
+			AddTransition(m_coyote, m_rising, m_coyoteToRisingCondition);
+			AddTransition(m_coyote, m_dash, m_coyoteToDashCondition);
+			
+			AddTransition(m_airExit, m_airEntry, new FuncPredicate(() => false));
 		}
 	}
 }
