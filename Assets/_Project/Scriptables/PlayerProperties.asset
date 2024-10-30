@@ -21,6 +21,6 @@ MonoBehaviour:
   m_groundAcceleration: 200
   m_airAcceleration: 200
   m_jumpPower: 50
-  m_dashDuration: 0.1
+  m_dashDuration: 0.15
   m_numberOfDashes: 1
   m_numberOfJumps: 2

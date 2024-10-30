@@ -46,7 +46,7 @@ namespace Smash.Player.States
 				_stateMachine.CurrentState is Dash && m_dash.IsFinished);
 			
 			m_coyoteToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Coyote && _controller.IsRising());
-			m_coyoteToDashCondition = new FuncPredicate(() => _stateMachine.CurrentState is Coyote && m_dashPressed);
+			m_coyoteToDashCondition = new FuncPredicate(Predicate<Coyote>);
 			m_coyoteToFallingCondition = new FuncPredicate(() =>
 				_stateMachine.CurrentState is Coyote && _controller.IsFalling() &&
 				m_coyote.ElapsedTime >= _controller.CoyoteTime);

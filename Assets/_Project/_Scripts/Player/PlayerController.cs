@@ -14,8 +14,10 @@ namespace Smash.Player
 
 		[SerializeField] private PlayerMotor m_motor;
 		[SerializeField] private PlayerPropertiesSO m_properties;
+		[Header("Timer Values")]
 		[SerializeField] private float m_jumpBufferTime = 0.1f;
 		[SerializeField] private float m_coyoteTime = 0.1f;
+		[SerializeField] private float m_dashResetTime = 0.2f;
 
 		private float m_speed;
 		private float m_jumpPower;
@@ -30,6 +32,7 @@ namespace Smash.Player
 		private Transform m_tr;
 		private StateMachine m_stateMachine;
 		private CountDownTimer m_jumpBufferTimer;
+		private CountDownTimer m_dashResetTimer;
 
 		private GroundedSubStateMachine m_groundedState;
 		private AirborneSubStateMachine m_airborneState;
@@ -64,6 +67,9 @@ namespace Smash.Player
 			m_numberOfDashes = m_properties.NumberOfDashes;
 
 			m_jumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
+			m_dashResetTimer = new CountDownTimer(m_dashResetTime);
+
+			m_dashResetTimer.onTimerEnd += () => m_numberOfDashes = m_properties.NumberOfDashes;
 			
 			SetUpStateMachine();
 		}
@@ -76,10 +82,11 @@ namespace Smash.Player
 		private void FixedUpdate()
 		{
 			m_stateMachine.OnFixedUpdate();
-			// Todo: Refine Dash
-			// Todo: Float
+			// Todo: Apex Float
+			// Todo: Jump up and descend slow
 			// Todo: Ledge Grab
 			// Todo: Wall Jump
+			// Todo: One-Way Platforms
 			// Todo: Slopes??
 			// Todo: Wall Clipping
 			m_motor.CheckForGround();
@@ -98,6 +105,13 @@ namespace Smash.Player
 		public void HandleJumpInput()
 		{
 			if (m_numberOfJumps <= 0)
+			{
+				if (m_jumpBufferTimer.IsRunning) m_jumpBufferTimer.Reset();	
+				m_jumpBufferTimer.Start();
+				return;
+			}
+
+			if (CurrentState is Dash)
 			{
 				if (m_jumpBufferTimer.IsRunning) m_jumpBufferTimer.Reset();	
 				m_jumpBufferTimer.Start();
@@ -147,8 +161,9 @@ namespace Smash.Player
 
 		public void SetDashStart()
 		{
+			// Debug.Log("Dashing");
 			RemoveVerticalVelocity();
-			Debug.Log("Dashing");
+			m_dashResetTimer.Reset();
 			m_gravity = 0f;
 			Vector3 velocity = Direction * m_properties.DashSpeed;
 			m_savedVelocity = Vector3Math.RemoveDotVector(m_savedVelocity, Direction);
@@ -157,7 +172,8 @@ namespace Smash.Player
 
 		public void SetDashEnd()
 		{
-			Debug.Log("Dash Ended");
+			// Debug.Log("Dash Ended");
+			m_dashResetTimer.Start();
 			if (m_motor.IsGrounded())
 			{
 				m_gravity = m_properties.GroundGravity;
@@ -168,6 +184,9 @@ namespace Smash.Player
 				m_gravity = m_properties.AirGravity;
 				m_speed = m_properties.AirSpeed;
 			}
+			if (!m_jumpBufferTimer.IsRunning) return;
+			m_jumpBufferTimer.Reset();
+			HandleJumpInput();
 		}
 		
 		public bool IsRising() => 
