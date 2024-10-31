@@ -12,17 +12,25 @@ namespace Smash.Player
 	{
 		#region Fields
 
+		[Header("References")]
 		[SerializeField] private PlayerMotor m_motor;
 		[SerializeField] private PlayerPropertiesSO m_properties;
+		[Header("Control Values")]
+		[SerializeField] private float m_groundGravity = 200f;
+		[SerializeField] private float m_airGravity = 200f;
+		[SerializeField] private float m_maxFallSpeed = 50f;
 		[Header("Timer Values")]
 		[SerializeField] private float m_jumpBufferTime = 0.1f;
 		[SerializeField] private float m_coyoteTime = 0.1f;
 		[SerializeField] private float m_dashResetTime = 0.2f;
+		[Header("Apex")]
+		[SerializeField] private float m_apexTime = 0.05f;
+		[SerializeField, Range(0,1)] private float m_apexSpeedBoostRatio = 0.05f;
 
 		private float m_speed;
 		private float m_jumpPower;
 		private float m_gravity;
-		private float m_maxFallSpeed;
+		private float m_fallSpeed;
 		private float m_acceleration;
 		private int m_numberOfJumps;
 		private int m_numberOfDashes;
@@ -44,6 +52,7 @@ namespace Smash.Player
 		
 		public float CoyoteTime => m_coyoteTime;
 		public float DashDuration => m_properties.DashDuration; 
+		public float ApexTime => m_apexTime; 
 		public Vector3 Direction { get; set; }
 		public IState CurrentState{ get; set; }
 
@@ -59,8 +68,8 @@ namespace Smash.Player
 			m_motor ??= GetComponent<PlayerMotor>();
 
 			m_speed = m_properties.GroundSpeed;
-			m_gravity = m_properties.AirGravity;
-			m_maxFallSpeed = m_properties.MaxFallSpeed;
+			m_gravity = m_airGravity;
+			m_fallSpeed = m_maxFallSpeed;
 			m_acceleration = m_properties.GroundAcceleration;
 			m_numberOfJumps = m_properties.NumberOfJumps;
 			m_jumpPower = m_properties.JumpPower;
@@ -82,12 +91,12 @@ namespace Smash.Player
 		private void FixedUpdate()
 		{
 			m_stateMachine.OnFixedUpdate();
-			// Todo: Apex Float
-			// Todo: Jump up and descend slow
+			// Todo: floating in air
 			// Todo: Ledge Grab
 			// Todo: Wall Jump
 			// Todo: One-Way Platforms
 			// Todo: Slopes??
+			// Todo: Stairs??
 			// Todo: Wall Clipping
 			m_motor.CheckForGround();
 
@@ -138,9 +147,9 @@ namespace Smash.Player
 		{
 			m_speed = m_properties.AirSpeed;
 			m_numberOfDashes = m_properties.NumberOfDashes;
-			m_gravity = m_properties.AirGravity;
+			m_gravity = m_airGravity;
 			m_acceleration = m_properties.AirAcceleration;
-			m_maxFallSpeed = m_properties.MaxFallSpeed;
+			m_fallSpeed = m_maxFallSpeed;
 		}
 
 		public void SetOnGround()
@@ -148,9 +157,9 @@ namespace Smash.Player
 			m_numberOfJumps = m_properties.NumberOfJumps;
 			m_numberOfDashes = m_properties.NumberOfDashes;
 			m_speed = m_properties.GroundSpeed;
-			m_gravity = m_properties.GroundGravity;
+			m_gravity = m_groundGravity;
 			m_acceleration = m_properties.GroundAcceleration;
-			m_maxFallSpeed = 0f;
+			m_fallSpeed = 0f;
 			RemoveVerticalVelocity();
 			m_isJumping = false;
 			
@@ -176,17 +185,31 @@ namespace Smash.Player
 			m_dashResetTimer.Start();
 			if (m_motor.IsGrounded())
 			{
-				m_gravity = m_properties.GroundGravity;
+				m_gravity = m_groundGravity;
 				m_speed = m_properties.GroundSpeed;
 			}
 			else
 			{
-				m_gravity = m_properties.AirGravity;
+				m_gravity = m_airGravity;
 				m_speed = m_properties.AirSpeed;
 			}
 			if (!m_jumpBufferTimer.IsRunning) return;
 			m_jumpBufferTimer.Reset();
 			HandleJumpInput();
+		}
+
+		public void SetApex(bool isApex)
+		{
+			if (isApex)
+			{
+				m_fallSpeed = 5f;
+				m_speed += m_apexSpeedBoostRatio * m_speed;
+			}
+			else
+			{
+				m_fallSpeed = m_maxFallSpeed;
+				m_speed = m_properties.AirSpeed;
+			}
 		}
 		
 		public bool IsRising() => 
@@ -222,7 +245,7 @@ namespace Smash.Player
 
 		private void AdjustVerticalVelocity(ref Vector3 verticalVelocity)
 		{
-			verticalVelocity = Vector3.MoveTowards(verticalVelocity, m_tr.up * -m_maxFallSpeed,
+			verticalVelocity = Vector3.MoveTowards(verticalVelocity, m_tr.up * -m_fallSpeed,
 				m_gravity * Time.fixedDeltaTime);
 		}
 

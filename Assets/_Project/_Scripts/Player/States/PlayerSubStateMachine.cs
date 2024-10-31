@@ -9,9 +9,10 @@ namespace Smash.Player.States
 		{
 		}
 		
-		protected virtual void CreateAndAddTransitions() {}
-		
 		protected virtual void CreateStates() {}
+		protected virtual void CreateTransitions() {}
+		protected virtual void AddTransitions() {}
+		
 		
 		protected void AddTransition(IState from, IState to, IPredicate condition) =>
 			_stateMachine.AddTransition(from, to, condition);

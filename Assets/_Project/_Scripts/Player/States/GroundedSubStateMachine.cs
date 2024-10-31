@@ -12,14 +12,14 @@ namespace Smash.Player.States
 
 		private bool m_dashPressed;
 		
-		private readonly FuncPredicate m_entryToIdleCondition;
-		private readonly FuncPredicate m_entryToMovingCondition;
-		private readonly FuncPredicate m_idleToMovingCondition;
-		private readonly FuncPredicate m_movingToIdleCondition;
-		private readonly FuncPredicate m_dashToIdleCondition;
-		private readonly FuncPredicate m_dashToMovingCondition;
-		private readonly FuncPredicate m_idleToDashCondition;
-		private readonly FuncPredicate m_movingToDashCondition;
+		private FuncPredicate m_entryToIdleCondition;
+		private FuncPredicate m_entryToMovingCondition;
+		private FuncPredicate m_idleToMovingCondition;
+		private FuncPredicate m_movingToIdleCondition;
+		private FuncPredicate m_dashToIdleCondition;
+		private FuncPredicate m_dashToMovingCondition;
+		private FuncPredicate m_idleToDashCondition;
+		private FuncPredicate m_movingToDashCondition;
 		
 		public GroundedSubStateMachine(PlayerController controller) : base(controller)
 		{
@@ -27,29 +27,9 @@ namespace Smash.Player.States
 
 			CreateStates();
 			
-			m_entryToIdleCondition = new FuncPredicate(() => _stateMachine.CurrentState is GroundEntry && !_controller.IsMoving());
-			m_entryToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is GroundEntry && _controller.IsMoving());
+			CreateTransitions();
 			
-			m_idleToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && _controller.IsMoving());
-			m_movingToIdleCondition = new FuncPredicate(() => _stateMachine.CurrentState is Moving && !_controller.IsMoving());
-			
-			m_idleToDashCondition = new FuncPredicate(Predicate<Idle>);
-			m_movingToDashCondition = new FuncPredicate(Predicate<Moving>);
-			
-			m_dashToIdleCondition = new FuncPredicate(() =>
-				_stateMachine.CurrentState is Dash && !_controller.IsMoving() && m_dash.IsFinished);
-			m_dashToMovingCondition = new FuncPredicate(() =>
-				_stateMachine.CurrentState is Dash && _controller.IsMoving() && m_dash.IsFinished);
-			
-			CreateAndAddTransitions();
-			return;
-
-			bool Predicate<T>()
-			{
-				bool flag = _stateMachine.CurrentState is T && m_dashPressed;
-				m_dashPressed = false;
-				return flag;
-			}
+			AddTransitions();
 		}
 
 		#region State Machine Methods
@@ -95,6 +75,13 @@ namespace Smash.Player.States
 			m_dashPressed = value;
 		}
 
+		private bool Predicate<T>()
+		{
+			bool flag = _stateMachine.CurrentState is T && m_dashPressed;
+			m_dashPressed = false;
+			return flag;
+		}
+
 		protected override void CreateStates()
 		{
 			m_groundEntry = new GroundEntry(_controller);
@@ -104,7 +91,24 @@ namespace Smash.Player.States
 			m_dash = new Dash(_controller, _controller.DashDuration);
 		}
 
-		protected override void CreateAndAddTransitions()
+		protected override void CreateTransitions()
+		{
+			m_entryToIdleCondition = new FuncPredicate(() => _stateMachine.CurrentState is GroundEntry && !_controller.IsMoving());
+			m_entryToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is GroundEntry && _controller.IsMoving());
+			
+			m_idleToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && _controller.IsMoving());
+			m_movingToIdleCondition = new FuncPredicate(() => _stateMachine.CurrentState is Moving && !_controller.IsMoving());
+			
+			m_idleToDashCondition = new FuncPredicate(Predicate<Idle>);
+			m_movingToDashCondition = new FuncPredicate(Predicate<Moving>);
+			
+			m_dashToIdleCondition = new FuncPredicate(() =>
+				_stateMachine.CurrentState is Dash && !_controller.IsMoving() && m_dash.IsFinished);
+			m_dashToMovingCondition = new FuncPredicate(() =>
+				_stateMachine.CurrentState is Dash && _controller.IsMoving() && m_dash.IsFinished);
+		}
+
+		protected override void AddTransitions()
 		{
 			AddTransition(m_groundEntry, m_idle, m_entryToIdleCondition);
 			AddTransition(m_groundEntry, m_moving, m_entryToMovingCondition);

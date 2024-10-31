@@ -64,8 +64,37 @@ namespace Smash.Player.States
 			ElapsedTime += Time.deltaTime;
 		}
 	}
-	
-	
+
+	public class Apex : PlayerBaseState
+	{
+		public float ElapsedTime { get; private set; }
+
+		public Apex(PlayerController controller) : base(controller)
+		{
+		}
+
+
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			ElapsedTime = 0f;
+			_controller.CurrentState = this;
+			_controller.SetApex(true);
+		}
+
+		public override void OnUpdate()
+		{
+			base.OnUpdate();
+			ElapsedTime += Time.deltaTime;
+		}
+
+		public override void OnExit()
+		{
+			base.OnExit();
+			ElapsedTime = 0f;
+			_controller.SetApex(false);
+		}
+	}
 
 	public class Dash : PlayerBaseState
 	{
