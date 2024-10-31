@@ -20,6 +20,12 @@ namespace Smash.Player
         [SerializeField] private float m_dashSpeed = 30f;
         [SerializeField] private float m_dashDuration = 0.5f;
         [SerializeField] private int m_numberOfDashes = 1;
+        [FormerlySerializedAs("m_launchForce")]
+        [Header("Launch")]
+        [SerializeField] private float m_launchPower = 100f;
+        [SerializeField] private float m_crashSpeed = 100f;
+        [SerializeField] private float m_floatFallSpeed = 10f;
+        [SerializeField, Range(0, 2)] private float m_floatControlRatio = 0.5f;
         
         #endregion
 
@@ -34,6 +40,10 @@ namespace Smash.Player
         public float DashSpeed => m_dashSpeed;
         public float DashDuration => m_dashDuration;
         public int NumberOfDashes => m_numberOfDashes;
+        public float LaunchPower => m_launchPower;
+        public float CrashSpeed => m_crashSpeed;
+        public float FloatFallSpeed => m_floatFallSpeed;
+        public float FloatControlRatio => m_floatControlRatio;
 
         #endregion
     }

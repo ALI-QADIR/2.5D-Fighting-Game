@@ -1,5 +1,5 @@
+using Smash.StructsAndEnums;
 using UnityEngine;
-using Smash.Player.StructsAndEnums;
 
 namespace Smash.Player
 {

@@ -39,6 +39,7 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			_controller.CurrentState = this;
+			_controller.SetFalling();
 		}
 	}
 	

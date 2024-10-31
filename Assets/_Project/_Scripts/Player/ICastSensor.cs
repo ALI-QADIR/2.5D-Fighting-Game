@@ -1,4 +1,4 @@
-﻿using Smash.Player.StructsAndEnums;
+﻿using Smash.StructsAndEnums;
 using UnityEngine;
 
 namespace Smash.Player

@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: PlayerProperties
   m_EditorClassIdentifier: 
   m_groundSpeed: 10
-  m_airSpeed: 10
-  m_dashSpeed: 30
-  m_groundGravity: 200
-  m_airGravity: 200
-  m_maxFallSpeed: 50
   m_groundAcceleration: 200
+  m_airSpeed: 10
   m_airAcceleration: 200
-  m_jumpPower: 50
+  m_jumpPower: 40
+  m_numberOfJumps: 2
+  m_dashSpeed: 30
   m_dashDuration: 0.15
   m_numberOfDashes: 1
-  m_numberOfJumps: 2
+  m_launchPower: 60
+  m_crashSpeed: 200
+  m_floatFallSpeed: 10
+  m_floatControlRatio: 0.5

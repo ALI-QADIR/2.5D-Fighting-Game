@@ -37,7 +37,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""PrimaryAttack"",
+                    ""name"": ""MainAttack"",
                     ""type"": ""Button"",
                     ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
                     ""expectedControlType"": """",
@@ -46,7 +46,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SecondaryAttack"",
+                    ""name"": ""SpecialAttack"",
                     ""type"": ""Button"",
                     ""id"": ""3f8f4e9a-b1ce-4f3c-bba0-63ebaa168338"",
                     ""expectedControlType"": """",
@@ -76,6 +76,33 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""TempDash"",
                     ""type"": ""Button"",
                     ""id"": ""e069078d-c403-42f7-bc1b-d3f64ba457e5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Launch"",
+                    ""type"": ""Button"",
+                    ""id"": ""c816874e-4edd-4843-92c8-5fc8d57b4941"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LaunchAndFloat"",
+                    ""type"": ""Button"",
+                    ""id"": ""b829c323-73af-4e94-834f-c6c7c7aff0c2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LaunchAndCrash"",
+                    ""type"": ""Button"",
+                    ""id"": ""2d7c24fb-eab7-4e45-9d36-f9051c3311b0"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -156,7 +183,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""PrimaryAttack"",
+                    ""action"": ""MainAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -167,7 +194,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""PrimaryAttack"",
+                    ""action"": ""MainAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -178,7 +205,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""SecondaryAttack"",
+                    ""action"": ""SpecialAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -189,7 +216,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""SecondaryAttack"",
+                    ""action"": ""SpecialAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -335,6 +362,204 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""TempDash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0a70acf9-6124-4f48-97a4-7e65272cbe74"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Launch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4156b25f-b181-40eb-ae79-f81bdbd9df35"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Launch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""195b2d7d-e3c3-4923-865c-50bba2237772"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Launch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f409d247-f11a-467e-9b02-0d34bdbb28af"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Launch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""66f7a956-04ec-4120-81e0-6e752f41dfd3"",
+                    ""path"": ""OneModifier(overrideModifiersNeedToBePressedFirst=true)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LaunchAndFloat"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""85c4340c-d76d-4892-b9ea-e295e10b3059"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""LaunchAndFloat"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""0c3d4cd8-baba-48e7-a671-e832fa5bfb99"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""LaunchAndFloat"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""93e25a21-8c79-48e4-8d37-bf2490962fef"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""LaunchAndFloat"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""6bc10113-9b50-49e9-ae8e-247cb34252c6"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""LaunchAndFloat"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""40f8a347-e395-476d-abec-ebc0c6c7928f"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""LaunchAndFloat"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""6a0ae448-45d4-436d-be3f-2ef0227e2cc5"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""LaunchAndFloat"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""7b7c3e00-9386-4bb0-8b0e-8fcbe3291576"",
+                    ""path"": ""OneModifier(overrideModifiersNeedToBePressedFirst=true)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LaunchAndCrash"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""3833e779-03fc-47a0-bfa2-49fa5d3ebfcc"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""LaunchAndCrash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""a5020fbe-5249-4ce1-97e6-3704b3969f6a"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""LaunchAndCrash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""0bc99ae1-aa43-48b6-97cd-acd4920fb25c"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""LaunchAndCrash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""5ae130b4-be96-40cc-8951-9632be210766"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""LaunchAndCrash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""8b9e3836-0436-4b45-8212-df6fab135c55"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""LaunchAndCrash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""188ffaa7-f6ca-433f-806c-afe793ca6383"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""LaunchAndCrash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -921,11 +1146,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_PrimaryAttack = m_Player.FindAction("PrimaryAttack", throwIfNotFound: true);
-        m_Player_SecondaryAttack = m_Player.FindAction("SecondaryAttack", throwIfNotFound: true);
+        m_Player_MainAttack = m_Player.FindAction("MainAttack", throwIfNotFound: true);
+        m_Player_SpecialAttack = m_Player.FindAction("SpecialAttack", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Shield = m_Player.FindAction("Shield", throwIfNotFound: true);
         m_Player_TempDash = m_Player.FindAction("TempDash", throwIfNotFound: true);
+        m_Player_Launch = m_Player.FindAction("Launch", throwIfNotFound: true);
+        m_Player_LaunchAndFloat = m_Player.FindAction("LaunchAndFloat", throwIfNotFound: true);
+        m_Player_LaunchAndCrash = m_Player.FindAction("LaunchAndCrash", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1006,21 +1234,27 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_PrimaryAttack;
-    private readonly InputAction m_Player_SecondaryAttack;
+    private readonly InputAction m_Player_MainAttack;
+    private readonly InputAction m_Player_SpecialAttack;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Shield;
     private readonly InputAction m_Player_TempDash;
+    private readonly InputAction m_Player_Launch;
+    private readonly InputAction m_Player_LaunchAndFloat;
+    private readonly InputAction m_Player_LaunchAndCrash;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @PrimaryAttack => m_Wrapper.m_Player_PrimaryAttack;
-        public InputAction @SecondaryAttack => m_Wrapper.m_Player_SecondaryAttack;
+        public InputAction @MainAttack => m_Wrapper.m_Player_MainAttack;
+        public InputAction @SpecialAttack => m_Wrapper.m_Player_SpecialAttack;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Shield => m_Wrapper.m_Player_Shield;
         public InputAction @TempDash => m_Wrapper.m_Player_TempDash;
+        public InputAction @Launch => m_Wrapper.m_Player_Launch;
+        public InputAction @LaunchAndFloat => m_Wrapper.m_Player_LaunchAndFloat;
+        public InputAction @LaunchAndCrash => m_Wrapper.m_Player_LaunchAndCrash;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1033,12 +1267,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @PrimaryAttack.started += instance.OnPrimaryAttack;
-            @PrimaryAttack.performed += instance.OnPrimaryAttack;
-            @PrimaryAttack.canceled += instance.OnPrimaryAttack;
-            @SecondaryAttack.started += instance.OnSecondaryAttack;
-            @SecondaryAttack.performed += instance.OnSecondaryAttack;
-            @SecondaryAttack.canceled += instance.OnSecondaryAttack;
+            @MainAttack.started += instance.OnMainAttack;
+            @MainAttack.performed += instance.OnMainAttack;
+            @MainAttack.canceled += instance.OnMainAttack;
+            @SpecialAttack.started += instance.OnSpecialAttack;
+            @SpecialAttack.performed += instance.OnSpecialAttack;
+            @SpecialAttack.canceled += instance.OnSpecialAttack;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -1048,6 +1282,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @TempDash.started += instance.OnTempDash;
             @TempDash.performed += instance.OnTempDash;
             @TempDash.canceled += instance.OnTempDash;
+            @Launch.started += instance.OnLaunch;
+            @Launch.performed += instance.OnLaunch;
+            @Launch.canceled += instance.OnLaunch;
+            @LaunchAndFloat.started += instance.OnLaunchAndFloat;
+            @LaunchAndFloat.performed += instance.OnLaunchAndFloat;
+            @LaunchAndFloat.canceled += instance.OnLaunchAndFloat;
+            @LaunchAndCrash.started += instance.OnLaunchAndCrash;
+            @LaunchAndCrash.performed += instance.OnLaunchAndCrash;
+            @LaunchAndCrash.canceled += instance.OnLaunchAndCrash;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1055,12 +1298,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @PrimaryAttack.started -= instance.OnPrimaryAttack;
-            @PrimaryAttack.performed -= instance.OnPrimaryAttack;
-            @PrimaryAttack.canceled -= instance.OnPrimaryAttack;
-            @SecondaryAttack.started -= instance.OnSecondaryAttack;
-            @SecondaryAttack.performed -= instance.OnSecondaryAttack;
-            @SecondaryAttack.canceled -= instance.OnSecondaryAttack;
+            @MainAttack.started -= instance.OnMainAttack;
+            @MainAttack.performed -= instance.OnMainAttack;
+            @MainAttack.canceled -= instance.OnMainAttack;
+            @SpecialAttack.started -= instance.OnSpecialAttack;
+            @SpecialAttack.performed -= instance.OnSpecialAttack;
+            @SpecialAttack.canceled -= instance.OnSpecialAttack;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -1070,6 +1313,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @TempDash.started -= instance.OnTempDash;
             @TempDash.performed -= instance.OnTempDash;
             @TempDash.canceled -= instance.OnTempDash;
+            @Launch.started -= instance.OnLaunch;
+            @Launch.performed -= instance.OnLaunch;
+            @Launch.canceled -= instance.OnLaunch;
+            @LaunchAndFloat.started -= instance.OnLaunchAndFloat;
+            @LaunchAndFloat.performed -= instance.OnLaunchAndFloat;
+            @LaunchAndFloat.canceled -= instance.OnLaunchAndFloat;
+            @LaunchAndCrash.started -= instance.OnLaunchAndCrash;
+            @LaunchAndCrash.performed -= instance.OnLaunchAndCrash;
+            @LaunchAndCrash.canceled -= instance.OnLaunchAndCrash;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1253,11 +1505,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnPrimaryAttack(InputAction.CallbackContext context);
-        void OnSecondaryAttack(InputAction.CallbackContext context);
+        void OnMainAttack(InputAction.CallbackContext context);
+        void OnSpecialAttack(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnShield(InputAction.CallbackContext context);
         void OnTempDash(InputAction.CallbackContext context);
+        void OnLaunch(InputAction.CallbackContext context);
+        void OnLaunchAndFloat(InputAction.CallbackContext context);
+        void OnLaunchAndCrash(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

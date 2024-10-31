@@ -1,4 +1,4 @@
-﻿namespace Smash.Player.StructsAndEnums
+﻿namespace Smash.StructsAndEnums
 {
 	public enum CastDirection
 	{
