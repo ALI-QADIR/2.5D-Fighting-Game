@@ -38,7 +38,7 @@ namespace Smash.Player
 		private bool m_isLaunching;
 		private Vector3 m_velocity, m_savedVelocity;
 
-		private LaunchType m_launchType;
+		private FallType m_fallType;
 		
 		private Transform m_tr;
 		private StateMachine m_stateMachine;
@@ -115,6 +115,34 @@ namespace Smash.Player
 
 		#region Input
 
+		public void HandleUpInput()
+		{
+			 // if (CurrentState is Ledge)
+			 // {
+				//  climb up
+				//  return;
+			 // }
+			 // else if (CurrentState is WallSlide)
+			 // {
+				//  wall jump
+				//  return;
+			 // }
+			HandleJumpInput();
+		}
+
+		public void HandleDownInput()
+		{
+			if (m_motor.IsGrounded())
+			{
+				// pass through platform
+				return;
+			}
+			if (CurrentState is Falling or FloatingFall or Rising or Dash)
+			{
+				m_fallType = FallType.Crash;
+			}
+		}
+
 		public void HandleJumpInput()
 		{
 			if (m_numberOfJumps <= 0)
@@ -141,7 +169,7 @@ namespace Smash.Player
 
 		public void HandleDashInput()
 		{
-			if (m_numberOfDashes <= 0 || Direction == Vector3.zero) return;
+			if (m_numberOfDashes <= 0 || Direction == Vector3.zero || CurrentState is CrashingFall) return;
 			OnDash?.Invoke(true);
 			if (CurrentState is Coyote) return;
 			m_numberOfDashes--;
@@ -153,7 +181,7 @@ namespace Smash.Player
 			if (m_isLaunching) return;
 			m_isLaunching = true;
 			m_numberOfJumps = 0;
-			m_launchType = LaunchType.Normal;
+			m_fallType = FallType.Normal;
 			HandleLaunch();
 		}
 		
@@ -162,7 +190,7 @@ namespace Smash.Player
 			if (m_isLaunching) return;
 			m_isLaunching = true;
 			m_numberOfJumps = 0;
-			m_launchType = LaunchType.Crash;
+			m_fallType = FallType.Crash;
 			HandleLaunch();
 		}
 
@@ -171,7 +199,7 @@ namespace Smash.Player
 			if (m_isLaunching) return;
 			m_isLaunching = true;
 			m_numberOfJumps = 0;
-			m_launchType = LaunchType.Float;
+			m_fallType = FallType.Float;
 			HandleLaunch();
 		}
 		
@@ -199,7 +227,7 @@ namespace Smash.Player
 			RemoveVerticalVelocity();
 			m_isJumping = false;
 			m_isLaunching = false;
-			m_launchType = LaunchType.None;
+			m_fallType = FallType.None;
 
 			HandleJumpBuffer();
 		}
@@ -249,7 +277,6 @@ namespace Smash.Player
 
 		public void SetFalling()
 		{
-			if (m_isJumping) return;
 			m_fallSpeed = m_maxFallSpeed;
 			m_speed = m_properties.AirSpeed;
 		}
@@ -275,9 +302,9 @@ namespace Smash.Player
 			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.up) < 0f && !m_motor.IsGrounded();
 		public bool IsMoving() => 
 			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.right) != 0f && m_motor.IsGrounded(); 
-		public bool IsNormalFall() => m_launchType is LaunchType.Normal or LaunchType.None;
-		public bool IsFloatingFall() => m_launchType == LaunchType.Float;
-		public bool IsCrashingFall() => m_launchType == LaunchType.Crash;
+		public bool IsNormalFall() => m_fallType is FallType.Normal or FallType.None;
+		public bool IsFloatingFall() => m_fallType == FallType.Float;
+		public bool IsCrashingFall() => m_fallType == FallType.Crash;
 		public bool IsGroundTooSteep() => m_motor.IsGroundTooSteep();
 
 		#endregion Public Methods
@@ -374,7 +401,7 @@ namespace Smash.Player
 		private void AddAnyTransition(IState to, IPredicate condition) => m_stateMachine.AddAnyTransition(to, condition);
 		
 		#endregion Private Methods
-		private enum LaunchType { Normal, Crash, Float, None }
+		private enum FallType { Normal, Crash, Float, None }
 	}
 	
 }

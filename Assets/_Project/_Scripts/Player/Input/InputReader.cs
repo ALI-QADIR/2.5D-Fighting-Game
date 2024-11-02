@@ -1,3 +1,4 @@
+using TripleA.Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,38 +17,64 @@ namespace Smash.Player.Input
 
         private void OnEnable()
         {
-            m_input.Player.Move.performed += OnMove;
-            m_input.Player.Move.canceled += OnMove;
+            m_input.Player.Horizontal.performed += OnHorizontal;
+            m_input.Player.Horizontal.canceled += OnHorizontal;
+            
+            
+            m_input.Player.Up.performed += OnUp;
+            m_input.Player.Down.performed += OnDown;
+            
             m_input.Player.MainAttack.performed += OnMainAttack;
             m_input.Player.SpecialAttack.performed += OnSpecialAttack;
+            
             m_input.Player.Jump.performed += OnJump;
             m_input.Player.TempDash.performed += OnDash;
+            
             m_input.Player.Shield.performed += OnShield;
+            
             m_input.Player.Launch.performed += Launch;
             m_input.Player.LaunchAndCrash.performed += LaunchAndCrash;
             m_input.Player.LaunchAndFloat.performed += LaunchAndFloat;
+            
             m_input.Player.Enable();
         }
 
         private void OnDisable()
         {
-            m_input.Player.Move.performed -= OnMove;
-            m_input.Player.Move.canceled -= OnMove;
+            m_input.Player.Horizontal.performed -= OnHorizontal;
+            m_input.Player.Horizontal.canceled -= OnHorizontal;
+            
+            m_input.Player.Up.performed -= OnUp;
+            m_input.Player.Down.performed -= OnDown;
+            
             m_input.Player.MainAttack.performed -= OnMainAttack;
             m_input.Player.SpecialAttack.performed -= OnSpecialAttack;
+            
             m_input.Player.Jump.performed -= OnJump;
             m_input.Player.TempDash.performed -= OnDash;
+            
             m_input.Player.Shield.performed -= OnShield;
+            
             m_input.Player.Launch.performed -= Launch;
             m_input.Player.LaunchAndCrash.performed -= LaunchAndCrash;
             m_input.Player.LaunchAndFloat.performed -= LaunchAndFloat;
+            
             m_input.Player.Disable();
         }
 
-        private void OnMove(InputAction.CallbackContext context)
+        private void OnHorizontal(InputAction.CallbackContext context)
         {
-            m_controller.Direction = context.ReadValue<Vector2>();
-            // Debug.Log(context.ReadValue<Vector2>());
+            m_controller.Direction = Vector3.zero.With(x: context.ReadValue<float>());
+        }
+
+        private void OnUp(InputAction.CallbackContext context)
+        {
+            m_controller.HandleUpInput();
+        }
+
+        private void OnDown(InputAction.CallbackContext context)
+        {
+            m_controller.HandleDownInput();
         }
 
         private void OnMainAttack(InputAction.CallbackContext context)
