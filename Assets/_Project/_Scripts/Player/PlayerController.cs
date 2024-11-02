@@ -4,6 +4,7 @@ using TripleA.Extensions;
 using TripleA.FSM;
 using TripleA.ImprovedTimer.Timers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Smash.Player
 {
@@ -15,6 +16,7 @@ namespace Smash.Player
 		[Header("References")]
 		[SerializeField] private PlayerMotor m_motor;
 		[SerializeField] private PlayerPropertiesSO m_properties;
+		[FormerlySerializedAs("m_rotationDuration")]
 		[Header("Control Values")]
 		[SerializeField] private float m_groundGravity = 200f;
 		[SerializeField] private float m_airGravity = 200f;
@@ -32,11 +34,14 @@ namespace Smash.Player
 		private float m_gravity;
 		private float m_fallSpeed;
 		private float m_acceleration;
+		private float m_elapsedTime;
+		private float m_lookCompletion;
 		private int m_numberOfJumps;
 		private int m_numberOfDashes;
 		private bool m_isJumping;
 		private bool m_isLaunching;
 		private Vector3 m_velocity, m_savedVelocity;
+		private Quaternion m_savedRotation, m_targetRotation;
 
 		private FallType m_fallType;
 		
@@ -54,6 +59,7 @@ namespace Smash.Player
 		#region Properties
 		
 		public float CoyoteTime => m_coyoteTime;
+		public float TimeToRotate => m_properties.TimeToRotate;
 		public float DashDuration => m_properties.DashDuration; 
 		public float ApexTime => m_apexTime; 
 		public Vector3 Direction { get; set; }
@@ -61,7 +67,8 @@ namespace Smash.Player
 
 		#endregion
 		
-		public event Action<bool> OnDash; 
+		public event Action<bool> OnDash = delegate { }; 
+		public event Action OnRotate = delegate { }; 
 		
 		#region Unity Methods
 
@@ -141,6 +148,15 @@ namespace Smash.Player
 			{
 				m_fallType = FallType.Crash;
 			}
+		}
+
+		public void Rotate(float angle)
+		{
+			if (angle == 0) return;
+			OnRotate?.Invoke();
+			float lookAngle = Mathf.Approximately(angle, -1.0f) ? 179f : 0f;
+			m_targetRotation = Quaternion.Euler(0f, lookAngle, 0f);
+			m_savedRotation = m_tr.rotation;
 		}
 
 		public void HandleJumpInput()
@@ -228,8 +244,14 @@ namespace Smash.Player
 			m_isJumping = false;
 			m_isLaunching = false;
 			m_fallType = FallType.None;
+			if (m_tr.rotation != m_targetRotation) OnRotate?.Invoke();
 
 			HandleJumpBuffer();
+		}
+		
+		public void HandleRotation(float lookCompletion)
+		{
+			m_tr.rotation = Quaternion.Slerp(m_savedRotation, m_targetRotation, lookCompletion);
 		}
 
 		public void SetDashStart()
@@ -338,8 +360,8 @@ namespace Smash.Player
 
 		private void HandleVelocity()
 		{
-			Vector3 horizontalVelocity = Vector3Math.ExtractDotVector(m_savedVelocity, m_tr.right);
 			Vector3 verticalVelocity = Vector3Math.ExtractDotVector(m_savedVelocity, m_tr.up);
+			Vector3 horizontalVelocity = Vector3Math.RemoveDotVector(m_savedVelocity, m_tr.up);
 			
 			AdjustHorizontalVelocity(ref horizontalVelocity);
 			AdjustVerticalVelocity(ref verticalVelocity);

@@ -19,7 +19,7 @@ namespace Smash.Player.Input
         {
             m_input.Player.Horizontal.performed += OnHorizontal;
             m_input.Player.Horizontal.canceled += OnHorizontal;
-            
+            m_input.Player.Horizontal.started += OnLook;
             
             m_input.Player.Up.performed += OnUp;
             m_input.Player.Down.performed += OnDown;
@@ -43,6 +43,7 @@ namespace Smash.Player.Input
         {
             m_input.Player.Horizontal.performed -= OnHorizontal;
             m_input.Player.Horizontal.canceled -= OnHorizontal;
+            m_input.Player.Horizontal.started -= OnLook;
             
             m_input.Player.Up.performed -= OnUp;
             m_input.Player.Down.performed -= OnDown;
@@ -65,6 +66,11 @@ namespace Smash.Player.Input
         private void OnHorizontal(InputAction.CallbackContext context)
         {
             m_controller.Direction = Vector3.zero.With(x: context.ReadValue<float>());
+        }
+        
+        private void OnLook(InputAction.CallbackContext context)
+        {
+            m_controller.Rotate(context.ReadValue<float>());
         }
 
         private void OnUp(InputAction.CallbackContext context)

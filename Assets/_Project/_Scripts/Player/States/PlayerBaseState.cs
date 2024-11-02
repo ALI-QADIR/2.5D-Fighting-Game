@@ -1,11 +1,10 @@
 using TripleA.FSM;
-using UnityEngine;
 
 namespace Smash.Player.States
 {
     public class PlayerBaseState : BaseState
     {
-        protected PlayerController _controller;
+        protected readonly PlayerController _controller;
         
         protected PlayerBaseState(PlayerController controller)
         {

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Smash.Player
 {
@@ -7,6 +6,7 @@ namespace Smash.Player
     public class PlayerPropertiesSO : ScriptableObject
     {
         #region Fields
+        [SerializeField] private float m_timeToRotate = 0.1f;
         [Header("Ground")]
         [SerializeField] private float m_groundSpeed = 10f;
 	    [SerializeField] private float m_groundAcceleration = 10f;
@@ -20,7 +20,6 @@ namespace Smash.Player
         [SerializeField] private float m_dashSpeed = 30f;
         [SerializeField] private float m_dashDuration = 0.5f;
         [SerializeField] private int m_numberOfDashes = 1;
-        [FormerlySerializedAs("m_launchForce")]
         [Header("Launch")]
         [SerializeField] private float m_launchPower = 100f;
         [SerializeField] private float m_crashSpeed = 100f;
@@ -44,6 +43,7 @@ namespace Smash.Player
         public float CrashSpeed => m_crashSpeed;
         public float FloatFallSpeed => m_floatFallSpeed;
         public float FloatControlRatio => m_floatControlRatio;
+        public float TimeToRotate => m_timeToRotate;
 
         #endregion
     }

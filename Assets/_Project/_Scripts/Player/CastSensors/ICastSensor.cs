@@ -1,7 +1,7 @@
 ﻿using Smash.StructsAndEnums;
 using UnityEngine;
 
-namespace Smash.Player
+namespace Smash.Player.CastSensors
 {
 	public interface ICastSensor
 	{

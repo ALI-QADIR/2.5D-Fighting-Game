@@ -1,10 +1,12 @@
 ﻿using Smash.StructsAndEnums;
 using UnityEngine;
 
-namespace Smash.Player
+namespace Smash.Player.CastSensors
 {
 	public class CapsuleCastSensor : ICastSensor
 	{
+		public const float K_SAFETY_OFFSET = 0.015f;
+		
 		public float castDistance;
 		public LayerMask layerMask = 255;
 
@@ -16,7 +18,6 @@ namespace Smash.Player
 
 		private float m_playerHeight;
 		private float m_playerRadius;
-		private const float k_safetyOffset = 0.001f;
 
 		private readonly Transform m_tr;
 
@@ -33,8 +34,8 @@ namespace Smash.Player
 			m_playerHeight = playerHeight;
 			m_playerRadius = playerRadius;
 
-			m_bottom = Vector3.zero + m_tr.up * (m_playerRadius + k_safetyOffset);
-			m_top = Vector3.zero + (m_playerHeight - (m_playerRadius + k_safetyOffset)) * m_tr.up;
+			m_bottom = Vector3.zero + m_tr.up * (m_playerRadius + K_SAFETY_OFFSET);
+			m_top = Vector3.zero + (m_playerHeight - (m_playerRadius + K_SAFETY_OFFSET)) * m_tr.up;
 		}
 
 		public void Cast()
@@ -91,8 +92,8 @@ namespace Smash.Player
 			m_center = m_tr.InverseTransformPoint(castOrigin);
 			float halfHeight = m_playerHeight * 0.5f;
 			float sphereCenterDistance = halfHeight - m_playerRadius;
-			m_bottom = (m_center - sphereCenterDistance * m_tr.up) * (1f + k_safetyOffset);
-			m_top = (m_center + sphereCenterDistance * m_tr.up) * (1f + k_safetyOffset);
+			m_bottom = (m_center - sphereCenterDistance * m_tr.up) * (1f + K_SAFETY_OFFSET);
+			m_top = (m_center + sphereCenterDistance * m_tr.up) * (1f + K_SAFETY_OFFSET);
 		}
 
 		public Vector3 GetCastDirection() => m_rayCastDirection;
