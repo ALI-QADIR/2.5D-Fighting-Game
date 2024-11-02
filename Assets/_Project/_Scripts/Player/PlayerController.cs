@@ -143,9 +143,7 @@ namespace Smash.Player
 		{
 			if (m_numberOfDashes <= 0 || Direction == Vector3.zero) return;
 			OnDash?.Invoke(true);
-			Debug.Log("BBBBBBBB");
 			if (CurrentState is Coyote) return;
-			Debug.Log("AAAAAAA");
 			m_numberOfDashes--;
 		}
 
@@ -201,6 +199,7 @@ namespace Smash.Player
 			RemoveVerticalVelocity();
 			m_isJumping = false;
 			m_isLaunching = false;
+			m_launchType = LaunchType.None;
 
 			HandleJumpBuffer();
 		}
@@ -251,26 +250,21 @@ namespace Smash.Player
 		public void SetFalling()
 		{
 			if (m_isJumping) return;
-			switch (m_launchType)
-			{
-				case LaunchType.Normal:
-					m_fallSpeed = m_maxFallSpeed;
-					m_speed = m_properties.AirSpeed;
-					break;
-				case LaunchType.Crash:
-					m_fallSpeed = m_properties.CrashSpeed;
-					m_gravity = 1000f;
-					m_speed = 0f;
-					break;
-				case LaunchType.Float:
-					m_fallSpeed = m_properties.FloatFallSpeed;
-					m_speed = m_properties.AirSpeed * m_properties.FloatControlRatio;
-					break;
-				default:
-					m_fallSpeed = m_maxFallSpeed;
-					m_speed = m_properties.AirSpeed;
-					break;
-			}
+			m_fallSpeed = m_maxFallSpeed;
+			m_speed = m_properties.AirSpeed;
+		}
+
+		public void SetFloatingFall()
+		{
+			m_fallSpeed = m_properties.FloatFallSpeed;
+			m_speed = m_properties.AirSpeed * m_properties.FloatControlRatio;
+		}
+
+		public void SetCrashingFall()
+		{
+			m_fallSpeed = m_properties.CrashSpeed;
+			m_gravity = 1000f;
+			m_speed = 0f;
 		}
 
 		#endregion State Setters
@@ -281,6 +275,9 @@ namespace Smash.Player
 			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.up) < 0f && !m_motor.IsGrounded();
 		public bool IsMoving() => 
 			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.right) != 0f && m_motor.IsGrounded(); 
+		public bool IsNormalFall() => m_launchType is LaunchType.Normal or LaunchType.None;
+		public bool IsFloatingFall() => m_launchType == LaunchType.Float;
+		public bool IsCrashingFall() => m_launchType == LaunchType.Crash;
 		public bool IsGroundTooSteep() => m_motor.IsGroundTooSteep();
 
 		#endregion Public Methods
@@ -377,7 +374,7 @@ namespace Smash.Player
 		private void AddAnyTransition(IState to, IPredicate condition) => m_stateMachine.AddAnyTransition(to, condition);
 		
 		#endregion Private Methods
-		private enum LaunchType { Normal, Crash, Float }
+		private enum LaunchType { Normal, Crash, Float, None }
 	}
 	
 }

@@ -42,6 +42,33 @@ namespace Smash.Player.States
 			_controller.SetFalling();
 		}
 	}
+	public class FloatingFall : PlayerBaseState
+	{
+		public FloatingFall(PlayerController controller) : base(controller)
+		{
+		}
+
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_controller.CurrentState = this;
+			_controller.SetFloatingFall();
+		}
+	}
+	
+	public class CrashingFall : PlayerBaseState
+	{
+		public CrashingFall(PlayerController controller) : base(controller)
+		{
+		}
+
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_controller.CurrentState = this;
+			_controller.SetCrashingFall();
+		}
+	}
 	
 	public class Coyote : PlayerBaseState
 	{

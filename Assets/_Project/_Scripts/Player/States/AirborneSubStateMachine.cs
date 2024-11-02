@@ -8,6 +8,8 @@ namespace Smash.Player.States
 		private AirExit m_airExit;
 		private Rising m_rising;
 		private Falling m_falling;
+		private FloatingFall m_floatingFall;
+		private CrashingFall m_crashingFall;
 		private Coyote m_coyote;
 		private Dash m_dash;
 		private Apex m_apex;
@@ -21,6 +23,8 @@ namespace Smash.Player.States
 		private FuncPredicate m_risingToDashCondition;
 		
 		private FuncPredicate m_apexToFallingCondition;
+		private FuncPredicate m_apexToFloatingCondition;
+		private FuncPredicate m_apexToCrashingCondition;
 		private FuncPredicate m_apexToRisingCondition;
 		private FuncPredicate m_apexToDashCondition;
 		
@@ -99,6 +103,8 @@ namespace Smash.Player.States
 			m_airExit = new AirExit(_controller);
 			m_rising = new Rising(_controller);
 			m_falling = new Falling(_controller);
+			m_floatingFall = new FloatingFall(_controller);
+			m_crashingFall = new CrashingFall(_controller);
 			m_coyote = new Coyote(_controller);
 			m_dash = new Dash(_controller, _controller.DashDuration);
 			m_apex = new Apex(_controller);
@@ -118,7 +124,11 @@ namespace Smash.Player.States
 			m_apexToDashCondition = new FuncPredicate(Predicate<Apex>);
 			m_apexToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Apex && _controller.IsRising());
 			m_apexToFallingCondition = new FuncPredicate(() => 
-				_stateMachine.CurrentState is Apex && m_apex.ElapsedTime >= _controller.ApexTime);
+				_stateMachine.CurrentState is Apex && m_apex.ElapsedTime >= _controller.ApexTime && _controller.IsNormalFall());
+			m_apexToFloatingCondition = new FuncPredicate(() => 
+				_stateMachine.CurrentState is Apex && m_apex.ElapsedTime >= _controller.ApexTime && _controller.IsFloatingFall());
+			m_apexToCrashingCondition = new FuncPredicate(() => 
+				_stateMachine.CurrentState is Apex && m_apex.ElapsedTime >= _controller.ApexTime && _controller.IsCrashingFall());
 			
 			m_dashToCoyoteCondition = new FuncPredicate(() => 
 				_stateMachine.CurrentState is Dash && m_dash.IsFinished);
@@ -143,6 +153,8 @@ namespace Smash.Player.States
 			AddTransition(m_apex, m_dash, m_apexToDashCondition);
 			AddTransition(m_apex, m_rising, m_apexToRisingCondition);
 			AddTransition(m_apex, m_falling, m_apexToFallingCondition);
+			AddTransition(m_apex, m_floatingFall, m_apexToFloatingCondition);
+			AddTransition(m_apex, m_crashingFall, m_apexToCrashingCondition);
 			
 			AddTransition(m_dash, m_coyote, m_dashToCoyoteCondition);
 			
