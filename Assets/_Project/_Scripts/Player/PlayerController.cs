@@ -15,6 +15,7 @@ namespace Smash.Player
 
 		[Header("References")]
 		[SerializeField] private PlayerMotor m_motor;
+		[SerializeField] private LedgeDetector m_ledgeDetector;
 		[SerializeField] private PlayerPropertiesSO m_properties;
 		[FormerlySerializedAs("m_rotationDuration")]
 		[Header("Control Values")]
@@ -76,6 +77,7 @@ namespace Smash.Player
 		{
 			m_tr = transform;
 			m_motor ??= GetComponent<PlayerMotor>();
+			m_ledgeDetector ??= GetComponent<LedgeDetector>();
 
 			m_speed = m_properties.GroundSpeed;
 			m_gravity = m_airGravity;
@@ -108,10 +110,12 @@ namespace Smash.Player
 			// Todo: Stairs??
 			// Todo: Wall Clipping
 			m_motor.CheckForGround();
+			m_ledgeDetector.CheckForLedge();
 
 			m_motor.SetExtendedSensor(m_motor.IsGrounded());
 			
 			HandleVelocity();
+			HandleLedge();
 			
 			m_motor.SetVelocity(m_savedVelocity);
 		}
@@ -367,6 +371,13 @@ namespace Smash.Player
 			AdjustVerticalVelocity(ref verticalVelocity);
 			
 			m_savedVelocity = horizontalVelocity + verticalVelocity;
+		}
+
+		private void HandleLedge()
+		{
+			if (!m_ledgeDetector.IsLedgeDetected()) return;
+			m_savedVelocity = Vector3.zero;
+			m_ledgeDetector.SetOnLedge();
 		}
 
 		private void AdjustVerticalVelocity(ref Vector3 verticalVelocity)

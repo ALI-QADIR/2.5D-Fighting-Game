@@ -92,9 +92,9 @@ namespace Smash.Player
 
 	    private void SetUp()
 	    {
-		    m_tr = transform;
-		    m_rb = GetComponent<Rigidbody>();
-		    m_col = GetComponent<CapsuleCollider>();
+		    m_tr ??= transform;
+		    m_rb ??= GetComponent<Rigidbody>();
+		    m_col ??= GetComponent<CapsuleCollider>();
 
 		    m_rb.freezeRotation = true;
 		    m_rb.useGravity = false;
