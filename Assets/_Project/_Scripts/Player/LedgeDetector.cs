@@ -1,5 +1,4 @@
-﻿using System;
-using Smash.Player.CastSensors;
+﻿using Smash.Player.CastSensors;
 using Smash.StructsAndEnums;
 using TripleA.Extensions;
 using UnityEngine;
@@ -42,10 +41,17 @@ namespace Smash.Player
 
 		public void SetOnLedge()
 		{
-			// Todo: Fix position
-			Vector3 position = m_sensor.GetHitPoint().Subtract(y: m_height);
+			// fix positioning
+			Vector3 position = m_sensor.GetHitPoint();
+			position -= m_tr.right * m_radius;
+			position -= m_tr.up * m_height;
 			m_tr.position = position;
-			Debug.Break();
+		}
+
+		public void ResetSensorHits()
+		{
+			m_isLedgeDetected = false;
+			m_sensor.ResetHits();
 		}
 
 		#region Private Methods

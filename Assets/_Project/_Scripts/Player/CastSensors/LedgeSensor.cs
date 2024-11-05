@@ -35,10 +35,9 @@ namespace Smash.Player.CastSensors
 		
 		public void Cast()
 		{
+			ResetHits();
 			m_worldEnd = m_tr.TransformPoint(m_end);
 			m_worldStart = m_tr.TransformPoint(m_start);
-			m_verticalHitInfo = default;
-			m_horizontalHitInfo = default;
 			Physics.Linecast(
 				start: m_worldStart,
 				end: m_worldEnd,
@@ -54,21 +53,6 @@ namespace Smash.Player.CastSensors
 				layerMask: layerMask, 
 				hitInfo: out m_horizontalHitInfo,
 				queryTriggerInteraction: QueryTriggerInteraction.Ignore);
-
-			/* Debug Info
-			 if (HasDetectedHit())
-				Debug.Log($"Hit point: {m_hitInfo.point}\n" +
-					      $"Current Transform: {m_tr.position}\n" +
-					      $"Hit Distance: {m_hitInfo.distance}\n" +
-					      $"b:{m_bottom} ,c: {m_center}, t: {m_top}\n" +
-					      $"World Bottom: {m_worldBottom}\n" +
-					      $"World Top: {m_worldTop}\n" +
-					      $"bottom: {m_worldBottom.Add(y: -m_playerRadius)}\n" +
-					      $"top: {m_worldTop.Add(y: m_playerRadius)}\n" +
-					      $"World Direction: {m_worldDirection}\n" +
-					      $"Cast Direction: {m_rayCastDirection}\n" +
-					      $"Cast Distance: {castDistance}\n");
-			*/
 		}
 
 		public bool HasDetectedHit() => m_horizontalHitInfo.collider != null;
@@ -106,6 +90,12 @@ namespace Smash.Player.CastSensors
 				CastDirection.Right => -m_tr.right,
 				_ => Vector3.one
 			};
+		}
+
+		public void ResetHits()
+		{
+			m_verticalHitInfo = default;
+			m_horizontalHitInfo = default;
 		}
 	}
 }

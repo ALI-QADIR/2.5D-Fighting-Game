@@ -30,10 +30,10 @@ namespace Smash.Player
 		[SerializeField] private float m_apexTime = 0.05f;
 		[SerializeField, Range(0,1)] private float m_apexSpeedBoostRatio = 0.05f;
 
-		private float m_speed;
+		private float m_currentMoveSpeed;
 		private float m_jumpPower;
 		private float m_gravity;
-		private float m_fallSpeed;
+		private float m_currentFallSpeed;
 		private float m_acceleration;
 		private float m_elapsedTime;
 		private float m_lookCompletion;
@@ -64,7 +64,7 @@ namespace Smash.Player
 		public float DashDuration => m_properties.DashDuration; 
 		public float ApexTime => m_apexTime; 
 		public Vector3 Direction { get; set; }
-		public IState CurrentState{ get; set; }
+		public IState CurrentState { get; set; }
 
 		#endregion
 		
@@ -79,9 +79,9 @@ namespace Smash.Player
 			m_motor ??= GetComponent<PlayerMotor>();
 			m_ledgeDetector ??= GetComponent<LedgeDetector>();
 
-			m_speed = m_properties.GroundSpeed;
+			m_currentMoveSpeed = m_properties.GroundSpeed;
 			m_gravity = m_airGravity;
-			m_fallSpeed = m_maxFallSpeed;
+			m_currentFallSpeed = m_maxFallSpeed;
 			m_acceleration = m_properties.GroundAcceleration;
 			m_numberOfJumps = m_properties.NumberOfJumps;
 			m_jumpPower = m_properties.JumpPower;
@@ -103,19 +103,17 @@ namespace Smash.Player
 		private void FixedUpdate()
 		{
 			m_stateMachine.OnFixedUpdate();
-			// Todo: Ledge Grab
 			// Todo: Wall Jump
 			// Todo: One-Way Platforms
 			// Todo: Slopes??
 			// Todo: Stairs??
 			// Todo: Wall Clipping
+			CheckForLedge();
 			m_motor.CheckForGround();
-			m_ledgeDetector.CheckForLedge();
 
 			m_motor.SetExtendedSensor(m_motor.IsGrounded());
 			
 			HandleVelocity();
-			HandleLedge();
 			
 			m_motor.SetVelocity(m_savedVelocity);
 		}
@@ -128,11 +126,12 @@ namespace Smash.Player
 
 		public void HandleUpInput()
 		{
-			 // if (CurrentState is Ledge)
-			 // {
-				//  climb up
-				//  return;
-			 // }
+			if (CurrentState is Ledge)
+			{
+				// Todo : Climb
+				HandleJumpInput();
+				return;
+			}
 			 // else if (CurrentState is WallSlide)
 			 // {
 				//  wall jump
@@ -149,6 +148,11 @@ namespace Smash.Player
 				return;
 			}
 			if (CurrentState is Falling or FloatingFall or Rising or Dash)
+			{
+				m_fallType = FallType.Crash;
+				return;
+			}
+			if (CurrentState is Ledge)
 			{
 				m_fallType = FallType.Crash;
 			}
@@ -229,21 +233,21 @@ namespace Smash.Player
 
 		public void SetInAir()
 		{
-			m_speed = m_isLaunching ? 0 : m_properties.AirSpeed;
+			m_currentMoveSpeed = m_isLaunching ? 0 : m_properties.AirSpeed;
 			m_numberOfDashes = m_properties.NumberOfDashes;
 			m_gravity = m_airGravity;
 			m_acceleration = m_properties.AirAcceleration;
-			m_fallSpeed = m_maxFallSpeed;
+			m_currentFallSpeed = m_maxFallSpeed;
 		}
 
 		public void SetOnGround()
 		{
 			m_numberOfJumps = m_properties.NumberOfJumps;
 			m_numberOfDashes = m_properties.NumberOfDashes;
-			m_speed = m_properties.GroundSpeed;
+			m_currentMoveSpeed = m_properties.GroundSpeed;
 			m_gravity = m_groundGravity;
 			m_acceleration = m_properties.GroundAcceleration;
-			m_fallSpeed = 0f;
+			m_currentFallSpeed = 0f;
 			RemoveVerticalVelocity();
 			m_isJumping = false;
 			m_isLaunching = false;
@@ -276,12 +280,12 @@ namespace Smash.Player
 			{
 				m_dashResetTimer.Start();
 				m_gravity = m_groundGravity;
-				m_speed = m_properties.GroundSpeed;
+				m_currentMoveSpeed = m_properties.GroundSpeed;
 			}
 			else
 			{
 				m_gravity = m_airGravity;
-				m_speed = m_properties.AirSpeed;
+				m_currentMoveSpeed = m_properties.AirSpeed;
 			}
 
 			HandleJumpBuffer();
@@ -291,33 +295,52 @@ namespace Smash.Player
 		{
 			if (isApex)
 			{
-				m_fallSpeed = 5f;
-				m_speed += m_apexSpeedBoostRatio * m_speed;
+				m_currentFallSpeed = 5f;
+				m_currentMoveSpeed += m_apexSpeedBoostRatio * m_currentMoveSpeed;
 			}
 			else
 			{
-				m_fallSpeed = m_maxFallSpeed;
-				m_speed = m_properties.AirSpeed;
+				m_currentFallSpeed = m_maxFallSpeed;
+				m_currentMoveSpeed = m_properties.AirSpeed;
 			}
 		}
 
 		public void SetFalling()
 		{
-			m_fallSpeed = m_maxFallSpeed;
-			m_speed = m_properties.AirSpeed;
+			m_currentFallSpeed = m_maxFallSpeed;
+			m_currentMoveSpeed = m_properties.AirSpeed;
 		}
 
 		public void SetFloatingFall()
 		{
-			m_fallSpeed = m_properties.FloatFallSpeed;
-			m_speed = m_properties.AirSpeed * m_properties.FloatControlRatio;
+			m_currentFallSpeed = m_properties.FloatFallSpeed;
+			m_currentMoveSpeed = m_properties.AirSpeed * m_properties.FloatControlRatio;
 		}
 
 		public void SetCrashingFall()
 		{
-			m_fallSpeed = m_properties.CrashSpeed;
+			m_currentFallSpeed = m_properties.CrashSpeed;
 			m_gravity = 1000f;
-			m_speed = 0f;
+			m_currentMoveSpeed = 0f;
+		}
+
+		public void SetOnLedge(bool isLedge)
+		{
+			if (isLedge)
+			{
+				RemoveVerticalVelocity();
+				m_fallType = FallType.Normal;
+				m_ledgeDetector.SetOnLedge();
+				m_currentFallSpeed = 0;
+				m_currentMoveSpeed = 0;
+				m_numberOfJumps = 1;
+				m_ledgeDetector.ResetSensorHits();
+			}
+			else
+			{
+				m_currentFallSpeed = m_maxFallSpeed;
+				m_numberOfDashes = 1;
+			}
 		}
 
 		#endregion State Setters
@@ -331,11 +354,18 @@ namespace Smash.Player
 		public bool IsNormalFall() => m_fallType is FallType.Normal or FallType.None;
 		public bool IsFloatingFall() => m_fallType == FallType.Float;
 		public bool IsCrashingFall() => m_fallType == FallType.Crash;
+		public bool IsLedgeGrab() => m_ledgeDetector.IsLedgeDetected();
 		public bool IsGroundTooSteep() => m_motor.IsGroundTooSteep();
 
 		#endregion Public Methods
 
 		#region Private Methods
+
+		private void CheckForLedge()
+		{
+			if (CurrentState is Falling or FloatingFall or Apex or Coyote)
+				m_ledgeDetector.CheckForLedge();
+		}
 
 		private void HandleJump()
 		{
@@ -373,16 +403,9 @@ namespace Smash.Player
 			m_savedVelocity = horizontalVelocity + verticalVelocity;
 		}
 
-		private void HandleLedge()
-		{
-			if (!m_ledgeDetector.IsLedgeDetected()) return;
-			m_savedVelocity = Vector3.zero;
-			m_ledgeDetector.SetOnLedge();
-		}
-
 		private void AdjustVerticalVelocity(ref Vector3 verticalVelocity)
 		{
-			verticalVelocity = Vector3.MoveTowards(verticalVelocity, m_tr.up * -m_fallSpeed,
+			verticalVelocity = Vector3.MoveTowards(verticalVelocity, m_tr.up * -m_currentFallSpeed,
 				m_gravity * Time.fixedDeltaTime);
 		}
 
@@ -397,7 +420,7 @@ namespace Smash.Player
 
 		private Vector3 GetMovementVelocity()
 		{
-			return Direction * m_speed;
+			return Direction * m_currentMoveSpeed;
 		}
 
 		private void RemoveVerticalVelocity()

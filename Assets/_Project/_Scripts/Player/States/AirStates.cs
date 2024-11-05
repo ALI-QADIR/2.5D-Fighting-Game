@@ -26,6 +26,7 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			_controller.CurrentState = this;
+			_controller.SetInAir();
 		}
 	}
 	
@@ -121,6 +122,26 @@ namespace Smash.Player.States
 			base.OnExit();
 			ElapsedTime = 0f;
 			_controller.SetApex(false);
+		}
+	}
+
+	public class Ledge : PlayerBaseState
+	{
+		public Ledge(PlayerController controller) : base(controller)
+		{
+		}
+
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_controller.CurrentState = this;
+			_controller.SetOnLedge(true);
+		}
+
+		public override void OnExit()
+		{
+			base.OnExit();
+			_controller.SetOnLedge(false);
 		}
 	}
     
