@@ -22,6 +22,8 @@ namespace Smash.Player
 		[SerializeField] private float m_groundGravity = 200f;
 		[SerializeField] private float m_airGravity = 200f;
 		[SerializeField] private float m_maxFallSpeed = 50f;
+		[SerializeField] private float m_climbUpSpeed = 37f;
+		[SerializeField] private float m_climbSideSpeed = 20f;
 		[Header("Timer Values")]
 		[SerializeField] private float m_jumpBufferTime = 0.1f;
 		[SerializeField] private float m_coyoteTime = 0.1f;
@@ -103,8 +105,8 @@ namespace Smash.Player
 		private void FixedUpdate()
 		{
 			m_stateMachine.OnFixedUpdate();
-			// Todo: Wall Jump
 			// Todo: One-Way Platforms
+			// Todo: Wall Jump
 			// Todo: Slopes??
 			// Todo: Stairs??
 			// Todo: Wall Clipping
@@ -129,7 +131,7 @@ namespace Smash.Player
 			if (CurrentState is Ledge)
 			{
 				// Todo : Climb
-				HandleJumpInput();
+				HandleClimb();
 				return;
 			}
 			 // else if (CurrentState is WallSlide)
@@ -201,7 +203,6 @@ namespace Smash.Player
 
 		public void HandleLaunchInput()
 		{
-			return; // for now
 			if (m_isLaunching) return;
 			m_isLaunching = true;
 			m_numberOfJumps = 0;
@@ -374,6 +375,14 @@ namespace Smash.Player
 			RemoveVerticalVelocity();
 			m_savedVelocity += verticalVelocity;
 			// Debug.Log(m_savedVelocity);
+		}
+
+		private void HandleClimb()
+		{
+			Vector3 verticalVelocity = m_tr.up * m_climbUpSpeed;
+			Vector3 horizontalVelocity = m_tr.right * m_climbSideSpeed;
+			RemoveVerticalVelocity();
+			m_savedVelocity = horizontalVelocity + verticalVelocity;
 		}
 
 		private void HandleLaunch()

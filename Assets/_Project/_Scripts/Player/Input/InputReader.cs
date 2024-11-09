@@ -102,17 +102,17 @@ namespace Smash.Player.Input
         
         private void Launch(InputAction.CallbackContext context)
         {
-            m_controller.HandleLaunchInput();
+            // m_controller.HandleLaunchInput();
         }
         
         private void LaunchAndCrash(InputAction.CallbackContext context)
         {
-            m_controller.HandleLaunchAndCrashInput();
+            // m_controller.HandleLaunchAndCrashInput();
         }
         
         private void LaunchAndFloat(InputAction.CallbackContext context)
         {
-            m_controller.HandleLaunchAndFloatInput();
+            // m_controller.HandleLaunchAndFloatInput();
         }
 
         private void OnJump(InputAction.CallbackContext context)
