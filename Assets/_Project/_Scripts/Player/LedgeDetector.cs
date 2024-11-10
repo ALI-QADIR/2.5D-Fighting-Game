@@ -17,7 +17,7 @@ namespace Smash.Player
 		private LedgeSensor m_sensor;
 		private Transform m_tr;
 		
-		private  int m_currentLayer;
+		private int m_currentLayer;
 		private bool m_isLedgeDetected;
 
 		private void Awake()

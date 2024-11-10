@@ -4,7 +4,6 @@ using TripleA.Extensions;
 using TripleA.FSM;
 using TripleA.ImprovedTimer.Timers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Smash.Player
 {
@@ -16,8 +15,8 @@ namespace Smash.Player
 		[Header("References")]
 		[SerializeField] private PlayerMotor m_motor;
 		[SerializeField] private LedgeDetector m_ledgeDetector;
+		[SerializeField] private CeilingDetector m_ceilingDetector;
 		[SerializeField] private PlayerPropertiesSO m_properties;
-		[FormerlySerializedAs("m_rotationDuration")]
 		[Header("Control Values")]
 		[SerializeField] private float m_groundGravity = 200f;
 		[SerializeField] private float m_airGravity = 200f;
@@ -111,6 +110,7 @@ namespace Smash.Player
 			// Todo: Stairs??
 			// Todo: Wall Clipping
 			CheckForLedge();
+			CheckForCeiling();
 			m_motor.CheckForGround();
 
 			m_motor.SetExtendedSensor(m_motor.IsGrounded());
@@ -130,7 +130,6 @@ namespace Smash.Player
 		{
 			if (CurrentState is Ledge)
 			{
-				// Todo : Climb
 				HandleClimb();
 				return;
 			}
@@ -366,6 +365,21 @@ namespace Smash.Player
 		{
 			if (CurrentState is Falling or FloatingFall or Apex or Coyote)
 				m_ledgeDetector.CheckForLedge();
+		}
+
+		private void CheckForCeiling()
+		{
+			if (CurrentState is not Rising) return;
+			
+			m_ceilingDetector.ResetSensorHits();
+			m_ceilingDetector.CheckForCeiling();
+			
+			if (!m_ceilingDetector.IsCeilingDetected()) return;
+			
+			Vector3 verticalVelocity =
+				Vector3.Min(Vector3.zero, Vector3Math.ExtractDotVector(m_savedVelocity, m_tr.up));
+			RemoveVerticalVelocity();
+			m_savedVelocity += verticalVelocity;
 		}
 
 		private void HandleJump()

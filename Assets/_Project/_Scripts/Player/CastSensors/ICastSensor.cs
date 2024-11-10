@@ -6,6 +6,7 @@ namespace Smash.Player.CastSensors
 	public interface ICastSensor
 	{
 		void Cast();
+		void ResetHits();
 		bool HasDetectedHit();
 		float GetHitDistance();
 		Vector3 GetHitNormal();

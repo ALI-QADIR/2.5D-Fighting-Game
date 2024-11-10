@@ -1191,6 +1191,7 @@ GameObject:
   - component: {fileID: 925529466}
   - component: {fileID: 925529470}
   - component: {fileID: 925529471}
+  - component: {fileID: 925529472}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -1207,7 +1208,7 @@ Transform:
   m_GameObject: {fileID: 925529464}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.51, y: 5.49, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1294,10 +1295,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_motor: {fileID: 925529466}
   m_ledgeDetector: {fileID: 925529471}
+  m_ceilingDetector: {fileID: 925529472}
   m_properties: {fileID: 11400000, guid: b269f71dd16356745947ddfe21ba67d5, type: 2}
   m_groundGravity: 10
   m_airGravity: 200
   m_maxFallSpeed: 50
+  m_climbUpSpeed: 37
+  m_climbSideSpeed: 20
   m_jumpBufferTime: 0.1
   m_coyoteTime: 0.3
   m_dashResetTime: 0.2
@@ -1333,7 +1337,21 @@ MonoBehaviour:
   m_lineHeight: 0.8
   m_upOffset: 0.3
   m_forwardOffset: 0.4
-  m_debug: 1
+  m_debug: 0
+--- !u!114 &925529472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925529464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ab5d8a666d4e648d2551313d101607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_height: 1.8
+  m_radius: 0.35
 --- !u!1001 &1038544692
 PrefabInstance:
   m_ObjectHideFlags: 0

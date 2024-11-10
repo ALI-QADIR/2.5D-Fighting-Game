@@ -7,7 +7,7 @@ namespace Smash.Player
 	[RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
     public class PlayerMotor : MonoBehaviour
     {
-	    private const float k_safetyDistance = 0.001f;
+	    private const float k_safetyDistance = 0.015f;
 
 	    [Header("Collider Settings")]
 	    [SerializeField] private float m_height = 1.8f;
