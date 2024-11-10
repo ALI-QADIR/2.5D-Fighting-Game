@@ -12,4 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3639f2aa628f17742b9f7a9e5d7d2881, type: 3}
   m_Name: PlayerProperties
   m_EditorClassIdentifier: 
-  m_groundSpeed: 0
+  m_timeToRotate: 0.1
+  m_groundSpeed: 10
+  m_groundAcceleration: 200
+  m_airSpeed: 10
+  m_airAcceleration: 100
+  m_jumpPower: 40
+  m_numberOfJumps: 2
+  m_dashSpeed: 30
+  m_dashDuration: 0.15
+  m_numberOfDashes: 1
+  m_launchPower: 60
+  m_crashSpeed: 200
+  m_floatFallSpeed: 10
+  m_floatControlRatio: 0.5

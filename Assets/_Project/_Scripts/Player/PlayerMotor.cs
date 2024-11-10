@@ -1,4 +1,5 @@
-using Smash.Player.StructsAndEnums;
+using Smash.Player.CastSensors;
+using Smash.StructsAndEnums;
 using UnityEngine;
 
 namespace Smash.Player
@@ -6,12 +7,13 @@ namespace Smash.Player
 	[RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
     public class PlayerMotor : MonoBehaviour
     {
-	    private const float k_safetyDistance = 0.001f;
+	    private const float k_safetyDistance = 0.015f;
 
 	    [Header("Collider Settings")]
 	    [SerializeField] private float m_height = 1.8f;
 	    [SerializeField] private float m_radius = 0.35f;
 	    [SerializeField] private float m_stepHeight = 0.35f;
+	    [SerializeField, Range(0, 90)] private float m_slopeLimit = 45f;
 
 	    private Rigidbody m_rb;
 	    private Transform m_tr;
@@ -21,6 +23,7 @@ namespace Smash.Player
 	    private bool m_useExtendedSensor = false;
 	    
 	    private bool m_isGrounded;
+	    private bool m_isSliding;
 	    private Vector3 m_currentGroundAdjustmentVelocity;
 	    private int m_currentLayer;
 	    private float m_baseSensorRange;
@@ -61,16 +64,24 @@ namespace Smash.Player
 		    m_sensor.Cast();
 		    
 		    m_isGrounded = m_sensor.HasDetectedHit();
+		    // Debug.Log(m_sensor.GetHitAngle());
 		    
 		    if (!m_isGrounded) return;
-
-		    m_currentGroundAdjustmentVelocity = m_tr.up * (m_sensor.GetHitDistance() / Time.fixedDeltaTime);
+		    
+		    /*float hitAngle = m_sensor.GetHitAngle();
+		    
+		    if (hitAngle <= m_slopeLimit || hitAngle >= 180 - m_slopeLimit) return;*/
+		    
+		    m_currentGroundAdjustmentVelocity = m_tr.up * (-m_sensor.GetHitDistance() / Time.fixedDeltaTime);
 	    }
 
 	    public bool IsGrounded() => m_isGrounded;
+
+	    public bool IsGroundTooSteep() =>
+		    m_sensor.GetHitAngle() >= m_slopeLimit && m_sensor.GetHitAngle() <= 180 - m_slopeLimit;
 	    
 	    public Vector3 GetGroundNormal() => m_sensor.GetHitNormal();
-	    
+
 	    public void SetVelocity(Vector3 velocity) => m_rb.linearVelocity = velocity + m_currentGroundAdjustmentVelocity;
 
 	    public void SetExtendedSensor(bool useExtendedSensor) => m_useExtendedSensor = useExtendedSensor;
@@ -81,9 +92,9 @@ namespace Smash.Player
 
 	    private void SetUp()
 	    {
-		    m_tr = transform;
-		    m_rb = GetComponent<Rigidbody>();
-		    m_col = GetComponent<CapsuleCollider>();
+		    m_tr ??= transform;
+		    m_rb ??= GetComponent<Rigidbody>();
+		    m_col ??= GetComponent<CapsuleCollider>();
 
 		    m_rb.freezeRotation = true;
 		    m_rb.useGravity = false;
