@@ -16,6 +16,7 @@ namespace Smash.Player
 		[SerializeField] private PlayerMotor m_motor;
 		[SerializeField] private LedgeDetector m_ledgeDetector;
 		[SerializeField] private CeilingDetector m_ceilingDetector;
+		[SerializeField] private PlayerAnimator m_animator;
 		[SerializeField] private PlayerPropertiesSO m_properties;
 		[Header("Control Values")]
 		[SerializeField] private float m_groundGravity = 200f;
@@ -55,6 +56,7 @@ namespace Smash.Player
 		private GroundedSubStateMachine m_groundedState;
 		private AirborneSubStateMachine m_airborneState;
 		private PlayerInit m_initState;
+		private IState m_currentState;
 
 		#endregion Fields
 
@@ -65,7 +67,16 @@ namespace Smash.Player
 		public float DashDuration => m_properties.DashDuration; 
 		public float ApexTime => m_apexTime; 
 		public Vector3 Direction { get; set; }
-		public IState CurrentState { get; set; }
+
+		public IState CurrentState
+		{
+			get => m_currentState;
+			set
+			{
+				m_currentState = value;
+				m_animator.SetState(value.GetType());
+			}
+		}
 
 		#endregion
 		
