@@ -4,7 +4,7 @@ namespace Smash.Player.States
 {
 	public class GroundEntry : PlayerBaseState
 	{
-		public GroundEntry(PlayerController controller) : base(controller)
+		public GroundEntry(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 
@@ -12,12 +12,13 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			_controller.SetOnGround();
+			_animator.SetOnGround();
 		}
 	}
 	
 	public class Idle : PlayerBaseState
 	{
-		public Idle(PlayerController controller) : base(controller)
+		public Idle(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 
@@ -25,6 +26,7 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			_controller.CurrentState = this;
+			_animator.SetIdle();
 		}
 	}
 
@@ -33,7 +35,7 @@ namespace Smash.Player.States
 		private readonly float m_duration;
 		private float m_elapsedTime;
 		public bool IsFinished => m_elapsedTime >= m_duration;
-		public Rotating(PlayerController controller, float duration) : base(controller)
+		public Rotating(PlayerController controller, float duration, PlayerAnimator animator) : base(controller, animator)
 		{
 			m_duration = duration;
 		}
@@ -61,7 +63,7 @@ namespace Smash.Player.States
 	
 	public class Moving : PlayerBaseState
 	{
-		public Moving(PlayerController controller) : base(controller)
+		public Moving(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 		
@@ -69,6 +71,7 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			_controller.CurrentState = this;
+			_animator.SetRunning();
 		}
 	}
 
@@ -78,7 +81,7 @@ namespace Smash.Player.States
 		private float m_elapsedTime;
 		public bool IsFinished => m_elapsedTime >= m_duration;
 		
-		public Dash(PlayerController controller, float duration) : base(controller)
+		public Dash(PlayerController controller, float duration, PlayerAnimator animator) : base(controller, animator)
 		{
 			m_duration = duration;
 		}
@@ -89,6 +92,7 @@ namespace Smash.Player.States
 			m_elapsedTime = 0f;
 			_controller.CurrentState = this;
 			_controller.SetDashStart();
+			_animator.SetDashing();
 		}
 		
 		public override void OnUpdate()
@@ -107,7 +111,7 @@ namespace Smash.Player.States
     
 	public class GroundExit : PlayerBaseState
 	{
-		public GroundExit(PlayerController controller) : base(controller)
+		public GroundExit(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 	}

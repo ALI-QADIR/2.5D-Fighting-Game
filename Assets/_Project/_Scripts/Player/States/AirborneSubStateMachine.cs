@@ -44,7 +44,7 @@ namespace Smash.Player.States
 		
 		private FuncPredicate m_dashToCoyoteCondition;
 
-		public AirborneSubStateMachine(PlayerController controller) : base(controller)
+		public AirborneSubStateMachine(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 			_stateMachine = new StateMachine();
 			
@@ -106,16 +106,16 @@ namespace Smash.Player.States
 		
 		protected override void CreateStates()
 		{
-			m_airEntry = new AirEntry(_controller);
-			m_airExit = new AirExit(_controller);
-			m_rising = new Rising(_controller);
-			m_falling = new Falling(_controller);
-			m_floatingFall = new FloatingFall(_controller);
-			m_crashingFall = new CrashingFall(_controller);
-			m_coyote = new Coyote(_controller);
-			m_dash = new Dash(_controller, _controller.DashDuration);
-			m_apex = new Apex(_controller);
-			m_ledge = new Ledge(_controller);
+			m_airEntry = new AirEntry(_controller, _animator);
+			m_airExit = new AirExit(_controller, _animator);
+			m_rising = new Rising(_controller, _animator);
+			m_falling = new Falling(_controller, _animator);
+			m_floatingFall = new FloatingFall(_controller, _animator);
+			m_crashingFall = new CrashingFall(_controller, _animator);
+			m_coyote = new Coyote(_controller, _animator);
+			m_dash = new Dash(_controller, _controller.DashDuration, _animator);
+			m_apex = new Apex(_controller, _animator);
+			m_ledge = new Ledge(_controller, _animator);
 		}
 		
 		protected override void CreateTransitions()

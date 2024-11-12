@@ -23,7 +23,7 @@ namespace Smash.Player.States
 		private FuncPredicate m_idleToDashCondition;
 		private FuncPredicate m_movingToDashCondition;
 		
-		public GroundedSubStateMachine(PlayerController controller) : base(controller)
+		public GroundedSubStateMachine(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 			_stateMachine = new StateMachine();
 
@@ -100,12 +100,12 @@ namespace Smash.Player.States
 
 		protected override void CreateStates()
 		{
-			m_groundEntry = new GroundEntry(_controller);
-			m_groundExit = new GroundExit(_controller);
-			m_idle = new Idle(_controller);
-			m_moving = new Moving(_controller);
-			m_dash = new Dash(_controller, _controller.DashDuration);
-			m_rotating = new Rotating(_controller, _controller.TimeToRotate);
+			m_groundEntry = new GroundEntry(_controller, _animator);
+			m_groundExit = new GroundExit(_controller, _animator);
+			m_idle = new Idle(_controller, _animator);
+			m_moving = new Moving(_controller, _animator);
+			m_dash = new Dash(_controller, _controller.DashDuration, _animator);
+			m_rotating = new Rotating(_controller, _controller.TimeToRotate, _animator);
 		}
 
 		private FuncPredicate m_idleToRotatingCondition;

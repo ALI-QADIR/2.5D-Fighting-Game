@@ -5,7 +5,7 @@ namespace Smash.Player.States
 	public class PlayerSubStateMachine : PlayerBaseState
 	{
 		protected StateMachine _stateMachine;
-		protected PlayerSubStateMachine(PlayerController controller) : base(controller)
+		protected PlayerSubStateMachine(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 		

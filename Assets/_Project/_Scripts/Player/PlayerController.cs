@@ -43,6 +43,7 @@ namespace Smash.Player
 		private int m_numberOfDashes;
 		private bool m_isJumping;
 		private bool m_isLaunching;
+		private bool m_isClimbing;
 		private Vector3 m_velocity, m_savedVelocity;
 		private Quaternion m_savedRotation, m_targetRotation;
 
@@ -56,7 +57,6 @@ namespace Smash.Player
 		private GroundedSubStateMachine m_groundedState;
 		private AirborneSubStateMachine m_airborneState;
 		private PlayerInit m_initState;
-		private IState m_currentState;
 
 		#endregion Fields
 
@@ -67,16 +67,7 @@ namespace Smash.Player
 		public float DashDuration => m_properties.DashDuration; 
 		public float ApexTime => m_apexTime; 
 		public Vector3 Direction { get; set; }
-
-		public IState CurrentState
-		{
-			get => m_currentState;
-			set
-			{
-				m_currentState = value;
-				m_animator.SetState(value.GetType());
-			}
-		}
+		public IState CurrentState { get; set; }
 
 		#endregion
 		
@@ -366,7 +357,13 @@ namespace Smash.Player
 		public bool IsFloatingFall() => m_fallType == FallType.Float;
 		public bool IsCrashingFall() => m_fallType == FallType.Crash;
 		public bool IsLedgeGrab() => m_ledgeDetector.IsLedgeDetected();
-		public bool IsGroundTooSteep() => m_motor.IsGroundTooSteep();
+
+		public bool IsClimbing()
+		{
+			bool temp = m_isClimbing;
+			m_isClimbing = false;
+			return temp;
+		}
 
 		#endregion Public Methods
 
@@ -395,6 +392,7 @@ namespace Smash.Player
 
 		private void HandleJump()
 		{
+			m_isClimbing = false;
 			m_jumpPower = m_properties.JumpPower;
 			Vector3 verticalVelocity = m_tr.up * m_jumpPower;
 			RemoveVerticalVelocity();
@@ -404,6 +402,7 @@ namespace Smash.Player
 
 		private void HandleClimb()
 		{
+			m_isClimbing = true;
 			Vector3 verticalVelocity = m_tr.up * m_climbUpSpeed;
 			Vector3 horizontalVelocity = m_tr.right * m_climbSideSpeed;
 			RemoveVerticalVelocity();
@@ -466,8 +465,8 @@ namespace Smash.Player
 		{
 			m_stateMachine = new StateMachine();
 
-			m_groundedState = new GroundedSubStateMachine(this);
-			m_airborneState = new AirborneSubStateMachine(this);
+			m_groundedState = new GroundedSubStateMachine(this, m_animator);
+			m_airborneState = new AirborneSubStateMachine(this, m_animator);
 			m_initState = new PlayerInit();
 			
 			FuncPredicate groundToAirborne = new(() => 

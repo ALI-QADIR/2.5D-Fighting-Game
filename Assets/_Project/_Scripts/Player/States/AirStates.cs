@@ -5,7 +5,7 @@ namespace Smash.Player.States
 {
 	public class AirEntry : PlayerBaseState
 	{
-		public AirEntry(PlayerController controller) : base(controller)
+		public AirEntry(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 
@@ -18,7 +18,7 @@ namespace Smash.Player.States
 	
 	public class Rising : PlayerBaseState
 	{
-		public Rising(PlayerController controller) : base(controller)
+		public Rising(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 
@@ -27,12 +27,15 @@ namespace Smash.Player.States
 			base.OnEnter();
 			_controller.CurrentState = this;
 			_controller.SetInAir();
+			
+			if (_controller.IsClimbing()) _animator.SetClimbing();
+			else _animator.SetJumping();
 		}
 	}
 	
 	public class Falling : PlayerBaseState
 	{
-		public Falling(PlayerController controller) : base(controller)
+		public Falling(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 
@@ -41,11 +44,12 @@ namespace Smash.Player.States
 			base.OnEnter();
 			_controller.CurrentState = this;
 			_controller.SetFalling();
+			_animator.SetFalling();
 		}
 	}
 	public class FloatingFall : PlayerBaseState
 	{
-		public FloatingFall(PlayerController controller) : base(controller)
+		public FloatingFall(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 
@@ -59,7 +63,7 @@ namespace Smash.Player.States
 	
 	public class CrashingFall : PlayerBaseState
 	{
-		public CrashingFall(PlayerController controller) : base(controller)
+		public CrashingFall(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 
@@ -75,7 +79,7 @@ namespace Smash.Player.States
 	{
 		public float ElapsedTime { get; private set; }
 
-		public Coyote(PlayerController controller) : base(controller)
+		public Coyote(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 
@@ -85,6 +89,7 @@ namespace Smash.Player.States
 			base.OnEnter();
 			ElapsedTime = 0f;
 			_controller.CurrentState = this;
+			_animator.SetFalling();
 		}
 		
 		public override void OnUpdate()
@@ -98,7 +103,7 @@ namespace Smash.Player.States
 	{
 		public float ElapsedTime { get; private set; }
 
-		public Apex(PlayerController controller) : base(controller)
+		public Apex(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 
@@ -127,7 +132,7 @@ namespace Smash.Player.States
 
 	public class Ledge : PlayerBaseState
 	{
-		public Ledge(PlayerController controller) : base(controller)
+		public Ledge(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 
@@ -136,6 +141,7 @@ namespace Smash.Player.States
 			base.OnEnter();
 			_controller.CurrentState = this;
 			_controller.SetOnLedge(true);
+			_animator.SetOnLedge();
 		}
 
 		public override void OnExit()
@@ -147,7 +153,7 @@ namespace Smash.Player.States
     
 	public class AirExit : PlayerBaseState
 	{
-		public AirExit(PlayerController controller) : base(controller)
+		public AirExit(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
 		{
 		}
 	}
