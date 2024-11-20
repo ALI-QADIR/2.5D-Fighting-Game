@@ -14,8 +14,6 @@ namespace Smash.Player.States
 		private Dash m_dash;
 		private Apex m_apex;
 		private Ledge m_ledge;
-		
-		private bool m_dashPressed;
 
 		private FuncPredicate m_entryToRisingCondition;
 		private FuncPredicate m_entryToCoyoteCondition;
@@ -44,7 +42,7 @@ namespace Smash.Player.States
 		
 		private FuncPredicate m_dashToCoyoteCondition;
 
-		public AirborneSubStateMachine(PlayerController controller, PlayerAnimator animator) : base(controller, animator)
+		public AirborneSubStateMachine(PlayerController controller) : base(controller)
 		{
 			_stateMachine = new StateMachine();
 			
@@ -92,30 +90,18 @@ namespace Smash.Player.States
 
 		#endregion State Machine Methods
 		
-		private void ControllerOnOnDash(bool value)
-		{
-			m_dashPressed = value;
-		}
-		
-		private bool Predicate<T>()
-		{
-			bool flag = _stateMachine.CurrentState is T && m_dashPressed;
-			m_dashPressed = false;
-			return flag;
-		}
-		
 		protected override void CreateStates()
 		{
-			m_airEntry = new AirEntry(_controller, _animator);
-			m_airExit = new AirExit(_controller, _animator);
-			m_rising = new Rising(_controller, _animator);
-			m_falling = new Falling(_controller, _animator);
-			m_floatingFall = new FloatingFall(_controller, _animator);
-			m_crashingFall = new CrashingFall(_controller, _animator);
-			m_coyote = new Coyote(_controller, _animator);
-			m_dash = new Dash(_controller, _controller.DashDuration, _animator);
-			m_apex = new Apex(_controller, _animator);
-			m_ledge = new Ledge(_controller, _animator);
+			m_airEntry = new AirEntry(_controller);
+			m_airExit = new AirExit(_controller);
+			m_rising = new Rising(_controller);
+			m_falling = new Falling(_controller);
+			m_floatingFall = new FloatingFall(_controller);
+			m_crashingFall = new CrashingFall(_controller);
+			m_coyote = new Coyote(_controller);
+			m_dash = new Dash(_controller, _controller.DashDuration);
+			m_apex = new Apex(_controller);
+			m_ledge = new Ledge(_controller);
 		}
 		
 		protected override void CreateTransitions()
@@ -124,17 +110,17 @@ namespace Smash.Player.States
 			m_entryToCoyoteCondition = new FuncPredicate(() => _stateMachine.CurrentState is AirEntry && _controller.IsFalling());
 			
 			m_risingToApexCondition = new FuncPredicate(() => _stateMachine.CurrentState is Rising && _controller.IsFalling());
-			m_risingToDashCondition = new FuncPredicate(Predicate<Rising>);
+			m_risingToDashCondition = new FuncPredicate(DashPredicate<Rising>);
 			
 			m_fallingToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Falling && _controller.IsRising());
-			m_fallingToDashCondition = new FuncPredicate(Predicate<Falling>);
+			m_fallingToDashCondition = new FuncPredicate(DashPredicate<Falling>);
 
 			m_ledgeCondition = new FuncPredicate(() =>
 				_stateMachine.CurrentState is Coyote or FloatingFall or Falling or Apex && _controller.IsLedgeGrab());
 			m_crashingCondition = new FuncPredicate(() => 
 				_stateMachine.CurrentState is Ledge or FloatingFall or Falling or Dash or Rising && _controller.IsCrashingFall());
 
-			m_apexToDashCondition = new FuncPredicate(Predicate<Apex>);
+			m_apexToDashCondition = new FuncPredicate(DashPredicate<Apex>);
 			m_apexToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Apex && _controller.IsRising());
 			m_apexToFallingCondition = new FuncPredicate(() => 
 				_stateMachine.CurrentState is Apex && m_apex.ElapsedTime >= _controller.ApexTime && _controller.IsNormalFall());
@@ -145,12 +131,12 @@ namespace Smash.Player.States
 			
 			m_dashToCoyoteCondition = new FuncPredicate(() => 
 				_stateMachine.CurrentState is Dash && m_dash.IsFinished);
-			m_floatingToDashCondition = new FuncPredicate(Predicate<FloatingFall>);
+			m_floatingToDashCondition = new FuncPredicate(DashPredicate<FloatingFall>);
 			
 			m_ledgeToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Ledge && _controller.IsRising());
 			
 			m_coyoteToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Coyote && _controller.IsRising());
-			m_coyoteToDashCondition = new FuncPredicate(Predicate<Coyote>);
+			m_coyoteToDashCondition = new FuncPredicate(DashPredicate<Coyote>);
 			m_coyoteToFallingCondition = new FuncPredicate(() =>
 				_stateMachine.CurrentState is Coyote && _controller.IsFalling() && m_coyote.ElapsedTime >= _controller.CoyoteTime);
 		}

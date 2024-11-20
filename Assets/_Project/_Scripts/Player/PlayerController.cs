@@ -4,6 +4,7 @@ using TripleA.Extensions;
 using TripleA.FSM;
 using TripleA.ImprovedTimer.Timers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Smash.Player
 {
@@ -16,7 +17,7 @@ namespace Smash.Player
 		[SerializeField] private PlayerMotor m_motor;
 		[SerializeField] private LedgeDetector m_ledgeDetector;
 		[SerializeField] private CeilingDetector m_ceilingDetector;
-		[SerializeField] private PlayerAnimator m_animator;
+		[FormerlySerializedAs("m_animator")] [SerializeField] private PlayerGraphicsController m_graphicsController;
 		[SerializeField] private PlayerPropertiesSO m_properties;
 		[Header("Control Values")]
 		[SerializeField] private float m_groundGravity = 200f;
@@ -235,6 +236,9 @@ namespace Smash.Player
 
 		public void SetInAir()
 		{
+			if (IsClimbing()) m_graphicsController.SetClimbing();
+			else m_graphicsController.SetJumping();
+			
 			m_currentMoveSpeed = m_isLaunching ? 0 : m_properties.AirSpeed;
 			m_numberOfDashes = m_properties.NumberOfDashes;
 			m_gravity = m_airGravity;
@@ -244,6 +248,7 @@ namespace Smash.Player
 
 		public void SetOnGround()
 		{
+			m_graphicsController.SetOnGround();
 			m_numberOfJumps = m_properties.NumberOfJumps;
 			m_numberOfDashes = m_properties.NumberOfDashes;
 			m_currentMoveSpeed = m_properties.GroundSpeed;
@@ -258,6 +263,13 @@ namespace Smash.Player
 
 			HandleJumpBuffer();
 		}
+
+		public void SetRunning()
+		{
+			m_graphicsController.SetRunning();
+		}
+
+		public void SetIdle() => m_graphicsController.SetIdle();
 		
 		public void HandleRotation(float lookCompletion)
 		{
@@ -267,6 +279,7 @@ namespace Smash.Player
 		public void SetDashStart()
 		{
 			// Debug.Log("Dashing");
+			m_graphicsController.SetDashing();
 			RemoveVerticalVelocity();
 			m_dashResetTimer.Reset();
 			m_gravity = 0f;
@@ -311,7 +324,10 @@ namespace Smash.Player
 		{
 			m_currentFallSpeed = m_maxFallSpeed;
 			m_currentMoveSpeed = m_properties.AirSpeed;
+			m_graphicsController.SetFalling();
 		}
+
+		public void SetCoyote() => m_graphicsController.SetFalling();
 
 		public void SetFloatingFall()
 		{
@@ -330,6 +346,8 @@ namespace Smash.Player
 		{
 			if (isLedge)
 			{
+				m_graphicsController.SetOnLedge();
+				
 				RemoveVerticalVelocity();
 				m_fallType = FallType.Normal;
 				m_ledgeDetector.SetOnLedge();
@@ -358,7 +376,7 @@ namespace Smash.Player
 		public bool IsCrashingFall() => m_fallType == FallType.Crash;
 		public bool IsLedgeGrab() => m_ledgeDetector.IsLedgeDetected();
 
-		public bool IsClimbing()
+		private bool IsClimbing()
 		{
 			bool temp = m_isClimbing;
 			m_isClimbing = false;
@@ -465,8 +483,8 @@ namespace Smash.Player
 		{
 			m_stateMachine = new StateMachine();
 
-			m_groundedState = new GroundedSubStateMachine(this, m_animator);
-			m_airborneState = new AirborneSubStateMachine(this, m_animator);
+			m_groundedState = new GroundedSubStateMachine(this);
+			m_airborneState = new AirborneSubStateMachine(this);
 			m_initState = new PlayerInit();
 			
 			FuncPredicate groundToAirborne = new(() => 
