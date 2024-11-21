@@ -39,7 +39,9 @@ namespace Smash.Player
 		private float m_currentFallSpeed;
 		private float m_acceleration;
 		private float m_elapsedTime;
-		private float m_lookCompletion;
+		private float m_timeToRotate;
+		private float m_elapsedRotationTime;
+		private float m_currentLookAngle;
 		private int m_numberOfJumps;
 		private int m_numberOfDashes;
 		private bool m_isJumping;
@@ -64,7 +66,6 @@ namespace Smash.Player
 		#region Properties
 		
 		public float CoyoteTime => m_coyoteTime;
-		public float TimeToRotate => m_properties.TimeToRotate;
 		public float DashDuration => m_properties.DashDuration; 
 		public float ApexTime => m_apexTime; 
 		public Vector3 Direction { get; set; }
@@ -73,7 +74,6 @@ namespace Smash.Player
 		#endregion
 		
 		public event Action<bool> OnDash = delegate { }; 
-		public event Action OnRotate = delegate { }; 
 		
 		#region Unity Methods
 
@@ -90,6 +90,7 @@ namespace Smash.Player
 			m_numberOfJumps = m_properties.NumberOfJumps;
 			m_jumpPower = m_properties.JumpPower;
 			m_numberOfDashes = m_properties.NumberOfDashes;
+			m_timeToRotate = m_properties.TimeToRotate;
 
 			m_jumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
 			m_dashResetTimer = new CountDownTimer(m_dashResetTime);
@@ -112,8 +113,11 @@ namespace Smash.Player
 			// Todo: Slopes??
 			// Todo: Stairs??
 			// Todo: Wall Clipping
+			
 			CheckForLedge();
 			CheckForCeiling();
+			HandleRotation();
+			
 			m_motor.CheckForGround();
 
 			m_motor.SetExtendedSensor(m_motor.IsGrounded());
@@ -165,10 +169,17 @@ namespace Smash.Player
 		public void Rotate(float angle)
 		{
 			if (angle == 0) return;
-			OnRotate?.Invoke();
+			if (CurrentState is Dash or Ledge) return;
+			
+			// OnRotate?.Invoke();
 			float lookAngle = Mathf.Approximately(angle, -1.0f) ? 179f : 0f;
+			if (Mathf.Approximately(m_currentLookAngle, lookAngle)) return;
+			
+			Debug.Log("Rotating");
+			m_currentLookAngle = lookAngle;
 			m_targetRotation = Quaternion.Euler(0f, lookAngle, 0f);
 			m_savedRotation = m_tr.rotation;
+			m_elapsedTime = 0;
 		}
 
 		public void HandleJumpInput()
@@ -249,17 +260,20 @@ namespace Smash.Player
 		public void SetOnGround()
 		{
 			m_graphicsController.SetOnGround();
+			
 			m_numberOfJumps = m_properties.NumberOfJumps;
 			m_numberOfDashes = m_properties.NumberOfDashes;
 			m_currentMoveSpeed = m_properties.GroundSpeed;
-			m_gravity = m_groundGravity;
 			m_acceleration = m_properties.GroundAcceleration;
+			m_gravity = m_groundGravity;
+			
 			m_currentFallSpeed = 0f;
+			
 			RemoveVerticalVelocity();
+			
 			m_isJumping = false;
 			m_isLaunching = false;
 			m_fallType = FallType.None;
-			if (m_tr.rotation != m_targetRotation) OnRotate?.Invoke();
 
 			HandleJumpBuffer();
 		}
@@ -270,11 +284,6 @@ namespace Smash.Player
 		}
 
 		public void SetIdle() => m_graphicsController.SetIdle();
-		
-		public void HandleRotation(float lookCompletion)
-		{
-			m_tr.rotation = Quaternion.Slerp(m_savedRotation, m_targetRotation, lookCompletion);
-		}
 
 		public void SetDashStart()
 		{
@@ -408,6 +417,12 @@ namespace Smash.Player
 			m_savedVelocity += verticalVelocity;
 		}
 
+		private void HandleRotation()
+		{
+			m_elapsedTime += Time.deltaTime;
+			m_tr.rotation = Quaternion.Slerp(m_savedRotation, m_targetRotation, m_elapsedTime / m_timeToRotate);
+		}
+		
 		private void HandleJump()
 		{
 			m_isClimbing = false;
@@ -509,6 +524,5 @@ namespace Smash.Player
 		
 		#endregion Private Methods
 		private enum FallType { Normal, Crash, Float, None }
-	}
-	
+	}	
 }

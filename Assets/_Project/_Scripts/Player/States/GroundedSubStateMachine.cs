@@ -9,7 +9,6 @@ namespace Smash.Player.States
 		private Idle m_idle;
 		private Moving m_moving;
 		private Dash m_dash;
-		private Rotating m_rotating;
 		
 		private FuncPredicate m_entryToIdleCondition;
 		private FuncPredicate m_entryToMovingCondition;
@@ -37,7 +36,6 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			_controller.OnDash += ControllerOnOnDash;
-			_controller.OnRotate += ControllerOnRotate;
 			_controller.CurrentState = this;
 			_stateMachine.SetState(m_groundEntry);
 			
@@ -65,7 +63,6 @@ namespace Smash.Player.States
 		{
 			base.OnExit();
 			_controller.OnDash -= ControllerOnOnDash;
-			_controller.OnRotate -= ControllerOnRotate;
 			_stateMachine.SetState(m_groundExit);
 		}
 
@@ -78,33 +75,18 @@ namespace Smash.Player.States
 			m_idle = new Idle(_controller);
 			m_moving = new Moving(_controller);
 			m_dash = new Dash(_controller, _controller.DashDuration);
-			m_rotating = new Rotating(_controller, _controller.TimeToRotate);
 		}
-
-		private FuncPredicate m_idleToRotatingCondition;
-		private FuncPredicate m_movingToRotatingCondition;
-		private FuncPredicate m_entryToRotatingCondition;
-		private FuncPredicate m_rotatingToIdleCondition;
-		private FuncPredicate m_rotatingToMovingCondition;
 
 		protected override void CreateTransitions()
 		{
 			m_entryToIdleCondition = new FuncPredicate(() => _stateMachine.CurrentState is GroundEntry && !_controller.IsMoving());
 			m_entryToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is GroundEntry && _controller.IsMoving());
-			m_entryToRotatingCondition = new FuncPredicate(RotatingPredicate<GroundEntry>);
 			
 			m_idleToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && _controller.IsMoving());
 			m_idleToDashCondition = new FuncPredicate(DashPredicate<Idle>);
-			m_idleToRotatingCondition = new FuncPredicate(RotatingPredicate<Idle>);
 			
 			m_movingToIdleCondition = new FuncPredicate(() => _stateMachine.CurrentState is Moving && !_controller.IsMoving());
 			m_movingToDashCondition = new FuncPredicate(DashPredicate<Moving>);
-			m_movingToRotatingCondition = new FuncPredicate(RotatingPredicate<Moving>);
-			
-			m_rotatingToIdleCondition = new FuncPredicate(() =>
-				_stateMachine.CurrentState is Rotating && !_controller.IsMoving() && m_rotating.IsFinished);
-			m_rotatingToMovingCondition = new FuncPredicate(() =>
-				_stateMachine.CurrentState is Rotating && _controller.IsMoving() && m_rotating.IsFinished);
 			
 			m_dashToIdleCondition = new FuncPredicate(() =>
 				_stateMachine.CurrentState is Dash && !_controller.IsMoving() && m_dash.IsFinished);
@@ -116,18 +98,12 @@ namespace Smash.Player.States
 		{
 			AddTransition(m_groundEntry, m_idle, m_entryToIdleCondition);
 			AddTransition(m_groundEntry, m_moving, m_entryToMovingCondition);
-			AddTransition(m_groundEntry, m_rotating, m_entryToRotatingCondition);
 			
 			AddTransition(m_idle, m_moving, m_idleToMovingCondition);
 			AddTransition(m_idle, m_dash, m_idleToDashCondition);
-			AddTransition(m_idle, m_rotating, m_idleToRotatingCondition);
 			
 			AddTransition(m_moving, m_idle, m_movingToIdleCondition);
 			AddTransition(m_moving, m_dash, m_movingToDashCondition);
-			AddTransition(m_moving, m_rotating, m_movingToRotatingCondition);
-			
-			AddTransition(m_rotating, m_idle, m_rotatingToIdleCondition);
-			AddTransition(m_rotating, m_moving, m_rotatingToMovingCondition);
 			
 			AddTransition(m_dash, m_idle, m_dashToIdleCondition);
 			AddTransition(m_dash, m_moving, m_dashToMovingCondition);
