@@ -4,6 +4,7 @@ using TripleA.Extensions;
 using TripleA.FSM;
 using TripleA.ImprovedTimer.Timers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Smash.Player
 {
@@ -16,7 +17,7 @@ namespace Smash.Player
 		[SerializeField] private PlayerMotor m_motor;
 		[SerializeField] private LedgeDetector m_ledgeDetector;
 		[SerializeField] private CeilingDetector m_ceilingDetector;
-		[SerializeField] private PlayerAnimator m_animator;
+		[FormerlySerializedAs("m_animator")] [SerializeField] private PlayerGraphicsController m_graphicsController;
 		[SerializeField] private PlayerPropertiesSO m_properties;
 		[Header("Control Values")]
 		[SerializeField] private float m_groundGravity = 200f;
@@ -43,6 +44,7 @@ namespace Smash.Player
 		private int m_numberOfDashes;
 		private bool m_isJumping;
 		private bool m_isLaunching;
+		private bool m_isClimbing;
 		private Vector3 m_velocity, m_savedVelocity;
 		private Quaternion m_savedRotation, m_targetRotation;
 
@@ -56,7 +58,6 @@ namespace Smash.Player
 		private GroundedSubStateMachine m_groundedState;
 		private AirborneSubStateMachine m_airborneState;
 		private PlayerInit m_initState;
-		private IState m_currentState;
 
 		#endregion Fields
 
@@ -67,16 +68,7 @@ namespace Smash.Player
 		public float DashDuration => m_properties.DashDuration; 
 		public float ApexTime => m_apexTime; 
 		public Vector3 Direction { get; set; }
-
-		public IState CurrentState
-		{
-			get => m_currentState;
-			set
-			{
-				m_currentState = value;
-				m_animator.SetState(value.GetType());
-			}
-		}
+		public IState CurrentState { get; set; }
 
 		#endregion
 		
@@ -244,6 +236,9 @@ namespace Smash.Player
 
 		public void SetInAir()
 		{
+			if (IsClimbing()) m_graphicsController.SetClimbing();
+			else m_graphicsController.SetJumping();
+			
 			m_currentMoveSpeed = m_isLaunching ? 0 : m_properties.AirSpeed;
 			m_numberOfDashes = m_properties.NumberOfDashes;
 			m_gravity = m_airGravity;
@@ -253,6 +248,7 @@ namespace Smash.Player
 
 		public void SetOnGround()
 		{
+			m_graphicsController.SetOnGround();
 			m_numberOfJumps = m_properties.NumberOfJumps;
 			m_numberOfDashes = m_properties.NumberOfDashes;
 			m_currentMoveSpeed = m_properties.GroundSpeed;
@@ -267,6 +263,13 @@ namespace Smash.Player
 
 			HandleJumpBuffer();
 		}
+
+		public void SetRunning()
+		{
+			m_graphicsController.SetRunning();
+		}
+
+		public void SetIdle() => m_graphicsController.SetIdle();
 		
 		public void HandleRotation(float lookCompletion)
 		{
@@ -276,6 +279,7 @@ namespace Smash.Player
 		public void SetDashStart()
 		{
 			// Debug.Log("Dashing");
+			m_graphicsController.SetDashing();
 			RemoveVerticalVelocity();
 			m_dashResetTimer.Reset();
 			m_gravity = 0f;
@@ -320,7 +324,10 @@ namespace Smash.Player
 		{
 			m_currentFallSpeed = m_maxFallSpeed;
 			m_currentMoveSpeed = m_properties.AirSpeed;
+			m_graphicsController.SetFalling();
 		}
+
+		public void SetCoyote() => m_graphicsController.SetFalling();
 
 		public void SetFloatingFall()
 		{
@@ -339,6 +346,8 @@ namespace Smash.Player
 		{
 			if (isLedge)
 			{
+				m_graphicsController.SetOnLedge();
+				
 				RemoveVerticalVelocity();
 				m_fallType = FallType.Normal;
 				m_ledgeDetector.SetOnLedge();
@@ -366,7 +375,13 @@ namespace Smash.Player
 		public bool IsFloatingFall() => m_fallType == FallType.Float;
 		public bool IsCrashingFall() => m_fallType == FallType.Crash;
 		public bool IsLedgeGrab() => m_ledgeDetector.IsLedgeDetected();
-		public bool IsGroundTooSteep() => m_motor.IsGroundTooSteep();
+
+		private bool IsClimbing()
+		{
+			bool temp = m_isClimbing;
+			m_isClimbing = false;
+			return temp;
+		}
 
 		#endregion Public Methods
 
@@ -395,6 +410,7 @@ namespace Smash.Player
 
 		private void HandleJump()
 		{
+			m_isClimbing = false;
 			m_jumpPower = m_properties.JumpPower;
 			Vector3 verticalVelocity = m_tr.up * m_jumpPower;
 			RemoveVerticalVelocity();
@@ -404,6 +420,7 @@ namespace Smash.Player
 
 		private void HandleClimb()
 		{
+			m_isClimbing = true;
 			Vector3 verticalVelocity = m_tr.up * m_climbUpSpeed;
 			Vector3 horizontalVelocity = m_tr.right * m_climbSideSpeed;
 			RemoveVerticalVelocity();

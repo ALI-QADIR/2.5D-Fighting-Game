@@ -25,6 +25,7 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			_controller.CurrentState = this;
+			_controller.SetIdle();
 		}
 	}
 
@@ -69,6 +70,7 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			_controller.CurrentState = this;
+			_controller.SetRunning();
 		}
 	}
 

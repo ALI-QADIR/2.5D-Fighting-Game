@@ -10,9 +10,6 @@ namespace Smash.Player.States
 		private Moving m_moving;
 		private Dash m_dash;
 		private Rotating m_rotating;
-
-		private bool m_dashPressed;
-		private bool m_rotatePressed;
 		
 		private FuncPredicate m_entryToIdleCondition;
 		private FuncPredicate m_entryToMovingCondition;
@@ -74,30 +71,6 @@ namespace Smash.Player.States
 
 		#endregion State Machine Methods
 
-		private void ControllerOnOnDash(bool value)
-		{
-			m_dashPressed = value;
-		}
-
-		private void ControllerOnRotate()
-		{
-			m_rotatePressed = true;
-		}
-
-		private bool DashPredicate<T>()
-		{
-			bool flag = _stateMachine.CurrentState is T && m_dashPressed;
-			m_dashPressed = false;
-			return flag;
-		}
-		
-		private bool RotatingPredicate<T>()
-		{
-			bool flag = _stateMachine.CurrentState is T && m_rotatePressed;
-			m_rotatePressed = false;
-			return flag;
-		}
-
 		protected override void CreateStates()
 		{
 			m_groundEntry = new GroundEntry(_controller);
@@ -118,7 +91,7 @@ namespace Smash.Player.States
 		{
 			m_entryToIdleCondition = new FuncPredicate(() => _stateMachine.CurrentState is GroundEntry && !_controller.IsMoving());
 			m_entryToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is GroundEntry && _controller.IsMoving());
-			m_movingToRotatingCondition = new FuncPredicate(RotatingPredicate<GroundEntry>);
+			m_entryToRotatingCondition = new FuncPredicate(RotatingPredicate<GroundEntry>);
 			
 			m_idleToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && _controller.IsMoving());
 			m_idleToDashCondition = new FuncPredicate(DashPredicate<Idle>);
@@ -143,7 +116,7 @@ namespace Smash.Player.States
 		{
 			AddTransition(m_groundEntry, m_idle, m_entryToIdleCondition);
 			AddTransition(m_groundEntry, m_moving, m_entryToMovingCondition);
-			AddTransition(m_groundEntry, m_rotating, m_entryToMovingCondition);
+			AddTransition(m_groundEntry, m_rotating, m_entryToRotatingCondition);
 			
 			AddTransition(m_idle, m_moving, m_idleToMovingCondition);
 			AddTransition(m_idle, m_dash, m_idleToDashCondition);

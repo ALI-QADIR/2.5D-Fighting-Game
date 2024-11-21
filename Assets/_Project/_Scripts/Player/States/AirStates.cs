@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Smash.Player.States
 {
@@ -85,6 +84,7 @@ namespace Smash.Player.States
 			base.OnEnter();
 			ElapsedTime = 0f;
 			_controller.CurrentState = this;
+			_controller.SetCoyote();
 		}
 		
 		public override void OnUpdate()
