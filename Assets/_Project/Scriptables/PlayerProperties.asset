@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3639f2aa628f17742b9f7a9e5d7d2881, type: 3}
   m_Name: PlayerProperties
   m_EditorClassIdentifier: 
-  m_timeToRotate: 0.1
+  m_timeToRotate: 1
   m_groundSpeed: 10
   m_groundAcceleration: 200
   m_airSpeed: 10

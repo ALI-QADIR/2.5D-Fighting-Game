@@ -28,37 +28,6 @@ namespace Smash.Player.States
 			_controller.SetIdle();
 		}
 	}
-
-	public class Rotating : PlayerBaseState
-	{
-		private readonly float m_duration;
-		private float m_elapsedTime;
-		public bool IsFinished => m_elapsedTime >= m_duration;
-		public Rotating(PlayerController controller, float duration) : base(controller)
-		{
-			m_duration = duration;
-		}
-
-		public override void OnEnter()
-		{
-			base.OnEnter();
-			m_elapsedTime = 0f;
-			_controller.CurrentState = this;
-		}
-
-		public override void OnFixedUpdate()
-		{
-			base.OnFixedUpdate();
-			m_elapsedTime += Time.deltaTime;
-			_controller.HandleRotation(m_elapsedTime / m_duration);
-		}
-
-		public override void OnExit()
-		{
-			base.OnExit();
-			m_elapsedTime = 0f;
-		}
-	}
 	
 	public class Moving : PlayerBaseState
 	{

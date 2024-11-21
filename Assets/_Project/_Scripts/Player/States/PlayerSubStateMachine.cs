@@ -6,7 +6,6 @@ namespace Smash.Player.States
 	{
 		protected StateMachine _stateMachine;
 		protected bool _dashPressed;
-		protected bool _rotatePressed;
 		
 		protected PlayerSubStateMachine(PlayerController controller) : base(controller)
 		{
@@ -23,22 +22,10 @@ namespace Smash.Player.States
 			_dashPressed = false;
 			return flag;
 		}
-		
-		protected bool RotatingPredicate<T>()
-		{
-			bool flag = _stateMachine.CurrentState is T && _rotatePressed;
-			_rotatePressed = false;
-			return flag;
-		}
 
 		protected void ControllerOnOnDash(bool value)
 		{
 			_dashPressed = value;
-		}
-
-		protected void ControllerOnRotate()
-		{
-			_rotatePressed = true;
 		}
 		
 		protected void AddTransition(IState from, IState to, IPredicate condition) =>
