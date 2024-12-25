@@ -5,6 +5,7 @@
     "com.triple-a-studios.scene-manager": "https://github.com/Triple-A-Studios/TripleA-SceneManager.git",
     "com.triple-a-studios.statemachine": "https://github.com/Triple-A-Studios/TripleA-StateMachine.git",
     "com.triple-a-studios.utils": "https://github.com/Triple-A-Studios/TripleA-Utils.git",
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "2.0.4",
     "com.unity.collab-proxy": "2.5.2",
     "com.unity.ide.rider": "3.0.34",
