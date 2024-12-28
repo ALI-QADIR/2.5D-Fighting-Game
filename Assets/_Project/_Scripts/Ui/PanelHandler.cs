@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using PrimeTween;
-using Smash.System;
-using TripleA.EventSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
+using UnityEngine.InputSystem;
 
 namespace Smash.Ui
 {
-	public abstract class PanelHandler : EventListener<UiEventArgs>
+	public abstract class PanelHandler : UiEventListener
 	{
 		[Header("Animation")] 
 		[SerializeField] private float m_duration;
@@ -18,13 +16,17 @@ namespace Smash.Ui
 
 		[Space(10)]
 		[SerializeField] private ButtonSelectionHandler m_primaryButton;
+		private GameObject m_lastSelected;
 
 		protected Sequence _openSequence, _closeSequence;
 		protected Transform _tr;
+
+		protected PlayerInputActions _input;
 		
 		protected override void Awake()
 		{
 			base.Awake();
+			_input = new PlayerInputActions();
 			_tr = transform;
 			_tr.position = _closeTransform.position;
 			gameObject.SetActive(false);
@@ -36,8 +38,45 @@ namespace Smash.Ui
 			EventSystem.current.SetSelectedGameObject(m_primaryButton.gameObject);
 		}
 
-		public virtual void OpenPanel() => Show();
-		public virtual void ClosePanel() => Hide();
+		private void OnButtonDeselected(GameObject obj)
+		{
+			m_lastSelected = obj;
+		}
+		
+		protected void OnNavigateStart(InputAction.CallbackContext ctx)
+		{
+			if (EventSystem.current.currentSelectedGameObject != null) return;
+			if (m_lastSelected == null) EventSystem.current.SetSelectedGameObject(m_primaryButton.gameObject);
+			else EventSystem.current.SetSelectedGameObject(m_lastSelected);
+		}
+
+		public virtual void OpenPanel()
+		{
+			Show();
+			
+			ButtonSelectionHandler.OnButtonDeselected += OnButtonDeselected;
+			
+			_input.Player.Disable();
+			_input.UI.Disable();
+			_input.UI.Enable();
+			
+			_input.UI.Navigate.Enable();
+			_input.UI.Navigate.performed += OnNavigateStart;
+		}
+		
+		public virtual void ClosePanel()
+		{
+			Hide();
+			
+			ButtonSelectionHandler.OnButtonDeselected -= OnButtonDeselected;
+			
+			_input.Player.Disable();
+			_input.UI.Disable();
+			_input.UI.Enable();
+			
+			_input.UI.Navigate.Enable();
+			_input.UI.Navigate.performed -= OnNavigateStart;
+		}
 
 		protected virtual void Show()
 		{

@@ -1,4 +1,5 @@
-﻿using PrimeTween;
+﻿using System;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -23,6 +24,8 @@ namespace Smash.Ui
 		
 		private Sequence m_selectSequence, m_deselectSequence;
 		private Transform m_tr;
+
+		public static event Action<GameObject> OnButtonDeselected; 
 
 		protected override void Awake()
 		{
@@ -56,6 +59,8 @@ namespace Smash.Ui
 		public void OnDeselect(BaseEventData eventData)
 		{
 			if (m_selectSequence.isAlive) m_deselectSequence.Stop();
+			
+			OnButtonDeselected?.Invoke(gameObject);
 			
 			m_deselectSequence = Sequence.Create()
 				.Group(Tween.Color(m_fadingImage, m_S_ActiveColor, m_S_InactiveColor, m_duration))
