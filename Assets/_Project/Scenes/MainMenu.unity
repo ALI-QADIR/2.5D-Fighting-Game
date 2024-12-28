@@ -758,6 +758,7 @@ MonoBehaviour:
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
   m_eventArgs:
     id: 
+    sender: {fileID: 0}
   m_fadingImage: {fileID: 2038678802}
   m_button: {fileID: 402188615}
   m_duration: 0.1
@@ -1181,6 +1182,7 @@ MonoBehaviour:
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
   m_eventArgs:
     id: 
+    sender: {fileID: 0}
   m_fadingImage: {fileID: 1601805964}
   m_button: {fileID: 591005119}
   m_duration: 0.1
@@ -1323,6 +1325,7 @@ MonoBehaviour:
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
   m_eventArgs:
     id: 
+    sender: {fileID: 0}
   m_fadingImage: {fileID: 1303048661}
   m_button: {fileID: 711745769}
   m_duration: 0.1
@@ -1852,6 +1855,7 @@ MonoBehaviour:
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
   m_eventArgs:
     id: 
+    sender: {fileID: 0}
   m_fadingImage: {fileID: 719722037}
   m_button: {fileID: 906026220}
   m_duration: 0.1
@@ -1994,6 +1998,7 @@ MonoBehaviour:
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
   m_eventArgs:
     id: 
+    sender: {fileID: 0}
   m_fadingImage: {fileID: 2029313832}
   m_button: {fileID: 924280747}
   m_duration: 0.1
@@ -2246,6 +2251,7 @@ MonoBehaviour:
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
   m_eventArgs:
     id: 
+    sender: {fileID: 0}
   m_fadingImage: {fileID: 1158431944}
   m_button: {fileID: 1256407976}
   m_duration: 0.1
@@ -3440,6 +3446,7 @@ MonoBehaviour:
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
   m_eventArgs:
     id: 
+    sender: {fileID: 0}
   m_fadingImage: {fileID: 15162262}
   m_button: {fileID: 1749531106}
   m_duration: 0.1
@@ -3718,6 +3725,7 @@ MonoBehaviour:
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
   m_eventArgs:
     id: 
+    sender: {fileID: 0}
   m_fadingImage: {fileID: 536665130}
   m_button: {fileID: 1795202223}
   m_duration: 0.1
@@ -3981,6 +3989,7 @@ MonoBehaviour:
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
   m_eventArgs:
     id: 
+    sender: {fileID: 0}
   m_fadingImage: {fileID: 1484768379}
   m_button: {fileID: 1977955797}
   m_duration: 0.1
@@ -4409,6 +4418,7 @@ MonoBehaviour:
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
   m_eventArgs:
     id: 
+    sender: {fileID: 0}
   m_fadingImage: {fileID: 1588898115}
   m_button: {fileID: 2077408850}
   m_duration: 0.1
@@ -4468,7 +4478,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 612d104c6dae421d864e94f48afdc21e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_primaryButton: {fileID: 906026220}
+  m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_primaryButton: {fileID: 906026221}
+  m_settings:
+    duration: 0.2
+    ease: 3
+    customEase:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    cycles: 1
+    cycleMode: 0
+    startDelay: 1
+    endDelay: 0
+    useUnscaledTime: 1
+    useFixedUpdate: 1
+  _closeTransform: {fileID: 1198893591}
+  _openTransform: {fileID: 555466359}
 --- !u!1 &2105617630
 GameObject:
   m_ObjectHideFlags: 0
