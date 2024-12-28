@@ -1,5 +1,4 @@
-﻿using System;
-using PrimeTween;
+﻿using PrimeTween;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,8 +6,8 @@ using UnityEngine.UI;
 namespace Smash.Ui
 {
 	[RequireComponent(typeof(Button))]
-	public class ButtonSelectionHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
-	{
+	public class ButtonSelectionHandler : UiEventInvoker, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
+	{ 
 		[Header("Components")]
 		[SerializeField] private Image m_fadingImage;
 		[SerializeField] private Button m_button;
@@ -24,14 +23,14 @@ namespace Smash.Ui
 		
 		private Sequence m_selectSequence, m_deselectSequence;
 		private Transform m_tr;
-		
-		public static event Action<GameObject> OnButtonDeselected;
 
-		private void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
 			m_s_scale = Vector3.one * m_scaleAmount;
 			m_tr = transform;
 			m_fadingImage.color = m_S_InactiveColor;
+			m_button.onClick.AddListener(InvokeEvent);
 		}
 
 		public void OnPointerEnter(PointerEventData eventData)
@@ -57,8 +56,6 @@ namespace Smash.Ui
 		public void OnDeselect(BaseEventData eventData)
 		{
 			if (m_selectSequence.isAlive) m_deselectSequence.Stop();
-			
-			OnButtonDeselected?.Invoke(gameObject);
 			
 			m_deselectSequence = Sequence.Create()
 				.Group(Tween.Color(m_fadingImage, m_S_ActiveColor, m_S_InactiveColor, m_duration))

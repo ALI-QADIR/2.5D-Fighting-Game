@@ -30,6 +30,7 @@ namespace Smash.System
 
         private async void Start()
         {
+            Cursor.lockState = CursorLockMode.Locked;
             await LoadSceneGroup(0);
         }
 
