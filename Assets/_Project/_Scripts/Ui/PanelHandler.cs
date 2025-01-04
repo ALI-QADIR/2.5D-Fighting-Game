@@ -32,7 +32,7 @@ namespace Smash.Ui
 			gameObject.SetActive(false);
 		}
 
-		protected virtual IEnumerator Start()
+		protected virtual IEnumerator SetSelected()
 		{
 			yield return null;
 			EventSystem.current.SetSelectedGameObject(m_primaryButton.gameObject);
@@ -86,11 +86,17 @@ namespace Smash.Ui
 			_openSequence = Sequence.Create()
 				.Group(Tween.Position(target: _tr, startValue: _closeTransform.position,
 					endValue: _openTransform.position, duration: m_duration, ease: m_ease));
+			
+			_openSequence.OnComplete(target:this, target => target.OnComplete());
 		}
+		
+		private void OnComplete() => StartCoroutine(SetSelected());
 
 		protected virtual void Hide()
 		{
 			if (_closeSequence.isAlive) return;
+			
+			EventSystem.current.SetSelectedGameObject(null);
 			
 			_closeSequence = Sequence.Create()
 				.Group(Tween.Position(target: _tr, startValue: _openTransform.position,

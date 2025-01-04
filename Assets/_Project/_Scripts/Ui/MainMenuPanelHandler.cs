@@ -10,22 +10,19 @@ namespace Smash.Ui
 		{
 			base.Awake();
 			OpenPanel();
+			_eventDictionary.Add("btn_play", OnClickPlayButton);
+			_eventDictionary.Add("btn_leaderboard", OnClickLeaderboardButton);
+			_eventDictionary.Add("btn_tutorial", OnClickTutorialButton);
+			_eventDictionary.Add("btn_credits", OnClickCreditsButton);
+			_eventDictionary.Add("btn_options", OnClickOptionsButton);
+			_eventDictionary.Add("btn_quit", OnClickQuitButton);
+			_eventDictionary.Add("btn_modeselect_back", OpenPanel);
 		}
 
 		protected override void AuthenticateEvent(UiEventArgs args)
 		{
-			if (String.Equals(args.id.ToLower(), "btn_play"))
-				OnClickPlayButton();
-			else if (String.Equals(args.id.ToLower(), "btn_leaderboard"))
-				OnClickLeaderboardButton();
-			else if (String.Equals(args.id.ToLower(), "btn_tutorial"))
-				OnClickTutorialButton();
-			else if (String.Equals(args.id.ToLower(), "btn_credits"))
-				OnClickCreditsButton();
-			else if (String.Equals(args.id.ToLower(), "btn_options"))
-				OnClickOptionsButton();
-			else if (String.Equals(args.id.ToLower(), "btn_quit"))
-				OnClickQuitButton();
+			if (_eventDictionary.TryGetValue(args.id.ToLower(), out Action action))
+				action?.Invoke();
 		}
 
 		private void OnClickPlayButton()
