@@ -16,6 +16,7 @@ namespace Smash.Ui
 
 		[Space(10)]
 		[SerializeField] private ButtonSelectionHandler m_primaryButton;
+		[SerializeField] protected BackButtonHandler _backButtonHandler;
 		private GameObject m_lastSelected;
 
 		protected Sequence _openSequence, _closeSequence;
@@ -60,6 +61,7 @@ namespace Smash.Ui
 			_input.UI.Disable();
 			_input.UI.Enable();
 			
+			_input.UI.Cancel.Disable();
 			_input.UI.Navigate.Enable();
 			_input.UI.Navigate.performed += OnNavigateStart;
 		}
@@ -70,11 +72,6 @@ namespace Smash.Ui
 			
 			ButtonSelectionHandler.OnButtonDeselected -= OnButtonDeselected;
 			
-			_input.Player.Disable();
-			_input.UI.Disable();
-			_input.UI.Enable();
-			
-			_input.UI.Navigate.Enable();
 			_input.UI.Navigate.performed -= OnNavigateStart;
 		}
 
@@ -104,6 +101,8 @@ namespace Smash.Ui
 			
 			_closeSequence.OnComplete(target: this, target => target.DisableGameObject());
 		}
+
+		protected abstract void BackButtonPressed(InputAction.CallbackContext ctx);
 
 		private void DisableGameObject() => gameObject.SetActive(false);
 	}

@@ -13,6 +13,12 @@ namespace Smash.Ui
 		{
 			m_eventArgs.sender = this;
 		}
+		
+		public void SetEventArgs(string id, MonoBehaviour sender)
+		{
+			m_eventArgs.sender = sender;
+			m_eventArgs.id = id;
+		}
 
 		protected virtual void InvokeEvent() => m_eventChannel.Invoke(m_eventArgs);
 	}

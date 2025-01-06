@@ -1,17 +1,16 @@
 ﻿using System;
 using Smash.System;
-using UnityEngine.InputSystem;
 
 namespace Smash.Ui
 {
-	public class ModeSelectPanelHandler : PanelHandler
+	public class CreditsPanelHandler : PanelHandler
 	{
 		protected override void Awake()
 		{
 			base.Awake();
-			_eventDictionary.Add("btn_main_play", OnClickPlayButton);
-			_eventDictionary.Add("btn_modes_back", OnClickBackButton);
-			_backButtonHandler.SetEventArgs("btn_modes_back", this);
+			_eventDictionary.Add("btn_credits_back", OnClickBackButton);
+			_eventDictionary.Add("btn_main_credits", OnClickCreditsButton);
+			_backButtonHandler.SetEventArgs("btn_credits_back", this);
 		}
 
 		protected override void AuthenticateEvent(UiEventArgs args)
@@ -33,19 +32,19 @@ namespace Smash.Ui
 			_input.UI.Cancel.started -= BackButtonPressed;
 		}
 
-		protected override void BackButtonPressed(InputAction.CallbackContext ctx)
+		protected override void BackButtonPressed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
 		{
 			_backButtonHandler.BackButtonPressed();
-		}
-
-		private void OnClickPlayButton()
-		{
-			OpenPanel();
 		}
 		
 		private void OnClickBackButton()
 		{
 			ClosePanel();
+		}
+
+		private void OnClickCreditsButton()
+		{
+			OpenPanel();
 		}
 	}
 }
