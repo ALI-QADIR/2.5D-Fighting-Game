@@ -57,11 +57,6 @@ namespace Smash.Ui.Panels
 			ClosePanel();
 		}
 
-		private void OnClickLeaderboardButton()
-		{
-			throw new NotImplementedException();
-		}
-
 		private void OnClickTutorialButton()
 		{
 			throw new NotImplementedException();
