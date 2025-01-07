@@ -1,7 +1,8 @@
 ﻿using System;
 using Smash.System;
+using Smash.Ui.System;
 
-namespace Smash.Ui
+namespace Smash.Ui.Panels
 {
 	public class CreditsPanelHandler : PanelHandler
 	{

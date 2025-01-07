@@ -1,4 +1,6 @@
-﻿namespace Smash.Ui
+﻿using Smash.Ui.System;
+
+namespace Smash.Ui.Components
 {
 	public class BackButtonHandler : UiEventInvoker
 	{

@@ -5,7 +5,7 @@ using UnityEngine.Events;
 namespace Smash.System
 {
 	[CreateAssetMenu(fileName = "Player Settings", menuName = "Scriptable Objects/Player Settings")]
-	public class PlayerSettings : ScriptableObject
+	public class PlayerSettingsSO : ScriptableObject
 	{
 		[SerializeField] private ObservableBool m_touchControls = new (false);
 		[SerializeField] private ObservableBool m_sfx = new (true);

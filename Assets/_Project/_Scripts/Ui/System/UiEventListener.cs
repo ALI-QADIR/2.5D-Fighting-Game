@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Smash.System;
 using TripleA.EventSystem;
 
-namespace Smash.Ui
+namespace Smash.Ui.System
 {
 	public class UiEventListener : EventListener<UiEventArgs>
 	{

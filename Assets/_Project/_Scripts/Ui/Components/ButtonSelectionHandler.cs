@@ -1,10 +1,11 @@
 ﻿using System;
 using PrimeTween;
+using Smash.Ui.System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Smash.Ui
+namespace Smash.Ui.Components
 {
 	[RequireComponent(typeof(Button))]
 	public class ButtonSelectionHandler : UiEventInvoker, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler

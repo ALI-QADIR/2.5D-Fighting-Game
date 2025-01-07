@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using PrimeTween;
+using Smash.Ui.Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-namespace Smash.Ui
+namespace Smash.Ui.System
 {
 	public abstract class PanelHandler : UiEventListener
 	{

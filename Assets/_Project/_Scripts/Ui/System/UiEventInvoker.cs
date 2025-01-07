@@ -1,7 +1,7 @@
 ﻿using Smash.System;
 using UnityEngine;
 
-namespace Smash.Ui
+namespace Smash.Ui.System
 {
 	public abstract class UiEventInvoker : MonoBehaviour
 	{

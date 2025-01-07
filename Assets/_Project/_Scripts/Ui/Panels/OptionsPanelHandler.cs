@@ -1,14 +1,15 @@
 ﻿using System;
 using Smash.System;
+using Smash.Ui.System;
 using TMPro;
 using UnityEngine;
 
-namespace Smash.Ui
+namespace Smash.Ui.Panels
 {
 	public class OptionsPanelHandler : PanelHandler
 	{
 		[Space(15)]
-		[SerializeField] private PlayerSettings m_playerSettings;
+		[SerializeField] private PlayerSettingsSO m_playerSettings;
 		
 		[Space(15)]
 		[SerializeField] private TMP_Text m_sfxStateText;
