@@ -1237,8 +1237,8 @@ MonoBehaviour:
   m_radius: 0.4
   m_lineHeight: 0.8
   m_upOffset: 0.3
-  m_forwardOffset: 0.2
-  m_debug: 1
+  m_forwardOffset: 0.4
+  m_debug: 0
 --- !u!114 &925529472
 MonoBehaviour:
   m_ObjectHideFlags: 0
