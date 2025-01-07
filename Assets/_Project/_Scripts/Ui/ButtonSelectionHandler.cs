@@ -25,7 +25,7 @@ namespace Smash.Ui
 		private Sequence m_selectSequence, m_deselectSequence;
 		private Transform m_tr;
 
-		public static event Action<GameObject> OnButtonDeselected; 
+		public static event Action<GameObject> OnButtonDeselected;
 
 		protected override void Awake()
 		{

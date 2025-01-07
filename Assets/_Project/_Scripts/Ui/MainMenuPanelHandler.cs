@@ -15,10 +15,12 @@ namespace Smash.Ui
 			_eventDictionary.Add("btn_leaderboard", OnClickLeaderboardButton);
 			_eventDictionary.Add("btn_tutorial", OnClickTutorialButton);
 			_eventDictionary.Add("btn_main_credits", ClosePanel);
-			_eventDictionary.Add("btn_options", OnClickOptionsButton);
+			_eventDictionary.Add("btn_main_options", ClosePanel);
 			_eventDictionary.Add("btn_main_quit", OnClickQuitButton);
+			
 			_eventDictionary.Add("btn_modes_back", OpenPanel);
 			_eventDictionary.Add("btn_credits_back", OpenPanel);
+			_eventDictionary.Add("btn_options_back", OpenPanel);
 			
 			_backButtonHandler.SetEventArgs("btn_main_quit", this);
 		}
@@ -58,11 +60,6 @@ namespace Smash.Ui
 		}
 
 		private void OnClickTutorialButton()
-		{
-			throw new NotImplementedException();
-		}
-
-		private void OnClickOptionsButton()
 		{
 			throw new NotImplementedException();
 		}
