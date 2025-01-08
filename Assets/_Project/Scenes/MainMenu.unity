@@ -3282,7 +3282,7 @@ MonoBehaviour:
   m_ease: 3
   _closeTransform: {fileID: 1394855691}
   _openTransform: {fileID: 555466359}
-  m_primaryButton: {fileID: 100107320}
+  _primaryButton: {fileID: 100107320}
   _backButtonHandler: {fileID: 793703011}
 --- !u!114 &793703011
 MonoBehaviour:
@@ -3362,7 +3362,7 @@ MonoBehaviour:
   m_ease: 3
   _closeTransform: {fileID: 1394855691}
   _openTransform: {fileID: 555466359}
-  m_primaryButton: {fileID: 924280748}
+  _primaryButton: {fileID: 924280748}
   _backButtonHandler: {fileID: 836455407}
 --- !u!114 &836455407
 MonoBehaviour:
@@ -5658,7 +5658,7 @@ MonoBehaviour:
   m_ease: 3
   _closeTransform: {fileID: 1394855691}
   _openTransform: {fileID: 555466359}
-  m_primaryButton: {fileID: 1970030154}
+  _primaryButton: {fileID: 1970030154}
   _backButtonHandler: {fileID: 1443535307}
 --- !u!1 &1444875250
 GameObject:
@@ -6024,7 +6024,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1700752752}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -6032,7 +6032,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 31
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -6359,6 +6359,7 @@ GameObject:
   - component: {fileID: 1700752753}
   - component: {fileID: 1700752752}
   - component: {fileID: 1700752751}
+  - component: {fileID: 1700752754}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6406,7 +6407,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 101
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -6440,6 +6441,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1700752754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700752750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &1737653347
 GameObject:
   m_ObjectHideFlags: 0
@@ -7042,7 +7087,7 @@ MonoBehaviour:
   m_ease: 3
   _closeTransform: {fileID: 1394855691}
   _openTransform: {fileID: 555466359}
-  m_primaryButton: {fileID: 971565220}
+  _primaryButton: {fileID: 971565220}
   _backButtonHandler: {fileID: 1886641773}
   m_playerSettings: {fileID: 11400000, guid: e7f7c42547a679543812ef7dddd4672f, type: 2}
   m_sfxStateText: {fileID: 170304403}
@@ -8176,7 +8221,7 @@ MonoBehaviour:
   m_ease: 3
   _closeTransform: {fileID: 1198893591}
   _openTransform: {fileID: 555466359}
-  m_primaryButton: {fileID: 906026221}
+  _primaryButton: {fileID: 906026221}
   _backButtonHandler: {fileID: 2089416866}
 --- !u!114 &2089416866
 MonoBehaviour:
