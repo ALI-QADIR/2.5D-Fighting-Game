@@ -12,6 +12,10 @@ namespace Smash.System
 		private PlayerSignInData m_playerSignInData;
 		public string PlayerId => m_playerSignInData?.Id;
 		public string AccessToken => m_playerSignInData?.AccessToken;
+		public string PlayerName => m_playerSignInData?.PlayerName;
+		public double PlayerScore => m_playerSignInData?.PlayerScore ?? ScoreHelper.DefaultScore;
+		public void SetPlayerScore(double score) => m_playerSignInData?.SetPlayerScore(score);
+		public void SetPlayerName(string playerName) => m_playerSignInData?.SetPlayerName(playerName);
 		
 		private bool m_isServiceInitialised;
 
@@ -72,7 +76,7 @@ namespace Smash.System
 		}
 
 		private PlayerSignInData CreatePlayerData() => new (AuthenticationService.Instance.PlayerId,
-			AuthenticationService.Instance.AccessToken, "anon");
+			AuthenticationService.Instance.AccessToken, "anon", 84540);
 
 		private void SetUpEvents()
 		{
