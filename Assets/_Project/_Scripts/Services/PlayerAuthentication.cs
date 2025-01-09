@@ -1,11 +1,12 @@
 ﻿using System;
-using UnityEngine;
-using Unity.Services.Core;
-using Unity.Services.Authentication;
 using System.Threading.Tasks;
+using Smash.System;
 using TripleA.Singletons;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
+using UnityEngine;
 
-namespace Smash.System
+namespace Smash.Services
 {
 	public class PlayerAuthentication : PersistentSingleton<PlayerAuthentication>
 	{

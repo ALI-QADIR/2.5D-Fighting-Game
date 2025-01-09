@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
+using Smash.Services;
 using Smash.System;
-using Entry = Smash.Ui.Components.LeaderboardEntry;
+using Smash.Ui.Components;
 using TMPro;
-using Unity.Services.Leaderboards;
-using Unity.Services.Leaderboards.Models;
 using UnityEngine;
 
 namespace Smash.Ui
@@ -13,9 +12,7 @@ namespace Smash.Ui
 		[SerializeField] private GameObject m_board;
 		[SerializeField] private TMP_Text m_connectionStatusText;
 		[SerializeField] private TMP_Text m_yourScoreText;
-		[SerializeField] private Entry[] m_entries;
-
-		private const string k_LeaderboardId = "smash-platformer-speedrun";
+		[SerializeField] private LeaderboardEntry[] m_entries;
 		
 		public void OnClickRefresh() => RefreshBoard();
 
@@ -55,72 +52,51 @@ namespace Smash.Ui
 			m_board.SetActive(false);
 			m_connectionStatusText.text = "refreshing...";
 			m_connectionStatusText.gameObject.SetActive(true);
-			bool isPlayerScoreSet = await TryGetOrSetPlayerScore();
+			bool isPlayerScoreSet = await LeaderboardServicesHandler.Instance.TryGetOrSetPlayerDetails();
 			if (!isPlayerScoreSet)
 			{
 				SetLeaderboard(false);
 				return; 
 			} 
-			bool setLeaderboard = await TrySetLeaderBoard();
+			SetPlayerScore();
+			bool setLeaderboard = await LeaderboardServicesHandler.Instance.TryGetLeaderBoard(m_entries.Length);
 			SetLeaderboard(setLeaderboard);
 		}
 
 		private void SetLeaderboard(bool setLeaderboard)
 		{
+			if (setLeaderboard) PopulateLeaderBoard();
 			m_connectionStatusText.gameObject.SetActive(!setLeaderboard);
 			m_connectionStatusText.text = "refresh failed!!";
 			m_board.SetActive(setLeaderboard);
 		}
 
-		private async Task<bool> TryGetOrSetPlayerScore()
+		private void SetPlayerScore()
 		{
-			string yourScore = "--";
-			try
-			{
-				LeaderboardEntry entry = await LeaderboardsService.Instance.AddPlayerScoreAsync(
-					k_LeaderboardId, PlayerAuthentication.Instance.PlayerScore);
-				PlayerAuthentication.Instance.SetPlayerScore(entry.Score);
-				PlayerAuthentication.Instance.SetPlayerName(entry.PlayerName);
-				m_yourScoreText.text = ScoreHelper.ApproximatelyEqual(entry.Score, ScoreHelper.DefaultScore)
-					? yourScore
-					: ScoreHelper.ConvertScore(entry.Score);
-				return true;
-			}
-			catch
-			{
-				m_yourScoreText.text = yourScore;
-				return false;
-			}
+			double playerScore = PlayerAuthentication.Instance.PlayerScore;
+			m_yourScoreText.text =
+				ScoreHelper.ApproximatelyEqual(playerScore, ScoreHelper.DefaultScore)
+				? "--" : ScoreHelper.ConvertScore(playerScore);
 		}
 
-		private async Task<bool> TrySetLeaderBoard()
+		private void PopulateLeaderBoard()
 		{
-			try
+			foreach (var entry in m_entries)
 			{
-				var scoreResponse = await LeaderboardsService.Instance.GetScoresAsync(
-					k_LeaderboardId, new GetScoresOptions { Limit = 25 });
-				var entries = scoreResponse.Results;
-				foreach (var entry in m_entries)
-				{
-					entry.gameObject.SetActive(false);
-				}
-
-				for (int i = 0; i < entries.Count; i++)
-				{
-					if (ScoreHelper.ApproximatelyEqual(entries[i].Score, ScoreHelper.DefaultScore)) continue;
-					m_entries[i].Set(
-						position: i+1, 
-						playerName: entries[i].PlayerName, 
-						score: entries[i].Score);
-					m_entries[i].CheckMyPlayer(entries[i].PlayerId);
-					m_entries[i].gameObject.SetActive(true);
-				}
-
-				return true;
+				entry.gameObject.SetActive(false);
 			}
-			catch
+			
+			var entries = LeaderboardServicesHandler.Instance.Entries;
+			
+			for (int i = 0; i < entries.Count; i++)
 			{
-				return false;
+				if (ScoreHelper.ApproximatelyEqual(entries[i].Score, ScoreHelper.DefaultScore)) continue;
+				m_entries[i].Set(
+					position: i+1, 
+					playerName: entries[i].PlayerName, 
+					score: entries[i].Score);
+				m_entries[i].CheckMyPlayer(entries[i].PlayerId);
+				m_entries[i].gameObject.SetActive(true);
 			}
 		}
 	}
