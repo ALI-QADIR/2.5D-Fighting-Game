@@ -2,17 +2,17 @@
 using System.Threading.Tasks;
 using Smash.StructsAndEnums;
 using TripleA.SceneManagement;
+using TripleA.Singletons;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Smash.System
 {
-    public class AsyncSceneLoader : MonoBehaviour
+    public class AsyncSceneLoader : GenericSingleton<AsyncSceneLoader>
     {
         [SerializeField] private Image m_fill;
         [SerializeField] private float m_fillSpeed = 0.5f;
         [SerializeField] private Canvas m_canvas;
-        [SerializeField] private Camera m_cam;
         [SerializeField] private MySceneGroup[] m_sceneGroup;
 
         private float m_targetProgress;
@@ -20,8 +20,9 @@ namespace Smash.System
         
         private MySceneGroupManager m_sceneGroupManager;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             m_sceneGroupManager = new(new List<string>{"AsyncSceneLoader"});
             m_sceneGroupManager.OnSceneGroupLoaded += () => Debug.Log("Scene Group Loaded");
             m_sceneGroupManager.OnSceneUnloaded += sceneName => Debug.Log($"Unloaded : {sceneName}");
@@ -30,6 +31,14 @@ namespace Smash.System
 
         private async void Start()
         {
+            EnableLoadingCanvas();
+            int count = 0;
+            bool isInitialised = false;
+            while (count < 3 && !isInitialised)
+            {
+                count++;
+                isInitialised = await PlayerAuthentication.Instance.InitializeUnityAuthentication();
+            }
             await LoadSceneGroup(0);
         }
 
@@ -63,13 +72,14 @@ namespace Smash.System
 
             await m_sceneGroupManager.LoadScenes(m_sceneGroup[index], progress, MySceneTypes.ActiveScene, false, 2f);
 
+            await Task.Delay(1000);
+            
             EnableLoadingCanvas(false);
         }
 
         private void EnableLoadingCanvas(bool enable = true)
         {
             m_isLoading = enable;
-            m_cam.gameObject.SetActive(enable);
             m_canvas.gameObject.SetActive(enable);
         }
     }

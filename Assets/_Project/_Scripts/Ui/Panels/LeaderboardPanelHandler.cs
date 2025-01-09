@@ -1,16 +1,23 @@
 ﻿using System;
 using Smash.System;
 using Smash.Ui.System;
+using UnityEngine;
 
 namespace Smash.Ui.Panels
 {
 	public class LeaderboardPanelHandler : PanelHandler
 	{
+		[SerializeField] private LeaderboardHandler m_leaderboardHandler;
+		
 		protected override void Awake()
 		{
 			base.Awake();
+			
+			m_leaderboardHandler ??= GetComponent<LeaderboardHandler>();
+			
 			_eventDictionary.Add("btn_leaderboard_back", OnClickBackButton);
-			_eventDictionary.Add("btn_main_leaderboard", OnClickCreditsButton);
+			_eventDictionary.Add("btn_leaderboard_refresh", OnClickRefreshButton);
+			_eventDictionary.Add("btn_main_leaderboard", OnClickLeaderboardButton);
 			
 			_backButtonHandler.SetEventArgs("btn_leaderboard_back", this);
 		}
@@ -44,9 +51,15 @@ namespace Smash.Ui.Panels
 			ClosePanel();
 		}
 
-		private void OnClickCreditsButton()
+		private void OnClickLeaderboardButton()
 		{
 			OpenPanel();
+			m_leaderboardHandler.OnOpen();
+		}
+		
+		private void OnClickRefreshButton()
+		{
+			m_leaderboardHandler.OnClickRefresh();
 		}
 	}
 }
