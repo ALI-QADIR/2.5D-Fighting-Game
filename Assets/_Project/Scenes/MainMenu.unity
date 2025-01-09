@@ -5338,7 +5338,7 @@ MonoBehaviour:
   m_ease: 3
   _closeTransform: {fileID: 1394855691}
   _openTransform: {fileID: 555466359}
-  _primaryButton: {fileID: 100107320}
+  m_primaryButton: {fileID: 100107320}
   _backButtonHandler: {fileID: 793703011}
 --- !u!114 &793703011
 MonoBehaviour:
@@ -5418,7 +5418,7 @@ MonoBehaviour:
   m_ease: 3
   _closeTransform: {fileID: 1394855691}
   _openTransform: {fileID: 555466359}
-  _primaryButton: {fileID: 924280748}
+  m_primaryButton: {fileID: 924280748}
   _backButtonHandler: {fileID: 836455407}
 --- !u!114 &836455407
 MonoBehaviour:
@@ -8591,7 +8591,7 @@ MonoBehaviour:
   m_ease: 3
   _closeTransform: {fileID: 1394855691}
   _openTransform: {fileID: 555466359}
-  _primaryButton: {fileID: 1970030154}
+  m_primaryButton: {fileID: 1475261567}
   _backButtonHandler: {fileID: 1443535307}
   m_leaderboardHandler: {fileID: 1443535309}
 --- !u!114 &1443535309
@@ -10977,7 +10977,7 @@ MonoBehaviour:
   m_ease: 3
   _closeTransform: {fileID: 1394855691}
   _openTransform: {fileID: 555466359}
-  _primaryButton: {fileID: 971565220}
+  m_primaryButton: {fileID: 971565220}
   _backButtonHandler: {fileID: 1886641773}
   m_playerSettings: {fileID: 11400000, guid: e7f7c42547a679543812ef7dddd4672f, type: 2}
   m_sfxStateText: {fileID: 170304403}
@@ -12704,7 +12704,7 @@ MonoBehaviour:
   m_ease: 3
   _closeTransform: {fileID: 1198893591}
   _openTransform: {fileID: 555466359}
-  _primaryButton: {fileID: 906026221}
+  m_primaryButton: {fileID: 906026221}
   _backButtonHandler: {fileID: 2089416866}
 --- !u!114 &2089416866
 MonoBehaviour:

@@ -68,15 +68,20 @@ namespace Smash.System
 				await InitializeUnityAuthentication();
 				return false;
 			}
+			catch (RequestFailedException)
+			{
+				Debug.Log("Request Failed Exception");
+				return false;
+			}
 			catch (Exception e)
 			{
-				Debug.LogError("Sign In Failed " + e);
+				Debug.Log(e);
 				return false;
 			}
 		}
 
 		private PlayerSignInData CreatePlayerData() => new (AuthenticationService.Instance.PlayerId,
-			AuthenticationService.Instance.AccessToken, "anon", 84540);
+			AuthenticationService.Instance.AccessToken, "anon", ScoreHelper.DefaultScore);
 
 		private void SetUpEvents()
 		{

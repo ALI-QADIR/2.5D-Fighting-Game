@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using System.Threading.Tasks;
 using Smash.System;
 using Entry = Smash.Ui.Components.LeaderboardEntry;
 using TMPro;
@@ -30,18 +28,18 @@ namespace Smash.Ui
 				m_board.SetActive(false);
 				m_connectionStatusText.text = "not signed in";
 				m_connectionStatusText.gameObject.SetActive(true);
-				SignIn();
+				SignIn().GetAwaiter();
 			}
 		}
 
-		private async void SignIn()
+		private async Task SignIn()
 		{
-			try
+			bool isSignInSuccessful = await PlayerAuthentication.Instance.TryAnonSignin();
+			if (isSignInSuccessful)
 			{
-				await PlayerAuthentication.Instance.TryAnonSignin();
 				RefreshBoard();
 			}
-			catch
+			else
 			{
 				m_connectionStatusText.gameObject.SetActive(true);
 				m_connectionStatusText.text = "sign in failed!!";
@@ -50,44 +48,52 @@ namespace Smash.Ui
 
 		private async void RefreshBoard()
 		{
+			if (!PlayerAuthentication.Instance.IsSignedIn())
+			{
+				await SignIn();
+			}
 			m_board.SetActive(false);
 			m_connectionStatusText.text = "refreshing...";
 			m_connectionStatusText.gameObject.SetActive(true);
-			await GetOrSetPlayerScore();
-			bool setLeaderboard = await SetLeaderBoard();
-			if (setLeaderboard)
+			bool isPlayerScoreSet = await TryGetOrSetPlayerScore();
+			if (!isPlayerScoreSet)
 			{
-				m_connectionStatusText.gameObject.SetActive(false);
-				m_board.SetActive(true);
-			}
-			else
-			{
-				m_connectionStatusText.gameObject.SetActive(true);
-				m_connectionStatusText.text = "refresh failed!!";
-			}
+				SetLeaderboard(false);
+				return; 
+			} 
+			bool setLeaderboard = await TrySetLeaderBoard();
+			SetLeaderboard(setLeaderboard);
 		}
 
-		private async Task GetOrSetPlayerScore()
+		private void SetLeaderboard(bool setLeaderboard)
+		{
+			m_connectionStatusText.gameObject.SetActive(!setLeaderboard);
+			m_connectionStatusText.text = "refresh failed!!";
+			m_board.SetActive(setLeaderboard);
+		}
+
+		private async Task<bool> TryGetOrSetPlayerScore()
 		{
 			string yourScore = "--";
 			try
 			{
-				await LeaderboardsService.Instance.AddPlayerScoreAsync(
+				LeaderboardEntry entry = await LeaderboardsService.Instance.AddPlayerScoreAsync(
 					k_LeaderboardId, PlayerAuthentication.Instance.PlayerScore);
-				LeaderboardEntry entry = await LeaderboardsService.Instance.GetPlayerScoreAsync(k_LeaderboardId);
 				PlayerAuthentication.Instance.SetPlayerScore(entry.Score);
 				PlayerAuthentication.Instance.SetPlayerName(entry.PlayerName);
 				m_yourScoreText.text = ScoreHelper.ApproximatelyEqual(entry.Score, ScoreHelper.DefaultScore)
 					? yourScore
 					: ScoreHelper.ConvertScore(entry.Score);
+				return true;
 			}
 			catch
 			{
-				m_yourScoreText.text = "--";
+				m_yourScoreText.text = yourScore;
+				return false;
 			}
 		}
 
-		private async Task<bool> SetLeaderBoard()
+		private async Task<bool> TrySetLeaderBoard()
 		{
 			try
 			{
