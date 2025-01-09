@@ -375,7 +375,7 @@ MonoBehaviour:
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 270601560}
   m_HorizontalScrollbarVisibility: 2
-  m_VerticalScrollbarVisibility: 0
+  m_VerticalScrollbarVisibility: 1
   m_HorizontalScrollbarSpacing: -3
   m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
@@ -1992,7 +1992,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1708980011}
   m_HandleRect: {fileID: 1708980010}
   m_Direction: 2
-  m_Value: 0.9999999
+  m_Value: 1
   m_Size: 0.4001074
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7088,7 +7088,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0000077787, y: 0.00007280707}
+  m_AnchoredPosition: {x: 0.0000077787, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1063429317
@@ -8933,6 +8933,7 @@ GameObject:
   - component: {fileID: 1443535308}
   - component: {fileID: 1443535307}
   - component: {fileID: 1443535309}
+  - component: {fileID: 1443535310}
   m_Layer: 5
   m_Name: Leaderboard
   m_TagString: Untagged
@@ -9000,6 +9001,7 @@ MonoBehaviour:
   m_primaryButton: {fileID: 1475261567}
   _backButtonHandler: {fileID: 1443535307}
   m_leaderboardHandler: {fileID: 1443535309}
+  m_scrollHandler: {fileID: 1443535310}
 --- !u!114 &1443535309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9041,6 +9043,21 @@ MonoBehaviour:
   - {fileID: 420884764}
   - {fileID: 564466307}
   - {fileID: 1296100395}
+--- !u!114 &1443535310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443535304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00decbff62054860add041af6f4d0123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_scrollSpeed: 1
+  m_scrollbar: {fileID: 270601560}
+  axisValue: 0
 --- !u!1 &1444875250
 GameObject:
   m_ObjectHideFlags: 0

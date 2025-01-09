@@ -1,14 +1,17 @@
 ﻿using System;
 using Smash.System;
+using Smash.Ui.Components;
 using Smash.Ui.System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Smash.Ui.Panels
 {
 	public class LeaderboardPanelHandler : PanelHandler
 	{
 		[SerializeField] private LeaderboardHandler m_leaderboardHandler;
-		
+		[SerializeField] private ScrollHandler m_scrollHandler;
+
 		protected override void Awake()
 		{
 			base.Awake();
@@ -31,7 +34,13 @@ namespace Smash.Ui.Panels
 		public override void OpenPanel()
 		{
 			base.OpenPanel();
+
+			m_scrollHandler.axisValue = 0;
+			
 			_input.UI.Cancel.Enable();
+			_input.UI.VerticalScroll.Enable();
+			_input.UI.VerticalScroll.performed += OnVerticalScroll;
+			_input.UI.VerticalScroll.canceled += OnVerticalScroll;
 			_input.UI.Cancel.started += BackButtonPressed;
 		}
 
@@ -39,11 +48,18 @@ namespace Smash.Ui.Panels
 		{
 			base.ClosePanel();
 			_input.UI.Cancel.started -= BackButtonPressed;
+			_input.UI.VerticalScroll.performed -= OnVerticalScroll;
+			_input.UI.VerticalScroll.canceled -= OnVerticalScroll;
 		}
 
-		protected override void BackButtonPressed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+		protected override void BackButtonPressed(InputAction.CallbackContext ctx)
 		{
 			_backButtonHandler.BackButtonPressed();
+		}
+
+		private void OnVerticalScroll(InputAction.CallbackContext ctx)
+		{
+			m_scrollHandler.axisValue = ctx.ReadValue<float>();
 		}
 		
 		private void OnClickBackButton()

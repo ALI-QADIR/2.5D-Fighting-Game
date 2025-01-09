@@ -64,6 +64,8 @@ namespace Smash.Ui.System
 			
 			_input.UI.Cancel.Disable();
 			_input.UI.Retry.Disable();
+			_input.UI.HorizontalScroll.Disable();
+			_input.UI.VerticalScroll.Disable();
 			_input.UI.Navigate.Enable();
 			_input.UI.Navigate.performed += OnNavigateStart;
 		}
