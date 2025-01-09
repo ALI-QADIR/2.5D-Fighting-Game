@@ -916,6 +916,7 @@ MonoBehaviour:
   m_fill: {fileID: 3886247}
   m_fillSpeed: 0.5
   m_canvas: {fileID: 615253558}
+  m_cam: {fileID: 580336038}
   m_sceneGroup:
   - groupName: MainMenu
     scenes:

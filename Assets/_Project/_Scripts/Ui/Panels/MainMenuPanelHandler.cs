@@ -8,6 +8,8 @@ namespace Smash.Ui.Panels
 {
 	public class MainMenuPanelHandler : PanelHandler
 	{
+		[SerializeField] private MainMenuHandler m_mainMenuHandler;
+		
 		protected override void Awake()
 		{
 			base.Awake();
@@ -38,18 +40,28 @@ namespace Smash.Ui.Panels
 		{
 			base.OpenPanel();
 			_input.UI.Cancel.Enable();
+			_input.UI.Retry.Enable();
 			_input.UI.Cancel.started += BackButtonPressed;
+			_input.UI.Retry.started += Retry;
+			
+			m_mainMenuHandler.OnOpen();
 		}
 
 		public override void ClosePanel()
 		{
 			base.ClosePanel();
 			_input.UI.Cancel.started -= BackButtonPressed;
+			_input.UI.Retry.started -= Retry;
 		}
 
 		protected override void BackButtonPressed(InputAction.CallbackContext ctx)
 		{
 			_backButtonHandler.BackButtonPressed();
+		}
+
+		private void Retry(InputAction.CallbackContext ctx)
+		{
+			m_mainMenuHandler.OnRetry();
 		}
 
 		private void OnClickPlayButton()

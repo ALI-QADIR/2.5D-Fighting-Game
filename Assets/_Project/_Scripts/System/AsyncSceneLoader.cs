@@ -14,6 +14,7 @@ namespace Smash.System
         [SerializeField] private Image m_fill;
         [SerializeField] private float m_fillSpeed = 0.5f;
         [SerializeField] private Canvas m_canvas;
+        [SerializeField] private Camera m_cam;
         [SerializeField] private MySceneGroup[] m_sceneGroup;
 
         private float m_targetProgress;
@@ -81,6 +82,7 @@ namespace Smash.System
         private void EnableLoadingCanvas(bool enable = true)
         {
             m_isLoading = enable;
+            m_cam.gameObject.SetActive(enable);
             m_canvas.gameObject.SetActive(enable);
         }
     }
