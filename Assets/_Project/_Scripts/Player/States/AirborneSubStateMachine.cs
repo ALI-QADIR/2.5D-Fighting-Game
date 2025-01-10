@@ -14,6 +14,7 @@ namespace Smash.Player.States
 		private Dash m_dash;
 		private Apex m_apex;
 		private Ledge m_ledge;
+		private WallSlide m_wallSlide;
 
 		private FuncPredicate m_entryToRisingCondition;
 		private FuncPredicate m_entryToCoyoteCondition;
@@ -28,6 +29,7 @@ namespace Smash.Player.States
 		private FuncPredicate m_apexToDashCondition;
 		
 		private FuncPredicate m_ledgeCondition;
+		private FuncPredicate m_wallCondition;
 		private FuncPredicate m_crashingCondition;
 		private FuncPredicate m_floatingToDashCondition;
 		
@@ -35,6 +37,9 @@ namespace Smash.Player.States
 		private FuncPredicate m_fallingToDashCondition;
 		
 		private FuncPredicate m_ledgeToRisingCondition;
+		
+		private FuncPredicate m_wallSlideToRisingCondition;
+		private FuncPredicate m_wallSlideToFallingCondition;
 		
 		private FuncPredicate m_coyoteToRisingCondition;
 		private FuncPredicate m_coyoteToFallingCondition;
@@ -102,24 +107,32 @@ namespace Smash.Player.States
 			m_dash = new Dash(_controller, _controller.DashDuration);
 			m_apex = new Apex(_controller);
 			m_ledge = new Ledge(_controller);
+			m_wallSlide = new WallSlide(_controller);
 		}
 		
 		protected override void CreateTransitions()
 		{
+			// Entry
 			m_entryToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is AirEntry && _controller.IsRising());
 			m_entryToCoyoteCondition = new FuncPredicate(() => _stateMachine.CurrentState is AirEntry && _controller.IsFalling());
 			
+			// Rising
 			m_risingToApexCondition = new FuncPredicate(() => _stateMachine.CurrentState is Rising && _controller.IsFalling());
 			m_risingToDashCondition = new FuncPredicate(DashPredicate<Rising>);
 			
+			// Falling
 			m_fallingToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Falling && _controller.IsRising());
 			m_fallingToDashCondition = new FuncPredicate(DashPredicate<Falling>);
 
+			// Independent
 			m_ledgeCondition = new FuncPredicate(() =>
-				_stateMachine.CurrentState is Coyote or FloatingFall or Falling or Apex && _controller.IsLedgeGrab());
+				_stateMachine.CurrentState is Coyote or FloatingFall or Falling or Apex or WallSlide && _controller.IsLedgeGrab());
+			m_wallCondition = new FuncPredicate(() => 
+				_stateMachine.CurrentState is FloatingFall or Falling && _controller.IsWallDetected());
 			m_crashingCondition = new FuncPredicate(() => 
-				_stateMachine.CurrentState is Ledge or FloatingFall or Falling or Dash or Rising && _controller.IsCrashingFall());
+				_stateMachine.CurrentState is Ledge or FloatingFall or Falling or Dash or Rising or WallSlide && _controller.IsCrashingFall());
 
+			// Apex
 			m_apexToDashCondition = new FuncPredicate(DashPredicate<Apex>);
 			m_apexToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Apex && _controller.IsRising());
 			m_apexToFallingCondition = new FuncPredicate(() => 
@@ -129,12 +142,20 @@ namespace Smash.Player.States
 			m_apexToCrashingCondition = new FuncPredicate(() => 
 				_stateMachine.CurrentState is Apex && m_apex.ElapsedTime >= _controller.ApexTime && _controller.IsCrashingFall());
 			
+			// Dash
 			m_dashToCoyoteCondition = new FuncPredicate(() => 
 				_stateMachine.CurrentState is Dash && m_dash.IsFinished);
 			m_floatingToDashCondition = new FuncPredicate(DashPredicate<FloatingFall>);
 			
+			// Ledge
 			m_ledgeToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Ledge && _controller.IsRising());
 			
+			// WallSlide
+			m_wallSlideToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is WallSlide && _controller.IsRising());
+			m_wallSlideToFallingCondition = new FuncPredicate(() =>
+				_stateMachine.CurrentState is WallSlide && _controller.IsFalling() && !_controller.IsWallDetected());
+			
+			// Coyote
 			m_coyoteToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Coyote && _controller.IsRising());
 			m_coyoteToDashCondition = new FuncPredicate(DashPredicate<Coyote>);
 			m_coyoteToFallingCondition = new FuncPredicate(() =>
@@ -154,6 +175,7 @@ namespace Smash.Player.States
 			AddTransition(m_falling, m_dash, m_fallingToDashCondition);
 			AddTransition(m_falling, m_crashingFall, m_crashingCondition);
 			AddTransition(m_falling, m_ledge, m_ledgeCondition);
+			AddTransition(m_falling, m_wallSlide, m_wallCondition);
 			
 			AddTransition(m_apex, m_dash, m_apexToDashCondition);
 			AddTransition(m_apex, m_rising, m_apexToRisingCondition);
@@ -168,9 +190,16 @@ namespace Smash.Player.States
 			AddTransition(m_floatingFall, m_crashingFall, m_crashingCondition);
 			AddTransition(m_floatingFall, m_dash, m_floatingToDashCondition);
 			AddTransition(m_floatingFall, m_ledge, m_ledgeCondition);
+			AddTransition(m_floatingFall, m_wallSlide, m_wallCondition);
 			
 			AddTransition(m_ledge, m_crashingFall, m_crashingCondition);
 			AddTransition(m_ledge, m_rising, m_ledgeToRisingCondition);
+			
+			AddTransition(m_wallSlide, m_crashingFall, m_crashingCondition);
+			AddTransition(m_wallSlide, m_falling, m_wallSlideToFallingCondition);
+			AddTransition(m_wallSlide, m_rising, m_wallSlideToRisingCondition);
+			AddTransition(m_wallSlide, m_ledge, m_ledgeCondition);
+			
 			
 			AddTransition(m_coyote, m_falling, m_coyoteToFallingCondition);
 			AddTransition(m_coyote, m_rising, m_coyoteToRisingCondition);

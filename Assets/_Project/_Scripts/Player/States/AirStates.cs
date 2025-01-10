@@ -144,6 +144,26 @@ namespace Smash.Player.States
 			_controller.SetOnLedge(false);
 		}
 	}
+	
+	public class WallSlide : PlayerBaseState
+	{
+		public WallSlide(PlayerController controller) : base(controller)
+		{
+		}
+
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_controller.CurrentState = this;
+			_controller.SetWallSliding(true);
+		}
+
+		public override void OnExit()
+		{
+			base.OnExit();
+			_controller.SetWallSliding(false);
+		}
+	}
     
 	public class AirExit : PlayerBaseState
 	{
