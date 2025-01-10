@@ -17,12 +17,15 @@ namespace Smash.Player
 		[SerializeField] private PlayerMotor m_motor;
 		[SerializeField] private LedgeDetector m_ledgeDetector;
 		[SerializeField] private CeilingDetector m_ceilingDetector;
+		[SerializeField] private WallDetector m_wallDetector;
 		[FormerlySerializedAs("m_animator")] [SerializeField] private PlayerGraphicsController m_graphicsController;
 		[SerializeField] private PlayerPropertiesSO m_properties;
 		[Header("Control Values")]
 		[SerializeField] private float m_groundGravity = 200f;
 		[SerializeField] private float m_airGravity = 200f;
 		[SerializeField] private float m_maxFallSpeed = 50f;
+		[SerializeField] private float m_wallSlideSpeed = 20f;
+		[SerializeField] private float m_wallJumpSideSpeed = 50f;
 		[SerializeField] private float m_climbUpSpeed = 37f;
 		[SerializeField] private float m_climbSideSpeed = 20f;
 		[Header("Timer Values")]
@@ -82,6 +85,9 @@ namespace Smash.Player
 			m_tr = transform;
 			m_motor ??= GetComponent<PlayerMotor>();
 			m_ledgeDetector ??= GetComponent<LedgeDetector>();
+			m_wallDetector ??= GetComponent<WallDetector>();
+			m_ceilingDetector ??= GetComponent<CeilingDetector>();
+			m_graphicsController ??= GetComponent<PlayerGraphicsController>();
 
 			m_currentMoveSpeed = m_properties.GroundSpeed;
 			m_gravity = m_airGravity;
@@ -109,13 +115,14 @@ namespace Smash.Player
 		{
 			m_stateMachine.OnFixedUpdate();
 			// Todo: One-Way Platforms
-			// Todo: Wall Jump
 			// Todo: Slopes??
 			// Todo: Stairs??
 			// Todo: Wall Clipping
 			
 			CheckForLedge();
+			CheckWallSlide();
 			CheckForCeiling();
+			CheckRotation();
 			HandleRotation();
 			
 			m_motor.CheckForGround();
@@ -160,7 +167,7 @@ namespace Smash.Player
 				m_fallType = FallType.Crash;
 				return;
 			}
-			if (CurrentState is Ledge)
+			if (CurrentState is Ledge or WallSlide)
 			{
 				m_fallType = FallType.Crash;
 			}
@@ -169,13 +176,14 @@ namespace Smash.Player
 		public void Rotate(float angle)
 		{
 			if (angle == 0) return;
-			if (CurrentState is Dash or Ledge) return;
+			if (CurrentState is Dash) return;
+			if (CurrentState is Ledge && !m_isJumping) return;
 			
 			// OnRotate?.Invoke();
 			float lookAngle = Mathf.Approximately(angle, -1.0f) ? 179f : 0f;
 			if (Mathf.Approximately(m_currentLookAngle, lookAngle)) return;
 			
-			Debug.Log("Rotating");
+			// Debug.Log("Rotating");
 			m_currentLookAngle = lookAngle;
 			m_targetRotation = Quaternion.Euler(0f, lookAngle, 0f);
 			m_savedRotation = m_tr.rotation;
@@ -202,6 +210,14 @@ namespace Smash.Player
 			
 			m_numberOfJumps--;
 			m_isJumping = true;
+			if (CurrentState is WallSlide or Ledge || (CurrentState is Rising or Apex && IsWallDetected()))
+			{
+				// TODO: Fix Z drift when wall Jumping => for now rigid body -> freeze z position
+				Vector3 horizontalVelocity = m_tr.right * -m_wallJumpSideSpeed;
+				m_savedVelocity += horizontalVelocity;
+				float lookAngle = Mathf.Approximately(m_currentLookAngle, 179) ? 1 : -1;
+				Rotate(lookAngle);
+			}
 			HandleJump();
 			// Debug.Log($"Jumping {m_numberOfJumps}");
 		}
@@ -364,6 +380,22 @@ namespace Smash.Player
 				m_currentMoveSpeed = 0;
 				m_numberOfJumps = 1;
 				m_ledgeDetector.ResetSensorHits();
+				m_isJumping = false;
+			}
+			else
+			{
+				m_currentFallSpeed = m_maxFallSpeed;
+				m_numberOfDashes = 1;
+			}
+		}
+
+		public void SetWallSliding(bool isWallSliding)
+		{
+			if (isWallSliding)
+			{
+				m_currentFallSpeed = m_wallSlideSpeed;
+				m_numberOfJumps = 1;
+				HandleJumpBuffer();
 			}
 			else
 			{
@@ -384,6 +416,7 @@ namespace Smash.Player
 		public bool IsFloatingFall() => m_fallType == FallType.Float;
 		public bool IsCrashingFall() => m_fallType == FallType.Crash;
 		public bool IsLedgeGrab() => m_ledgeDetector.IsLedgeDetected();
+		public bool IsWallDetected() => m_wallDetector.IsWallDetected();
 
 		private bool IsClimbing()
 		{
@@ -400,6 +433,16 @@ namespace Smash.Player
 		{
 			if (CurrentState is Falling or FloatingFall or Apex or Coyote)
 				m_ledgeDetector.CheckForLedge();
+		}
+
+		private void CheckWallSlide()
+		{
+			if (CurrentState is Ledge or CrashingFall) return;
+			if (CurrentState is Falling or FloatingFall or WallSlide or Rising or Apex)
+			{
+				m_wallDetector.ResetSensorHits();
+				m_wallDetector.CheckForWall();
+			}
 		}
 
 		private void CheckForCeiling()
@@ -421,6 +464,15 @@ namespace Smash.Player
 		{
 			m_elapsedTime += Time.deltaTime;
 			m_tr.rotation = Quaternion.Slerp(m_savedRotation, m_targetRotation, m_elapsedTime / m_timeToRotate);
+		}
+
+		private void CheckRotation()
+		{
+			if (CurrentState is Ledge or Dash) return;
+			if(Direction ==  Vector3.zero) return;
+			Vector3 inputRotation = Vector3.zero;
+			inputRotation.y = Direction.x > 0f ? 0 : 179f;
+			m_targetRotation = Quaternion.Euler(inputRotation);
 		}
 		
 		private void HandleJump()

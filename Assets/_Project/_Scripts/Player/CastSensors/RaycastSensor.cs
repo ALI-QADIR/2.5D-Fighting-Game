@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Smash.Player.CastSensors
 {
-	public class RaycastCastSensor : ICastSensor
+	public class RaycastSensor : ICastSensor
 	{
 		public float castDistance;
 		public LayerMask layerMask = 255;
@@ -18,7 +18,7 @@ namespace Smash.Player.CastSensors
 
 		private RaycastHit m_hitInfo;
 
-		public RaycastCastSensor(Transform playerTR, CastDirection rayCastDirection, Vector3 origin)
+		public RaycastSensor(Transform playerTR, CastDirection rayCastDirection, Vector3 origin)
 		{
 			m_tr = playerTR;
 			m_rayCastDirection = GetCastDirection(rayCastDirection);
@@ -66,7 +66,7 @@ namespace Smash.Player.CastSensors
 				CastDirection.Up => m_tr.up,
 				CastDirection.Down => -m_tr.up,
 				CastDirection.Left => -m_tr.right,
-				CastDirection.Right => -m_tr.right,
+				CastDirection.Right => m_tr.right,
 				_ => Vector3.one
 			};
 		}

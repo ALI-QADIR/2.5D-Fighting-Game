@@ -1091,6 +1091,7 @@ GameObject:
   - component: {fileID: 925529470}
   - component: {fileID: 925529471}
   - component: {fileID: 925529472}
+  - component: {fileID: 925529474}
   - component: {fileID: 925529473}
   m_Layer: 6
   m_Name: Player
@@ -1156,7 +1157,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 2
-  m_Constraints: 112
+  m_Constraints: 120
   m_CollisionDetection: 2
 --- !u!136 &925529468
 CapsuleCollider:
@@ -1196,11 +1197,14 @@ MonoBehaviour:
   m_motor: {fileID: 925529466}
   m_ledgeDetector: {fileID: 925529471}
   m_ceilingDetector: {fileID: 925529472}
+  m_wallDetector: {fileID: 925529474}
   m_graphicsController: {fileID: 925529473}
   m_properties: {fileID: 11400000, guid: b269f71dd16356745947ddfe21ba67d5, type: 2}
   m_groundGravity: 10
   m_airGravity: 100
   m_maxFallSpeed: 30
+  m_wallSlideSpeed: 10
+  m_wallJumpSideSpeed: 40
   m_climbUpSpeed: 32
   m_climbSideSpeed: 25
   m_jumpBufferTime: 0.1
@@ -1331,6 +1335,20 @@ MonoBehaviour:
     m_particleSystem: {fileID: 0}
     m_loopingSound: 0
     m_loopingParticles: 0
+--- !u!114 &925529474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925529464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18f1509897584bcdab8b3f2b50f64a12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_radius: 0.4
+  m_extension: 0.2
 --- !u!1001 &1038544692
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2222,7 +2240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c309a31e5f4054a089be7f256a3443df, type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c309a31e5f4054a089be7f256a3443df, type: 3}
       propertyPath: m_LocalScale.z
@@ -2230,11 +2248,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c309a31e5f4054a089be7f256a3443df, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16
+      value: -13
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c309a31e5f4054a089be7f256a3443df, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: -2.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c309a31e5f4054a089be7f256a3443df, type: 3}
       propertyPath: m_LocalPosition.z

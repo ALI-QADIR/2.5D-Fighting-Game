@@ -1,6 +1,5 @@
 ﻿using Smash.Player.CastSensors;
 using Smash.StructsAndEnums;
-using TripleA.Extensions;
 using UnityEngine;
 
 namespace Smash.Player
