@@ -40,7 +40,6 @@ namespace Smash.Services
 			{
 				await UnityServices.InitializeAsync();
 
-				Debug.Log("Setup Events");
 				SetUpEvents();
 				m_isServiceInitialised = true;
 			}

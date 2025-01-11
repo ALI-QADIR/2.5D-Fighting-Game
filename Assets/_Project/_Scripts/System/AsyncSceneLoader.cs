@@ -55,8 +55,13 @@ namespace Smash.System
             
             m_fill.fillAmount = Mathf.Lerp(currentFillAmount, m_targetProgress, Time.deltaTime * dynamicFillSpeed);
         }
+        
+        public async void LoadSceneGroupByIndex(int index)
+        {
+            await LoadSceneGroup(index: index);
+        }
 
-        public async Task LoadSceneGroup(int index)
+        private async Task LoadSceneGroup(int index)
         {
             m_fill.fillAmount = 0f;
             m_targetProgress = 1f;

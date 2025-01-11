@@ -71,7 +71,7 @@ namespace Smash.Ui.Panels
 
 		private void OnClickTutorialButton()
 		{
-			throw new NotImplementedException();
+			AsyncSceneLoader.Instance.LoadSceneGroupByIndex(1);
 		}
 
 		private void OnClickQuitButton()
