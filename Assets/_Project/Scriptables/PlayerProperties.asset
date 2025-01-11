@@ -19,8 +19,8 @@ MonoBehaviour:
   m_airAcceleration: 100
   m_jumpPower: 40
   m_numberOfJumps: 2
-  m_dashSpeed: 30
-  m_dashDuration: 0.15
+  m_dashSpeed: 25
+  m_dashDuration: 0.3
   m_numberOfDashes: 1
   m_launchPower: 60
   m_crashSpeed: 200
