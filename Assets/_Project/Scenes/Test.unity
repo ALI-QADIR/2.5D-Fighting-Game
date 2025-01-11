@@ -1335,6 +1335,14 @@ MonoBehaviour:
     m_particleSystem: {fileID: 0}
     m_loopingSound: 0
     m_loopingParticles: 0
+  - m_name: WallSlide
+    m_animationName: WallSlide
+    m_transitionDuration: 0.05
+    m_state: 9
+    m_clip: {fileID: 0}
+    m_particleSystem: {fileID: 0}
+    m_loopingSound: 0
+    m_loopingParticles: 0
 --- !u!114 &925529474
 MonoBehaviour:
   m_ObjectHideFlags: 0

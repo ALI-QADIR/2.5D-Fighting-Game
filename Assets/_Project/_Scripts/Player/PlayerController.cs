@@ -393,6 +393,7 @@ namespace Smash.Player
 		{
 			if (isWallSliding)
 			{
+				m_graphicsController.SetWallSliding();
 				m_currentFallSpeed = m_wallSlideSpeed;
 				m_numberOfJumps = 1;
 				HandleJumpBuffer();

@@ -27,6 +27,7 @@ namespace Smash.Player
 		private int m_jumpingAnimationIndex;
 		private int m_flipAnimationIndex;
 		private int m_climbAnimationIndex;
+		private int m_wallSlideAnimationIndex;
 
 		private void Awake()
 		{
@@ -54,6 +55,7 @@ namespace Smash.Player
 			m_jumpingAnimationIndex = GetIndexByState(GraphicState.Jump);
 			m_flipAnimationIndex = GetIndexByState(GraphicState.Flip);
 			m_climbAnimationIndex = GetIndexByState(GraphicState.Climb);
+			m_wallSlideAnimationIndex = GetIndexByState(GraphicState.WallSlide);
 			
 			m_currentGraphicsProperty = m_graphicsProperties[m_idleAnimationIndex];
 		}
@@ -124,6 +126,13 @@ namespace Smash.Player
 			if (m_climbAnimationIndex == -1) return;
 			
 			PlayGraphicAtIndex(m_climbAnimationIndex);
+		}
+		
+		public void SetWallSliding()
+		{
+			if (m_wallSlideAnimationIndex == -1) return;
+			
+			PlayGraphicAtIndex(m_wallSlideAnimationIndex);
 		}
 
 		private void PlayGraphicAtIndex(int index)

@@ -10,6 +10,7 @@
 		Land,
 		Flip,
 		Dash,
-		Running
+		Running,
+		WallSlide
 	}
 }
