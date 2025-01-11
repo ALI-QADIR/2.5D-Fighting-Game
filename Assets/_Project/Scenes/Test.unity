@@ -1200,11 +1200,11 @@ MonoBehaviour:
   m_wallDetector: {fileID: 925529474}
   m_graphicsController: {fileID: 925529473}
   m_properties: {fileID: 11400000, guid: b269f71dd16356745947ddfe21ba67d5, type: 2}
-  m_groundGravity: 10
-  m_airGravity: 100
-  m_maxFallSpeed: 30
+  m_groundGravity: 0
+  m_airGravity: 200
+  m_maxFallSpeed: 40
   m_wallSlideSpeed: 10
-  m_wallJumpSideSpeed: 40
+  m_wallJumpSideSpeed: 35
   m_climbUpSpeed: 32
   m_climbSideSpeed: 25
   m_jumpBufferTime: 0.1
