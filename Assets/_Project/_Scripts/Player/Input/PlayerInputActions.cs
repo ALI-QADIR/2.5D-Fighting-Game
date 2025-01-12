@@ -46,15 +46,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Pause"",
-                    ""type"": ""Button"",
-                    ""id"": ""8673fbef-c49f-463c-98c3-12f5abf292bf"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Down"",
                     ""type"": ""Button"",
                     ""id"": ""d67d4a15-ca86-464e-873e-4fb3398a7c63"",
@@ -130,6 +121,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""LaunchAndCrash"",
                     ""type"": ""Button"",
                     ""id"": ""2d7c24fb-eab7-4e45-9d36-f9051c3311b0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""8673fbef-c49f-463c-98c3-12f5abf292bf"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -855,9 +855,31 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""up"",
+                    ""id"": ""53afbb5e-130e-4eeb-a181-8195d1d23a7b"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": ""down"",
                     ""id"": ""85d264ad-e0a0-4565-b7ff-1a37edde51ac"",
                     ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""82271194-7d31-447c-a4e6-b1647b6ebbf3"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -877,9 +899,31 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""left"",
+                    ""id"": ""ce73289c-19f3-45fd-a5e2-e48b928a3289"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": ""right"",
                     ""id"": ""4cda81dc-9edd-4e03-9d7c-a71a14345d0b"",
                     ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""8c85cd9c-5641-4309-b731-1c1e3345a90d"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -1132,7 +1176,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""0a879401-aff7-4211-bc46-f6815dbae03b"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -1143,7 +1187,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""76fb4bd8-aaf4-4f58-a746-385586959d1c"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""path"": ""<Keyboard>/i"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
@@ -1232,7 +1276,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Horizontal = m_Player.FindAction("Horizontal", throwIfNotFound: true);
         m_Player_Up = m_Player.FindAction("Up", throwIfNotFound: true);
-        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_Down = m_Player.FindAction("Down", throwIfNotFound: true);
         m_Player_MainAttack = m_Player.FindAction("MainAttack", throwIfNotFound: true);
         m_Player_SpecialAttack = m_Player.FindAction("SpecialAttack", throwIfNotFound: true);
@@ -1242,6 +1285,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Launch = m_Player.FindAction("Launch", throwIfNotFound: true);
         m_Player_LaunchAndFloat = m_Player.FindAction("LaunchAndFloat", throwIfNotFound: true);
         m_Player_LaunchAndCrash = m_Player.FindAction("LaunchAndCrash", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1327,7 +1371,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Horizontal;
     private readonly InputAction m_Player_Up;
-    private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_Down;
     private readonly InputAction m_Player_MainAttack;
     private readonly InputAction m_Player_SpecialAttack;
@@ -1337,13 +1380,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Launch;
     private readonly InputAction m_Player_LaunchAndFloat;
     private readonly InputAction m_Player_LaunchAndCrash;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Horizontal => m_Wrapper.m_Player_Horizontal;
         public InputAction @Up => m_Wrapper.m_Player_Up;
-        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @Down => m_Wrapper.m_Player_Down;
         public InputAction @MainAttack => m_Wrapper.m_Player_MainAttack;
         public InputAction @SpecialAttack => m_Wrapper.m_Player_SpecialAttack;
@@ -1353,6 +1396,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Launch => m_Wrapper.m_Player_Launch;
         public InputAction @LaunchAndFloat => m_Wrapper.m_Player_LaunchAndFloat;
         public InputAction @LaunchAndCrash => m_Wrapper.m_Player_LaunchAndCrash;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1368,9 +1412,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Up.started += instance.OnUp;
             @Up.performed += instance.OnUp;
             @Up.canceled += instance.OnUp;
-            @Pause.started += instance.OnPause;
-            @Pause.performed += instance.OnPause;
-            @Pause.canceled += instance.OnPause;
             @Down.started += instance.OnDown;
             @Down.performed += instance.OnDown;
             @Down.canceled += instance.OnDown;
@@ -1398,6 +1439,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LaunchAndCrash.started += instance.OnLaunchAndCrash;
             @LaunchAndCrash.performed += instance.OnLaunchAndCrash;
             @LaunchAndCrash.canceled += instance.OnLaunchAndCrash;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1408,9 +1452,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Up.started -= instance.OnUp;
             @Up.performed -= instance.OnUp;
             @Up.canceled -= instance.OnUp;
-            @Pause.started -= instance.OnPause;
-            @Pause.performed -= instance.OnPause;
-            @Pause.canceled -= instance.OnPause;
             @Down.started -= instance.OnDown;
             @Down.performed -= instance.OnDown;
             @Down.canceled -= instance.OnDown;
@@ -1438,6 +1479,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @LaunchAndCrash.started -= instance.OnLaunchAndCrash;
             @LaunchAndCrash.performed -= instance.OnLaunchAndCrash;
             @LaunchAndCrash.canceled -= instance.OnLaunchAndCrash;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1654,7 +1698,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnHorizontal(InputAction.CallbackContext context);
         void OnUp(InputAction.CallbackContext context);
-        void OnPause(InputAction.CallbackContext context);
         void OnDown(InputAction.CallbackContext context);
         void OnMainAttack(InputAction.CallbackContext context);
         void OnSpecialAttack(InputAction.CallbackContext context);
@@ -1664,6 +1707,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnLaunch(InputAction.CallbackContext context);
         void OnLaunchAndFloat(InputAction.CallbackContext context);
         void OnLaunchAndCrash(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
