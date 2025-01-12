@@ -3,13 +3,15 @@ using Smash.Ui.Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Smash.Ui.System
 {
 	public abstract class PanelHandler : UiEventListener
 	{
+		[FormerlySerializedAs("m_animationStrategy")]
 		[Header("Animation")] 
-		[SerializeField] AnimationStrategy m_animationStrategy;
+		[SerializeField] protected AnimationStrategy _animationStrategy;
 
 		[Space(10)]
 		[SerializeField] private ButtonSelectionHandler m_primaryButton;
@@ -22,7 +24,7 @@ namespace Smash.Ui.System
 		{
 			base.Awake();
 			_input = new PlayerInputActions();
-			m_animationStrategy.onShowComplete += OnComplete;
+			_animationStrategy.onShowComplete += OnComplete;
 			gameObject.SetActive(false);
 		}
 
@@ -46,7 +48,7 @@ namespace Smash.Ui.System
 
 		public virtual void OpenPanel()
 		{
-			m_animationStrategy.Show();
+			_animationStrategy.Show();
 			
 			ButtonSelectionHandler.OnButtonDeselected += OnButtonDeselected;
 			
@@ -56,6 +58,7 @@ namespace Smash.Ui.System
 			
 			_input.UI.Cancel.Disable();
 			_input.UI.Retry.Disable();
+			_input.UI.Resume.Disable();
 			_input.UI.HorizontalScroll.Disable();
 			_input.UI.VerticalScroll.Disable();
 			_input.UI.Navigate.Enable();
@@ -64,7 +67,7 @@ namespace Smash.Ui.System
 		
 		public virtual void ClosePanel()
 		{
-			m_animationStrategy.Hide();
+			_animationStrategy.Hide();
 			
 			ButtonSelectionHandler.OnButtonDeselected -= OnButtonDeselected;
 			

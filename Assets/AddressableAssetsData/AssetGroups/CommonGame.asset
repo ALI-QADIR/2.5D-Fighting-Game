@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Tutorial
+  m_Name: CommonGame
   m_EditorClassIdentifier: 
-  m_GroupName: Tutorial
-  m_GUID: 846d0e3bee55ca44681f0ca5a47c9c65
+  m_GroupName: CommonGame
+  m_GUID: 0e435a53bf164d44195e0d6b25c358a4
   m_SerializeEntries:
-  - m_GUID: 04fba6b2fe86e494ead6d00cc7c46539
-    m_Address: Assets/_Project/Scenes/Tutorial.unity
+  - m_GUID: 4bba85ef0d23c2343a637da2d4c1d46e
+    m_Address: Assets/_Project/Scenes/CommonGameUi.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -24,5 +24,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 16a8fb02beaa2b14d8408d2c56165fba, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 706ba2311cbd61044a8770f54dc6e300, type: 2}
-    - {fileID: 11400000, guid: a6b2fcd13c5550045b552f78c01fd40c, type: 2}
+    - {fileID: 11400000, guid: f94b893b3a0a92847801944ba03d5fc9, type: 2}
+    - {fileID: 11400000, guid: c1cc57c567a0df2488c2597e7430c6c2, type: 2}

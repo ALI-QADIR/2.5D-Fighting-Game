@@ -24,6 +24,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "8673fbef-c49f-463c-98c3-12f5abf292bf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Down",
                     "type": "Button",
                     "id": "d67d4a15-ca86-464e-873e-4fb3398a7c63",
@@ -504,6 +513,28 @@
                 },
                 {
                     "name": "",
+                    "id": "b364b5f1-549d-482e-846f-1b697b139ed7",
+                    "path": "<Keyboard>/{Cancel}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bbea5276-0b92-4b50-b107-a802bc3825fb",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "0c24ccd2-54f4-41f3-a438-5daba0226de1",
                     "path": "<Keyboard>/s",
                     "interactions": "",
@@ -561,6 +592,15 @@
                     "name": "Cancel",
                     "type": "Button",
                     "id": "15cef263-9014-4fd5-94d9-4e4a6234a6ef",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Resume",
+                    "type": "Button",
+                    "id": "36bdd77c-e40b-4061-b27d-fbbbe7787394",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -866,6 +906,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse;Gamepad;Touch;Joystick;XR",
                     "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf3ce55d-bd50-4c74-b82b-77df92125b69",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Resume",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

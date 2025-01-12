@@ -77,7 +77,7 @@ namespace Smash.System
             
             EnableLoadingCanvas();
 
-            await m_sceneGroupManager.LoadScenes(m_sceneGroup[index], progress, MySceneTypes.ActiveScene, false, 2f);
+            await m_sceneGroupManager.LoadScenes(m_sceneGroup[index], progress, MySceneTypes.ActiveScene, false, 0.5f);
 
             await Task.Delay(1000);
             

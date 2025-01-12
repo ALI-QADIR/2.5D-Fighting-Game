@@ -71,6 +71,7 @@ namespace Smash.Ui.Panels
 
 		private void OnClickTutorialButton()
 		{
+			_input.UI.Disable();
 			AsyncSceneLoader.Instance.LoadSceneGroupByIndex(1);
 		}
 

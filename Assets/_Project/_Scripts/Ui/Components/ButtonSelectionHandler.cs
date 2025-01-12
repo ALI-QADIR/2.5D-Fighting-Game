@@ -59,7 +59,7 @@ namespace Smash.Ui.Components
 
 		public void OnDeselect(BaseEventData eventData)
 		{
-			if (m_selectSequence.isAlive) m_deselectSequence.Stop();
+			if (m_selectSequence.isAlive) m_selectSequence.Stop();
 			
 			OnButtonDeselected?.Invoke(gameObject);
 			

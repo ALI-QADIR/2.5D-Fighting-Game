@@ -5741,7 +5741,7 @@ MonoBehaviour:
   _unityEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_animationStrategy: {fileID: 793703012}
+  _animationStrategy: {fileID: 793703012}
   m_primaryButton: {fileID: 100107320}
   _backButtonHandler: {fileID: 793703011}
 --- !u!114 &793703011
@@ -5835,7 +5835,7 @@ MonoBehaviour:
   _unityEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_animationStrategy: {fileID: 836455408}
+  _animationStrategy: {fileID: 836455408}
   m_primaryButton: {fileID: 924280748}
   _backButtonHandler: {fileID: 836455407}
 --- !u!114 &836455407
@@ -6601,7 +6601,7 @@ MonoBehaviour:
     m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 278412156}
-    m_SelectOnDown: {fileID: 2131154447}
+    m_SelectOnDown: {fileID: 1444875253}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 0
@@ -9023,7 +9023,7 @@ MonoBehaviour:
   _unityEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_animationStrategy: {fileID: 1443535311}
+  _animationStrategy: {fileID: 1443535311}
   m_primaryButton: {fileID: 1475261567}
   _backButtonHandler: {fileID: 1443535307}
   m_leaderboardHandler: {fileID: 1443535309}
@@ -9177,7 +9177,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 2131154447}
+    m_SelectOnUp: {fileID: 971565221}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -11514,6 +11514,7 @@ GameObject:
   - component: {fileID: 1886641771}
   - component: {fileID: 1886641773}
   - component: {fileID: 1886641774}
+  - component: {fileID: 1886641776}
   - component: {fileID: 1886641775}
   m_Layer: 5
   m_Name: Options
@@ -11575,15 +11576,10 @@ MonoBehaviour:
   _unityEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_animationStrategy: {fileID: 1886641775}
+  _animationStrategy: {fileID: 1886641775}
   m_primaryButton: {fileID: 971565220}
   _backButtonHandler: {fileID: 1886641773}
-  m_playerSettings: {fileID: 11400000, guid: e7f7c42547a679543812ef7dddd4672f, type: 2}
-  m_sfxStateText: {fileID: 170304403}
-  m_sfxVolText: {fileID: 426127600}
-  m_touchControlsText: {fileID: 1390493043}
-  m_onGradient: {fileID: 11400000, guid: 4ace1ac863540b4428ac44ee786998d7, type: 2}
-  m_offGradient: {fileID: 11400000, guid: e5973219e2ce11740969daf39b8df28e, type: 2}
+  m_settingsController: {fileID: 1886641776}
 --- !u!114 &1886641775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11600,6 +11596,24 @@ MonoBehaviour:
   _ease: 3
   _closeTransform: {fileID: 1394855691}
   _openTransform: {fileID: 555466359}
+--- !u!114 &1886641776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886641770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4eb3aa459a4e5ba9f0149d39bb7360, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerSettings: {fileID: 11400000, guid: e7f7c42547a679543812ef7dddd4672f, type: 2}
+  m_sfxStateText: {fileID: 170304403}
+  m_sfxVolText: {fileID: 223264503}
+  m_touchControlsText: {fileID: 1390493043}
+  m_onGradient: {fileID: 11400000, guid: 4ace1ac863540b4428ac44ee786998d7, type: 2}
+  m_offGradient: {fileID: 11400000, guid: e5973219e2ce11740969daf39b8df28e, type: 2}
 --- !u!1 &1910667115
 GameObject:
   m_ObjectHideFlags: 0
@@ -13321,7 +13335,7 @@ MonoBehaviour:
   _unityEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_animationStrategy: {fileID: 2089416868}
+  _animationStrategy: {fileID: 2089416868}
   m_primaryButton: {fileID: 906026221}
   _backButtonHandler: {fileID: 2089416866}
   m_mainMenuHandler: {fileID: 2089416867}
