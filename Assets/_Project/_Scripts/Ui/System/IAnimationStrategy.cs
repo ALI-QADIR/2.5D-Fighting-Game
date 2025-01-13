@@ -1,8 +1,10 @@
-﻿namespace Smash.Ui.System
+﻿using JetBrains.Annotations;
+
+namespace Smash.Ui.System
 {
-	public interface IAnimationStrategy
+	public interface IAnimationStrategy<T>
 	{
-		void Show();
-		void Hide();
+		void Activate(T obj);
+		void Deactivate(T obj);
 	}
 }

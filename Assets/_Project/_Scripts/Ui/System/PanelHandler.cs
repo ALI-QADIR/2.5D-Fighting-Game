@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Smash.Ui.Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,7 +12,7 @@ namespace Smash.Ui.System
 	{
 		[FormerlySerializedAs("m_animationStrategy")]
 		[Header("Animation")] 
-		[SerializeField] protected AnimationStrategy _animationStrategy;
+		[SerializeField] protected AnimationStrategy<Action> _animationStrategy;
 
 		[Space(10)]
 		[SerializeField] private ButtonSelectionHandler m_primaryButton;
@@ -24,7 +25,6 @@ namespace Smash.Ui.System
 		{
 			base.Awake();
 			_input = new PlayerInputActions();
-			_animationStrategy.onShowComplete += OnComplete;
 			gameObject.SetActive(false);
 		}
 
@@ -48,7 +48,7 @@ namespace Smash.Ui.System
 
 		public virtual void OpenPanel()
 		{
-			_animationStrategy.Show();
+			_animationStrategy.Activate(OnComplete);
 			
 			ButtonSelectionHandler.OnButtonDeselected += OnButtonDeselected;
 			
@@ -67,7 +67,7 @@ namespace Smash.Ui.System
 		
 		public virtual void ClosePanel()
 		{
-			_animationStrategy.Hide();
+			_animationStrategy.Deactivate();
 			
 			ButtonSelectionHandler.OnButtonDeselected -= OnButtonDeselected;
 			

@@ -1,10 +1,11 @@
-﻿using PrimeTween;
+﻿using System;
+using PrimeTween;
 using Smash.Ui.System;
 using UnityEngine;
 
 namespace Smash.Ui.AnimationStrategies
 {
-	public class PanelSlideAnimationStrategy : AnimationStrategy
+	public class PanelSlideAnimationStrategy : AnimationStrategy<Action>
 	{
 		[SerializeField] protected Transform _closeTransform, _openTransform;
 
@@ -16,31 +17,31 @@ namespace Smash.Ui.AnimationStrategies
 			m_tr.position = _closeTransform.position;
 		}
 
-		public override void Show()
+		public override void Activate(Action onCompleteAction = null)
 		{
-			if (_openSequence.isAlive) return;
+			if (_activateSequence.isAlive) return;
 
 			m_tr ??= transform;
 			
 			gameObject.SetActive(true);
-			_openSequence = Sequence.Create()
+			_activateSequence = Sequence.Create()
 				.Group(Tween.Position(target: m_tr, startValue: _closeTransform.position,
 					endValue: _openTransform.position, duration: _duration, ease: _ease));
 
-			_openSequence.OnComplete(target: this, target => target.onShowComplete());
+			_activateSequence.OnComplete(onCompleteAction);
 		}
 
-		public override void Hide()
+		public override void Deactivate(Action onCompleteAction = null)
 		{
-			if (_closeSequence.isAlive) return;
+			if (_deactivateSequence.isAlive) return;
 
 			m_tr ??= transform;
 			
-			_closeSequence = Sequence.Create()
+			_deactivateSequence = Sequence.Create()
 				.Group(Tween.Position(target: m_tr, startValue: _openTransform.position,
 					endValue: _closeTransform.position, duration: _duration, ease: _ease));
 		
-			_closeSequence.OnComplete(target: this, target => target.DisableGameObject());
+			_deactivateSequence.OnComplete(target: this, target => target.DisableGameObject());
 		}
 		
 		private void DisableGameObject() => gameObject.SetActive(false);

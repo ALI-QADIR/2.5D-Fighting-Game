@@ -4,18 +4,15 @@ using UnityEngine;
 
 namespace Smash.Ui.System
 {
-	public abstract class AnimationStrategy : MonoBehaviour, IAnimationStrategy
+	public abstract class AnimationStrategy<T> : MonoBehaviour, IAnimationStrategy<T>
 	{
 		[SerializeField] protected float _duration = 0.25f;
 		[SerializeField] protected Ease _ease = Ease.OutSine;
 		
-		protected Sequence _openSequence, _closeSequence;
-		
-		public Action onShowComplete;
-		public Action onHideComplete;
+		protected Sequence _activateSequence, _deactivateSequence;
 
-		public abstract void Show();
+		public abstract void Activate(T onCompleteAction = default);
 		
-		public abstract void Hide();
+		public abstract void Deactivate(T onCompleteAction = default);
 	}
 }
