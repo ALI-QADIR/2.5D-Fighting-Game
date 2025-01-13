@@ -7,9 +7,9 @@ namespace Smash.System
 	[CreateAssetMenu(fileName = "Player Settings", menuName = "Scriptable Objects/Player Settings")]
 	public class PlayerSettingsSO : ScriptableObject
 	{
-		[SerializeField] private ObservableBool m_touchControls = new (false);
+		[SerializeField] private ObservableBool m_touchControls = new (true);
 		[SerializeField] private ObservableBool m_sfx = new (true);
-		[SerializeField] private ObservableInt m_sfxVolume = new (10);
+		[SerializeField] private ObservableInt m_sfxVolume = new (5);
 		
 		public bool GetTouchControls => m_touchControls.Value;
 		public void SetTouchControls(bool value) => m_touchControls.Set(value);
