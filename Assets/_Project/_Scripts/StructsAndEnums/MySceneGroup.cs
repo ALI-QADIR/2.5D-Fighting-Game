@@ -11,6 +11,7 @@ namespace Smash.StructsAndEnums
 		MainMenu,
 		SpeedRun,
 		Tutorial,
+		TutorialUi,
 		ActiveScene,
 		Bootstrapper,
 	}

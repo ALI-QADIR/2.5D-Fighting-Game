@@ -1,27 +1,23 @@
-﻿using System.Collections;
-using PrimeTween;
+﻿using System;
+using System.Collections;
 using Smash.Ui.Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Smash.Ui.System
 {
 	public abstract class PanelHandler : UiEventListener
 	{
+		[FormerlySerializedAs("m_animationStrategy")]
 		[Header("Animation")] 
-		[SerializeField] private float m_duration;
-		[SerializeField] private Ease m_ease;
-		[SerializeField] protected Transform _closeTransform;
-		[SerializeField] protected Transform _openTransform;
+		[SerializeField] protected AnimationStrategy<Action> _animationStrategy;
 
 		[Space(10)]
 		[SerializeField] private ButtonSelectionHandler m_primaryButton;
 		[SerializeField] protected BackButtonHandler _backButtonHandler;
 		private GameObject m_lastSelected;
-
-		protected Sequence _openSequence, _closeSequence;
-		protected Transform _tr;
 
 		protected PlayerInputActions _input;
 		
@@ -29,8 +25,6 @@ namespace Smash.Ui.System
 		{
 			base.Awake();
 			_input = new PlayerInputActions();
-			_tr = transform;
-			_tr.position = _closeTransform.position;
 			gameObject.SetActive(false);
 		}
 
@@ -54,7 +48,7 @@ namespace Smash.Ui.System
 
 		public virtual void OpenPanel()
 		{
-			Show();
+			_animationStrategy.Activate(OnComplete);
 			
 			ButtonSelectionHandler.OnButtonDeselected += OnButtonDeselected;
 			
@@ -64,6 +58,7 @@ namespace Smash.Ui.System
 			
 			_input.UI.Cancel.Disable();
 			_input.UI.Retry.Disable();
+			_input.UI.Resume.Disable();
 			_input.UI.HorizontalScroll.Disable();
 			_input.UI.VerticalScroll.Disable();
 			_input.UI.Navigate.Enable();
@@ -72,42 +67,16 @@ namespace Smash.Ui.System
 		
 		public virtual void ClosePanel()
 		{
-			Hide();
+			_animationStrategy.Deactivate();
 			
 			ButtonSelectionHandler.OnButtonDeselected -= OnButtonDeselected;
 			
 			_input.UI.Navigate.performed -= OnNavigateStart;
 		}
-
-		protected virtual void Show()
-		{
-			if (_openSequence.isAlive) return;
-			
-			gameObject.SetActive(true);
-			_openSequence = Sequence.Create()
-				.Group(Tween.Position(target: _tr, startValue: _closeTransform.position,
-					endValue: _openTransform.position, duration: m_duration, ease: m_ease));
-			
-			_openSequence.OnComplete(target:this, target => target.OnComplete());
-		}
 		
 		private void OnComplete() => StartCoroutine(SetSelected());
 
-		protected virtual void Hide()
-		{
-			if (_closeSequence.isAlive) return;
-			
-			EventSystem.current.SetSelectedGameObject(null);
-			
-			_closeSequence = Sequence.Create()
-				.Group(Tween.Position(target: _tr, startValue: _openTransform.position,
-					endValue: _closeTransform.position, duration: m_duration, ease: m_ease));
-			
-			_closeSequence.OnComplete(target: this, target => target.DisableGameObject());
-		}
-
 		protected abstract void BackButtonPressed(InputAction.CallbackContext ctx);
 
-		private void DisableGameObject() => gameObject.SetActive(false);
 	}
 }

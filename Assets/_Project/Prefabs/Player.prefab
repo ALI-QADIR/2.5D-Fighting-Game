@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 851043534711153540}
   - component: {fileID: 1977780103577655877}
   - component: {fileID: 8228131811739052616}
+  - component: {fileID: 529304905219068536}
+  - component: {fileID: 7620727918118945090}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -34,7 +36,7 @@ Transform:
   m_GameObject: {fileID: 2686585324151597656}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -116,9 +118,9 @@ MonoBehaviour:
   m_wallJumpSideSpeed: 35
   m_climbUpSpeed: 32
   m_climbSideSpeed: 25
-  m_jumpBufferTime: 0.1
+  m_jumpBufferTime: 0.2
   m_coyoteTime: 0.3
-  m_dashResetTime: 0.2
+  m_dashResetTime: 0.3
   m_apexTime: 0.05
   m_apexSpeedBoostRatio: 0.1
 --- !u!114 &8875285976668337261
@@ -150,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_controller: {fileID: 5991776475819307800}
+  m_pauseHandler: {fileID: 529304905219068536}
 --- !u!114 &4069767105276759520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +285,39 @@ MonoBehaviour:
     m_particleSystem: {fileID: 0}
     m_loopingSound: 0
     m_loopingParticles: 0
+--- !u!114 &529304905219068536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2686585324151597656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cba649e6fbf14c2ea4bea48a52c8287b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
+  m_eventArgs:
+    id: 
+    sender: {fileID: 0}
+--- !u!114 &7620727918118945090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2686585324151597656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50fc23cd238c47508331f831c56e7d8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_playerInputReader: {fileID: 7212934585170828002}
 --- !u!1 &4851197016639227174
 GameObject:
   m_ObjectHideFlags: 0

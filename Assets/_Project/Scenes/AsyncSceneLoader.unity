@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.028301895, g: 0.028301895, b: 0.028301895, a: 1}
+  m_Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -693,7 +693,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 36be289d700e1f54b815b8218a9c5b08, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -923,6 +923,16 @@ MonoBehaviour:
     - sceneReference:
         asset: {fileID: 102900000, guid: a5243ad567f8edd438dda79b90564ef1, type: 3}
         guid: a5243ad567f8edd438dda79b90564ef1
+      sceneType: 4
+  - groupName: Tutorial
+    scenes:
+    - sceneReference:
+        asset: {fileID: 102900000, guid: 04fba6b2fe86e494ead6d00cc7c46539, type: 3}
+        guid: 04fba6b2fe86e494ead6d00cc7c46539
+      sceneType: 4
+    - sceneReference:
+        asset: {fileID: 102900000, guid: 4bba85ef0d23c2343a637da2d4c1d46e, type: 3}
+        guid: 4bba85ef0d23c2343a637da2d4c1d46e
       sceneType: 3
 --- !u!4 &1704147657
 Transform:

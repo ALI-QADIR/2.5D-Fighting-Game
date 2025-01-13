@@ -1,3 +1,4 @@
+using System;
 using TripleA.Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,11 +9,17 @@ namespace Smash.Player.Input
     public class InputReader : MonoBehaviour
     {
         [SerializeField] private PlayerController m_controller;
+        [SerializeField] private PlayerPauseHandler m_pauseHandler;
         private PlayerInputActions m_input;
         private void Awake()
         {
             m_input = new PlayerInputActions();
             m_controller ??= GetComponent<PlayerController>();
+        }
+
+        private void Start()
+        {
+            m_pauseHandler.SetEventArgs(id: "btn_player_pause", sender: this);
         }
 
         private void OnEnable()
@@ -36,7 +43,9 @@ namespace Smash.Player.Input
             m_input.Player.LaunchAndCrash.performed += LaunchAndCrash;
             m_input.Player.LaunchAndFloat.performed += LaunchAndFloat;
             
-            m_input.Player.Enable();
+            m_input.Player.Pause.started += Pause;
+            
+            EnablePlayerInput();
         }
 
         private void OnDisable()
@@ -60,7 +69,23 @@ namespace Smash.Player.Input
             m_input.Player.LaunchAndCrash.performed -= LaunchAndCrash;
             m_input.Player.LaunchAndFloat.performed -= LaunchAndFloat;
             
+            DisablePlayerInput();
+        }
+        
+        public void EnablePlayerInput()
+        {
+            m_input.Player.Enable();
+        }
+        
+        public void DisablePlayerInput()
+        {
             m_input.Player.Disable();
+        }
+
+        private void Pause(InputAction.CallbackContext obj)
+        {
+            DisablePlayerInput();
+            m_pauseHandler.OnPause();
         }
 
         private void OnHorizontal(InputAction.CallbackContext context)
