@@ -59,6 +59,7 @@ namespace Smash.Player
 		private StateMachine m_stateMachine;
 		private CountDownTimer m_jumpBufferTimer;
 		private CountDownTimer m_dashResetTimer;
+		private CountDownTimer m_wallJumpBufferTimer;
 
 		private GroundedSubStateMachine m_groundedState;
 		private AirborneSubStateMachine m_airborneState;
@@ -99,6 +100,7 @@ namespace Smash.Player
 			m_timeToRotate = m_properties.TimeToRotate;
 
 			m_jumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
+			m_wallJumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
 			m_dashResetTimer = new CountDownTimer(m_dashResetTime);
 
 			m_dashResetTimer.onTimerEnd += () => m_numberOfDashes = m_properties.NumberOfDashes;
@@ -210,10 +212,11 @@ namespace Smash.Player
 			
 			m_numberOfJumps--;
 			m_isJumping = true;
-			if (CurrentState is WallSlide or Ledge || (CurrentState is Rising or Apex && IsWallDetected()))
+			if (CurrentState is WallSlide or Ledge || (CurrentState is Rising or Apex && IsWallDetected()) || m_wallJumpBufferTimer.IsRunning)
 			{
 				// TODO: Fix Z drift when wall Jumping => for now rigid body -> freeze z position
-				Vector3 horizontalVelocity = m_tr.right * -m_wallJumpSideSpeed;
+				float jumpDirectionMultiplier = m_wallJumpBufferTimer.IsRunning ? 0.8f : -1f;
+				Vector3 horizontalVelocity = m_tr.right * m_wallJumpSideSpeed * jumpDirectionMultiplier;
 				m_savedVelocity += horizontalVelocity;
 				float lookAngle = Mathf.Approximately(m_currentLookAngle, 179) ? 1 : -1;
 				Rotate(lookAngle);
@@ -396,10 +399,12 @@ namespace Smash.Player
 				m_graphicsController.SetWallSliding();
 				m_currentFallSpeed = m_wallSlideSpeed;
 				m_numberOfJumps = 1;
+				m_wallJumpBufferTimer.Reset();
 				HandleJumpBuffer();
 			}
 			else
 			{
+				m_wallJumpBufferTimer.Start();
 				m_currentFallSpeed = m_maxFallSpeed;
 				m_numberOfDashes = 1;
 			}
@@ -418,7 +423,6 @@ namespace Smash.Player
 		public bool IsCrashingFall() => m_fallType == FallType.Crash;
 		public bool IsLedgeGrab() => m_ledgeDetector.IsLedgeDetected();
 		public bool IsWallDetected() => m_wallDetector.IsWallDetected();
-
 		private bool IsClimbing()
 		{
 			bool temp = m_isClimbing;

@@ -16,6 +16,14 @@ namespace Smash.Ui
 		[SerializeField] private TMP_ColorGradient m_onGradient;
 		[SerializeField] private TMP_ColorGradient m_offGradient;
 
+		private void Awake()
+		{
+			if(Application.platform != RuntimePlatform.Android || Application.platform != RuntimePlatform.WebGLPlayer)
+				m_playerSettings.SetTouchControls(false);
+			else
+				m_playerSettings.SetTouchControls(true);
+		}
+
 		public void EnableSettingsControl()
 		{
 			m_playerSettings.AddSfxListener(SfxToggled);
