@@ -445,7 +445,7 @@ Transform:
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 100, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2245,6 +2245,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2686585324151597656, guid: f540c158a155a4542b495a087d590539, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6704465084425658449, guid: f540c158a155a4542b495a087d590539, type: 3}
       propertyPath: m_LocalPosition.y
       value: 4
@@ -2311,9 +2315,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6616864736500232638, guid: 069f3ba4d4bc5184e91108317a2ba12b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6654085366439634983, guid: 069f3ba4d4bc5184e91108317a2ba12b, type: 3}
       propertyPath: m_Name
       value: Speedrun Cam
+      objectReference: {fileID: 0}
+    - target: {fileID: 7078802900070493986, guid: 069f3ba4d4bc5184e91108317a2ba12b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

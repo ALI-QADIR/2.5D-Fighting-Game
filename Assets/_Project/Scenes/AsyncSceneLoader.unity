@@ -934,6 +934,16 @@ MonoBehaviour:
         asset: {fileID: 102900000, guid: 4bba85ef0d23c2343a637da2d4c1d46e, type: 3}
         guid: 4bba85ef0d23c2343a637da2d4c1d46e
       sceneType: 3
+  - groupName: SpeedRun
+    scenes:
+    - sceneReference:
+        asset: {fileID: 102900000, guid: 96950b662ad62bc4a8bc112053f3d14b, type: 3}
+        guid: 96950b662ad62bc4a8bc112053f3d14b
+      sceneType: 4
+    - sceneReference:
+        asset: {fileID: 102900000, guid: 4bba85ef0d23c2343a637da2d4c1d46e, type: 3}
+        guid: 4bba85ef0d23c2343a637da2d4c1d46e
+      sceneType: 3
 --- !u!4 &1704147657
 Transform:
   m_ObjectHideFlags: 0

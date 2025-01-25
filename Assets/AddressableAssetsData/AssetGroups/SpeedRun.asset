@@ -1,0 +1,198 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: SpeedRun
+  m_EditorClassIdentifier: 
+  m_GroupName: SpeedRun
+  m_GUID: 0c2019f669b0bb44b9dc4b5f4eab1b58
+  m_SerializeEntries:
+  - m_GUID: 069f3ba4d4bc5184e91108317a2ba12b
+    m_Address: Assets/_Project/Prefabs/Speedrun Cam.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1377cda2b5f87be4c867911b2cdfc081
+    m_Address: Assets/_Project/Art/Materials/SimpleCumulus_Gradient_03/Textures/Front.2048x2048.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 187c15a21fc7f2346a831d66b7b247cb
+    m_Address: Assets/_Project/Art/Materials/SimpleCumulus_Gradient_03/SimpleCumulus_Gradient_03.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1b208951c72f9f04c834932ea1fb72be
+    m_Address: Assets/_Project/Art/Materials/SimpleCumulus_Gradient_03/Textures/Up.2048x2048.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 20ec185fb06482e42adcf7740a14e0a9
+    m_Address: Assets/_Project/Art/Models/Env/Footpath-5x1.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2331109fc36abce4db93c7a855a51a5b
+    m_Address: Assets/_Project/Art/Models/Env/Building-Lg-01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e86a2802bcc6d64e8b67b5e15741b3f
+    m_Address: Assets/_Project/Art/Models/Env/Building-Lg-02.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3074bb0b181ce8c45a50f25c86137189
+    m_Address: Assets/_Project/Scenes/SpeedRun/OcclusionCullingData.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35591762b8384724e96a7469cf474af1
+    m_Address: Assets/_Project/Art/Models/Env/Building-Lg-03.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 486f1c7f6f0bb994a8dd220fa074c64a
+    m_Address: Assets/_Project/Art/Prefabs/RoadBlock_01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a69dd0367cf5d644bbbc055dce3c859
+    m_Address: Assets/_Project/Art/Models/Env/GrassBlock.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 506c441d43fbcd7459f175935aa6ef39
+    m_Address: Assets/_Project/Art/Materials/Env/Mat_Platform-Blue.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5812d9d27455ecb4e884749d13fbc133
+    m_Address: Assets/_Project/Art/Models/Env/Road-5x2.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 669408139abcf574b8f1cbe1e36e8f7c
+    m_Address: Assets/_Project/Art/Models/Env/Building-Sm-02.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6815f0fca98063945a0e7740e7ab6c9c
+    m_Address: Assets/_Project/Art/Models/Env/Building-Md-03.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6afcbdae58e336149acba312fb020860
+    m_Address: Assets/_Project/Art/Models/Env/Road-5x3.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6caaf1822d9da1d4c811e7430ae15fd6
+    m_Address: Assets/_Project/Art/Models/Env/Building-Md-01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71b38366e615a8349aab19cf12586773
+    m_Address: Assets/_Project/Art/Models/Env/Building-Sm-01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 725d4e8edf33f36488043326c6962bd5
+    m_Address: Assets/_Project/Art/Textures/Env/Tex_CircleGradient.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8df13d82ac7f9004fb7fbdbd4751deba
+    m_Address: Assets/_Project/Art/Materials/Env/Mat_Platform-Orange.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95e97ee0083b8ab4c8d51e5fedfe0963
+    m_Address: Assets/_Project/Art/Materials/SimpleCumulus_Gradient_03/Textures/Right.2048x2048.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 96950b662ad62bc4a8bc112053f3d14b
+    m_Address: Assets/_Project/Scenes/SpeedRun.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 96e2aa3a4afd1d14d9026d52d45f37c2
+    m_Address: Assets/_Project/Art/Models/Env/Building-Sm-03.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b30d1e766719f641820db995617b4ca
+    m_Address: Assets/_Project/Art/Materials/SimpleCumulus_Gradient_03/Textures/Back.2048x2048.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a054353a8de58254ea8062fd58b28a92
+    m_Address: Assets/_Project/Art/Models/Env/Grass-10x10.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a4a833ffc9f9a5047aff1fc90ed2f36b
+    m_Address: Assets/_Project/Art/Materials/SimpleCumulus_Gradient_03/Textures/Down.2048x2048.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c54dd544dd462214895c9ea14c162bff
+    m_Address: Assets/_Project/Art/Materials/Env/Mat_ColorPalette-URP.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: caf80bc6aa5aad046aee88f70f187bf9
+    m_Address: Assets/_Project/Art/Materials/SimpleCumulus_Gradient_03/Textures/Left.2048x2048.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d12a70fe79b31e74a84703d7e07033e6
+    m_Address: Assets/_Project/Art/Models/Env/Road-2x2.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da2026b806cef984cba0e524632ad6ae
+    m_Address: Assets/_Project/Art/Models/Env/MudBlock.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0ae701b65a12d8408ac9316f25d32d9
+    m_Address: Assets/_Project/Art/Models/Env/Road-3x3.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2f85009a2ab68c4eb17d65b19cd1677
+    m_Address: Assets/_Project/Art/Models/Env/Building-Md-02.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee3252019180e67428777f8b1ea0002e
+    m_Address: Assets/_Project/Art/Textures/Env/Tex_ColorPallete.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef905fd2af7dac34e84daf0d6105dd7f
+    m_Address: Assets/_Project/Art/Materials/Env/Mat_ColorPalette-Toon.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa86959cdb1752d4386ba5db5014d333
+    m_Address: Assets/_Project/Art/Models/Env/Mud-10x10.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 16a8fb02beaa2b14d8408d2c56165fba, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 7044c7bb15bb0104080e34568f7556fb, type: 2}
+    - {fileID: 11400000, guid: 73794804cc00b384ca2907cb0634ec5c, type: 2}
