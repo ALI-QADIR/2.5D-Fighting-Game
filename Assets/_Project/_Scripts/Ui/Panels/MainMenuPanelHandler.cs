@@ -66,7 +66,8 @@ namespace Smash.Ui.Panels
 
 		private void OnClickPlayButton()
 		{
-			ClosePanel();
+			_input.UI.Disable();
+			AsyncSceneLoader.Instance.LoadSceneGroupByIndex(2);
 		}
 
 		private void OnClickTutorialButton()

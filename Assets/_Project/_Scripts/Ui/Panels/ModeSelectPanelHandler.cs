@@ -10,7 +10,7 @@ namespace Smash.Ui.Panels
 		protected override void Awake()
 		{
 			base.Awake();
-			_eventDictionary.Add("btn_main_play", OnClickPlayButton);
+			// _eventDictionary.Add("btn_main_play", OnClickPlayButton);
 			_eventDictionary.Add("btn_modes_back", OnClickBackButton);
 			_backButtonHandler.SetEventArgs("btn_modes_back", this);
 		}
