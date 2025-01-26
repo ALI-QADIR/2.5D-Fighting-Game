@@ -15,8 +15,83 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: acd6c6a437aae0549b534b0f2d7fd41b
   m_SerializeEntries:
+  - m_GUID: 0b34dd5a1a3f7134ebf11452788e1030
+    m_Address: Assets/_Project/Art/Models/RoundCube.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 34bf4e889e787f74facb77603d140ccd
+    m_Address: Assets/_Project/Art/Audio/AudioMixer.mixer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 491cf5b947c82db4e905e5f7f9203901
+    m_Address: Assets/_Project/Art/Animations/RoundCubeAnimationController.controller
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 92449acb190e8024a868b3437f78742d
+    m_Address: Assets/_Project/Art/Audio/Aud_Transition.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 981c4f82f29c55c40bd7cd16acb27446
+    m_Address: Assets/_Project/Art/Audio/Aud_ButtonClick_2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 99c9720ab356a0642a771bea13969a05
     m_Address: Assets/_Project/Scenes/Test.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9dbf58f782177164e80e95f5ad34af9b
+    m_Address: Assets/_Project/Art/Animations/Anim_RoundCube_WallSlide.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b269f71dd16356745947ddfe21ba67d5
+    m_Address: Assets/_Project/Scriptables/PlayerProperties.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b3cff59260a34f9429a026d37f6501c8
+    m_Address: Assets/TextMesh Pro/Fonts/bubblegum-sans.regular.ttf
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: be891319084e9d147b09d89e80ce60e0
+    m_Address: Packages/com.unity.toonshader/Runtime/Integrated/Shaders/UnityToon.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bfa0963497482cc41a876eca11c43cfa
+    m_Address: Assets/TextMesh Pro/Fonts/bubblegum-sans.regular SDF.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c20b1eb0fed58f743b21854c861e9986
+    m_Address: Assets/_Project/Scriptables/Ui Event Channel.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c309a31e5f4054a089be7f256a3443df
+    m_Address: Assets/Decimate/Grid Master/FBX/GM-Cube.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db82dc9c84568b14dab74d9fabeeeb44
+    m_Address: Assets/_Project/Art/Audio/Aud_ButtonClick.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7f7c42547a679543812ef7dddd4672f
+    m_Address: Assets/_Project/Scriptables/Player Settings.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe393ace9b354375a9cb14cdbbc28be4
+    m_Address: Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -52,6 +52,8 @@ namespace Smash.Ui.Panels
 		protected override void BackButtonPressed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
 		{
 			_backButtonHandler.BackButtonPressed();
+			if (AudioManager.HasInstance)
+				AudioManager.Instance.PlayButtonClick();
 		}
 		
 		private void OnClickResumeButton()
@@ -62,6 +64,8 @@ namespace Smash.Ui.Panels
 		private void OnClickPauseButton()
 		{
 			OpenPanel();
+			if (AudioManager.HasInstance)
+				AudioManager.Instance.PlayButtonClick();
 		}
 
 		private void OnClickMainMenuButton()

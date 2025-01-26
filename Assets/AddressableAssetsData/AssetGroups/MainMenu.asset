@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: MainMenu
   m_GUID: 6945a33f05db2c34083dba256b6bf384
   m_SerializeEntries:
+  - m_GUID: 4bba85ef0d23c2343a637da2d4c1d46e
+    m_Address: Assets/_Project/Scenes/CommonGameUi.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a5243ad567f8edd438dda79b90564ef1
     m_Address: Assets/_Project/Scenes/MainMenu.unity
     m_ReadOnly: 0

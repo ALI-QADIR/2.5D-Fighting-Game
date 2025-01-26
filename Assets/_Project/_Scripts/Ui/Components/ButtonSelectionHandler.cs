@@ -1,4 +1,5 @@
 ﻿using System;
+using Smash.System;
 using Smash.Ui.System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,6 +20,7 @@ namespace Smash.Ui.Components
 		{
 			base.Awake();
 			m_button.onClick.AddListener(InvokeEvent);
+			m_button.onClick.AddListener(ButtonClickSound);
 			if (m_deactivateOnClick) m_button.onClick.AddListener(() => OnDeselect(null));
 		}
 
@@ -34,6 +36,9 @@ namespace Smash.Ui.Components
 
 		public void OnSelect(BaseEventData eventData)
 		{
+			if (AudioManager.HasInstance)
+				AudioManager.Instance.PlayButtonTransition();
+
 			m_animationStrategy.Activate();
 		}
 
@@ -41,6 +46,12 @@ namespace Smash.Ui.Components
 		{
 			m_animationStrategy.Deactivate();
 			OnButtonDeselected?.Invoke(gameObject);
+		}
+
+		private void ButtonClickSound()
+		{
+			if (AudioManager.HasInstance)
+				AudioManager.Instance.PlayButtonClick();
 		}
 	}
 }
