@@ -90,11 +90,15 @@ namespace Smash.Ui
 			
 			for (int i = 0; i < entries.Count; i++)
 			{
-				if (ScoreHelper.ApproximatelyEqual(entries[i].Score, ScoreHelper.DefaultScore)) continue;
+				double score = entries[i].Score;
+				if (ScoreHelper.ApproximatelyEqual(score, ScoreHelper.DefaultScore))
+				{
+					score = 0;
+				}
 				m_entries[i].Set(
 					position: i+1, 
-					playerName: entries[i].PlayerName, 
-					score: entries[i].Score);
+					playerName: entries[i].PlayerName,
+					score: score);
 				m_entries[i].CheckMyPlayer(entries[i].PlayerId);
 				m_entries[i].gameObject.SetActive(true);
 			}

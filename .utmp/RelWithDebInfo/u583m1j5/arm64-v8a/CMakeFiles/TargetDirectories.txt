@@ -1,0 +1,5 @@
+C:/GitHub/Unity/2.5D-Fighting-Game/.utmp/RelWithDebInfo/u583m1j5/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/GitHub/Unity/2.5D-Fighting-Game/.utmp/RelWithDebInfo/u583m1j5/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/GitHub/Unity/2.5D-Fighting-Game/.utmp/RelWithDebInfo/u583m1j5/arm64-v8a/GameActivity/CMakeFiles/game.dir
+C:/GitHub/Unity/2.5D-Fighting-Game/.utmp/RelWithDebInfo/u583m1j5/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+C:/GitHub/Unity/2.5D-Fighting-Game/.utmp/RelWithDebInfo/u583m1j5/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Smash.Services;
 using Smash.StructsAndEnums;
@@ -21,12 +22,15 @@ namespace Smash.System
         private bool m_isLoading;
         
         private MySceneGroupManager m_sceneGroupManager;
+        
+        public event Action OnSceneGroupLoaded;
 
         protected override void Awake()
         {
             base.Awake();
+            OnSceneGroupLoaded += () => Debug.Log("Scene Group Loaded");
             m_sceneGroupManager = new(new List<string>{"AsyncSceneLoader"});
-            m_sceneGroupManager.OnSceneGroupLoaded += () => Debug.Log("Scene Group Loaded");
+            m_sceneGroupManager.OnSceneGroupLoaded += OnSceneGroupLoaded;
             m_sceneGroupManager.OnSceneUnloaded += sceneName => Debug.Log($"Unloaded : {sceneName}");
             m_sceneGroupManager.OnSceneLoaded += sceneName => Debug.Log($"Loaded : {sceneName}");
         }
