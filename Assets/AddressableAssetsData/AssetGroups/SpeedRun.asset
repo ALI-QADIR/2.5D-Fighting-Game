@@ -50,11 +50,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3074bb0b181ce8c45a50f25c86137189
-    m_Address: Assets/_Project/Scenes/SpeedRun/OcclusionCullingData.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 35591762b8384724e96a7469cf474af1
     m_Address: Assets/_Project/Art/Models/Env/Building-Lg-03.fbx
     m_ReadOnly: 0
@@ -97,6 +92,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6caaf1822d9da1d4c811e7430ae15fd6
     m_Address: Assets/_Project/Art/Models/Env/Building-Md-01.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e2e690d05174824d82f1d29337fba89
+    m_Address: Assets/_Project/Art/Ui/Tex_Oiiai.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -162,6 +162,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d12a70fe79b31e74a84703d7e07033e6
     m_Address: Assets/_Project/Art/Models/Env/Road-2x2.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4e8cc3763ccad34a971f3fd26c920ce
+    m_Address: Assets/_Project/Art/OIIAIOIIIIAI.mov
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

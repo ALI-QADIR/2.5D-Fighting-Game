@@ -4,7 +4,6 @@ using Smash.System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using NotImplementedException = System.NotImplementedException;
 
 namespace Smash.Ui.Components
 {

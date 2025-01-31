@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee31dfa0fcb246fb9685101f9adfa4b7, type: 3}
   m_Name: Player Settings
   m_EditorClassIdentifier: 
-  touchControls:
+  m_touchControls:
     m_value: 0
     m_onValueChanged:
       m_PersistentCalls:
         m_Calls: []
-  sfx:
+  m_sfx:
     m_value: 1
     m_onValueChanged:
       m_PersistentCalls:
         m_Calls: []
-  sfxVolume:
-    m_value: 10
+  m_sfxVolume:
+    m_value: 5
     m_onValueChanged:
       m_PersistentCalls:
         m_Calls: []
