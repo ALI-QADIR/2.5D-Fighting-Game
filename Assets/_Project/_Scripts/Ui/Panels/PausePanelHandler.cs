@@ -8,6 +8,7 @@ namespace Smash.Ui.Panels
 	public class PausePanelHandler : PanelHandler
 	{
 		[Header("Options")] [SerializeField] private PlayerSettingsController m_settingsController;
+		[Header("Pause")] [SerializeField] private GameObject m_retryButton;
 		
 		protected override void Awake()
 		{
@@ -19,6 +20,7 @@ namespace Smash.Ui.Panels
 			_eventDictionary.Add("btn_pause_sfx_vol", m_settingsController.OnClickSfxVolButton);
 			_eventDictionary.Add("btn_pause_touch_controls", m_settingsController.OnClickTouchControlsButton);
 			_eventDictionary.Add("btn_pause_mainmenu", OnClickMainMenuButton);
+			_eventDictionary.Add("btn_pause_retry", OnClickRetry);
 			
 			_backButtonHandler.SetEventArgs("btn_pause_resume", this);
 		}
@@ -32,6 +34,10 @@ namespace Smash.Ui.Panels
 		public override void OpenPanel()
 		{
 			base.OpenPanel();
+			
+			m_retryButton.SetActive(false);
+			if (SpeedRunManager.HasInstance) ActivateSpeedRunOptionsPanel();
+			
 			_input.UI.Cancel.Enable();
 			_input.UI.Resume.Enable();
 			_input.UI.Cancel.started += BackButtonPressed;
@@ -58,7 +64,23 @@ namespace Smash.Ui.Panels
 		
 		private void OnClickResumeButton()
 		{
+			if (SpeedRunManager.HasInstance)
+				SpeedRunManager.Instance.PauseTimer(false);
 			ClosePanel();
+		}
+
+		private void OnClickRetry()
+		{
+			if(!SpeedRunManager.HasInstance) return;
+			SpeedRunManager.Instance.ShouldBeginCountdown();
+			ClosePanel();
+		}
+
+		private void ActivateSpeedRunOptionsPanel()
+		{
+			m_retryButton.SetActive(true);
+			
+			SpeedRunManager.Instance.PauseTimer(true);
 		}
 
 		private void OnClickPauseButton()

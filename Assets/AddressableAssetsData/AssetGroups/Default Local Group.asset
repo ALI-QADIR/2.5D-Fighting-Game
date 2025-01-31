@@ -30,6 +30,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36be289d700e1f54b815b8218a9c5b08
+    m_Address: Assets/_Project/Art/Ui/Ui_White.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 36e335017ad71d54fbb10842863188ae
     m_Address: Packages/com.unity.render-pipelines.core/Runtime/RenderPipelineResources/FallbackShader.shader
     m_ReadOnly: 0
@@ -72,6 +77,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9dbf58f782177164e80e95f5ad34af9b
     m_Address: Assets/_Project/Art/Animations/Anim_RoundCube_WallSlide.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: af3da8f560a308b4dbcf555b9f5090b9
+    m_Address: Assets/TextMesh Pro/White Gradient.asset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

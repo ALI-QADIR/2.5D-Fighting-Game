@@ -459,7 +459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fpsText: {fileID: 1525988257}
   refreshTime: 0.5
-  showFps: 1
+  showFps: 0
 --- !u!1 &215076581
 GameObject:
   m_ObjectHideFlags: 0

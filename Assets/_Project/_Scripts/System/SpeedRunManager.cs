@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections;
+using System.Threading.Tasks;
 using Smash.Player.Input;
 using Smash.Services;
 using Smash.Ui.Panels;
@@ -37,11 +38,6 @@ namespace Smash.System
 		{
 			base.Awake();
 			SetUpStateMachine();
-
-			m_stopwatchTimer = new StopwatchTimer(2f);
-			m_stopwatchTimer.onTimerUpdate += OnTimerUpdate;
-			m_countdownTimer = new FrequencyTimer(1);
-			m_countdownTimer.onTick += CountDownTick;
 		}
 
 		private void Update()
@@ -62,21 +58,16 @@ namespace Smash.System
 
 		public void BeginCountDown()
 		{
-			m_countdownTimer.Reset();
-			m_count = 3;
-			m_countdownTimer.Start();
-			m_stopwatchTimer.Reset();
-			
-			m_shouldBeginCountdown = false;
-			m_playerInput.transform.position = m_playerStart.position;
-			m_timerPanel.SetText("3");
-			
+			m_playerInput.transform.SetPositionAndRotation(m_playerStart.position, m_playerStart.rotation);
+			StartCoroutine(WaitAndBeginCountDown());
 			// Debug.LogWarning("Countdown Start");
 		}
 
 		public void GameStarted()
 		{
-			m_countdownTimer.Reset();
+			m_countdownTimer.onTick -= CountDownTick; 
+			m_countdownTimer.Dispose();
+			
 			m_stopwatchTimer.Start();
 			
 			m_playerInput.EnablePlayerInput();
@@ -98,6 +89,18 @@ namespace Smash.System
 			m_optionsPanel.EndGame(time.ToString("F3"));
 			PlayerAuthentication.Instance.SetPlayerScore(time * 1000f);
 			SetPlayerScore();
+			
+			m_stopwatchTimer.onTimerUpdate -= OnTimerUpdate;
+			m_stopwatchTimer.Dispose();
+		}
+		
+		
+		public void PauseTimer(bool state)
+		{
+			if (state)
+				m_stopwatchTimer.Pause();
+			else 
+				m_stopwatchTimer.Resume();
 		}
 		
 		private async void SetPlayerScore()
@@ -123,6 +126,24 @@ namespace Smash.System
 			if (m_count < 0) m_shouldBeginGame = true;
 		}
 
+		private IEnumerator WaitAndBeginCountDown()
+		{
+			yield return null;
+			
+			m_playerInput.transform.SetPositionAndRotation(m_playerStart.position, m_playerStart.rotation);
+			
+			m_countdownTimer = new FrequencyTimer(1);
+			m_countdownTimer.onTick += CountDownTick;
+			m_count = 3;
+			m_countdownTimer.Start();
+			
+			m_shouldBeginCountdown = false;
+			m_timerPanel.SetText("3");
+			
+			m_stopwatchTimer = new StopwatchTimer(2f);
+			m_stopwatchTimer.onTimerUpdate += OnTimerUpdate;
+		}
+
 		private void SetUpStateMachine()
 		{
 			m_stateMachine = new StateMachine();
@@ -137,6 +158,7 @@ namespace Smash.System
 			AddTransition(m_getReady, m_countdown, new FuncPredicate(() => m_shouldBeginCountdown));
 			AddTransition(m_countdown, m_active, new FuncPredicate(() => m_shouldBeginGame));
 			AddTransition(m_active, m_end, new FuncPredicate(() => m_shouldGameEnd));
+			AddTransition(m_active, m_countdown, new FuncPredicate(() => m_shouldBeginCountdown));
 			AddTransition(m_end, m_countdown, new FuncPredicate(() => m_shouldBeginCountdown));
 			
 			m_stateMachine.SetState(m_init);

@@ -19,8 +19,8 @@ namespace Smash.World.SpeedRun
 
 		private void OnTriggerEnter(Collider other)
 		{
-			m_player.Play();
 			m_player.gameObject.SetActive(true);
+			m_player.Play();
 		}
 
 		private void OnTriggerExit(Collider other)
