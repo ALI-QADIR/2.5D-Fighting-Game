@@ -47,7 +47,7 @@ namespace Smash.Player.States
 		
 		private FuncPredicate m_dashToCoyoteCondition;
 
-		public AirborneSubStateMachine(PlayerController controller) : base(controller)
+		public AirborneSubStateMachine(PlayerPawn pawn) : base(pawn)
 		{
 			_stateMachine = new StateMachine();
 			
@@ -63,8 +63,8 @@ namespace Smash.Player.States
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			_controller.CurrentState = this;
-			_controller.OnDash += ControllerOnOnDash;
+			_pawn.CurrentState = this;
+			_pawn.OnDash += PawnOnOnDash;
 			_stateMachine.SetState(m_airEntry);
 		}
 
@@ -89,7 +89,7 @@ namespace Smash.Player.States
 		public override void OnExit()
 		{
 			base.OnExit();
-			_controller.OnDash -= ControllerOnOnDash;
+			_pawn.OnDash -= PawnOnOnDash;
 			_stateMachine.SetState(m_airExit);
 		}
 
@@ -97,50 +97,50 @@ namespace Smash.Player.States
 		
 		protected override void CreateStates()
 		{
-			m_airEntry = new AirEntry(_controller);
-			m_airExit = new AirExit(_controller);
-			m_rising = new Rising(_controller);
-			m_falling = new Falling(_controller);
-			m_floatingFall = new FloatingFall(_controller);
-			m_crashingFall = new CrashingFall(_controller);
-			m_coyote = new Coyote(_controller);
-			m_dash = new Dash(_controller, _controller.DashDuration);
-			m_apex = new Apex(_controller);
-			m_ledge = new Ledge(_controller);
-			m_wallSlide = new WallSlide(_controller);
+			m_airEntry = new AirEntry(_pawn);
+			m_airExit = new AirExit(_pawn);
+			m_rising = new Rising(_pawn);
+			m_falling = new Falling(_pawn);
+			m_floatingFall = new FloatingFall(_pawn);
+			m_crashingFall = new CrashingFall(_pawn);
+			m_coyote = new Coyote(_pawn);
+			m_dash = new Dash(_pawn, _pawn.DashDuration);
+			m_apex = new Apex(_pawn);
+			m_ledge = new Ledge(_pawn);
+			m_wallSlide = new WallSlide(_pawn);
 		}
 		
 		protected override void CreateTransitions()
 		{
 			// Entry
-			m_entryToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is AirEntry && _controller.IsRising());
-			m_entryToCoyoteCondition = new FuncPredicate(() => _stateMachine.CurrentState is AirEntry && _controller.IsFalling());
+			m_entryToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is AirEntry && _pawn.IsRising());
+			m_entryToCoyoteCondition = new FuncPredicate(() => _stateMachine.CurrentState is AirEntry && _pawn.IsFalling());
 			
 			// Rising
-			m_risingToApexCondition = new FuncPredicate(() => _stateMachine.CurrentState is Rising && _controller.IsFalling());
+			m_risingToApexCondition = new FuncPredicate(() => _stateMachine.CurrentState is Rising && _pawn.IsFalling());
 			m_risingToDashCondition = new FuncPredicate(DashPredicate<Rising>);
 			
 			// Falling
-			m_fallingToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Falling && _controller.IsRising());
+			m_fallingToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Falling && _pawn.IsRising());
 			m_fallingToDashCondition = new FuncPredicate(DashPredicate<Falling>);
 
 			// Independent
 			m_ledgeCondition = new FuncPredicate(() =>
-				_stateMachine.CurrentState is Coyote or FloatingFall or Falling or Apex or WallSlide && _controller.IsLedgeGrab());
+				_stateMachine.CurrentState is Coyote or FloatingFall or Falling or Apex or WallSlide && _pawn.IsLedgeGrab());
 			m_wallCondition = new FuncPredicate(() => 
-				_stateMachine.CurrentState is FloatingFall or Falling && _controller.IsWallDetected());
+				_stateMachine.CurrentState is FloatingFall or Falling && _pawn.IsWallDetected());
 			m_crashingCondition = new FuncPredicate(() => 
-				_stateMachine.CurrentState is Ledge or FloatingFall or Falling or Dash or Rising or WallSlide && _controller.IsCrashingFall());
+				_stateMachine.CurrentState is Ledge or FloatingFall or Falling or Dash or Rising or WallSlide && _pawn.IsCrashingFall());
 
 			// Apex
 			m_apexToDashCondition = new FuncPredicate(DashPredicate<Apex>);
-			m_apexToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Apex && _controller.IsRising());
+			m_apexToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Apex && _pawn.IsRising());
 			m_apexToFallingCondition = new FuncPredicate(() => 
-				_stateMachine.CurrentState is Apex && m_apex.ElapsedTime >= _controller.ApexTime && _controller.IsNormalFall());
+				_stateMachine.CurrentState is Apex && m_apex.ElapsedTime >= _pawn.ApexTime && _pawn.IsNormalFall());
 			m_apexToFloatingCondition = new FuncPredicate(() => 
-				_stateMachine.CurrentState is Apex && m_apex.ElapsedTime >= _controller.ApexTime && _controller.IsFloatingFall());
+				_stateMachine.CurrentState is Apex && m_apex.ElapsedTime >= _pawn.ApexTime && _pawn.IsFloatingFall());
 			m_apexToCrashingCondition = new FuncPredicate(() => 
-				_stateMachine.CurrentState is Apex && m_apex.ElapsedTime >= _controller.ApexTime && _controller.IsCrashingFall());
+				_stateMachine.CurrentState is Apex && m_apex.ElapsedTime >= _pawn.ApexTime && _pawn.IsCrashingFall());
 			
 			// Dash
 			m_dashToCoyoteCondition = new FuncPredicate(() => 
@@ -148,18 +148,18 @@ namespace Smash.Player.States
 			m_floatingToDashCondition = new FuncPredicate(DashPredicate<FloatingFall>);
 			
 			// Ledge
-			m_ledgeToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Ledge && _controller.IsRising());
+			m_ledgeToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Ledge && _pawn.IsRising());
 			
 			// WallSlide
-			m_wallSlideToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is WallSlide && _controller.IsRising());
+			m_wallSlideToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is WallSlide && _pawn.IsRising());
 			m_wallSlideToFallingCondition = new FuncPredicate(() =>
-				_stateMachine.CurrentState is WallSlide && _controller.IsFalling() && !_controller.IsWallDetected());
+				_stateMachine.CurrentState is WallSlide && _pawn.IsFalling() && !_pawn.IsWallDetected());
 			
 			// Coyote
-			m_coyoteToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Coyote && _controller.IsRising());
+			m_coyoteToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Coyote && _pawn.IsRising());
 			m_coyoteToDashCondition = new FuncPredicate(DashPredicate<Coyote>);
 			m_coyoteToFallingCondition = new FuncPredicate(() =>
-				_stateMachine.CurrentState is Coyote && _controller.IsFalling() && m_coyote.ElapsedTime >= _controller.CoyoteTime);
+				_stateMachine.CurrentState is Coyote && _pawn.IsFalling() && m_coyote.ElapsedTime >= _pawn.CoyoteTime);
 		}
 
 		protected override void AddTransitions()

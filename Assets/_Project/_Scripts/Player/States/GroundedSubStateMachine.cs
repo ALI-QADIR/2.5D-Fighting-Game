@@ -19,7 +19,7 @@ namespace Smash.Player.States
 		private FuncPredicate m_idleToDashCondition;
 		private FuncPredicate m_movingToDashCondition;
 		
-		public GroundedSubStateMachine(PlayerController controller) : base(controller)
+		public GroundedSubStateMachine(PlayerPawn pawn) : base(pawn)
 		{
 			_stateMachine = new StateMachine();
 
@@ -35,8 +35,8 @@ namespace Smash.Player.States
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			_controller.OnDash += ControllerOnOnDash;
-			_controller.CurrentState = this;
+			_pawn.OnDash += PawnOnOnDash;
+			_pawn.CurrentState = this;
 			_stateMachine.SetState(m_groundEntry);
 			
 		}
@@ -62,7 +62,7 @@ namespace Smash.Player.States
 		public override void OnExit()
 		{
 			base.OnExit();
-			_controller.OnDash -= ControllerOnOnDash;
+			_pawn.OnDash -= PawnOnOnDash;
 			_stateMachine.SetState(m_groundExit);
 		}
 
@@ -70,28 +70,28 @@ namespace Smash.Player.States
 
 		protected override void CreateStates()
 		{
-			m_groundEntry = new GroundEntry(_controller);
-			m_groundExit = new GroundExit(_controller);
-			m_idle = new Idle(_controller);
-			m_moving = new Moving(_controller);
-			m_dash = new Dash(_controller, _controller.DashDuration);
+			m_groundEntry = new GroundEntry(_pawn);
+			m_groundExit = new GroundExit(_pawn);
+			m_idle = new Idle(_pawn);
+			m_moving = new Moving(_pawn);
+			m_dash = new Dash(_pawn, _pawn.DashDuration);
 		}
 
 		protected override void CreateTransitions()
 		{
-			m_entryToIdleCondition = new FuncPredicate(() => _stateMachine.CurrentState is GroundEntry && !_controller.IsMoving());
-			m_entryToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is GroundEntry && _controller.IsMoving());
+			m_entryToIdleCondition = new FuncPredicate(() => _stateMachine.CurrentState is GroundEntry && !_pawn.IsMoving());
+			m_entryToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is GroundEntry && _pawn.IsMoving());
 			
-			m_idleToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && _controller.IsMoving());
+			m_idleToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && _pawn.IsMoving());
 			m_idleToDashCondition = new FuncPredicate(DashPredicate<Idle>);
 			
-			m_movingToIdleCondition = new FuncPredicate(() => _stateMachine.CurrentState is Moving && !_controller.IsMoving());
+			m_movingToIdleCondition = new FuncPredicate(() => _stateMachine.CurrentState is Moving && !_pawn.IsMoving());
 			m_movingToDashCondition = new FuncPredicate(DashPredicate<Moving>);
 			
 			m_dashToIdleCondition = new FuncPredicate(() =>
-				_stateMachine.CurrentState is Dash && !_controller.IsMoving() && m_dash.IsFinished);
+				_stateMachine.CurrentState is Dash && !_pawn.IsMoving() && m_dash.IsFinished);
 			m_dashToMovingCondition = new FuncPredicate(() =>
-				_stateMachine.CurrentState is Dash && _controller.IsMoving() && m_dash.IsFinished);
+				_stateMachine.CurrentState is Dash && _pawn.IsMoving() && m_dash.IsFinished);
 		}
 
 		protected override void AddTransitions()

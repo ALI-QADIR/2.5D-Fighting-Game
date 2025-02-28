@@ -4,69 +4,69 @@ namespace Smash.Player.States
 {
 	public class AirEntry : PlayerBaseState
 	{
-		public AirEntry(PlayerController controller) : base(controller)
+		public AirEntry(PlayerPawn pawn) : base(pawn)
 		{
 		}
 
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			_controller.SetInAir();
+			_pawn.SetInAir();
 		}
 	}
 	
 	public class Rising : PlayerBaseState
 	{
-		public Rising(PlayerController controller) : base(controller)
+		public Rising(PlayerPawn pawn) : base(pawn)
 		{
 		}
 
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			_controller.CurrentState = this;
-			_controller.SetInAir();
+			_pawn.CurrentState = this;
+			_pawn.SetInAir();
 		}
 	}
 	
 	public class Falling : PlayerBaseState
 	{
-		public Falling(PlayerController controller) : base(controller)
+		public Falling(PlayerPawn pawn) : base(pawn)
 		{
 		}
 
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			_controller.CurrentState = this;
-			_controller.SetFalling();
+			_pawn.CurrentState = this;
+			_pawn.SetFalling();
 		}
 	}
 	public class FloatingFall : PlayerBaseState
 	{
-		public FloatingFall(PlayerController controller) : base(controller)
+		public FloatingFall(PlayerPawn pawn) : base(pawn)
 		{
 		}
 
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			_controller.CurrentState = this;
-			_controller.SetFloatingFall();
+			_pawn.CurrentState = this;
+			_pawn.SetFloatingFall();
 		}
 	}
 	
 	public class CrashingFall : PlayerBaseState
 	{
-		public CrashingFall(PlayerController controller) : base(controller)
+		public CrashingFall(PlayerPawn pawn) : base(pawn)
 		{
 		}
 
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			_controller.CurrentState = this;
-			_controller.SetCrashingFall();
+			_pawn.CurrentState = this;
+			_pawn.SetCrashingFall();
 		}
 	}
 	
@@ -74,7 +74,7 @@ namespace Smash.Player.States
 	{
 		public float ElapsedTime { get; private set; }
 
-		public Coyote(PlayerController controller) : base(controller)
+		public Coyote(PlayerPawn pawn) : base(pawn)
 		{
 		}
 
@@ -83,8 +83,8 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			ElapsedTime = 0f;
-			_controller.CurrentState = this;
-			_controller.SetCoyote();
+			_pawn.CurrentState = this;
+			_pawn.SetCoyote();
 		}
 		
 		public override void OnUpdate()
@@ -98,7 +98,7 @@ namespace Smash.Player.States
 	{
 		public float ElapsedTime { get; private set; }
 
-		public Apex(PlayerController controller) : base(controller)
+		public Apex(PlayerPawn pawn) : base(pawn)
 		{
 		}
 
@@ -107,8 +107,8 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			ElapsedTime = 0f;
-			_controller.CurrentState = this;
-			_controller.SetApex(true);
+			_pawn.CurrentState = this;
+			_pawn.SetApex(true);
 		}
 
 		public override void OnUpdate()
@@ -121,53 +121,53 @@ namespace Smash.Player.States
 		{
 			base.OnExit();
 			ElapsedTime = 0f;
-			_controller.SetApex(false);
+			_pawn.SetApex(false);
 		}
 	}
 
 	public class Ledge : PlayerBaseState
 	{
-		public Ledge(PlayerController controller) : base(controller)
+		public Ledge(PlayerPawn pawn) : base(pawn)
 		{
 		}
 
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			_controller.CurrentState = this;
-			_controller.SetOnLedge(true);
+			_pawn.CurrentState = this;
+			_pawn.SetOnLedge(true);
 		}
 
 		public override void OnExit()
 		{
 			base.OnExit();
-			_controller.SetOnLedge(false);
+			_pawn.SetOnLedge(false);
 		}
 	}
 	
 	public class WallSlide : PlayerBaseState
 	{
-		public WallSlide(PlayerController controller) : base(controller)
+		public WallSlide(PlayerPawn pawn) : base(pawn)
 		{
 		}
 
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			_controller.CurrentState = this;
-			_controller.SetWallSliding(true);
+			_pawn.CurrentState = this;
+			_pawn.SetWallSliding(true);
 		}
 
 		public override void OnExit()
 		{
 			base.OnExit();
-			_controller.SetWallSliding(false);
+			_pawn.SetWallSliding(false);
 		}
 	}
     
 	public class AirExit : PlayerBaseState
 	{
-		public AirExit(PlayerController controller) : base(controller)
+		public AirExit(PlayerPawn pawn) : base(pawn)
 		{
 		}
 	}

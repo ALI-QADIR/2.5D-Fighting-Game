@@ -4,13 +4,11 @@ using Smash.Ui.Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Smash.Ui.System
 {
 	public abstract class PanelHandler : UiEventListener
 	{
-		[FormerlySerializedAs("m_animationStrategy")]
 		[Header("Animation")] 
 		[SerializeField] protected AnimationStrategy<Action> _animationStrategy;
 

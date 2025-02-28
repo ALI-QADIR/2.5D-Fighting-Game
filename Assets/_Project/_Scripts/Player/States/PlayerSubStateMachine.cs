@@ -7,7 +7,7 @@ namespace Smash.Player.States
 		protected StateMachine _stateMachine;
 		protected bool _dashPressed;
 		
-		protected PlayerSubStateMachine(PlayerController controller) : base(controller)
+		protected PlayerSubStateMachine(PlayerPawn pawn) : base(pawn)
 		{
 		}
 		
@@ -23,7 +23,7 @@ namespace Smash.Player.States
 			return flag;
 		}
 
-		protected void ControllerOnOnDash(bool value)
+		protected void PawnOnOnDash(bool value)
 		{
 			_dashPressed = value;
 		}

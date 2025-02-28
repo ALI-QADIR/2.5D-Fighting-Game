@@ -4,12 +4,11 @@ using TripleA.Extensions;
 using TripleA.FSM;
 using TripleA.ImprovedTimer.Timers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Smash.Player
 {
 	[RequireComponent(typeof(PlayerMotor))]
-	public class PlayerController : MonoBehaviour
+	public class PlayerPawn : MonoBehaviour
 	{
 		#region Fields
 
@@ -18,7 +17,7 @@ namespace Smash.Player
 		[SerializeField] private LedgeDetector m_ledgeDetector;
 		[SerializeField] private CeilingDetector m_ceilingDetector;
 		[SerializeField] private WallDetector m_wallDetector;
-		[FormerlySerializedAs("m_animator")] [SerializeField] private PlayerGraphicsController m_graphicsController;
+		[SerializeField] private PlayerGraphicsController m_graphicsController;
 		[SerializeField] private PlayerPropertiesSO m_properties;
 		[Header("Control Values")]
 		[SerializeField] private float m_groundGravity = 200f;

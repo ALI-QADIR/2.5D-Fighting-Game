@@ -1,20 +1,19 @@
-using System;
 using TripleA.Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Smash.Player.Input
 {
-    [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof(PlayerPawn))]
     public class InputReader : MonoBehaviour
     {
-        [SerializeField] private PlayerController m_controller;
+        [SerializeField] private PlayerPawn m_pawn;
         [SerializeField] private PlayerPauseHandler m_pauseHandler;
         private PlayerInputActions m_input;
         private void Awake()
         {
             m_input = new PlayerInputActions();
-            m_controller ??= GetComponent<PlayerController>();
+            m_pawn ??= GetComponent<PlayerPawn>();
         }
 
         private void Start()
@@ -90,22 +89,22 @@ namespace Smash.Player.Input
 
         private void OnHorizontal(InputAction.CallbackContext context)
         {
-            m_controller.Direction = Vector3.zero.With(x: context.ReadValue<float>());
+            m_pawn.Direction = Vector3.zero.With(x: context.ReadValue<float>());
         }
         
         private void OnLook(InputAction.CallbackContext context)
         {
-            m_controller.Rotate(context.ReadValue<float>());
+            m_pawn.Rotate(context.ReadValue<float>());
         }
 
         private void OnUp(InputAction.CallbackContext context)
         {
-            m_controller.HandleUpInput();
+            m_pawn.HandleUpInput();
         }
 
         private void OnDown(InputAction.CallbackContext context)
         {
-            m_controller.HandleDownInput();
+            m_pawn.HandleDownInput();
         }
 
         private void OnMainAttack(InputAction.CallbackContext context)
@@ -122,7 +121,7 @@ namespace Smash.Player.Input
         
         private void OnDash(InputAction.CallbackContext context)
         {
-            m_controller.HandleDashInput();
+            m_pawn.HandleDashInput();
         }
         
         private void Launch(InputAction.CallbackContext context)
@@ -142,7 +141,7 @@ namespace Smash.Player.Input
 
         private void OnJump(InputAction.CallbackContext context)
         {
-            m_controller.HandleJumpInput();
+            m_pawn.HandleJumpInput();
         }
     }
 }

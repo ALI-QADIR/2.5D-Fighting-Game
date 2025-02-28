@@ -4,42 +4,42 @@ namespace Smash.Player.States
 {
 	public class GroundEntry : PlayerBaseState
 	{
-		public GroundEntry(PlayerController controller) : base(controller)
+		public GroundEntry(PlayerPawn pawn) : base(pawn)
 		{
 		}
 
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			_controller.SetOnGround();
+			_pawn.SetOnGround();
 		}
 	}
 	
 	public class Idle : PlayerBaseState
 	{
-		public Idle(PlayerController controller) : base(controller)
+		public Idle(PlayerPawn pawn) : base(pawn)
 		{
 		}
 
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			_controller.CurrentState = this;
-			_controller.SetIdle();
+			_pawn.CurrentState = this;
+			_pawn.SetIdle();
 		}
 	}
 	
 	public class Moving : PlayerBaseState
 	{
-		public Moving(PlayerController controller) : base(controller)
+		public Moving(PlayerPawn pawn) : base(pawn)
 		{
 		}
 		
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			_controller.CurrentState = this;
-			_controller.SetRunning();
+			_pawn.CurrentState = this;
+			_pawn.SetRunning();
 		}
 	}
 
@@ -49,7 +49,7 @@ namespace Smash.Player.States
 		private float m_elapsedTime;
 		public bool IsFinished => m_elapsedTime >= m_duration;
 		
-		public Dash(PlayerController controller, float duration) : base(controller)
+		public Dash(PlayerPawn pawn, float duration) : base(pawn)
 		{
 			m_duration = duration;
 		}
@@ -58,8 +58,8 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			m_elapsedTime = 0f;
-			_controller.CurrentState = this;
-			_controller.SetDashStart();
+			_pawn.CurrentState = this;
+			_pawn.SetDashStart();
 		}
 		
 		public override void OnUpdate()
@@ -72,13 +72,13 @@ namespace Smash.Player.States
 		{
 			base.OnExit();
 			m_elapsedTime = 0f;
-			_controller.SetDashEnd();
+			_pawn.SetDashEnd();
 		}
 	}
     
 	public class GroundExit : PlayerBaseState
 	{
-		public GroundExit(PlayerController controller) : base(controller)
+		public GroundExit(PlayerPawn pawn) : base(pawn)
 		{
 		}
 	}
