@@ -7,6 +7,7 @@ using TripleA.FSM;
 using TripleA.ImprovedTimer.Timers;
 using TripleA.Singletons;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Smash.System
 {
@@ -14,7 +15,7 @@ namespace Smash.System
 	{
 		[SerializeField] private SpeedRunOptionsPanel m_optionsPanel;
 		[SerializeField] private SpeedRunTimerPanel m_timerPanel;
-		[SerializeField] private InputReader m_playerInput;
+		[FormerlySerializedAs("m_playerInput")] [SerializeField] private PlayerInputActionsController m_playerInputActionsController;
 		[SerializeField] private Transform m_playerStart;
 		
 		private StopwatchTimer m_stopwatchTimer;
@@ -51,14 +52,14 @@ namespace Smash.System
 			m_shouldBeginGame = false;
 			m_shouldGameEnd = false;
 			
-			m_playerInput.DisablePlayerInput();
+			// m_playerInput.DisablePlayerInput();
 			m_optionsPanel.BeginGame();
 			// Debug.LogWarning("Init");
 		}
 
 		public void BeginCountDown()
 		{
-			m_playerInput.transform.SetPositionAndRotation(m_playerStart.position, m_playerStart.rotation);
+			m_playerInputActionsController.transform.SetPositionAndRotation(m_playerStart.position, m_playerStart.rotation);
 			StartCoroutine(WaitAndBeginCountDown());
 			// Debug.LogWarning("Countdown Start");
 		}
@@ -70,7 +71,7 @@ namespace Smash.System
 			
 			m_stopwatchTimer.Start();
 			
-			m_playerInput.EnablePlayerInput();
+			// m_playerInput.EnablePlayerInput();
 			
 			m_shouldBeginGame = false;
 		}
@@ -79,7 +80,7 @@ namespace Smash.System
 		{
 			m_shouldGameEnd = false;
 			
-			m_playerInput.DisablePlayerInput();
+			// m_playerInput.DisablePlayerInput();
 			
 			float time = m_stopwatchTimer.CurrentTime;
 			m_timerPanel.Time = time;
@@ -130,7 +131,7 @@ namespace Smash.System
 		{
 			yield return null;
 			
-			m_playerInput.transform.SetPositionAndRotation(m_playerStart.position, m_playerStart.rotation);
+			m_playerInputActionsController.transform.SetPositionAndRotation(m_playerStart.position, m_playerStart.rotation);
 			
 			m_countdownTimer = new FrequencyTimer(1);
 			m_countdownTimer.onTick += CountDownTick;

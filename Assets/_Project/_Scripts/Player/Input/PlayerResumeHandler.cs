@@ -2,12 +2,13 @@
 using Smash.System;
 using Smash.Ui.System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Smash.Player.Input
 {
 	public class PlayerResumeHandler : UiEventListener
 	{
-		[SerializeField] private InputReader m_playerInputReader;
+		[FormerlySerializedAs("m_playerPlayerInput")] [FormerlySerializedAs("m_playerPlayerController")] [SerializeField] private PlayerInputActionsController m_playerPlayerInputActionsController;
 
 		protected override void Awake()
 		{
@@ -23,7 +24,7 @@ namespace Smash.Player.Input
 		
 		private void OnResume()
 		{
-			m_playerInputReader.EnablePlayerInput();
+			// m_playerPlayerController.EnablePlayerInput();
 		}
 	}
 }

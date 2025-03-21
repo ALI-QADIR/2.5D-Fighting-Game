@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Smash.Player
 {
     [CreateAssetMenu(fileName = "PlayerProperties", menuName = "Scriptable Objects/PlayerPropertiesSO")]
-    public class PlayerPropertiesSO : ScriptableObject
+    public class CharacterPropertiesSO : ScriptableObject
     {
         #region Fields
         [SerializeField] private float m_timeToRotate = 0.1f;

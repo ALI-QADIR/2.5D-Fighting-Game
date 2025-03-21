@@ -1,4 +1,5 @@
 ﻿using System;
+using Smash.Player.Input;
 using Smash.Player.States;
 using TripleA.Extensions;
 using TripleA.FSM;
@@ -8,7 +9,7 @@ using UnityEngine;
 namespace Smash.Player
 {
 	[RequireComponent(typeof(PlayerMotor))]
-	public class PlayerPawn : MonoBehaviour
+	public class PlayerPawn : BasePawn
 	{
 		#region Fields
 
@@ -18,7 +19,7 @@ namespace Smash.Player
 		[SerializeField] private CeilingDetector m_ceilingDetector;
 		[SerializeField] private WallDetector m_wallDetector;
 		[SerializeField] private PlayerGraphicsController m_graphicsController;
-		[SerializeField] private PlayerPropertiesSO m_properties;
+		[SerializeField] private CharacterPropertiesSO m_properties;
 		[Header("Control Values")]
 		[SerializeField] private float m_groundGravity = 200f;
 		[SerializeField] private float m_airGravity = 200f;
@@ -80,8 +81,9 @@ namespace Smash.Player
 		
 		#region Unity Methods
 
-		private void Awake()
+		public override void Initialise(BaseController possessingController)
 		{
+			base.Initialise(possessingController);
 			m_tr = transform;
 			m_motor ??= GetComponent<PlayerMotor>();
 			m_ledgeDetector ??= GetComponent<LedgeDetector>();
@@ -422,17 +424,18 @@ namespace Smash.Player
 		public bool IsCrashingFall() => m_fallType == FallType.Crash;
 		public bool IsLedgeGrab() => m_ledgeDetector.IsLedgeDetected();
 		public bool IsWallDetected() => m_wallDetector.IsWallDetected();
+
+		#endregion Public Methods
+
+		#region Private Methods
+
 		private bool IsClimbing()
 		{
 			bool temp = m_isClimbing;
 			m_isClimbing = false;
 			return temp;
 		}
-
-		#endregion Public Methods
-
-		#region Private Methods
-
+		
 		private void CheckForLedge()
 		{
 			if (CurrentState is Falling or FloatingFall or Apex or Coyote)
