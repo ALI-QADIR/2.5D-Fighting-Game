@@ -12,16 +12,17 @@ GameObject:
   - component: {fileID: 6253768598967610822}
   - component: {fileID: 2900337790333897636}
   - component: {fileID: 1289368125731603549}
+  - component: {fileID: 7066033461056179908}
   - component: {fileID: 3933780579439335045}
   - component: {fileID: 8797537056396316964}
-  - component: {fileID: 7066033461056179908}
+  - component: {fileID: 8851318336808331550}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6168442543825379366
 Transform:
   m_ObjectHideFlags: 0
@@ -184,6 +185,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e364487f9d0638545a325f487789217d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7066033461056179908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4671264533724570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a8f851d10544289e5548ebc307393a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_comboActionCommandFactory: {fileID: 8851318336808331550}
+  m_maxTimeForComboExecution: 0.5
+  m_minTimeBetweenCommands: 0.5
+  m_comboTimeAddedWithNewCommand: 0.5
+  m_maxComboLengthBeforeTrim: 3
 --- !u!114 &3933780579439335045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,7 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe0a60dce024a3fa631c3dd6c75a70c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7066033461056179908
+--- !u!114 &8851318336808331550
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,6 +235,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4671264533724570}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42a8f851d10544289e5548ebc307393a, type: 3}
+  m_Script: {fileID: 11500000, guid: b360cdfeacbd44d69b7c6514549f9387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

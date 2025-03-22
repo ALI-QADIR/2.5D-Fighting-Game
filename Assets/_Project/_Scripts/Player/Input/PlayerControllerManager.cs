@@ -63,14 +63,15 @@ namespace Smash.Player.Input
 
 		private void OnPlayerJoined(PlayerInput input)
 		{
-			BaseController ctr = input.GetComponent<BaseController>();
+			PlayerController ctr = input.GetComponent<PlayerController>();
 			int playerIndex = input.playerIndex;
 			if (!m_controllers.ContainsValue(ctr))
 			{
 				m_controllers.Add(playerIndex, ctr);
-				// Todo : Insatntiation from game manager
+				// Todo : Instantiation from game manager
 				var pawn = Instantiate(m_pawnPrefab, Vector3.zero, Quaternion.identity);
 				ctr.Initialise(pawn);
+				ctr.EnablePlayerInputAndDisableUiInput();
 			}
 		}
 		

@@ -1,4 +1,4 @@
-using Smash.Player.CommandPattern;
+using Smash.Player.CommandPattern.Controllers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +19,8 @@ namespace Smash.Player.Input
 		public int PlayerIndex { get; private set; }
 		private PlayerInputActions m_inputActions;
 
+		#region Unity Methods
+
 		protected override void Awake()
 		{
 			base.Awake();
@@ -34,13 +36,17 @@ namespace Smash.Player.Input
 			m_playerInput.onDeviceRegained -= DeviceRegained;
 		}
 
+		#endregion Unity Methods
+
+		#region Public Methods
+
 		public override void Initialise(PlayerPawn pawn)
 		{
 			base.Initialise(pawn);
 			Initialise();
 		}
 
-		private void Initialise()
+		public void Initialise()
 		{
 			m_inputActionsController ??= GetComponent<PlayerInputActionsController>();
 			m_inputActions = m_inputActionsController.InitialiseInputActions();
@@ -51,6 +57,20 @@ namespace Smash.Player.Input
 			InitialiseCommandInvoker();
 			InitialiseActionControllers();
 		}
+		
+		public void EnablePlayerInputAndDisableUiInput()
+		{
+			m_inputActionsController.SetUiInputEnabled(false);
+			m_inputActionsController.SetPlayerInputEnabled(true);
+		}
+		
+		public void EnableUiInputAndDisablePlayerInput()
+		{
+			m_inputActionsController.SetPlayerInputEnabled(false);
+			m_inputActionsController.SetUiInputEnabled(true);
+		}
+
+		#endregion  Public Methods
 		
 		private void InitialiseActionControllers()
 		{

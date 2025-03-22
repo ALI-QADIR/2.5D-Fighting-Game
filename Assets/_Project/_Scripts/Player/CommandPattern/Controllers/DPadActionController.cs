@@ -1,6 +1,7 @@
+using Smash.Player.CommandPattern.ActionCommands;
 using UnityEngine.InputSystem;
 
-namespace Smash.Player.CommandPattern
+namespace Smash.Player.CommandPattern.Controllers
 {
 	public enum DPadDirection
 	{
@@ -15,17 +16,17 @@ namespace Smash.Player.CommandPattern
 	{
 		private float m_horizontalInput;
 		private float m_verticalInput;
-		public DPadDirection CurrentDPadHorizontalDirection { get; private set; }
-		public DPadDirection CurrentDPadVerticalDirection { get; private set; }
+		private DPadDirection m_currentDPadHorizontalDirection;
+		private DPadDirection m_currentDPadVerticalDirection;
 		
 		protected override void SetupActions()
 		{
-			CurrentDPadHorizontalDirection = DPadDirection.None;
-			CurrentDPadVerticalDirection = DPadDirection.None;
+			m_currentDPadHorizontalDirection = DPadDirection.None;
+			m_currentDPadVerticalDirection = DPadDirection.None;
+			
 			InputActions.Player.Horizontal.performed += HandleHorizontal;
 			InputActions.Player.Horizontal.canceled += HandleHorizontal;
 			InputActions.Player.Vertical.performed += HandleVertical;
-			InputActions.Player.Vertical.canceled += HandleVertical;
 		}
 		
 		protected override void RemoveActions()
@@ -33,63 +34,34 @@ namespace Smash.Player.CommandPattern
 			InputActions.Player.Horizontal.performed -= HandleHorizontal;
 			InputActions.Player.Horizontal.canceled -= HandleHorizontal;
 			InputActions.Player.Vertical.performed -= HandleVertical;
-			InputActions.Player.Vertical.canceled -= HandleVertical;
 		}
 
 		private void HandleHorizontal(InputAction.CallbackContext ctx)
 		{
 			m_horizontalInput = ctx.ReadValue<float>();
+			m_currentDPadHorizontalDirection = m_horizontalInput switch
+			{
+				> 0.5f => DPadDirection.Right,
+				< -0.5f => DPadDirection.Left,
+				_ => DPadDirection.None
+			};
+			CreateDpadCommand(m_currentDPadHorizontalDirection, out IGameplayActionCommand command);
+			AddToSequence(command);
+			ExecuteActionCommand(command);
 		}
 
 		private void HandleVertical(InputAction.CallbackContext ctx)
 		{
 			m_verticalInput = ctx.ReadValue<float>();
-			CurrentDPadVerticalDirection = m_verticalInput switch
+			m_currentDPadVerticalDirection = m_verticalInput switch
 			{
 				> 0.5f => DPadDirection.Up,
 				< -0.5f => DPadDirection.Down,
 				_ => DPadDirection.None
 			};
-			CreateDpadCommand(CurrentDPadVerticalDirection, out IGameplayActionCommand command);
+			CreateDpadCommand(m_currentDPadVerticalDirection, out IGameplayActionCommand command);
 			AddToSequence(command);
 			ExecuteActionCommand(command);
-		}
-
-		private void Update()
-		{
-			HandleDPad();
-		}
-
-		private void HandleDPad()
-		{
-			DetermineDirectionFromInput(m_horizontalInput, out var newHorizontalDirection);
-			ProcessDirectionChange(newHorizontalDirection);
-		}
-		
-		private void ProcessDirectionChange(DPadDirection newHorizontalDirection)
-		{
-			if (newHorizontalDirection != CurrentDPadHorizontalDirection)
-			{
-				CurrentDPadHorizontalDirection = newHorizontalDirection;
-				EnableCurrentDpadDirection(CurrentDPadHorizontalDirection);
-			}
-		}
-
-		private void EnableCurrentDpadDirection(in DPadDirection direction)
-		{
-			CreateDpadCommand(direction, out IGameplayActionCommand command);
-			AddToSequence(command);
-			ExecuteActionCommand(command);
-		}
-
-		protected override void AddToSequence(IGameplayActionCommand command)
-		{
-			ComboActionQueueManager.AddCommandToComboSequence(command);
-		}
-
-		protected override void ExecuteActionCommand(IGameplayActionCommand command)
-		{
-			Invoker.ExecuteCommand(command);
 		}
 
 		private static void CreateDpadCommand(in DPadDirection direction, out IGameplayActionCommand command)
@@ -100,7 +72,7 @@ namespace Smash.Player.CommandPattern
 				DPadDirection.Down => new DPadDownActionCommand(),
 				DPadDirection.Left => new DPadLeftActionCommand(),
 				DPadDirection.Right => new DPadRightActionCommand(),
-				_ => null
+				_ => new DPadNullActionCommand()
 			};
 		}
 		

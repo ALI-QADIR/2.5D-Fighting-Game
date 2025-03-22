@@ -1,6 +1,7 @@
+using Smash.Player.CommandPattern.ActionCommands;
 using UnityEngine.InputSystem;
 
-namespace Smash.Player.CommandPattern
+namespace Smash.Player.CommandPattern.Controllers
 {
 	public class ButtonActionController : ActionController
 	{
@@ -29,27 +30,23 @@ namespace Smash.Player.CommandPattern
 		
 		private void HandleSouthInput(InputAction.CallbackContext ctx)
 		{
-			
+			var southButtonCommand = new SouthButtonActionCommand();
+			AddToSequence(southButtonCommand);
+			ExecuteActionCommand(southButtonCommand);
 		}
 		
 		private void HandleEastInput(InputAction.CallbackContext ctx)
 		{
-			
+			var eastButtonCommand = new EastButtonActionCommand();
+			AddToSequence(eastButtonCommand);
+			ExecuteActionCommand(eastButtonCommand);
 		}
 		
 		private void HandleWestInput(InputAction.CallbackContext ctx)
 		{
-			
-		}
-
-		protected override void AddToSequence(IGameplayActionCommand command)
-		{
-			ComboActionQueueManager.AddCommandToComboSequence(command);
-		}
-		
-		protected override void ExecuteActionCommand(IGameplayActionCommand command)
-		{
-			Invoker.ExecuteCommand(command);
+			var westButtonCommand = new WestButtonActionCommand();
+			AddToSequence(westButtonCommand);
+			ExecuteActionCommand(westButtonCommand);
 		}
 	}
 }

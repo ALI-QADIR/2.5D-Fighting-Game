@@ -8,6 +8,9 @@ namespace Smash.Player.Input
         public PlayerInputActions InitialiseInputActions()
         {
             InputActions = new PlayerInputActions();
+            InputActions.Enable();
+            InputActions.Player.Disable();
+            InputActions.UI.Disable();
             return InputActions;
         }
 		

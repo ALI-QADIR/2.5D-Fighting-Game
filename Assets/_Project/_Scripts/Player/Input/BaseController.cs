@@ -14,14 +14,15 @@ namespace Smash.Player.Input
 
 		protected virtual void Awake()
 		{
+			InitialiseCommandInvoker();
 			ComboActionQueueManager ??= GetComponent<ComboActionQueueManager>();
+			ComboActionQueueManager.SetCommandInvoker(CommandInvoker);
 		}
 
 		public virtual void Initialise(PlayerPawn pawn)
 		{
 			_possessedPawn = pawn;
 			_possessedPawn.Initialise(this);
-			InitialiseCommandInvoker();
 		}
 		
 		public void SetPawn(PlayerPawn pawn) => _possessedPawn = pawn;
