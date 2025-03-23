@@ -47,7 +47,6 @@ namespace Smash.Player.CommandPattern.Controllers
 			};
 			CreateDpadCommand(m_currentDPadHorizontalDirection, out IGameplayActionCommand command);
 			AddToSequence(command);
-			ExecuteActionCommand(command);
 		}
 
 		private void HandleVertical(InputAction.CallbackContext ctx)
@@ -61,7 +60,6 @@ namespace Smash.Player.CommandPattern.Controllers
 			};
 			CreateDpadCommand(m_currentDPadVerticalDirection, out IGameplayActionCommand command);
 			AddToSequence(command);
-			ExecuteActionCommand(command);
 		}
 
 		private static void CreateDpadCommand(in DPadDirection direction, out IGameplayActionCommand command)

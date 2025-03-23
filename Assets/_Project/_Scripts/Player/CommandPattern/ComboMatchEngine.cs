@@ -33,27 +33,25 @@ namespace Smash.Player.CommandPattern
 
 		public bool CanStartCombo(Queue<IGameplayActionCommand> comboQueue)
 		{
-			DebugLog($"Can Start Combo {DoesFirstActionStartCombo(comboQueue, comboRules)}");
-			return DoesFirstActionStartCombo(comboQueue, comboRules);
+			bool canStartCombo = DoesFirstActionStartCombo(comboQueue, comboRules);
+			DebugLog($"Can Start Combo: {canStartCombo}");
+			return canStartCombo;
 		}
 
 		public void CheckAndExecuteCombo()
 		{
 			// Debug.Log("Check And Execute Combo");
 			var comboQueue = m_manager.GetComboQueue();
-			if (comboQueue.Count < m_minComboLength)
-				return;
-
 			// Debug.Log("Appropriate Combo Length");
 			IGameplayActionCommand comboCommand = CheckQueueForCombo(comboQueue);
-			if (comboCommand == null) return;
 			m_manager.ExecuteCommand(comboCommand);
 			// ComboEventSystem.OnNewCombo?.Invoke();
-			m_manager.ClearComboSequence();
 		}
 
 		private IGameplayActionCommand CheckQueueForCombo(Queue<IGameplayActionCommand> comboQueue)
 		{
+			if (comboQueue.Count < m_minComboLength)
+				return null;
 			for (int startIndex = 0; startIndex <= comboQueue.Count; startIndex++)
 			{
 				var subsequence = GetSubsequence(comboQueue, startIndex).ToArray();
@@ -81,8 +79,7 @@ namespace Smash.Player.CommandPattern
 			return comboQueue.Skip(startIndex);
 		}
 
-		private static bool DoesFirstActionStartCombo(Queue<IGameplayActionCommand> comboQueue,
-			List<IComboRule> comboRules)
+		private static bool DoesFirstActionStartCombo(Queue<IGameplayActionCommand> comboQueue, List<IComboRule> comboRules)
 		{
 			foreach (var rule in comboRules)
 			{
@@ -96,7 +93,7 @@ namespace Smash.Player.CommandPattern
 		private void DebugLog(string message)
 		{
 			if (!Debugging) return;
-			Debug.LogWarning(message);
+			Debug.Log(message);
 		}
 	}
 }

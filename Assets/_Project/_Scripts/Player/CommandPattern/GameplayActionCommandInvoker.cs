@@ -9,14 +9,15 @@ namespace Smash.Player.CommandPattern
 
 		public void ExecuteCommand(IGameplayActionCommand command)
 		{
-			DebugLog($"Executing Command: {command.ActionName}");
+			DebugLog($"Executing Command: {command.ActionName} \n" +
+			         $"Held Duration: {command.HeldDuration}");
 			command.ExecuteAction();
 		}
 		
 		private void DebugLog(string message)
 		{
 			if (!Debugging) return;
-			Debug.Log(message);
+			Debug.LogWarning(message);
 		}
 	}
 }

@@ -7,46 +7,62 @@ namespace Smash.Player.CommandPattern.Controllers
 	{
 		protected override void SetupActions()
 		{
-			InputActions.Player.North.performed += HandleNorthInput;
-			InputActions.Player.South.performed += HandleSouthInput;
-			InputActions.Player.East.performed += HandleEastInput;
-			InputActions.Player.West.performed += HandleWestInput;
+			InputActions.Player.North.performed += HandleNorthInputPerformed;
+			
+			InputActions.Player.South.performed += HandleSouthInputPerformed;
+			InputActions.Player.South.canceled += HandleSouthInputCanceled;
+			
+			InputActions.Player.East.performed += HandleEastInputPerformed;
+			InputActions.Player.East.canceled += HandleEastInputCanceled;
+			
+			InputActions.Player.West.performed += HandleWestInputPerformed;
 		}
 
 		protected override void RemoveActions()
 		{
-			InputActions.Player.North.performed -= HandleNorthInput;
-			InputActions.Player.South.performed -= HandleSouthInput;
-			InputActions.Player.East.performed -= HandleEastInput;
-			InputActions.Player.West.performed -= HandleWestInput;
+			InputActions.Player.North.performed -= HandleNorthInputPerformed;
+			
+			InputActions.Player.South.performed -= HandleSouthInputPerformed;
+			InputActions.Player.South.canceled -= HandleSouthInputCanceled;
+			
+			InputActions.Player.East.performed -= HandleEastInputPerformed;
+			InputActions.Player.East.canceled -= HandleEastInputCanceled;
+			
+			InputActions.Player.West.performed -= HandleWestInputPerformed;
 		}
 
-		private void HandleNorthInput(InputAction.CallbackContext ctx)
+		private void HandleNorthInputPerformed(InputAction.CallbackContext _)
 		{
 			var northButtonCommand = new NorthButtonActionCommand();
 			AddToSequence(northButtonCommand);
-			ExecuteActionCommand(northButtonCommand);
 		}
 		
-		private void HandleSouthInput(InputAction.CallbackContext ctx)
+		private void HandleSouthInputPerformed(InputAction.CallbackContext _)
 		{
 			var southButtonCommand = new SouthButtonActionCommand();
 			AddToSequence(southButtonCommand);
-			ExecuteActionCommand(southButtonCommand);
 		}
 		
-		private void HandleEastInput(InputAction.CallbackContext ctx)
+		private void HandleSouthInputCanceled(InputAction.CallbackContext _)
+		{
+			_comboActionQueueManager.TryExecuteCachedCombo();
+		}
+		
+		private void HandleEastInputPerformed(InputAction.CallbackContext _)
 		{
 			var eastButtonCommand = new EastButtonActionCommand();
 			AddToSequence(eastButtonCommand);
-			ExecuteActionCommand(eastButtonCommand);
 		}
 		
-		private void HandleWestInput(InputAction.CallbackContext ctx)
+		private void HandleEastInputCanceled(InputAction.CallbackContext _)
+		{
+			_comboActionQueueManager.TryExecuteCachedCombo();
+		}
+		
+		private void HandleWestInputPerformed(InputAction.CallbackContext _)
 		{
 			var westButtonCommand = new WestButtonActionCommand();
 			AddToSequence(westButtonCommand);
-			ExecuteActionCommand(westButtonCommand);
 		}
 	}
 }
