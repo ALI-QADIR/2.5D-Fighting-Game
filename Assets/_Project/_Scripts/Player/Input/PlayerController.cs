@@ -16,8 +16,12 @@ namespace Smash.Player.Input
 		[SerializeField] private PlayerInput m_playerInput;
 
 		[Header("Controller Properties")]
-		public int PlayerIndex { get; private set; }
+		[field: SerializeField] public int PlayerIndex { get; private set; }
 		private PlayerInputActions m_inputActions;
+		
+		[Header("Debug")] 
+		[SerializeField] private bool m_enableInvokerDebug = true;
+		[SerializeField] private bool m_enableQueueDebug = true;
 
 		#region Unity Methods
 
@@ -28,6 +32,9 @@ namespace Smash.Player.Input
 			DPadActionController ??= GetComponent<DPadActionController>();
 			m_playerInput.onDeviceLost += DeviceLost;
 			m_playerInput.onDeviceRegained += DeviceRegained;
+			
+			CommandInvoker.Debugging = m_enableInvokerDebug;
+			ComboActionQueueManager.Debugging = m_enableQueueDebug;
 		}
 
 		private void OnDestroy()

@@ -22,5 +22,20 @@ namespace Smash.Player.CommandPattern
 			// Debug.Log("Create Up Special Command");
 			return new ComboUpSpecialCommand();
 		}
+
+		public IGameplayActionCommand CreateSideMainCommand()
+		{
+			return new ComboSideMainCommand();
+		}
+		
+		public IGameplayActionCommand CreateDownMainCommand()
+		{
+			return new ComboDownMainCommand();
+		}
+		
+		public IGameplayActionCommand CreateUpMainCommand()
+		{
+			return new ComboUpMainCommand();
+		}
 	}
 }

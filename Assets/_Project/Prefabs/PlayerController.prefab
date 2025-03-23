@@ -173,6 +173,10 @@ MonoBehaviour:
   <DPadActionController>k__BackingField: {fileID: 8797537056396316964}
   m_inputActionsController: {fileID: 1289368125731603549}
   m_playerInput: {fileID: 6253768598967610822}
+  <PlayerIndex>k__BackingField: 0
+  m_enableInvokerDebug: 1
+  m_enableQueueDebug: 0
+  m_enableMatchEngineDebug: 0
 --- !u!114 &1289368125731603549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,9 +202,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_comboActionCommandFactory: {fileID: 8851318336808331550}
-  m_maxTimeForComboExecution: 0.5
-  m_minTimeBetweenCommands: 0.5
-  m_comboTimeAddedWithNewCommand: 0.5
+  m_maxTimeForComboExecution: 0.2
+  m_minTimeBetweenCommands: 0.2
+  m_comboTimeAddedWithNewCommand: 0.2
   m_maxComboLengthBeforeTrim: 3
 --- !u!114 &3933780579439335045
 MonoBehaviour:

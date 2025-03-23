@@ -1,17 +1,21 @@
 ﻿using System.Collections.Generic;
 using Smash.Player.CommandPattern.ActionCommands;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace Smash.Player.CommandPattern
 {
 	public class ComboActionQueueManager : MonoBehaviour
 	{
 		[SerializeField] private ComboActionCommandFactory m_comboActionCommandFactory;
-		[SerializeField] private float m_maxTimeForComboExecution = 0.5f;
-		[SerializeField] private float m_minTimeBetweenCommands = 0.5f;
-		[SerializeField] private float m_comboTimeAddedWithNewCommand;
-		[SerializeField] private int m_maxComboLengthBeforeTrim = 6;
+		[SerializeField, Tooltip("Max time to wait since first command input to start a combo")] 
+		private float m_maxTimeForComboExecution = 0.2f;
+		[SerializeField, Tooltip("Min time interval between each command input")] 
+		private float m_minTimeBetweenCommands = 0.2f;
+		[SerializeField, Tooltip("Time added to combo time with each new command input")] 
+		private float m_comboTimeAddedWithNewCommand = 0.2f;
+		[SerializeField] private int m_maxComboLengthBeforeTrim = 3;
+		
+		public bool Debugging { get; set; }
 		
 		private float m_timeSinceLastCommandInput;
 		private float m_timeSinceFirstCommandInput;
@@ -27,6 +31,7 @@ namespace Smash.Player.CommandPattern
 		{
 			m_comboQueue = new Queue<IGameplayActionCommand>();
 			m_comboMatchEngine = new ComboMatchEngine(this, m_comboActionCommandFactory, k_MinComboLength);
+			m_comboMatchEngine.Debugging = Debugging;
 		}
 
 		private void Update()
@@ -46,7 +51,7 @@ namespace Smash.Player.CommandPattern
 
 		public void AddCommandToComboSequence(IGameplayActionCommand command)
 		{
-			Debug.LogWarning($"Adding to sequence: {command.ActionName}");
+			DebugLog($"Adding to sequence: {command.ActionName}");
 			ClearSequenceIfCannotStartCombo();
 			DequeueOldestCommandIfNecessary();
 
@@ -99,7 +104,7 @@ namespace Smash.Player.CommandPattern
 		private void EnqueueCommandAndResetTimers(IGameplayActionCommand command)
 		{
 			m_comboQueue.Enqueue(command);
-			Debug.LogWarning($"Enqueued Command : {command.ActionName}, Current Queue Length {m_comboQueue.Count}");
+			DebugLog($"Enqueued Command : {command.ActionName}, Current Queue Length {m_comboQueue.Count}");
 			if (IsFirstCommandInSequence())
 			{
 				// Debug.Log($"Is first Command In Sequence");
@@ -141,6 +146,12 @@ namespace Smash.Player.CommandPattern
 
 			if (m_timeSinceFirstCommandInput > m_maxTimeForComboExecution)
 				ClearComboSequence();
+		}
+		
+		private void DebugLog(string message)
+		{
+			if (!Debugging) return;
+			Debug.LogWarning(message);
 		}
 	}
 }

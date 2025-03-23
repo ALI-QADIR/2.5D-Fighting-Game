@@ -12,6 +12,7 @@ namespace Smash.Player.CommandPattern
 		private readonly ComboActionCommandFactory m_factory;
 		private readonly int m_minComboLength;
 		private readonly List<IComboRule> comboRules;
+		public bool Debugging { get; set; }
 		
 		public ComboMatchEngine(ComboActionQueueManager manager, ComboActionCommandFactory factory, int minComboLength)
 		{
@@ -22,17 +23,17 @@ namespace Smash.Player.CommandPattern
 			comboRules = new List<IComboRule>()
 			{
 				new ComboSideSpecialRule(m_factory),
-				// new ComboUpSpecial(m_factory),
-				// new ComboDownSpecial(m_factory),
-				// new ComboSideMain(m_factory),
-				// new ComboUpMain(m_factory),
-				// new ComboDownMain(m_factory)
+				new ComboUpSpecialRule(m_factory),
+				new ComboDownSpecialRule(m_factory),
+				new ComboSideMainRule(m_factory),
+				new ComboUpMainRule(m_factory),
+				new ComboDownMainRule(m_factory)
 			};
 		}
 
 		public bool CanStartCombo(Queue<IGameplayActionCommand> comboQueue)
 		{
-			Debug.LogWarning($"Can Start Combo {DoesFirstActionStartCombo(comboQueue, comboRules)}");
+			DebugLog($"Can Start Combo {DoesFirstActionStartCombo(comboQueue, comboRules)}");
 			return DoesFirstActionStartCombo(comboQueue, comboRules);
 		}
 
@@ -90,6 +91,12 @@ namespace Smash.Player.CommandPattern
 			}
 
 			return false;
+		}
+		
+		private void DebugLog(string message)
+		{
+			if (!Debugging) return;
+			Debug.LogWarning(message);
 		}
 	}
 }
