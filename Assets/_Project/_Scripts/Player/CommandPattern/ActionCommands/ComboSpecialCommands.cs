@@ -5,12 +5,13 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "Combo Side Special";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution()
+		public void StartActionExecution(PlayerPawn pawn)
 		{
 		}
 
-		public void FinishActionExecution()
+		public void FinishActionExecution(PlayerPawn pawn)
 		{
+			pawn.HandleDashInput();
 		}
 	}
 	
@@ -19,12 +20,13 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "Combo Up Special";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution()
+		public void StartActionExecution(PlayerPawn pawn)
 		{
 		}
 		
-		public void FinishActionExecution()
+		public void FinishActionExecution(PlayerPawn pawn)
 		{
+			pawn.HandleLaunchInput();
 		}
 	}
 	
@@ -33,12 +35,13 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "Combo Down Special";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution()
+		public void StartActionExecution(PlayerPawn pawn)
 		{
 		}
 		
-		public void FinishActionExecution()
+		public void FinishActionExecution(PlayerPawn pawn)
 		{
+			pawn.HandleLaunchAndFloatInput();
 		}
 	}
 	
@@ -47,11 +50,11 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "Combo Side Main";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution()
+		public void StartActionExecution(PlayerPawn pawn)
 		{
 		}
 		
-		public void FinishActionExecution()
+		public void FinishActionExecution(PlayerPawn pawn)
 		{
 		}
 	}
@@ -61,11 +64,11 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "Combo Up Main";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution()
+		public void StartActionExecution(PlayerPawn pawn)
 		{
 		}
 		
-		public void FinishActionExecution()
+		public void FinishActionExecution(PlayerPawn pawn)
 		{
 		}
 	}
@@ -75,12 +78,13 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "Combo Down Main";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution()
+		public void StartActionExecution(PlayerPawn pawn)
 		{
 		}
 		
-		public void FinishActionExecution()
+		public void FinishActionExecution(PlayerPawn pawn)
 		{
+			pawn.HandleLaunchAndCrashInput();
 		}
 	}
 }

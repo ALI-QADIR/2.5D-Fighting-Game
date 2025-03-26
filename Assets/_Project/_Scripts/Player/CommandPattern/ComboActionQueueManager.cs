@@ -98,14 +98,14 @@ namespace Smash.Player.CommandPattern
 			// hence the first input command is executed all others are ignored
 			m_currentCommand ??= m_comboQueue.Peek();
 			m_currentCommand.HeldDuration = m_timeSinceFirstCommandInput;
-			m_commandInvoker.FinishCommandExecution(m_currentCommand);
+			m_commandInvoker.InvokeFinishCommand(m_currentCommand);
 			ClearComboSequence();
 		}
 
 		private void StartExecuteCommand()
 		{
 			m_currentCommand ??= m_comboQueue.Peek();
-			m_commandInvoker.StartCommandExecution(m_currentCommand);
+			m_commandInvoker.InvokeStartCommand(m_currentCommand);
 		}
 
 		private void TryStartExecution()

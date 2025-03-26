@@ -1,4 +1,5 @@
-﻿using Smash.Player.CommandPattern.ActionCommands;
+﻿using System;
+using Smash.Player.CommandPattern.ActionCommands;
 using UnityEngine;
 
 namespace Smash.Player.CommandPattern
@@ -7,16 +8,19 @@ namespace Smash.Player.CommandPattern
 	{
 		public bool Debugging { get; set; }
 		
-		public void StartCommandExecution(IGameplayActionCommand command)
+		public event Action<IGameplayActionCommand> OnCommandExecutionStarted; 
+		public event Action<IGameplayActionCommand> OnCommandExecutionFinished; 
+		
+		public void InvokeStartCommand(IGameplayActionCommand command)
 		{
 			DebugLog($"Starting Command: {command.ActionName}");
-			command.StartActionExecution();
+			OnCommandExecutionStarted?.Invoke(command);
 		}
 
-		public void FinishCommandExecution(IGameplayActionCommand command)
+		public void InvokeFinishCommand(IGameplayActionCommand command)
 		{
 			DebugLog($"Executing Command: {command.ActionName} --- Held Duration: {command.HeldDuration}");
-			command.FinishActionExecution();
+			OnCommandExecutionFinished?.Invoke(command);
 		}
 		
 		private void DebugLog(string message)

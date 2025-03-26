@@ -1,6 +1,6 @@
 ﻿using Smash.Player.CommandPattern;
+using Smash.Player.CommandPattern.ActionCommands;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace Smash.Player.Input
 {
@@ -8,15 +8,16 @@ namespace Smash.Player.Input
 	public abstract class BaseController : MonoBehaviour
 	{
 		[Header("Components")]
-		[field: SerializeField] protected ComboActionQueueManager ComboActionQueueManager { get; private set; }
+		[field: SerializeField] protected ComboActionQueueManager ComboQueueManager { get; private set; }
+
 		protected PlayerPawn _possessedPawn;
 		protected GameplayActionCommandInvoker CommandInvoker { get; private set; }
 
 		protected virtual void Awake()
 		{
 			InitialiseCommandInvoker();
-			ComboActionQueueManager ??= GetComponent<ComboActionQueueManager>();
-			ComboActionQueueManager.SetCommandInvoker(CommandInvoker);
+			ComboQueueManager ??= GetComponent<ComboActionQueueManager>();
+			ComboQueueManager.SetCommandInvoker(CommandInvoker);
 		}
 
 		public virtual void Initialise(PlayerPawn pawn)
@@ -24,18 +25,25 @@ namespace Smash.Player.Input
 			_possessedPawn = pawn;
 			_possessedPawn.Initialise(this);
 		}
+
+		public virtual void Dispose()
+		{
+			CommandInvoker.OnCommandExecutionStarted -= OnCommandExecutionStarted;
+			CommandInvoker.OnCommandExecutionFinished -= OnCommandExecutionFinished;
+			Destroy(_possessedPawn.gameObject);
+			Destroy(gameObject);
+		}
 		
 		public void SetPawn(PlayerPawn pawn) => _possessedPawn = pawn;
 
 		protected void InitialiseCommandInvoker()
 		{
 			CommandInvoker ??= new GameplayActionCommandInvoker();
+			CommandInvoker.OnCommandExecutionStarted += OnCommandExecutionStarted;
+			CommandInvoker.OnCommandExecutionFinished += OnCommandExecutionFinished;
 		}
 
-		public virtual void Dispose()
-		{
-			Destroy(_possessedPawn.gameObject);
-			Destroy(gameObject);
-		}
+		protected abstract void OnCommandExecutionStarted(IGameplayActionCommand command);
+		protected abstract void OnCommandExecutionFinished(IGameplayActionCommand command);
 	}
 }

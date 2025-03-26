@@ -1,3 +1,4 @@
+using Smash.Player.CommandPattern.ActionCommands;
 using Smash.Player.CommandPattern.Controllers;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,15 +11,17 @@ namespace Smash.Player.Input
 	[RequireComponent(typeof(PlayerInput))]
 	public class PlayerController : BaseController
 	{
-		[field: SerializeField] protected ButtonActionController ButtonActionController { get; private set; }
-		[field: SerializeField] protected DPadActionController DPadActionController { get; private set; }
+		[field: SerializeField] private ButtonActionController ButtonActionControllerComponent { get; set; }
+		[field: SerializeField] private DPadActionController DPadActionControllerComponent { get; set; }
 		[SerializeField] private PlayerInputActionsController m_inputActionsController;
-		[SerializeField] private PlayerInput m_playerInput;
+		[SerializeField] private PlayerInput m_playerInputComponent;
 
 		[Header("Controller Properties")]
-		[field: SerializeField] public int PlayerIndex { get; private set; }
+		[field: SerializeField]
+		public int PlayerIndex { get; private set; }
+
 		private PlayerInputActions m_inputActions;
-		
+
 		[Header("Debug")] 
 		[SerializeField] private bool m_enableInvokerDebug = true;
 		[SerializeField] private bool m_enableQueueDebug = true;
@@ -28,19 +31,19 @@ namespace Smash.Player.Input
 		protected override void Awake()
 		{
 			base.Awake();
-			ButtonActionController ??= GetComponent<ButtonActionController>();
-			DPadActionController ??= GetComponent<DPadActionController>();
-			m_playerInput.onDeviceLost += DeviceLost;
-			m_playerInput.onDeviceRegained += DeviceRegained;
+			ButtonActionControllerComponent ??= GetComponent<ButtonActionController>();
+			DPadActionControllerComponent ??= GetComponent<DPadActionController>();
+			m_playerInputComponent.onDeviceLost += DeviceLost;
+			m_playerInputComponent.onDeviceRegained += DeviceRegained;
 			
 			CommandInvoker.Debugging = m_enableInvokerDebug;
-			ComboActionQueueManager.Debugging = m_enableQueueDebug;
+			ComboQueueManager.Debugging = m_enableQueueDebug;
 		}
 
 		private void OnDestroy()
 		{
-			m_playerInput.onDeviceLost -= DeviceLost;
-			m_playerInput.onDeviceRegained -= DeviceRegained;
+			m_playerInputComponent.onDeviceLost -= DeviceLost;
+			m_playerInputComponent.onDeviceRegained -= DeviceRegained;
 		}
 
 		#endregion Unity Methods
@@ -58,10 +61,9 @@ namespace Smash.Player.Input
 			m_inputActionsController ??= GetComponent<PlayerInputActionsController>();
 			m_inputActions = m_inputActionsController.InitialiseInputActions();
 			
-			m_playerInput ??= GetComponent<PlayerInput>();
-			PlayerIndex = m_playerInput.playerIndex;
+			m_playerInputComponent ??= GetComponent<PlayerInput>();
+			PlayerIndex = m_playerInputComponent.playerIndex;
 			
-			InitialiseCommandInvoker();
 			InitialiseActionControllers();
 		}
 		
@@ -78,11 +80,23 @@ namespace Smash.Player.Input
 		}
 
 		#endregion  Public Methods
-		
+
+		#region Private Methods
+
 		private void InitialiseActionControllers()
 		{
-			ButtonActionController.Initialise(m_inputActions, CommandInvoker, ComboActionQueueManager);
-			DPadActionController.Initialise(m_inputActions, CommandInvoker, ComboActionQueueManager);
+			ButtonActionControllerComponent.Initialise(m_inputActions, ComboQueueManager);
+			DPadActionControllerComponent.Initialise(m_inputActions, ComboQueueManager);
+		}
+
+		protected override void OnCommandExecutionStarted(IGameplayActionCommand command)
+		{
+			command.StartActionExecution(_possessedPawn);
+		}
+
+		protected override void OnCommandExecutionFinished(IGameplayActionCommand command)
+		{
+			command.FinishActionExecution(_possessedPawn);
 		}
 
 		private void DeviceLost(PlayerInput _)
@@ -94,5 +108,7 @@ namespace Smash.Player.Input
 		{
 			Debug.Log("Device regained");
 		}
+
+		#endregion Private Methods
 	}
 }

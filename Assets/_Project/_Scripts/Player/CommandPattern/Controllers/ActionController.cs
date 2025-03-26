@@ -6,14 +6,11 @@ namespace Smash.Player.CommandPattern.Controllers
 	public abstract class ActionController : MonoBehaviour
 	{
 		protected PlayerInputActions InputActions { get; private set; }
-		private GameplayActionCommandInvoker m_invoker;
 		protected ComboActionQueueManager _comboActionQueueManager;
 
-		public virtual void Initialise(PlayerInputActions inputActions, GameplayActionCommandInvoker invoker,
-			ComboActionQueueManager comboActionQueueManager)
+		public virtual void Initialise(PlayerInputActions inputActions, ComboActionQueueManager comboActionQueueManager)
 		{
 			InputActions = inputActions;
-			m_invoker = invoker;
 			_comboActionQueueManager = comboActionQueueManager;
 			SetupActions();
 		}

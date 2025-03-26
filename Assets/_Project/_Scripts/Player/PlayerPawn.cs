@@ -14,6 +14,7 @@ namespace Smash.Player
 		#region Fields
 
 		[Header("References")]
+		
 		[SerializeField] private PlayerMotor m_motor;
 		[SerializeField] private LedgeDetector m_ledgeDetector;
 		[SerializeField] private CeilingDetector m_ceilingDetector;
@@ -21,18 +22,21 @@ namespace Smash.Player
 		[SerializeField] private PlayerGraphicsController m_graphicsController;
 		[SerializeField] private CharacterPropertiesSO m_properties;
 		[Header("Control Values")]
+		
 		[SerializeField] private float m_groundGravity = 200f;
 		[SerializeField] private float m_airGravity = 200f;
 		[SerializeField] private float m_maxFallSpeed = 50f;
 		[SerializeField] private float m_wallSlideSpeed = 20f;
-		[SerializeField] private float m_wallJumpSideSpeed = 50f;
 		[SerializeField] private float m_climbUpSpeed = 37f;
 		[SerializeField] private float m_climbSideSpeed = 20f;
+		// [SerializeField] private float m_wallJumpSideSpeed = 50f;
 		[Header("Timer Values")]
+		
 		[SerializeField] private float m_jumpBufferTime = 0.1f;
 		[SerializeField] private float m_coyoteTime = 0.1f;
 		[SerializeField] private float m_dashResetTime = 0.2f;
 		[Header("Apex")]
+		
 		[SerializeField] private float m_apexTime = 0.05f;
 		[SerializeField, Range(0,1)] private float m_apexSpeedBoostRatio = 0.05f;
 
@@ -182,11 +186,9 @@ namespace Smash.Player
 			if (CurrentState is Dash) return;
 			if (CurrentState is Ledge && !m_isJumping) return;
 			
-			// OnRotate?.Invoke();
 			float lookAngle = Mathf.Approximately(angle, -1.0f) ? 179f : 0f;
 			if (Mathf.Approximately(m_currentLookAngle, lookAngle)) return;
 			
-			// Debug.Log("Rotating");
 			m_currentLookAngle = lookAngle;
 			m_targetRotation = Quaternion.Euler(0f, lookAngle, 0f);
 			m_savedRotation = m_tr.rotation;
@@ -213,22 +215,23 @@ namespace Smash.Player
 			
 			m_numberOfJumps--;
 			m_isJumping = true;
-			if (CurrentState is WallSlide or Ledge || (CurrentState is Rising or Apex && IsWallDetected()) || m_wallJumpBufferTimer.IsRunning)
+			/* // Wall jumping logic
+			 if (CurrentState is WallSlide or Ledge || (CurrentState is Rising or Apex && IsWallDetected()) || m_wallJumpBufferTimer.IsRunning)
 			{
 				// TODO: Fix Z drift when wall Jumping => for now rigid body -> freeze z position
 				float jumpDirectionMultiplier = m_wallJumpBufferTimer.IsRunning ? 0.8f : -1f;
-				Vector3 horizontalVelocity = m_tr.right * m_wallJumpSideSpeed * jumpDirectionMultiplier;
+				Vector3 horizontalVelocity = m_tr.right * (m_wallJumpSideSpeed * jumpDirectionMultiplier);
 				m_savedVelocity += horizontalVelocity;
 				float lookAngle = Mathf.Approximately(m_currentLookAngle, 179) ? 1 : -1;
 				Rotate(lookAngle);
 			}
+			*/
 			HandleJump();
-			// Debug.Log($"Jumping {m_numberOfJumps}");
 		}
 
 		public void HandleDashInput()
 		{
-			if (m_numberOfDashes <= 0 || Direction == Vector3.zero || CurrentState is CrashingFall) return;
+			if (m_numberOfDashes <= 0 || CurrentState is CrashingFall) return;
 			OnDash?.Invoke(true);
 			if (CurrentState is Coyote) return;
 			m_numberOfDashes--;

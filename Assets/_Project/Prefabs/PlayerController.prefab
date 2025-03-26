@@ -168,11 +168,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d9e53c58d746149c4fc20017cda2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ComboActionQueueManager>k__BackingField: {fileID: 7066033461056179908}
-  <ButtonActionController>k__BackingField: {fileID: 3933780579439335045}
-  <DPadActionController>k__BackingField: {fileID: 8797537056396316964}
+  <ComboQueueManager>k__BackingField: {fileID: 7066033461056179908}
+  <ButtonActionControllerComponent>k__BackingField: {fileID: 3933780579439335045}
+  <DPadActionControllerComponent>k__BackingField: {fileID: 8797537056396316964}
   m_inputActionsController: {fileID: 1289368125731603549}
-  m_playerInput: {fileID: 6253768598967610822}
+  m_playerInputComponent: {fileID: 6253768598967610822}
   <PlayerIndex>k__BackingField: 0
   m_enableInvokerDebug: 1
   m_enableQueueDebug: 1
@@ -202,9 +202,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_comboActionCommandFactory: {fileID: 8851318336808331550}
   m_maxTimeForComboExecution: 3
-  m_minTimeBetweenCommands: 0.2
-  m_comboTimeAddedWithNewCommand: 0.2
-  m_maxComboLengthBeforeTrim: 3
+  m_maxTimeBetweenCommands: 0.2
+  m_maxQueueLengthBeforeTrim: 3
+  m_maxPossibleComboLength: 2
 --- !u!114 &3933780579439335045
 MonoBehaviour:
   m_ObjectHideFlags: 0

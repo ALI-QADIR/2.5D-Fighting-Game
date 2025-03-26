@@ -9,7 +9,6 @@ namespace Smash.Player.CommandPattern
 	public class ComboMatchEngine
 	{
 		private readonly ComboActionQueueManager m_manager;
-		private readonly ComboActionCommandFactory m_factory;
 		private readonly int m_minComboLength;
 		private readonly List<IComboRule> comboRules;
 		public bool Debugging { get; set; }
@@ -17,17 +16,16 @@ namespace Smash.Player.CommandPattern
 		public ComboMatchEngine(ComboActionQueueManager manager, ComboActionCommandFactory factory, int minComboLength)
 		{
 			m_manager = manager;
-			m_factory = factory;
 			m_minComboLength = minComboLength;
 			
-			comboRules = new List<IComboRule>()
+			comboRules = new List<IComboRule>
 			{
-				new ComboSideSpecialRule(m_factory),
-				new ComboUpSpecialRule(m_factory),
-				new ComboDownSpecialRule(m_factory),
-				new ComboSideMainRule(m_factory),
-				new ComboUpMainRule(m_factory),
-				new ComboDownMainRule(m_factory)
+				new ComboSideSpecialRule(factory),
+				new ComboUpSpecialRule(factory),
+				new ComboDownSpecialRule(factory),
+				new ComboSideMainRule(factory),
+				new ComboUpMainRule(factory),
+				new ComboDownMainRule(factory)
 			};
 		}
 
