@@ -4,8 +4,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "Combo Side Special";
 		public float HeldDuration { get; set; }
+		
+		public void StartActionExecution()
+		{
+		}
 
-		public void ExecuteAction()
+		public void FinishActionExecution()
 		{
 		}
 	}
@@ -15,9 +19,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "Combo Up Special";
 		public float HeldDuration { get; set; }
 		
-		public void ExecuteAction()
+		public void StartActionExecution()
 		{
-			
+		}
+		
+		public void FinishActionExecution()
+		{
 		}
 	}
 	
@@ -25,9 +32,13 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "Combo Down Special";
 		public float HeldDuration { get; set; }
-		public void ExecuteAction()
+		
+		public void StartActionExecution()
 		{
-			
+		}
+		
+		public void FinishActionExecution()
+		{
 		}
 	}
 	
@@ -35,9 +46,13 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "Combo Side Main";
 		public float HeldDuration { get; set; }
-		public void ExecuteAction()
+		
+		public void StartActionExecution()
 		{
-			
+		}
+		
+		public void FinishActionExecution()
+		{
 		}
 	}
 	
@@ -45,9 +60,13 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "Combo Up Main";
 		public float HeldDuration { get; set; }
-		public void ExecuteAction()
+		
+		public void StartActionExecution()
 		{
-			
+		}
+		
+		public void FinishActionExecution()
+		{
 		}
 	}
 
@@ -55,7 +74,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "Combo Down Main";
 		public float HeldDuration { get; set; }
-		public void ExecuteAction()
+		
+		public void StartActionExecution()
+		{
+		}
+		
+		public void FinishActionExecution()
 		{
 		}
 	}

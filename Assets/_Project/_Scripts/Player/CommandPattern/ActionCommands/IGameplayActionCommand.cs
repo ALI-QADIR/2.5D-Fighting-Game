@@ -4,6 +4,7 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		string ActionName { get; }
 		float HeldDuration { get; set; }
-		void ExecuteAction();
+		void StartActionExecution();
+		void FinishActionExecution();
 	}
 }

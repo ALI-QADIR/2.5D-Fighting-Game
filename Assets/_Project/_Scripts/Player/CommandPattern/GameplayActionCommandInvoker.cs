@@ -6,12 +6,17 @@ namespace Smash.Player.CommandPattern
 	public class GameplayActionCommandInvoker
 	{
 		public bool Debugging { get; set; }
-
-		public void ExecuteCommand(IGameplayActionCommand command)
+		
+		public void StartCommandExecution(IGameplayActionCommand command)
 		{
-			DebugLog($"Executing Command: {command.ActionName} \n" +
-			         $"Held Duration: {command.HeldDuration}");
-			command.ExecuteAction();
+			DebugLog($"Starting Command: {command.ActionName}");
+			command.StartActionExecution();
+		}
+
+		public void FinishCommandExecution(IGameplayActionCommand command)
+		{
+			DebugLog($"Executing Command: {command.ActionName} --- Held Duration: {command.HeldDuration}");
+			command.FinishActionExecution();
 		}
 		
 		private void DebugLog(string message)

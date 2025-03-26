@@ -4,8 +4,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "North";
 		public float HeldDuration { get; set; }
+		
+		public void StartActionExecution()
+		{
+		}
 
-		public void ExecuteAction()
+		public void FinishActionExecution()
 		{
 		}
 	}
@@ -14,7 +18,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "South";
 		public float HeldDuration { get; set; }
-		public void ExecuteAction()
+		
+		public void StartActionExecution()
+		{
+		}
+		
+		public void FinishActionExecution()
 		{
 		}
 	}
@@ -23,7 +32,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "East";
 		public float HeldDuration { get; set; }
-		public void ExecuteAction()
+		
+		public void StartActionExecution()
+		{
+		}
+		
+		public void FinishActionExecution()
 		{
 		}
 	}
@@ -32,7 +46,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "West";
 		public float HeldDuration { get; set; }
-		public void ExecuteAction()
+		
+		public void StartActionExecution()
+		{
+		}
+		
+		public void FinishActionExecution()
 		{
 		}
 	}
@@ -41,7 +60,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "DPadUp";
 		public float HeldDuration { get; set; }
-		public void ExecuteAction()
+		
+		public void StartActionExecution()
+		{
+		}
+		
+		public void FinishActionExecution()
 		{
 		}
 	}
@@ -50,7 +74,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "DPadDown";
 		public float HeldDuration { get; set; }
-		public void ExecuteAction()
+		
+		public void StartActionExecution()
+		{
+		}
+		
+		public void FinishActionExecution()
 		{
 		}
 	}
@@ -59,7 +88,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "DPadLeft";
 		public float HeldDuration { get; set; }
-		public void ExecuteAction()
+		
+		public void StartActionExecution()
+		{
+		}
+		
+		public void FinishActionExecution()
 		{
 		}
 	}
@@ -68,7 +102,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "DPadRight";
 		public float HeldDuration { get; set; }
-		public void ExecuteAction()
+		
+		public void StartActionExecution()
+		{
+		}
+		
+		public void FinishActionExecution()
 		{
 		}
 	}
@@ -77,7 +116,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "DPadNull";
 		public float HeldDuration { get; set; }
-		public void ExecuteAction()
+		
+		public void StartActionExecution()
+		{
+		}
+		
+		public void FinishActionExecution()
 		{
 		}
 	}

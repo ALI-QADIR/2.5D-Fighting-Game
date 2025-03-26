@@ -38,13 +38,13 @@ namespace Smash.Player.CommandPattern
 			return canStartCombo;
 		}
 
-		public void CheckAndExecuteCombo()
+		public IGameplayActionCommand CheckAndGetComboCommand()
 		{
 			// Debug.Log("Check And Execute Combo");
-			var comboQueue = m_manager.GetComboQueue();
-			// Debug.Log("Appropriate Combo Length");
+			var comboQueue = m_manager.GetComboQueue(); 
+			// DebugLog("Appropriate Combo Length");
 			IGameplayActionCommand comboCommand = CheckQueueForCombo(comboQueue);
-			m_manager.ExecuteCommand(comboCommand);
+			return comboCommand;
 			// ComboEventSystem.OnNewCombo?.Invoke();
 		}
 
@@ -67,11 +67,6 @@ namespace Smash.Player.CommandPattern
 			}
 
 			return null;
-		}
-		
-		private void ExecuteComboAction(IGameplayActionCommand comboCommand)
-		{
-			comboCommand.ExecuteAction();
 		}
 		
 		private static IEnumerable<IGameplayActionCommand> GetSubsequence(Queue<IGameplayActionCommand> comboQueue, int startIndex)
