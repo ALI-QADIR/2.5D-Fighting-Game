@@ -12,52 +12,57 @@ namespace Smash.Player
 	public class PlayerPawn : BasePawn
 	{
 		#region Fields
-
-		[Header("References")]
 		
+		[Header("References")]
 		[SerializeField] private PlayerMotor m_motor;
 		[SerializeField] private LedgeDetector m_ledgeDetector;
 		[SerializeField] private CeilingDetector m_ceilingDetector;
 		[SerializeField] private WallDetector m_wallDetector;
 		[SerializeField] private PlayerGraphicsController m_graphicsController;
 		[SerializeField] private CharacterPropertiesSO m_properties;
+		
 		[Header("Control Values")]
-		
-		[SerializeField] private float m_groundGravity = 200f;
+		[Space(10)]
+		[SerializeField] private float m_groundGravity = 0f;
+		[SerializeField] private float m_groundSpeed = 10f;
+		[SerializeField] private float m_groundAcceleration = 200f;
+		[Space(10)]
 		[SerializeField] private float m_airGravity = 200f;
-		[SerializeField] private float m_maxFallSpeed = 50f;
-		[SerializeField] private float m_wallSlideSpeed = 20f;
-		[SerializeField] private float m_climbUpSpeed = 37f;
-		[SerializeField] private float m_climbSideSpeed = 20f;
+		[SerializeField] private float m_airSpeed = 10f;
+		[SerializeField] private float m_airAcceleration = 100f;
+		[SerializeField] private float m_maxFallSpeed = 40f;
+		[Space(10)]
+		[SerializeField] private float m_jumpPower = 40f;
+		[SerializeField] private int m_maxNumberOfJumps = 2;
+		[Space(10)]
+		[SerializeField] private float m_wallSlideSpeed = 10f;
+		[SerializeField] private float m_climbUpSpeed = 32f;
+		[SerializeField] private float m_climbSideSpeed = 25f;
 		// [SerializeField] private float m_wallJumpSideSpeed = 50f;
-		[Header("Timer Values")]
+		[SerializeField] private float m_timeToRotate = 0.15f;
 		
+		[Header("Timer Values")]
 		[SerializeField] private float m_jumpBufferTime = 0.1f;
 		[SerializeField] private float m_coyoteTime = 0.1f;
 		[SerializeField] private float m_dashResetTime = 0.2f;
-		[Header("Apex")]
 		
+		[Header("Apex")]
 		[SerializeField] private float m_apexTime = 0.05f;
 		[SerializeField, Range(0,1)] private float m_apexSpeedBoostRatio = 0.05f;
 
 		private float m_currentMoveSpeed;
-		private float m_jumpPower;
 		private float m_gravity;
 		private float m_currentFallSpeed;
 		private float m_acceleration;
 		private float m_elapsedTime;
-		private float m_timeToRotate;
 		private float m_elapsedRotationTime;
 		private float m_currentLookAngle;
 		private int m_numberOfJumps;
-		private int m_numberOfDashes;
 		private bool m_isJumping;
 		private bool m_isLaunching;
 		private bool m_isClimbing;
 		private Vector3 m_velocity, m_savedVelocity;
 		private Quaternion m_savedRotation, m_targetRotation;
-
-		private FallType m_fallType;
 		
 		private Transform m_tr;
 		private StateMachine m_stateMachine;
@@ -74,14 +79,13 @@ namespace Smash.Player
 		#region Properties
 		
 		public float CoyoteTime => m_coyoteTime;
-		public float DashDuration => m_properties.DashDuration; 
 		public float ApexTime => m_apexTime; 
 		public Vector3 Direction { get; set; }
 		public IState CurrentState { get; set; }
 
 		#endregion
 		
-		public event Action<bool> OnDash = delegate { }; 
+		public event Action<bool> OnDash = delegate { };
 		
 		#region Unity Methods
 
@@ -95,20 +99,15 @@ namespace Smash.Player
 			m_ceilingDetector ??= GetComponent<CeilingDetector>();
 			m_graphicsController ??= GetComponent<PlayerGraphicsController>();
 
-			m_currentMoveSpeed = m_properties.GroundSpeed;
+			m_currentMoveSpeed = m_groundSpeed;
 			m_gravity = m_airGravity;
 			m_currentFallSpeed = m_maxFallSpeed;
-			m_acceleration = m_properties.GroundAcceleration;
-			m_numberOfJumps = m_properties.NumberOfJumps;
-			m_jumpPower = m_properties.JumpPower;
-			m_numberOfDashes = m_properties.NumberOfDashes;
-			m_timeToRotate = m_properties.TimeToRotate;
+			m_acceleration = m_groundAcceleration;
+			m_numberOfJumps = m_maxNumberOfJumps;
 
 			m_jumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
 			m_wallJumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
 			m_dashResetTimer = new CountDownTimer(m_dashResetTime);
-
-			m_dashResetTimer.onTimerEnd += () => m_numberOfDashes = m_properties.NumberOfDashes;
 			
 			SetUpStateMachine();
 		}
@@ -147,7 +146,13 @@ namespace Smash.Player
 
 		#region Input
 
-		public void HandleUpInput()
+		public override void HandleRightInput() => Direction = Vector3.right;
+
+		public override void HandleLeftInput() => Direction = Vector3.left;
+		
+		public override void HandleDpadNullInput() => Direction = Vector3.zero;
+
+		public override void HandleUpInput()
 		{
 			if (CurrentState is Ledge)
 			{
@@ -162,40 +167,16 @@ namespace Smash.Player
 			HandleJumpInput();
 		}
 
-		public void HandleDownInput()
+		public override void HandleDownInput()
 		{
 			if (m_motor.IsGrounded())
 			{
 				// pass through platform
 				return;
 			}
-			if (CurrentState is Falling or FloatingFall or Rising or Dash)
-			{
-				m_fallType = FallType.Crash;
-				return;
-			}
-			if (CurrentState is Ledge or WallSlide)
-			{
-				m_fallType = FallType.Crash;
-			}
 		}
 
-		public void Rotate(float angle)
-		{
-			if (angle == 0) return;
-			if (CurrentState is Dash) return;
-			if (CurrentState is Ledge && !m_isJumping) return;
-			
-			float lookAngle = Mathf.Approximately(angle, -1.0f) ? 179f : 0f;
-			if (Mathf.Approximately(m_currentLookAngle, lookAngle)) return;
-			
-			m_currentLookAngle = lookAngle;
-			m_targetRotation = Quaternion.Euler(0f, lookAngle, 0f);
-			m_savedRotation = m_tr.rotation;
-			m_elapsedTime = 0;
-		}
-
-		public void HandleJumpInput()
+		public override void HandleJumpInput()
 		{
 			if (m_numberOfJumps <= 0)
 			{
@@ -229,12 +210,44 @@ namespace Smash.Player
 			HandleJump();
 		}
 
-		public void HandleDashInput()
+		public override void HandleMainAttackInput()
 		{
-			if (m_numberOfDashes <= 0 || CurrentState is CrashingFall) return;
-			OnDash?.Invoke(true);
-			if (CurrentState is Coyote) return;
-			m_numberOfDashes--;
+			
+		}
+		
+		public override void HandleSideMainAttackInput()
+		{
+			
+		}
+
+		public override void HandleDownMainAttackInput()
+		{
+			
+		}
+		
+		public override void HandleUpMainAttackInput()
+		{
+			
+		}
+		
+		public override void HandleSpecialAttackInput()
+		{
+			
+		}
+		
+		public override void HandleSideSpecialAttackInput()
+		{
+			
+		}
+
+		public override void HandleDownSpecialAttackInput()
+		{
+			
+		}
+		
+		public override void HandleUpSpecialAttackInput()
+		{
+			
 		}
 
 		public void HandleLaunchInput()
@@ -242,25 +255,6 @@ namespace Smash.Player
 			if (m_isLaunching) return;
 			m_isLaunching = true;
 			m_numberOfJumps = 0;
-			m_fallType = FallType.Normal;
-			HandleLaunch();
-		}
-		
-		public void HandleLaunchAndCrashInput()
-		{
-			if (m_isLaunching) return;
-			m_isLaunching = true;
-			m_numberOfJumps = 0;
-			m_fallType = FallType.Crash;
-			HandleLaunch();
-		}
-
-		public void HandleLaunchAndFloatInput()
-		{
-			if (m_isLaunching) return;
-			m_isLaunching = true;
-			m_numberOfJumps = 0;
-			m_fallType = FallType.Float;
 			HandleLaunch();
 		}
 		
@@ -273,10 +267,9 @@ namespace Smash.Player
 			if (IsClimbing()) m_graphicsController.SetClimbing();
 			else m_graphicsController.SetJumping();
 			
-			m_currentMoveSpeed = m_isLaunching ? 0 : m_properties.AirSpeed;
-			m_numberOfDashes = m_properties.NumberOfDashes;
+			m_currentMoveSpeed = m_isLaunching ? 0 : m_airSpeed;
 			m_gravity = m_airGravity;
-			m_acceleration = m_properties.AirAcceleration;
+			m_acceleration = m_airAcceleration;
 			m_currentFallSpeed = m_maxFallSpeed;
 		}
 
@@ -284,10 +277,9 @@ namespace Smash.Player
 		{
 			m_graphicsController.SetOnGround();
 			
-			m_numberOfJumps = m_properties.NumberOfJumps;
-			m_numberOfDashes = m_properties.NumberOfDashes;
-			m_currentMoveSpeed = m_properties.GroundSpeed;
-			m_acceleration = m_properties.GroundAcceleration;
+			m_numberOfJumps = m_maxNumberOfJumps;
+			m_currentMoveSpeed = m_groundSpeed;
+			m_acceleration = m_groundAcceleration;
 			m_gravity = m_groundGravity;
 			
 			m_currentFallSpeed = 0f;
@@ -296,7 +288,6 @@ namespace Smash.Player
 			
 			m_isJumping = false;
 			m_isLaunching = false;
-			m_fallType = FallType.None;
 
 			HandleJumpBuffer();
 		}
@@ -315,9 +306,6 @@ namespace Smash.Player
 			RemoveVerticalVelocity();
 			m_dashResetTimer.Reset();
 			m_gravity = 0f;
-			Vector3 velocity = Direction * m_properties.DashSpeed;
-			m_savedVelocity = Vector3Math.RemoveDotVector(m_savedVelocity, Direction);
-			m_savedVelocity += velocity;
 		}
 
 		public void SetDashEnd()
@@ -327,12 +315,12 @@ namespace Smash.Player
 			{
 				m_dashResetTimer.Start();
 				m_gravity = m_groundGravity;
-				m_currentMoveSpeed = m_properties.GroundSpeed;
+				m_currentMoveSpeed = m_groundSpeed;
 			}
 			else
 			{
 				m_gravity = m_airGravity;
-				m_currentMoveSpeed = m_properties.AirSpeed;
+				m_currentMoveSpeed = m_airSpeed;
 			}
 
 			HandleJumpBuffer();
@@ -348,28 +336,21 @@ namespace Smash.Player
 			else
 			{
 				m_currentFallSpeed = m_maxFallSpeed;
-				m_currentMoveSpeed = m_properties.AirSpeed;
+				m_currentMoveSpeed = m_airSpeed;
 			}
 		}
 
 		public void SetFalling()
 		{
 			m_currentFallSpeed = m_maxFallSpeed;
-			m_currentMoveSpeed = m_properties.AirSpeed;
+			m_currentMoveSpeed = m_airSpeed;
 			m_graphicsController.SetFalling();
 		}
 
 		public void SetCoyote() => m_graphicsController.SetFalling();
 
-		public void SetFloatingFall()
-		{
-			m_currentFallSpeed = m_properties.FloatFallSpeed;
-			m_currentMoveSpeed = m_properties.AirSpeed * m_properties.FloatControlRatio;
-		}
-
 		public void SetCrashingFall()
 		{
-			m_currentFallSpeed = m_properties.CrashSpeed;
 			m_gravity = 1000f;
 			m_currentMoveSpeed = 0f;
 		}
@@ -381,7 +362,6 @@ namespace Smash.Player
 				m_graphicsController.SetOnLedge();
 				
 				RemoveVerticalVelocity();
-				m_fallType = FallType.Normal;
 				m_ledgeDetector.SetOnLedge();
 				m_currentFallSpeed = 0;
 				m_currentMoveSpeed = 0;
@@ -392,7 +372,6 @@ namespace Smash.Player
 			else
 			{
 				m_currentFallSpeed = m_maxFallSpeed;
-				m_numberOfDashes = 1;
 			}
 		}
 
@@ -410,7 +389,6 @@ namespace Smash.Player
 			{
 				m_wallJumpBufferTimer.Start();
 				m_currentFallSpeed = m_maxFallSpeed;
-				m_numberOfDashes = 1;
 			}
 		}
 
@@ -419,12 +397,9 @@ namespace Smash.Player
 		public bool IsRising() => 
 			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.up) > 0f && !m_motor.IsGrounded();
 		public bool IsFalling() => 
-			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.up) < 0f && !m_motor.IsGrounded();
+			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.up) <= 0f && !m_motor.IsGrounded();
 		public bool IsMoving() => 
-			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.right) != 0f && m_motor.IsGrounded(); 
-		public bool IsNormalFall() => m_fallType is FallType.Normal or FallType.None;
-		public bool IsFloatingFall() => m_fallType == FallType.Float;
-		public bool IsCrashingFall() => m_fallType == FallType.Crash;
+			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.right) != 0f && m_motor.IsGrounded();
 		public bool IsLedgeGrab() => m_ledgeDetector.IsLedgeDetected();
 		public bool IsWallDetected() => m_wallDetector.IsWallDetected();
 
@@ -441,14 +416,14 @@ namespace Smash.Player
 		
 		private void CheckForLedge()
 		{
-			if (CurrentState is Falling or FloatingFall or Apex or Coyote)
+			if (CurrentState is Falling or Apex or Coyote)
 				m_ledgeDetector.CheckForLedge();
 		}
 
 		private void CheckWallSlide()
 		{
-			if (CurrentState is Ledge or CrashingFall) return;
-			if (CurrentState is Falling or FloatingFall or WallSlide or Rising or Apex)
+			if (CurrentState is Ledge) return;
+			if (CurrentState is Falling or WallSlide or Rising or Apex)
 			{
 				m_wallDetector.ResetSensorHits();
 				m_wallDetector.CheckForWall();
@@ -488,7 +463,6 @@ namespace Smash.Player
 		private void HandleJump()
 		{
 			m_isClimbing = false;
-			m_jumpPower = m_properties.JumpPower;
 			Vector3 verticalVelocity = m_tr.up * m_jumpPower;
 			RemoveVerticalVelocity();
 			m_savedVelocity += verticalVelocity;
@@ -507,7 +481,6 @@ namespace Smash.Player
 		private void HandleLaunch()
 		{
 			RemoveVerticalVelocity();
-			m_jumpPower = m_properties.LaunchPower;
 			m_isJumping = false;
 			Vector3 verticalVelocity = m_tr.up * m_jumpPower;
 			m_savedVelocity += verticalVelocity;
@@ -585,6 +558,5 @@ namespace Smash.Player
 		private void AddAnyTransition(IState to, IPredicate condition) => m_stateMachine.AddAnyTransition(to, condition);
 		
 		#endregion Private Methods
-		private enum FallType { Normal, Crash, Float, None }
 	}	
 }

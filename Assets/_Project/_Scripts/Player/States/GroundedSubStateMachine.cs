@@ -8,16 +8,11 @@ namespace Smash.Player.States
 		private GroundExit m_groundExit;
 		private Idle m_idle;
 		private Moving m_moving;
-		private Dash m_dash;
 		
 		private FuncPredicate m_entryToIdleCondition;
 		private FuncPredicate m_entryToMovingCondition;
 		private FuncPredicate m_idleToMovingCondition;
 		private FuncPredicate m_movingToIdleCondition;
-		private FuncPredicate m_dashToIdleCondition;
-		private FuncPredicate m_dashToMovingCondition;
-		private FuncPredicate m_idleToDashCondition;
-		private FuncPredicate m_movingToDashCondition;
 		
 		public GroundedSubStateMachine(PlayerPawn pawn) : base(pawn)
 		{
@@ -74,7 +69,6 @@ namespace Smash.Player.States
 			m_groundExit = new GroundExit(_pawn);
 			m_idle = new Idle(_pawn);
 			m_moving = new Moving(_pawn);
-			m_dash = new Dash(_pawn, _pawn.DashDuration);
 		}
 
 		protected override void CreateTransitions()
@@ -83,15 +77,13 @@ namespace Smash.Player.States
 			m_entryToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is GroundEntry && _pawn.IsMoving());
 			
 			m_idleToMovingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && _pawn.IsMoving());
-			m_idleToDashCondition = new FuncPredicate(DashPredicate<Idle>);
 			
 			m_movingToIdleCondition = new FuncPredicate(() => _stateMachine.CurrentState is Moving && !_pawn.IsMoving());
-			m_movingToDashCondition = new FuncPredicate(DashPredicate<Moving>);
 			
-			m_dashToIdleCondition = new FuncPredicate(() =>
+			/*m_dashToIdleCondition = new FuncPredicate(() =>
 				_stateMachine.CurrentState is Dash && !_pawn.IsMoving() && m_dash.IsFinished);
 			m_dashToMovingCondition = new FuncPredicate(() =>
-				_stateMachine.CurrentState is Dash && _pawn.IsMoving() && m_dash.IsFinished);
+				_stateMachine.CurrentState is Dash && _pawn.IsMoving() && m_dash.IsFinished);*/
 		}
 
 		protected override void AddTransitions()
@@ -100,13 +92,8 @@ namespace Smash.Player.States
 			AddTransition(m_groundEntry, m_moving, m_entryToMovingCondition);
 			
 			AddTransition(m_idle, m_moving, m_idleToMovingCondition);
-			AddTransition(m_idle, m_dash, m_idleToDashCondition);
 			
 			AddTransition(m_moving, m_idle, m_movingToIdleCondition);
-			AddTransition(m_moving, m_dash, m_movingToDashCondition);
-			
-			AddTransition(m_dash, m_idle, m_dashToIdleCondition);
-			AddTransition(m_dash, m_moving, m_dashToMovingCondition);
 			
 			AddTransition(m_groundExit, m_groundEntry, new FuncPredicate(() => false));
 		}

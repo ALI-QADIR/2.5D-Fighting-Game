@@ -12,5 +12,20 @@ namespace Smash.Player
 		{
 			m_possessingController = possessingController;
 		}
+
+		public abstract void HandleUpInput();
+		public abstract void HandleDownInput();
+		public abstract void HandleLeftInput();
+		public abstract void HandleRightInput();
+		public abstract void HandleJumpInput();
+		public abstract void HandleMainAttackInput();
+		public abstract void HandleSideMainAttackInput();
+		public abstract void HandleUpMainAttackInput();
+		public abstract void HandleDownMainAttackInput();
+		public abstract void HandleSpecialAttackInput();
+		public abstract void HandleSideSpecialAttackInput();
+		public abstract void HandleUpSpecialAttackInput();
+		public abstract void HandleDownSpecialAttackInput();
+		public abstract void HandleDpadNullInput();
 	}
 }

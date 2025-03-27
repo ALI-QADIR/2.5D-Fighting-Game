@@ -5,11 +5,11 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "North";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(PlayerPawn pawn)
+		public void StartActionExecution(BasePawn pawn)
 		{
 		}
 
-		public void FinishActionExecution(PlayerPawn pawn)
+		public void FinishActionExecution(BasePawn pawn)
 		{
 			pawn.HandleJumpInput();
 		}
@@ -20,12 +20,13 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "South";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(PlayerPawn pawn)
+		public void StartActionExecution(BasePawn pawn)
 		{
 		}
 		
-		public void FinishActionExecution(PlayerPawn pawn)
+		public void FinishActionExecution(BasePawn pawn)
 		{
+			pawn.HandleSpecialAttackInput();
 		}
 	}
 	
@@ -34,12 +35,13 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "East";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(PlayerPawn pawn)
+		public void StartActionExecution(BasePawn pawn)
 		{
 		}
 		
-		public void FinishActionExecution(PlayerPawn pawn)
+		public void FinishActionExecution(BasePawn pawn)
 		{
+			pawn.HandleMainAttackInput();
 		}
 	}
 	
@@ -48,11 +50,11 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "West";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(PlayerPawn pawn)
+		public void StartActionExecution(BasePawn pawn)
 		{
 		}
 		
-		public void FinishActionExecution(PlayerPawn pawn)
+		public void FinishActionExecution(BasePawn pawn)
 		{
 			pawn.HandleJumpInput();
 		}
@@ -63,11 +65,11 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "DPadUp";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(PlayerPawn pawn)
+		public void StartActionExecution(BasePawn pawn)
 		{
 		}
 		
-		public void FinishActionExecution(PlayerPawn pawn)
+		public void FinishActionExecution(BasePawn pawn)
 		{
 			pawn.HandleUpInput();
 		}
@@ -78,11 +80,11 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "DPadDown";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(PlayerPawn pawn)
+		public void StartActionExecution(BasePawn pawn)
 		{
 		}
 		
-		public void FinishActionExecution(PlayerPawn pawn)
+		public void FinishActionExecution(BasePawn pawn)
 		{
 			pawn.HandleDownInput();
 		}
@@ -93,13 +95,13 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "DPadLeft";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(PlayerPawn pawn)
+		public void StartActionExecution(BasePawn pawn)
 		{
 		}
 		
-		public void FinishActionExecution(PlayerPawn pawn)
+		public void FinishActionExecution(BasePawn pawn)
 		{
-			pawn.Direction = UnityEngine.Vector3.left;
+			pawn.HandleLeftInput();
 		}
 	}
 	
@@ -108,13 +110,13 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "DPadRight";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(PlayerPawn pawn)
+		public void StartActionExecution(BasePawn pawn)
 		{
 		}
 		
-		public void FinishActionExecution(PlayerPawn pawn)
+		public void FinishActionExecution(BasePawn pawn)
 		{
-			pawn.Direction = UnityEngine.Vector3.right;
+			pawn.HandleRightInput();
 		}
 	}
 	
@@ -123,13 +125,13 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "DPadNull";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(PlayerPawn pawn)
+		public void StartActionExecution(BasePawn pawn)
 		{
 		}
 		
-		public void FinishActionExecution(PlayerPawn pawn)
+		public void FinishActionExecution(BasePawn pawn)
 		{
-			pawn.Direction = UnityEngine.Vector3.zero;
+			pawn.HandleDpadNullInput();
 		}
 	}
 }

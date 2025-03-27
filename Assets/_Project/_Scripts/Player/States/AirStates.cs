@@ -42,33 +42,6 @@ namespace Smash.Player.States
 			_pawn.SetFalling();
 		}
 	}
-	public class FloatingFall : PlayerBaseState
-	{
-		public FloatingFall(PlayerPawn pawn) : base(pawn)
-		{
-		}
-
-		public override void OnEnter()
-		{
-			base.OnEnter();
-			_pawn.CurrentState = this;
-			_pawn.SetFloatingFall();
-		}
-	}
-	
-	public class CrashingFall : PlayerBaseState
-	{
-		public CrashingFall(PlayerPawn pawn) : base(pawn)
-		{
-		}
-
-		public override void OnEnter()
-		{
-			base.OnEnter();
-			_pawn.CurrentState = this;
-			_pawn.SetCrashingFall();
-		}
-	}
 	
 	public class Coyote : PlayerBaseState
 	{
