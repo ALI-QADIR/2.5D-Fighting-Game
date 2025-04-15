@@ -52,11 +52,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		
 		public void StartActionExecution(BasePawn pawn)
 		{
+			pawn.HandleSideMainAttackInputStart();
 		}
 		
 		public void FinishActionExecution(BasePawn pawn)
 		{
-			pawn.HandleSideMainAttackInput();
+			pawn.HandleSideMainAttackInputEnd(HeldDuration);
 		}
 	}
 	
@@ -67,11 +68,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		
 		public void StartActionExecution(BasePawn pawn)
 		{
+			pawn.HandleUpMainAttackInputStart();
 		}
 		
 		public void FinishActionExecution(BasePawn pawn)
 		{
-			pawn.HandleUpMainAttackInput();
+			pawn.HandleUpMainAttackInputEnd(HeldDuration);
 		}
 	}
 
@@ -82,11 +84,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		
 		public void StartActionExecution(BasePawn pawn)
 		{
+			pawn.HandleDownMainAttackInputStart();
 		}
 		
 		public void FinishActionExecution(BasePawn pawn)
 		{
-			pawn.HandleDownMainAttackInput();
+			pawn.HandleDownMainAttackInputEnd(HeldDuration);
 		}
 	}
 }

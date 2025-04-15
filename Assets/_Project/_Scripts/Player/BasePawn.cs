@@ -20,9 +20,12 @@ namespace Smash.Player
 		public abstract void HandleJumpInput();
 		public abstract void HandleMainAttackInputStart();
 		public abstract void HandleMainAttackInputEnd(float heldTime);
-		public abstract void HandleSideMainAttackInput();
-		public abstract void HandleUpMainAttackInput();
-		public abstract void HandleDownMainAttackInput();
+		public abstract void HandleSideMainAttackInputStart();
+		public abstract void HandleSideMainAttackInputEnd(float heldTime);
+		public abstract void HandleUpMainAttackInputStart();
+		public abstract void HandleUpMainAttackInputEnd(float heldTime);
+		public abstract void HandleDownMainAttackInputStart();
+		public abstract void HandleDownMainAttackInputEnd(float heldTime);
 		public abstract void HandleSpecialAttackInput();
 		public abstract void HandleSideSpecialAttackInput();
 		public abstract void HandleUpSpecialAttackInput();

@@ -232,21 +232,39 @@ namespace Smash.Player
 			CurrentStateMachine.MainAttackHold = false;
 		}
 		
-		public override void HandleSideMainAttackInput()
+		public override void HandleSideMainAttackInputStart()
 		{
-			
+			CurrentStateMachine.SideMainAttackHold = true;
+		}
+		
+		public override void HandleSideMainAttackInputEnd(float heldTime)
+		{
+			CurrentStateMachine.SideMainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.SideMainAttackHold = false;
+		}
+		
+		public override void HandleUpMainAttackInputStart()
+		{
+			CurrentStateMachine.UpMainAttackHold = true;
+		}
+		
+		public override void HandleUpMainAttackInputEnd(float heldTime)
+		{
+			CurrentStateMachine.UpMainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.UpMainAttackHold = false;
 		}
 
-		public override void HandleDownMainAttackInput()
+		public override void HandleDownMainAttackInputStart()
 		{
-			
+			CurrentStateMachine.DownMainAttackHold = true;
 		}
-		
-		public override void HandleUpMainAttackInput()
+
+		public override void HandleDownMainAttackInputEnd(float heldTime)
 		{
-			
+			CurrentStateMachine.DownMainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.DownMainAttackHold = false;
 		}
-		
+
 		public override void HandleSpecialAttackInput()
 		{
 			
@@ -341,18 +359,62 @@ namespace Smash.Player
 			CurrentStateMachine.MainAttackHold = false;
 			CurrentStateMachine.MainAttackTap = false;
 			// Debug.Log("Dash Ended");
-			if (m_motor.IsGrounded())
-			{
-				m_gravity = m_groundGravity;
-				m_currentMoveSpeed = m_groundSpeed;
-			}
-			else
-			{
-				m_gravity = m_airGravity;
-				m_currentMoveSpeed = m_airSpeed;
-			}
-
+			SetGravity();
 			HandleJumpBuffer();
+		}
+
+		public void SetSideMainAttackWindUp()
+		{
+			Debug.Log("Side Main Attack Windup");
+		}
+		
+		public void SetSideMainAttackExecute()
+		{
+			Debug.Log("Side Main Attack Execute");
+		}
+
+		public void SetSideMainAttackFinish()
+		{
+			Debug.Log("Side Main Attack Finish");
+			CurrentStateMachine.SideMainAttackHold = false;
+			CurrentStateMachine.SideMainAttackTap = false;
+			SetGravity();
+		}
+		
+		public void SetUpMainAttackWindUp()
+		{
+			Debug.Log("Up Main Attack Windup");
+		}
+		
+		public void SetUpMainAttackExecute()
+		{
+			Debug.Log("up Main Attack Execute");
+		}
+
+		public void SetUpMainAttackFinish()
+		{
+			Debug.Log("Up Main Attack Finish");
+			CurrentStateMachine.UpMainAttackHold = false;
+			CurrentStateMachine.UpMainAttackTap = false;
+			SetGravity();
+		}
+		
+		public void SetDownMainAttackWindUp()
+		{
+			Debug.Log("Down Main Attack Windup");
+		}
+		
+		public void SetDownMainAttackExecute()
+		{
+			Debug.Log("Down Main Attack Execute");
+		}
+
+		public void SetDownMainAttackFinish()
+		{
+			Debug.Log("Down Main Attack Finish");
+			CurrentStateMachine.DownMainAttackHold = false;
+			CurrentStateMachine.DownMainAttackTap = false;
+			SetGravity();
 		}
 
 		public void SetApex(bool isApex)
@@ -472,6 +534,20 @@ namespace Smash.Player
 				Vector3.Min(Vector3.zero, Vector3Math.ExtractDotVector(m_savedVelocity, m_tr.up));
 			RemoveVerticalVelocity();
 			m_savedVelocity += verticalVelocity;
+		}
+
+		private void SetGravity()
+		{
+			if (m_motor.IsGrounded())
+			{
+				m_gravity = m_groundGravity;
+				m_currentMoveSpeed = m_groundSpeed;
+			}
+			else
+			{
+				m_gravity = m_airGravity;
+				m_currentMoveSpeed = m_airSpeed;
+			}
 		}
 
 		private void HandleRotation()
