@@ -19,6 +19,12 @@ namespace Smash.Player.CommandPattern.ComboRules
 		{
 			return firstCommand is SouthButtonActionCommand;
 		}
+		
+		public override bool IsSecondConditionMet(IGameplayActionCommand secondCommand)
+		{
+			return secondCommand is DPadLeftActionCommand or DPadRightActionCommand;
+		}
+
 
 		public override bool IsMatch(IEnumerable<IGameplayActionCommand> sequence)
 		{

@@ -26,17 +26,18 @@ namespace Smash.Player.CommandPattern
 
 		public bool Debugging { get; set; }
 
+		private bool m_hasStartedComboExecution;
+		private int m_thresholdToExtendComboTime;
 		private float m_timeSinceLastCommandInput;
 		private float m_timeSinceFirstCommandInput;
-		private int m_thresholdToExtendComboTime;
 
 		private Queue<IGameplayActionCommand> m_comboQueue;
 		private ComboMatchEngine m_comboMatchEngine;
 		private GameplayActionCommandInvoker m_commandInvoker;
 
-		private const int k_MinComboLength = 2;
 		private IGameplayActionCommand m_currentCommand;
-		private bool m_hasStartedComboExecution;
+		
+		private const int k_MinComboLength = 2;
 
 		#endregion Feilds and Properties
 
@@ -75,6 +76,11 @@ namespace Smash.Player.CommandPattern
 		public void AddCommandToComboSequence(IGameplayActionCommand command)
 		{
 			DebugLog($"Adding to sequence: {command.ActionName}");
+			if (command is DPadNullActionCommand)
+			{
+				m_commandInvoker.InvokeFinishCommand(command);
+				return;
+			}
 			EnqueueCommandAndResetTimers(command);
 			ClearSequenceIfCannotStartCombo();
 			DequeueOldestCommandIfNecessary();
@@ -156,9 +162,10 @@ namespace Smash.Player.CommandPattern
 				DebugLog($"Max Possible Combo Length Reached, ignoring command: {command.ActionName}");
 				return;
 			}
-
+			
 			m_comboQueue.Enqueue(command);
 			DebugLog($"Enqueued Command : {command.ActionName}, Current Queue Length {m_comboQueue.Count}");
+			
 			if (IsFirstCommandInSequence())
 			{
 				// Debug.Log($"Is first Command In Sequence");

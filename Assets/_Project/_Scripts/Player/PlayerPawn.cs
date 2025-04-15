@@ -23,7 +23,7 @@ namespace Smash.Player
 		
 		[Header("Control Values")]
 		[Space(10)]
-		[SerializeField] private float m_groundGravity = 0f;
+		[SerializeField] private float m_groundGravity;
 		[SerializeField] private float m_groundSpeed = 10f;
 		[SerializeField] private float m_groundAcceleration = 200f;
 		[Space(10)]
@@ -44,7 +44,6 @@ namespace Smash.Player
 		[Header("Timer Values")]
 		[SerializeField] private float m_jumpBufferTime = 0.1f;
 		[SerializeField] private float m_coyoteTime = 0.1f;
-		[SerializeField] private float m_dashResetTime = 0.2f;
 		
 		[Header("Apex")]
 		[SerializeField] private float m_apexTime = 0.05f;
@@ -67,7 +66,6 @@ namespace Smash.Player
 		private Transform m_tr;
 		private StateMachine m_stateMachine;
 		private CountDownTimer m_jumpBufferTimer;
-		private CountDownTimer m_dashResetTimer;
 		private CountDownTimer m_wallJumpBufferTimer;
 
 		private GroundedSubStateMachine m_groundedState;
@@ -82,6 +80,8 @@ namespace Smash.Player
 		public float ApexTime => m_apexTime; 
 		public Vector3 Direction { get; set; }
 		public IState CurrentState { get; set; }
+
+		public PlayerSubStateMachine CurrentStateMachine { get; set; }
 
 		#endregion
 		
@@ -107,7 +107,6 @@ namespace Smash.Player
 
 			m_jumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
 			m_wallJumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
-			m_dashResetTimer = new CountDownTimer(m_dashResetTime);
 			
 			SetUpStateMachine();
 		}
@@ -121,8 +120,6 @@ namespace Smash.Player
 		{
 			m_stateMachine.OnFixedUpdate();
 			// Todo: One-Way Platforms
-			// Todo: Slopes??
-			// Todo: Stairs??
 			// Todo: Wall Clipping
 			
 			CheckForLedge();
@@ -143,6 +140,20 @@ namespace Smash.Player
 		#endregion Unity Methods
 
 		#region Public Methods
+		
+		public void Rotate(float angle)
+		{
+			if (angle == 0) return;
+			if (CurrentState is Ledge && !m_isJumping) return;
+			
+			float lookAngle = Mathf.Approximately(angle, -1.0f) ? 179f : 0f;
+			if (Mathf.Approximately(m_currentLookAngle, lookAngle)) return;
+			
+			m_currentLookAngle = lookAngle;
+			m_targetRotation = Quaternion.Euler(0f, lookAngle, 0f);
+			m_savedRotation = m_tr.rotation;
+			m_elapsedTime = 0;
+		}
 
 		#region Input
 
@@ -185,7 +196,7 @@ namespace Smash.Player
 				return;
 			}
 
-			if (CurrentState is Dash)
+			if (CurrentState is MainAttackStart)
 			{
 				if (m_jumpBufferTimer.IsRunning) m_jumpBufferTimer.Reset();	
 				m_jumpBufferTimer.Start();
@@ -210,9 +221,15 @@ namespace Smash.Player
 			HandleJump();
 		}
 
-		public override void HandleMainAttackInput()
+		public override void HandleMainAttackInputStart()
 		{
-			
+			CurrentStateMachine.MainAttackHold = true;
+		}
+
+		public override void HandleMainAttackInputEnd(float heldTime)
+		{
+			CurrentStateMachine.MainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.MainAttackHold = false;
 		}
 		
 		public override void HandleSideMainAttackInput()
@@ -299,21 +316,33 @@ namespace Smash.Player
 
 		public void SetIdle() => m_graphicsController.SetIdle();
 
-		public void SetDashStart()
+		public void SetMainAttackWindup()
 		{
 			// Debug.Log("Dashing");
+			// Debug.Log("Main Attack Hold Start");
+			// Play Attack Windup animation
 			m_graphicsController.SetDashing();
 			RemoveVerticalVelocity();
-			m_dashResetTimer.Reset();
 			m_gravity = 0f;
 		}
 
-		public void SetDashEnd()
+		// Call this when main attack animation has to finish
+		public void SetMainAttackExecute()
 		{
+			// Play attack execution animation
+			// Debug.Log("Main Attack End");
+			// m_graphicsController.
+		}
+
+		public void SetMainAttackFinish()
+		{
+			// end attack execution animation
+			// Debug.Log("Main Attack Finished");
+			CurrentStateMachine.MainAttackHold = false;
+			CurrentStateMachine.MainAttackTap = false;
 			// Debug.Log("Dash Ended");
 			if (m_motor.IsGrounded())
 			{
-				m_dashResetTimer.Start();
 				m_gravity = m_groundGravity;
 				m_currentMoveSpeed = m_groundSpeed;
 			}
@@ -453,7 +482,7 @@ namespace Smash.Player
 
 		private void CheckRotation()
 		{
-			if (CurrentState is Ledge or Dash) return;
+			if (CurrentState is Ledge or MainAttackStart) return;
 			if(Direction ==  Vector3.zero) return;
 			Vector3 inputRotation = Vector3.zero;
 			inputRotation.y = Direction.x > 0f ? 0 : 179f;
@@ -512,7 +541,7 @@ namespace Smash.Player
 
 		private void AdjustHorizontalVelocity(ref Vector3 horizontalVelocity)
 		{
-			if (CurrentState is Dash) return;
+			if (CurrentState is MainAttackStart) return;
 			
 			m_velocity = GetMovementVelocity();
 			horizontalVelocity = Vector3.MoveTowards(horizontalVelocity, m_velocity, 

@@ -36,6 +36,11 @@ namespace Smash.Player.CommandPattern
 			return canStartCombo;
 		}
 
+		public bool ShouldEnqueueCommand(IGameplayActionCommand command)
+		{
+			return SecondActionMakesCombo(command, comboRules);
+		}
+
 		public IGameplayActionCommand CheckAndGetComboCommand()
 		{
 			// Debug.Log("Check And Execute Combo");
@@ -77,6 +82,17 @@ namespace Smash.Player.CommandPattern
 			foreach (var rule in comboRules)
 			{
 				if (rule.IsFirstConditionMet(comboQueue.Peek()))
+					return true;
+			}
+
+			return false;
+		}
+
+		private static bool SecondActionMakesCombo(IGameplayActionCommand command, List<IComboRule> comboRules)
+		{
+			foreach (var rule in comboRules)
+			{
+				if (rule.IsSecondConditionMet(command))
 					return true;
 			}
 

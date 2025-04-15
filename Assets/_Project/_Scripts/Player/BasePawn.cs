@@ -18,7 +18,8 @@ namespace Smash.Player
 		public abstract void HandleLeftInput();
 		public abstract void HandleRightInput();
 		public abstract void HandleJumpInput();
-		public abstract void HandleMainAttackInput();
+		public abstract void HandleMainAttackInputStart();
+		public abstract void HandleMainAttackInputEnd(float heldTime);
 		public abstract void HandleSideMainAttackInput();
 		public abstract void HandleUpMainAttackInput();
 		public abstract void HandleDownMainAttackInput();

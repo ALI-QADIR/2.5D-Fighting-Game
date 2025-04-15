@@ -12,26 +12,20 @@ namespace Smash.Player.States
 		private Apex m_apex;
 		private Ledge m_ledge;
 		private WallSlide m_wallSlide;
+		
+		private FuncPredicate m_anyToRisingCondition;
 
-		private FuncPredicate m_entryToRisingCondition;
 		private FuncPredicate m_entryToCoyoteCondition;
 		
 		private FuncPredicate m_risingToApexCondition;
 		
 		private FuncPredicate m_apexToFallingCondition;
-		private FuncPredicate m_apexToRisingCondition;
 		
 		private FuncPredicate m_ledgeCondition;
 		private FuncPredicate m_wallCondition;
 		
-		private FuncPredicate m_fallingToRisingCondition;
-		
-		private FuncPredicate m_ledgeToRisingCondition;
-		
-		private FuncPredicate m_wallSlideToRisingCondition;
 		private FuncPredicate m_wallSlideToFallingCondition;
 		
-		private FuncPredicate m_coyoteToRisingCondition;
 		private FuncPredicate m_coyoteToFallingCondition;
 
 		public AirborneSubStateMachine(PlayerPawn pawn) : base(pawn)
@@ -96,15 +90,13 @@ namespace Smash.Player.States
 		
 		protected override void CreateTransitions()
 		{
+			m_anyToRisingCondition = new FuncPredicate(() => _pawn.IsRising());
+			
 			// Entry
-			m_entryToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is AirEntry && _pawn.IsRising());
-			m_entryToCoyoteCondition = new FuncPredicate(() => _stateMachine.CurrentState is AirEntry && _pawn.IsFalling());
+			m_entryToCoyoteCondition = new FuncPredicate(() => _pawn.IsFalling());
 			
 			// Rising
-			m_risingToApexCondition = new FuncPredicate(() => _stateMachine.CurrentState is Rising && _pawn.IsFalling());
-			
-			// Falling
-			m_fallingToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Falling && _pawn.IsRising());
+			m_risingToApexCondition = new FuncPredicate(() => _pawn.IsFalling());
 
 			// Independent
 			m_ledgeCondition = new FuncPredicate(() =>
@@ -113,48 +105,38 @@ namespace Smash.Player.States
 				_stateMachine.CurrentState is Falling && _pawn.IsWallDetected());
 
 			// Apex
-			m_apexToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Apex && _pawn.IsRising());
 			m_apexToFallingCondition = new FuncPredicate(() => 
 				_stateMachine.CurrentState is Apex && m_apex.ElapsedTime >= _pawn.ApexTime && _pawn.IsFalling());
 			
-			// Ledge
-			m_ledgeToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Ledge && _pawn.IsRising());
 			
 			// WallSlide
-			m_wallSlideToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is WallSlide && _pawn.IsRising());
 			m_wallSlideToFallingCondition = new FuncPredicate(() =>
 				_stateMachine.CurrentState is WallSlide && _pawn.IsFalling() && !_pawn.IsWallDetected());
 			
 			// Coyote
-			m_coyoteToRisingCondition = new FuncPredicate(() => _stateMachine.CurrentState is Coyote && _pawn.IsRising());
 			m_coyoteToFallingCondition = new FuncPredicate(() =>
 				_stateMachine.CurrentState is Coyote && _pawn.IsFalling() && m_coyote.ElapsedTime >= _pawn.CoyoteTime);
 		}
 
 		protected override void AddTransitions()
 		{
-			AddTransition(m_airEntry, m_rising, m_entryToRisingCondition);
+			AddAnyTransition(m_rising, m_anyToRisingCondition);
+			
 			AddTransition(m_airEntry, m_coyote, m_entryToCoyoteCondition);
 			
 			AddTransition(m_rising, m_apex, m_risingToApexCondition);
 			
-			AddTransition(m_falling, m_rising, m_fallingToRisingCondition);
 			AddTransition(m_falling, m_ledge, m_ledgeCondition);
 			AddTransition(m_falling, m_wallSlide, m_wallCondition);
 			
-			AddTransition(m_apex, m_rising, m_apexToRisingCondition);
 			AddTransition(m_apex, m_falling, m_apexToFallingCondition);
 			AddTransition(m_apex, m_ledge, m_ledgeCondition);
 			
-			AddTransition(m_ledge, m_rising, m_ledgeToRisingCondition);
-			
 			AddTransition(m_wallSlide, m_falling, m_wallSlideToFallingCondition);
-			AddTransition(m_wallSlide, m_rising, m_wallSlideToRisingCondition);
 			AddTransition(m_wallSlide, m_ledge, m_ledgeCondition);
 			
 			
 			AddTransition(m_coyote, m_falling, m_coyoteToFallingCondition);
-			AddTransition(m_coyote, m_rising, m_coyoteToRisingCondition);
 			AddTransition(m_coyote, m_ledge, m_ledgeCondition);
 			
 			AddTransition(m_airExit, m_airEntry, new FuncPredicate(() => false));

@@ -22,6 +22,11 @@ namespace Smash.Player.CommandPattern.ComboRules
 		
 		public abstract bool IsFirstConditionMet(IGameplayActionCommand firstCommand);
 
+		public virtual bool IsSecondConditionMet(IGameplayActionCommand secondCommand)
+		{
+			return secondCommand.GetType() == _compositeCommands[1];
+		}
+
 		public virtual bool IsMatch(IEnumerable<IGameplayActionCommand> sequence)
 		{
 			var sequenceArray = sequence.Take(ComboLength).ToArray();

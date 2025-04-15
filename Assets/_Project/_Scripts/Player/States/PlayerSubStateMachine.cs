@@ -2,11 +2,14 @@
 
 namespace Smash.Player.States
 {
-	public class PlayerSubStateMachine : PlayerBaseState
+	public abstract class PlayerSubStateMachine : PlayerBaseState
 	{
 		protected StateMachine _stateMachine;
 		protected bool _dashPressed;
-		
+
+		public bool MainAttackTap { get; set; }
+		public bool MainAttackHold { get; set; }
+
 		protected PlayerSubStateMachine(PlayerPawn pawn) : base(pawn)
 		{
 		}
@@ -14,7 +17,13 @@ namespace Smash.Player.States
 		protected virtual void CreateStates() {}
 		protected virtual void CreateTransitions() {}
 		protected virtual void AddTransitions() {}
-		
+
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_pawn.CurrentStateMachine = this;
+		}
+
 
 		protected bool DashPredicate<T>()
 		{

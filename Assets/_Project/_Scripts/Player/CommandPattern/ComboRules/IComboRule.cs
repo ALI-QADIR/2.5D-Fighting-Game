@@ -35,6 +35,13 @@ namespace Smash.Player.CommandPattern.ComboRules
         /// <param name="firstCommand">The first command in the sequence to check.</param>
         /// <returns>True if the first command meets the starting condition for a combo; otherwise, false.</returns>
         public bool IsFirstConditionMet(IGameplayActionCommand firstCommand);
+        
+        /// <summary>
+        /// Determines if the second command in a sequence can potentially complete a valid combo.
+        /// </summary>
+        /// <param name="secondCommand">The Second and Final command in the sequence to check</param>
+        /// <returns>True if the second command meets the final condition for a combo; otherwise, false.</returns>
+        public bool IsSecondConditionMet(IGameplayActionCommand secondCommand);
 
         /// <summary>
         /// Checks if a given sequence of commands matches the conditions defined by this rule to form a valid combo.

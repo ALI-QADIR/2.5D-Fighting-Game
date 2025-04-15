@@ -37,11 +37,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		
 		public void StartActionExecution(BasePawn pawn)
 		{
+			pawn.HandleMainAttackInputStart();
 		}
 		
 		public void FinishActionExecution(BasePawn pawn)
 		{
-			pawn.HandleMainAttackInput();
+			pawn.HandleMainAttackInputEnd(HeldDuration);
 		}
 	}
 	
