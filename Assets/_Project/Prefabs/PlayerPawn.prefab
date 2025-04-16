@@ -110,15 +110,20 @@ MonoBehaviour:
   m_graphicsController: {fileID: 8228131811739052616}
   m_properties: {fileID: 11400000, guid: b269f71dd16356745947ddfe21ba67d5, type: 2}
   m_groundGravity: 0
-  m_airGravity: 200
+  m_groundSpeed: 10
+  m_groundAcceleration: 200
+  m_airGravity: 40
+  m_airSpeed: 10
+  m_airAcceleration: 100
   m_maxFallSpeed: 40
+  m_jumpPower: 40
+  m_maxNumberOfJumps: 2
   m_wallSlideSpeed: 10
-  m_wallJumpSideSpeed: 35
   m_climbUpSpeed: 32
   m_climbSideSpeed: 25
+  m_timeToRotate: 0.15
   m_jumpBufferTime: 0.2
   m_coyoteTime: 0.3
-  m_dashResetTime: 0.3
   m_apexTime: 0.05
   m_apexSpeedBoostRatio: 0.1
 --- !u!114 &8875285976668337261

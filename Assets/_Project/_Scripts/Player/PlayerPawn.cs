@@ -83,7 +83,7 @@ namespace Smash.Player
 
 		public PlayerSubStateMachine CurrentStateMachine { get; set; }
 
-		#endregion
+		#endregion Properties
 		
 		public event Action<bool> OnDash = delegate { };
 		
@@ -267,11 +267,13 @@ namespace Smash.Player
 
 		public override void HandleSpecialAttackInputStart()
 		{
+			Debug.Log("Special Attack Input Start");
 			CurrentStateMachine.SpecialAttackHold = true;
 		}
 
 		public override void HandleSpecialAttackInputEnd(float heldTime)
 		{
+			Debug.Log("Special Attack Input End");
 			CurrentStateMachine.SpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
 			CurrentStateMachine.SpecialAttackHold = false;
 		}
@@ -361,7 +363,7 @@ namespace Smash.Player
 		public void SetMainAttackWindup()
 		{
 			// Debug.Log("Dashing");
-			// Debug.Log("Main Attack Hold Start");
+			Debug.Log("Main Attack Hold Start");
 			// Play Attack Windup animation
 			m_graphicsController.SetDashing();
 			RemoveVerticalVelocity();
@@ -372,14 +374,14 @@ namespace Smash.Player
 		public void SetMainAttackExecute()
 		{
 			// Play attack execution animation
-			// Debug.Log("Main Attack End");
+			Debug.Log("Main Attack End");
 			// m_graphicsController.
 		}
 
 		public void SetMainAttackFinish()
 		{
 			// end attack execution animation
-			// Debug.Log("Main Attack Finished");
+			Debug.Log("Main Attack Finished");
 			CurrentStateMachine.MainAttackHold = false;
 			CurrentStateMachine.MainAttackTap = false;
 			// Debug.Log("Dash Ended");
