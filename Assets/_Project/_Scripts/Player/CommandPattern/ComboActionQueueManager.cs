@@ -20,16 +20,12 @@ namespace Smash.Player.CommandPattern
 
 		[SerializeField, Tooltip("Maximum Length possible for any combo"), Range(2, 5)]
 		private int m_maxPossibleComboLength = 2;
-		
-		// [SerializeField, Tooltip("Time added to combo time with each new command input")]
-		// private float m_comboTimeAddedWithNewCommand = 0.2f;
 
 		public bool Debugging { get; set; }
 
 		private bool m_hasStartedComboExecution;
 		private int m_thresholdToExtendComboTime;
 		private float m_timeSinceLastCommandInput;
-		private float m_timeSinceFirstCommandInput;
 
 		private Queue<IGameplayActionCommand> m_comboQueue;
 		private ComboMatchEngine m_comboMatchEngine;
@@ -84,12 +80,6 @@ namespace Smash.Player.CommandPattern
 			EnqueueCommandAndResetTimers(command);
 			ClearSequenceIfCannotStartCombo();
 			DequeueOldestCommandIfNecessary();
-
-			/*if (ShouldExtendComboTime())
-			{
-				// Debug.Log($"Extending Combo Time");
-				m_timeSinceFirstCommandInput -= m_comboTimeAddedWithNewCommand;
-			}*/
 		}
 
 		public Queue<IGameplayActionCommand> GetComboQueue() => m_comboQueue;
@@ -103,7 +93,7 @@ namespace Smash.Player.CommandPattern
 			// null command means no matching combo rule was found
 			// hence the first input command is executed all others are ignored
 			m_currentCommand ??= m_comboQueue.Peek();
-			m_currentCommand.HeldDuration = m_timeSinceFirstCommandInput;
+			m_currentCommand.HeldDuration = m_timeSinceLastCommandInput;
 			m_commandInvoker.InvokeFinishCommand(m_currentCommand);
 			ClearComboSequence();
 		}
@@ -128,7 +118,6 @@ namespace Smash.Player.CommandPattern
 			m_hasStartedComboExecution = false;
 			m_comboQueue.Clear();
 			m_timeSinceLastCommandInput = 0;
-			m_timeSinceFirstCommandInput = 0;
 		}
 
 		private void ClearSequenceIfCannotStartCombo()
@@ -165,12 +154,6 @@ namespace Smash.Player.CommandPattern
 			
 			m_comboQueue.Enqueue(command);
 			DebugLog($"Enqueued Command : {command.ActionName}, Current Queue Length {m_comboQueue.Count}");
-			
-			if (IsFirstCommandInSequence())
-			{
-				// Debug.Log($"Is first Command In Sequence");
-				m_timeSinceFirstCommandInput = 0;
-			}
 
 			m_timeSinceLastCommandInput = 0;
 		}
@@ -180,14 +163,13 @@ namespace Smash.Player.CommandPattern
 			if (m_comboQueue.Count == 0) return;
 
 			m_timeSinceLastCommandInput += deltaTime;
-			m_timeSinceFirstCommandInput += deltaTime;
 			
 			if (IsTooLateForCombo() && !m_hasStartedComboExecution)
 			{
 				TryStartExecution();
 			}
 
-			if (m_timeSinceFirstCommandInput > m_maxTimeForComboExecution)
+			if (m_timeSinceLastCommandInput > m_maxTimeForComboExecution)
 			{
 				TryExecuteCachedCombo();
 			}

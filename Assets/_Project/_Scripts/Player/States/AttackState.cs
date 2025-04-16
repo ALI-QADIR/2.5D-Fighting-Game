@@ -136,4 +136,140 @@
 			_pawn.SetDownMainAttackFinish();
 		}
 	}
+	
+	public class SpecialAttackStart : PlayerBaseState
+	{
+		public SpecialAttackStart(PlayerPawn pawn) : base(pawn)
+		{
+		}	
+		
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_pawn.CurrentState = this;
+			_pawn.SetSpecialAttackWindup();
+		}
+	}
+	
+	public class SpecialAttackEnd : PlayerBaseState
+	{
+		public SpecialAttackEnd(PlayerPawn pawn) : base(pawn)
+		{
+		}
+		
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_pawn.CurrentState = this;
+			_pawn.SetSpecialAttackExecute();
+		}
+
+		public override void OnExit()
+		{
+			base.OnExit();
+			_pawn.SetSpecialAttackFinish();
+		}
+	}
+	
+	public class SideSpecialAttackStart : PlayerBaseState
+	{
+		public SideSpecialAttackStart(PlayerPawn pawn) : base(pawn)
+		{
+		}
+		
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_pawn.CurrentState = this;
+			_pawn.SetSideSpecialAttackWindUp();
+		}
+	}
+	
+	public class SideSpecialAttackEnd : PlayerBaseState
+	{
+		public SideSpecialAttackEnd(PlayerPawn pawn) : base(pawn)
+		{
+		}
+		
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_pawn.CurrentState = this;
+			_pawn.SetSideSpecialAttackExecute();
+		}
+
+		public override void OnExit()
+		{
+			base.OnExit();
+			_pawn.SetSideSpecialAttackFinish();
+		}
+	}
+
+	public class UpSpecialAttackStart : PlayerBaseState
+	{
+		public UpSpecialAttackStart(PlayerPawn pawn) : base(pawn)
+		{
+		}
+
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_pawn.CurrentState = this;
+			_pawn.SetUpSpecialAttackWindUp();
+		}
+	}
+	
+	public class UpSpecialAttackEnd : PlayerBaseState
+	{
+		public UpSpecialAttackEnd(PlayerPawn pawn) : base(pawn)
+		{
+		}
+		
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_pawn.CurrentState = this;
+			_pawn.SetUpSpecialAttackExecute();
+		}
+
+		public override void OnExit()
+		{
+			base.OnExit();
+			_pawn.SetUpSpecialAttackFinish();
+		}
+	}
+	
+	public class DownSpecialAttackStart : PlayerBaseState
+	{
+		public DownSpecialAttackStart(PlayerPawn pawn) : base(pawn)
+		{
+		}
+
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_pawn.CurrentState = this;
+			_pawn.SetDownSpecialAttackWindUp();
+		}
+	}
+	
+	public class DownSpecialAttackEnd : PlayerBaseState
+	{
+		public DownSpecialAttackEnd(PlayerPawn pawn) : base(pawn)
+		{
+		}
+		
+		public override void OnEnter()
+		{
+			base.OnEnter();
+			_pawn.CurrentState = this;
+			_pawn.SetDownSpecialAttackExecute();
+		}
+
+		public override void OnExit()
+		{
+			base.OnExit();
+			_pawn.SetDownSpecialAttackFinish();
+		}
+	}
 }

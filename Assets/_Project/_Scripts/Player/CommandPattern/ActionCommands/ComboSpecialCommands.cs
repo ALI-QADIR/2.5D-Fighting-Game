@@ -7,11 +7,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		
 		public void StartActionExecution(BasePawn pawn)
 		{
+			pawn.HandleSideSpecialAttackInputStart();
 		}
 
 		public void FinishActionExecution(BasePawn pawn)
 		{
-			pawn.HandleSideSpecialAttackInput();
+			pawn.HandleSideSpecialAttackInputEnd(HeldDuration);
 		}
 	}
 	
@@ -22,11 +23,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		
 		public void StartActionExecution(BasePawn pawn)
 		{
+			pawn.HandleUpSpecialAttackInputStart();
 		}
 		
 		public void FinishActionExecution(BasePawn pawn)
 		{
-			pawn.HandleUpSpecialAttackInput();
+			pawn.HandleUpSpecialAttackInputEnd(HeldDuration);
 		}
 	}
 	
@@ -37,11 +39,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		
 		public void StartActionExecution(BasePawn pawn)
 		{
+			pawn.HandleDownSpecialAttackInputStart();
 		}
 		
 		public void FinishActionExecution(BasePawn pawn)
 		{
-			pawn.HandleDownSpecialAttackInput();
+			pawn.HandleDownSpecialAttackInputEnd(HeldDuration);
 		}
 	}
 	

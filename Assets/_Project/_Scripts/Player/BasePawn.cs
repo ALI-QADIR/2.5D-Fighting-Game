@@ -1,5 +1,4 @@
-﻿using Smash.Player.CommandPattern;
-using Smash.Player.Input;
+﻿using Smash.Player.Input;
 using UnityEngine;
 
 namespace Smash.Player
@@ -26,10 +25,14 @@ namespace Smash.Player
 		public abstract void HandleUpMainAttackInputEnd(float heldTime);
 		public abstract void HandleDownMainAttackInputStart();
 		public abstract void HandleDownMainAttackInputEnd(float heldTime);
-		public abstract void HandleSpecialAttackInput();
-		public abstract void HandleSideSpecialAttackInput();
-		public abstract void HandleUpSpecialAttackInput();
-		public abstract void HandleDownSpecialAttackInput();
+		public abstract void HandleSpecialAttackInputStart();
+		public abstract void HandleSpecialAttackInputEnd(float heldTime);
+		public abstract void HandleSideSpecialAttackInputStart();
+		public abstract void HandleSideSpecialAttackInputEnd(float heldTime);
+		public abstract void HandleUpSpecialAttackInputStart();
+		public abstract void HandleUpSpecialAttackInputEnd(float heldTime);
+		public abstract void HandleDownSpecialAttackInputStart();
+		public abstract void HandleDownSpecialAttackInputEnd(float heldTime);
 		public abstract void HandleDpadNullInput();
 	}
 }

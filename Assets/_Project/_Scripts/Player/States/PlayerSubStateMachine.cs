@@ -15,6 +15,15 @@ namespace Smash.Player.States
 		public bool UpMainAttackHold { get; set; }
 		public bool DownMainAttackTap { get; set; }
 		public bool DownMainAttackHold { get; set; }
+		
+		public bool SpecialAttackTap { get; set; }
+		public bool SpecialAttackHold { get; set; }
+		public bool SideSpecialAttackTap { get; set; }
+		public bool SideSpecialAttackHold { get; set; }
+		public bool UpSpecialAttackTap { get; set; }
+		public bool UpSpecialAttackHold { get; set; }
+		public bool DownSpecialAttackTap { get; set; }
+		public bool DownSpecialAttackHold { get; set; }
 
 		protected PlayerSubStateMachine(PlayerPawn pawn) : base(pawn)
 		{

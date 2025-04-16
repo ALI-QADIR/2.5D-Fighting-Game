@@ -265,24 +265,48 @@ namespace Smash.Player
 			CurrentStateMachine.DownMainAttackHold = false;
 		}
 
-		public override void HandleSpecialAttackInput()
+		public override void HandleSpecialAttackInputStart()
 		{
-			
-		}
-		
-		public override void HandleSideSpecialAttackInput()
-		{
-			
+			CurrentStateMachine.SpecialAttackHold = true;
 		}
 
-		public override void HandleDownSpecialAttackInput()
+		public override void HandleSpecialAttackInputEnd(float heldTime)
 		{
-			
+			CurrentStateMachine.SpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.SpecialAttackHold = false;
+		}
+
+		public override void HandleSideSpecialAttackInputStart()
+		{
+			CurrentStateMachine.SideSpecialAttackHold = true;
+		}
+
+		public override void HandleSideSpecialAttackInputEnd(float heldTime)
+		{
+			CurrentStateMachine.SideSpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.SideSpecialAttackHold = false;
+		}
+
+		public override void HandleDownSpecialAttackInputStart()
+		{
+			CurrentStateMachine.DownSpecialAttackHold = true;
 		}
 		
-		public override void HandleUpSpecialAttackInput()
+		public override void HandleDownSpecialAttackInputEnd(float heldTime)
 		{
-			
+			CurrentStateMachine.DownSpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.DownSpecialAttackHold = false;
+		}
+		
+		public override void HandleUpSpecialAttackInputStart()
+		{
+			CurrentStateMachine.UpSpecialAttackHold = true;
+		}
+		
+		public override void HandleUpSpecialAttackInputEnd(float heldTime)
+		{
+			CurrentStateMachine.UpSpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.UpSpecialAttackHold = false;
 		}
 
 		public void HandleLaunchInput()
@@ -414,6 +438,89 @@ namespace Smash.Player
 			Debug.Log("Down Main Attack Finish");
 			CurrentStateMachine.DownMainAttackHold = false;
 			CurrentStateMachine.DownMainAttackTap = false;
+			SetGravity();
+		}
+		
+		public void SetSpecialAttackWindup()
+		{
+			// Debug.Log("Dashing");
+			Debug.Log("Special Attack Wind Up");
+			// Play Attack Windup animation
+			// m_graphicsController.SetDashing();
+			RemoveVerticalVelocity();
+			m_gravity = 0f;
+		}
+
+		// Call this when Special attack animation has to finish
+		public void SetSpecialAttackExecute()
+		{
+			// Play attack execution animation
+			Debug.Log("Special Attack End");
+			// m_graphicsController.
+		}
+
+		public void SetSpecialAttackFinish()
+		{
+			// end attack execution animation
+			Debug.Log("Special Attack Finished");
+			CurrentStateMachine.SpecialAttackHold = false;
+			CurrentStateMachine.SpecialAttackTap = false;
+			// Debug.Log("Dash Ended");
+			SetGravity();
+			HandleJumpBuffer();
+		}
+
+		public void SetSideSpecialAttackWindUp()
+		{
+			Debug.Log("Side Special Attack Windup");
+		}
+		
+		public void SetSideSpecialAttackExecute()
+		{
+			Debug.Log("Side Special Attack Execute");
+		}
+
+		public void SetSideSpecialAttackFinish()
+		{
+			Debug.Log("Side Special Attack Finish");
+			CurrentStateMachine.SideSpecialAttackHold = false;
+			CurrentStateMachine.SideSpecialAttackTap = false;
+			SetGravity();
+		}
+		
+		public void SetUpSpecialAttackWindUp()
+		{
+			Debug.Log("Up Special Attack Windup");
+		}
+		
+		public void SetUpSpecialAttackExecute()
+		{
+			Debug.Log("up Special Attack Execute");
+		}
+
+		public void SetUpSpecialAttackFinish()
+		{
+			Debug.Log("Up Special Attack Finish");
+			CurrentStateMachine.UpSpecialAttackHold = false;
+			CurrentStateMachine.UpSpecialAttackTap = false;
+			SetGravity();
+		}
+		
+		public void SetDownSpecialAttackWindUp()
+		{
+			Debug.Log("Down Special Attack Windup");
+		}
+		
+		public void SetDownSpecialAttackExecute()
+		{
+			Debug.Log("Down Special Attack Execute");
+		}
+
+		public void SetDownSpecialAttackFinish()
+		{
+			Debug.Log("Down Special Attack Finish");
+			CurrentStateMachine.DownSpecialAttackHold = false;
+			CurrentStateMachine.DownSpecialAttackTap = false;
 			SetGravity();
 		}
 

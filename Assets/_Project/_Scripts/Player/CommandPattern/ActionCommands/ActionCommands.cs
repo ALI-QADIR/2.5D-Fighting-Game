@@ -22,11 +22,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		
 		public void StartActionExecution(BasePawn pawn)
 		{
+			pawn.HandleSpecialAttackInputStart();
 		}
 		
 		public void FinishActionExecution(BasePawn pawn)
 		{
-			pawn.HandleSpecialAttackInput();
+			pawn.HandleSpecialAttackInputEnd(HeldDuration);
 		}
 	}
 	
