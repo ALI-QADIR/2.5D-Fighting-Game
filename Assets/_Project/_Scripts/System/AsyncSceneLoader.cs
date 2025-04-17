@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Smash.Services;
 using Smash.StructsAndEnums;
-using TripleA.SceneManagement;
-using TripleA.Singletons;
+using TripleA.SceneManagement.AdditiveSceneManagement;
+using TripleA.Utils.Singletons;
 using UnityEngine;
 using UnityEngine.UI;
 

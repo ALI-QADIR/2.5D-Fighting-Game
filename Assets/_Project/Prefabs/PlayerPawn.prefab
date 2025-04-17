@@ -112,7 +112,7 @@ MonoBehaviour:
   m_groundGravity: 0
   m_groundSpeed: 10
   m_groundAcceleration: 200
-  m_airGravity: 40
+  m_airGravity: 200
   m_airSpeed: 10
   m_airAcceleration: 100
   m_maxFallSpeed: 40

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Smash.StructsAndEnums;
-using TripleA.SceneManagement;
+using TripleA.SceneManagement.AdditiveSceneManagement;
 
 namespace Smash.System
 {

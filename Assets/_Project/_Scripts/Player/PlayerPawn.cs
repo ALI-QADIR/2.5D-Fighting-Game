@@ -1,9 +1,9 @@
 ﻿using System;
 using Smash.Player.Input;
 using Smash.Player.States;
-using TripleA.Extensions;
-using TripleA.FSM;
-using TripleA.ImprovedTimer.Timers;
+using TripleA.Utils.Extensions;
+using TripleA.StateMachine.FSM;
+using TripleA.Timers.ImprovedTimers;
 using UnityEngine;
 
 namespace Smash.Player

@@ -16,6 +16,27 @@
       "source": "local-tarball",
       "dependencies": {}
     },
+    "com.triple-a-studios.core-setup": {
+      "version": "https://github.com/Triple-A-Studios/TripleA-CoreSetup.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "558084f4d76447b3efbdc2b2a63ac5953b02323f"
+    },
+    "com.triple-a-studios.event-systems": {
+      "version": "git+https://github.com/Triple-A-Studios/TripleA-EventSystems.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "36bc4c314389b36de990ad2179073bd1a7d5a55b"
+    },
+    "com.triple-a-studios.improved-timers": {
+      "version": "git+https://github.com/Triple-A-Studios/TripleA-ImprovedTimers.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "5044dbd3d9877a8357352b8440f6912d222d849a"
+    },
     "com.triple-a-studios.scene-manager": {
       "version": "https://github.com/Triple-A-Studios/TripleA-SceneManager.git",
       "depth": 0,
@@ -23,21 +44,21 @@
       "dependencies": {
         "com.unity.addressables": "1.19.19"
       },
-      "hash": "00618d56037e885cf6e4056e5661137bfcbd67c8"
+      "hash": "8fb91a19fdc64abc88c8625a2b8f4e3ca0c86ede"
     },
     "com.triple-a-studios.statemachine": {
       "version": "https://github.com/Triple-A-Studios/TripleA-StateMachine.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "82c3244368b40ccd511d3277eb51417660e07ab5"
+      "hash": "e939441d034cc0dea18cf14c2968dd70578e8f1f"
     },
     "com.triple-a-studios.utils": {
       "version": "https://github.com/Triple-A-Studios/TripleA-Utils.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "2b8edd359f4eb9e92efd5c09a68896957bb7f67f"
+      "hash": "c4fbf90f8d822757a00778b9055a090aad839031"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",

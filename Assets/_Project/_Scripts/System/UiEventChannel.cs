@@ -1,5 +1,5 @@
 ﻿using System;
-using TripleA.EventSystem;
+using TripleA.EventSystem.EventChannel;
 using UnityEngine;
 
 namespace Smash.System

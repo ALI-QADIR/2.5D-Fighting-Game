@@ -1,5 +1,4 @@
-﻿using System;
-using TripleA.Singletons;
+﻿using TripleA.Utils.Singletons;
 using UnityEngine;
 using UnityEngine.Audio;
 

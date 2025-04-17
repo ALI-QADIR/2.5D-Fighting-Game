@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Smash.System;
-using TripleA.EventSystem;
+using TripleA.EventSystem.EventChannel;
 
 namespace Smash.Ui.System
 {

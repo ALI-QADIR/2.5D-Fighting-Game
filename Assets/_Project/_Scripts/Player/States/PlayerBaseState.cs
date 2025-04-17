@@ -1,4 +1,4 @@
-using TripleA.FSM;
+using TripleA.StateMachine.FSM;
 
 namespace Smash.Player.States
 {

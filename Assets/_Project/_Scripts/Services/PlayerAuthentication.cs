@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Smash.System;
-using TripleA.Singletons;
+using TripleA.Utils.Singletons;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;

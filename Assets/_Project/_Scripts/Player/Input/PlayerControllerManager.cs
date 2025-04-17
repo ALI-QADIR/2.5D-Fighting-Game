@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using TripleA.Singletons;
+using TripleA.Utils.Singletons;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

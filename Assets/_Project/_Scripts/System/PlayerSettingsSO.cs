@@ -1,4 +1,4 @@
-﻿using TripleA.Observables.Primaries;
+﻿using TripleA.Utils.Observables.Primaries;
 using UnityEngine;
 using UnityEngine.Events;
 

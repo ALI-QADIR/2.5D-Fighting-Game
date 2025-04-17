@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Smash.Player.Input;
 using Smash.Services;
 using Smash.Ui.Panels;
-using TripleA.FSM;
-using TripleA.ImprovedTimer.Timers;
-using TripleA.Singletons;
+using TripleA.StateMachine.FSM;
+using TripleA.Timers.ImprovedTimers;
+using TripleA.Utils.Singletons;
 using UnityEngine;
 using UnityEngine.Serialization;
 

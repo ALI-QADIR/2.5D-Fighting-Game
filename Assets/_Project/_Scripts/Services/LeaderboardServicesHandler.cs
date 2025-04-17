@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TripleA.Singletons;
+using TripleA.Utils.Singletons;
 using Unity.Services.Leaderboards;
 using Unity.Services.Leaderboards.Models;
 
