@@ -1,4 +1,5 @@
 ﻿using System;
+using Smash.Player.Components;
 using Smash.Player.Input;
 using Smash.Player.States;
 using TripleA.Utils.Extensions;

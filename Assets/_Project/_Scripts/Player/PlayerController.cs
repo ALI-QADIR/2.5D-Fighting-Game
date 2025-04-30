@@ -1,9 +1,10 @@
 using Smash.Player.CommandPattern.ActionCommands;
 using Smash.Player.CommandPattern.Controllers;
+using Smash.Player.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Smash.Player.Input
+namespace Smash.Player
 {
 	[RequireComponent(typeof(ButtonActionController))]
 	[RequireComponent(typeof(DPadActionController))]

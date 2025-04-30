@@ -2,7 +2,7 @@
 using Smash.StructsAndEnums;
 using UnityEngine;
 
-namespace Smash.Player
+namespace Smash.Player.Components
 {
 	public class LedgeDetector : MonoBehaviour
 	{

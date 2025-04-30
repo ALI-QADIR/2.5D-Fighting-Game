@@ -2,7 +2,7 @@
 using Smash.Player.CommandPattern.ActionCommands;
 using UnityEngine;
 
-namespace Smash.Player.Input
+namespace Smash.Player
 {
 	[RequireComponent(typeof(ComboActionQueueManager))]
 	public abstract class BaseController : MonoBehaviour

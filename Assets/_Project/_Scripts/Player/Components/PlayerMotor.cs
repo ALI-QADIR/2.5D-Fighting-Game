@@ -2,7 +2,7 @@ using Smash.Player.CastSensors;
 using Smash.StructsAndEnums;
 using UnityEngine;
 
-namespace Smash.Player
+namespace Smash.Player.Components
 {
 	[RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
     public class PlayerMotor : MonoBehaviour

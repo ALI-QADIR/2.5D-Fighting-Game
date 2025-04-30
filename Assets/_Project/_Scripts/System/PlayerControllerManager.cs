@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Smash.Player;
 using TripleA.Utils.Singletons;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Smash.Player.Input
+namespace Smash.System
 {
 	[RequireComponent(typeof(PlayerInputManager))]
 	public class PlayerControllerManager : PersistentSingleton<PlayerControllerManager>
@@ -68,10 +69,9 @@ namespace Smash.Player.Input
 			if (!m_controllers.ContainsValue(ctr))
 			{
 				m_controllers.Add(playerIndex, ctr);
-				// Todo : Instantiation from game manager
-				var pawn = Instantiate(m_pawnPrefab, Vector3.zero, Quaternion.identity);
+				/*var pawn = Instantiate(m_pawnPrefab, Vector3.zero, Quaternion.identity);
 				ctr.Initialise(pawn);
-				ctr.EnablePlayerInputAndDisableUiInput();
+				ctr.EnablePlayerInputAndDisableUiInput();*/
 			}
 		}
 		

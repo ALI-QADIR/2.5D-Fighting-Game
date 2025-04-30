@@ -4,7 +4,7 @@ using TripleA.Utils.Singletons;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Smash.Player.Input
+namespace Smash.System
 {
 	public class PlayerDevicesManager : PersistentSingleton<PlayerDevicesManager>
 	{

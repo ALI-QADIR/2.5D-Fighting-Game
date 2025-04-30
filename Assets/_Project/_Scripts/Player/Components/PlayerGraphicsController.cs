@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Smash.StructsAndEnums;
 using UnityEngine;
 
-namespace Smash.Player
+namespace Smash.Player.Components
 {
 	public class PlayerGraphicsController : MonoBehaviour
 	{
