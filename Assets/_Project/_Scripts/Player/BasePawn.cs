@@ -2,7 +2,8 @@
 
 namespace Smash.Player
 {
-	public abstract class BasePawn : MonoBehaviour
+	[RequireComponent(typeof(InputHandler))]
+	public class BasePawn : MonoBehaviour
 	{
 		// public InputHandler InputHandler { get; set; }
 
