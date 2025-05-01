@@ -132,7 +132,7 @@ namespace Smash.Player.States
 
 		#endregion Attack States
 
-		protected PlayerSubStateMachine(PlayerPawn pawn) : base(pawn)
+		protected PlayerSubStateMachine(CharacterPawn pawn) : base(pawn)
 		{
 		}
 

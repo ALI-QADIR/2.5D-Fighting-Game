@@ -2,7 +2,7 @@
 {
 	public class GroundEntry : PlayerBaseState
 	{
-		public GroundEntry(PlayerPawn pawn) : base(pawn)
+		public GroundEntry(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -15,7 +15,7 @@
 	
 	public class Idle : PlayerBaseState
 	{
-		public Idle(PlayerPawn pawn) : base(pawn)
+		public Idle(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -29,7 +29,7 @@
 	
 	public class Moving : PlayerBaseState
 	{
-		public Moving(PlayerPawn pawn) : base(pawn)
+		public Moving(CharacterPawn pawn) : base(pawn)
 		{
 		}
 		
@@ -43,7 +43,7 @@
 
 	public class GroundExit : PlayerBaseState
 	{
-		public GroundExit(PlayerPawn pawn) : base(pawn)
+		public GroundExit(CharacterPawn pawn) : base(pawn)
 		{
 		}
 	}

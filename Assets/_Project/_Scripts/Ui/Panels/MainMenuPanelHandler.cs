@@ -13,7 +13,10 @@ namespace Smash.Ui.Panels
 		protected override void Awake()
 		{
 			base.Awake();
-			OpenPanel();
+			
+			if (AsyncSceneLoader.HasInstance)
+				AsyncSceneLoader.Instance.OnSceneGroupLoaded += SceneGroupLoaded;
+			
 			_eventDictionary.Add("btn_main_play", OnClickPlayButton);
 			_eventDictionary.Add("btn_tutorial", OnClickTutorialButton);
 			_eventDictionary.Add("btn_main_quit", OnClickQuitButton);
@@ -28,6 +31,17 @@ namespace Smash.Ui.Panels
 			_eventDictionary.Add("btn_leaderboard_back", OpenPanel);
 			
 			_backButtonHandler.SetEventArgs("btn_main_quit", this);
+		}
+
+		private void OnDisable()
+		{
+			if (AsyncSceneLoader.HasInstance)
+				AsyncSceneLoader.Instance.OnSceneGroupLoaded -= SceneGroupLoaded;
+		}
+
+		private void SceneGroupLoaded()
+		{
+			OpenPanel();
 		}
 
 		protected override void AuthenticateEvent(UiEventArgs args)

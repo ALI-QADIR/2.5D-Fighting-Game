@@ -10,16 +10,16 @@ namespace Smash.System
 	public class PlayerControllerManager : PersistentSingleton<PlayerControllerManager>
 	{
 		[SerializeField] private PlayerInputManager m_playerInputManager;
-		[SerializeField] private PlayerPawn m_pawnPrefab;
+		[SerializeField] private CharacterPawn m_pawnPrefab;
 		[SerializeField] private PlayerController m_controllerPrefab;
-		private Dictionary<int, BaseController> m_controllers;
+		private Dictionary<int, PlayerController> m_controllers;
 
 		#region Unity Methods
 
 		protected override void Awake()
 		{
 			base.Awake();
-			m_controllers = new Dictionary<int, BaseController>();
+			m_controllers = new Dictionary<int, PlayerController>();
 			m_playerInputManager ??= GetComponent<PlayerInputManager>();
 
 			m_playerInputManager.playerPrefab = m_controllerPrefab.gameObject;
@@ -58,13 +58,27 @@ namespace Smash.System
 			m_controllers.Remove(index);
 		}
 
+		public PlayerController AssignPawnToController(CharacterPawn pawn, int index)
+		{
+			var ctr = m_controllers[index];
+			ctr.Initialise(pawn);
+			return ctr;
+		}
+
+		public PlayerController AssignPawnToController(UiPawn pawn, int index)
+		{
+			var ctr = m_controllers[index];
+			ctr.Initialise(pawn);
+			return ctr;
+		}
+
 		#endregion Public Methods
 		
 		#region Private Methods
 
 		private void OnPlayerJoined(PlayerInput input)
 		{
-			PlayerController ctr = input.GetComponent<PlayerController>();
+			PlayerCharacterController ctr = input.GetComponent<PlayerCharacterController>();
 			int playerIndex = input.playerIndex;
 			if (!m_controllers.ContainsValue(ctr))
 			{

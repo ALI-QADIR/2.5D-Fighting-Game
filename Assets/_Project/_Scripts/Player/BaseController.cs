@@ -10,7 +10,8 @@ namespace Smash.Player
 		[Header("Components")]
 		[field: SerializeField] protected ComboActionQueueManager ComboQueueManager { get; private set; }
 
-		protected PlayerPawn _possessedPawn;
+		protected BasePawn _possessedPawn;
+		protected InputHandler _inputHandler;
 		protected GameplayActionCommandInvoker CommandInvoker { get; private set; }
 
 		protected virtual void Awake()
@@ -20,13 +21,28 @@ namespace Smash.Player
 			ComboQueueManager.SetCommandInvoker(CommandInvoker);
 		}
 
-		public virtual void Initialise(PlayerPawn pawn)
+		public void Initialise(BasePawn pawn)
 		{
 			_possessedPawn = pawn;
 			_possessedPawn.Initialise(this);
+			_inputHandler = pawn.GetInputHandler();
 		}
 
-		public virtual void Dispose()
+		public virtual void Initialise(CharacterPawn pawn)
+		{
+			_possessedPawn = pawn;
+			_possessedPawn.Initialise(this);
+			_inputHandler = pawn.GetInputHandler();
+		}
+		
+		public virtual void Initialise(UiPawn pawn)
+		{
+			_possessedPawn = pawn;
+			_possessedPawn.Initialise(this);
+			_inputHandler = pawn.GetInputHandler();
+		}
+
+		public void Dispose()
 		{
 			CommandInvoker.OnCommandExecutionStarted -= OnCommandExecutionStarted;
 			CommandInvoker.OnCommandExecutionFinished -= OnCommandExecutionFinished;
@@ -34,7 +50,7 @@ namespace Smash.Player
 			Destroy(gameObject);
 		}
 		
-		public void SetPawn(PlayerPawn pawn) => _possessedPawn = pawn;
+		// public void SetPawn(CharacterPawn pawn) => _possessedPawn = pawn;
 
 		protected void InitialiseCommandInvoker()
 		{

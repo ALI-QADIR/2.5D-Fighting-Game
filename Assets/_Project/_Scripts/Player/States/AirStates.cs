@@ -4,7 +4,7 @@ namespace Smash.Player.States
 {
 	public class AirEntry : PlayerBaseState
 	{
-		public AirEntry(PlayerPawn pawn) : base(pawn)
+		public AirEntry(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -17,7 +17,7 @@ namespace Smash.Player.States
 	
 	public class Rising : PlayerBaseState
 	{
-		public Rising(PlayerPawn pawn) : base(pawn)
+		public Rising(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -31,7 +31,7 @@ namespace Smash.Player.States
 	
 	public class Falling : PlayerBaseState
 	{
-		public Falling(PlayerPawn pawn) : base(pawn)
+		public Falling(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -47,7 +47,7 @@ namespace Smash.Player.States
 	{
 		public float ElapsedTime { get; private set; }
 
-		public Coyote(PlayerPawn pawn) : base(pawn)
+		public Coyote(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -71,7 +71,7 @@ namespace Smash.Player.States
 	{
 		public float ElapsedTime { get; private set; }
 
-		public Apex(PlayerPawn pawn) : base(pawn)
+		public Apex(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -100,7 +100,7 @@ namespace Smash.Player.States
 
 	public class Ledge : PlayerBaseState
 	{
-		public Ledge(PlayerPawn pawn) : base(pawn)
+		public Ledge(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -120,7 +120,7 @@ namespace Smash.Player.States
 	
 	public class WallSlide : PlayerBaseState
 	{
-		public WallSlide(PlayerPawn pawn) : base(pawn)
+		public WallSlide(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -140,7 +140,7 @@ namespace Smash.Player.States
     
 	public class AirExit : PlayerBaseState
 	{
-		public AirExit(PlayerPawn pawn) : base(pawn)
+		public AirExit(CharacterPawn pawn) : base(pawn)
 		{
 		}
 	}

@@ -4,9 +4,9 @@ namespace Smash.Player.States
 {
     public class PlayerBaseState : BaseState
     {
-        protected readonly PlayerPawn _pawn;
+        protected readonly CharacterPawn _pawn;
         
-        protected PlayerBaseState(PlayerPawn pawn)
+        protected PlayerBaseState(CharacterPawn pawn)
         {
             _pawn = pawn;
         }

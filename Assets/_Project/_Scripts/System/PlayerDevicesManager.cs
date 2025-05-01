@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TripleA.Utils.Singletons;
 using UnityEngine;
@@ -20,6 +21,8 @@ namespace Smash.System
 					? value
 					: PlayerInputManager.instance.maxPlayerCount;
 		}
+		
+		public event Action<int> OnPlayerJoined; 
 
 		protected override void Awake()
 		{
@@ -27,12 +30,12 @@ namespace Smash.System
 			m_activeInputDevices = new List<InputDevice>();
 
 			m_joinInputAction = new InputAction(binding: "/*/*");
+			EnablePlayerJoining(0);
 		}
 
 		private void Start()
 		{
 			m_joinInputAction.started += JoinPerformed;
-			EnablePlayerJoining(2); // TODO
 		}
 
 		private void OnDisable()
@@ -108,6 +111,7 @@ namespace Smash.System
 			m_activeInputDevices.Add(device);
 			int playerIndex = m_activeInputDevices.Count - 1;
 			PlayerControllerManager.Instance.AddInputDeviceAndJoinPlayer(playerIndex, device);
+			OnPlayerJoined?.Invoke(playerIndex);
 			Debug.Log($"Joined player {playerIndex}, device: {device.displayName}");
 		}
 	}

@@ -169,11 +169,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ComboQueueManager>k__BackingField: {fileID: 7066033461056179908}
+  _inputActionsController: {fileID: 1289368125731603549}
+  _playerInputComponent: {fileID: 6253768598967610822}
   <ButtonActionControllerComponent>k__BackingField: {fileID: 3933780579439335045}
   <DPadActionControllerComponent>k__BackingField: {fileID: 8797537056396316964}
-  m_inputActionsController: {fileID: 1289368125731603549}
-  m_playerInputComponent: {fileID: 6253768598967610822}
-  <PlayerIndex>k__BackingField: 0
   m_enableInvokerDebug: 1
   m_enableQueueDebug: 0
 --- !u!114 &1289368125731603549
