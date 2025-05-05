@@ -1,20 +1,17 @@
-﻿using TripleA.Utils.Extensions;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Smash.Player
 {
-	[RequireComponent(typeof(InputHandler))]
-	public class BasePawn : MonoBehaviour
+	public abstract class BasePawn : MonoBehaviour
 	{
-		private BaseController m_possessingController;
-		protected InputHandler _inputHandler;
+		// public InputHandler InputHandler { get; set; }
 
-		public virtual void Initialise(BaseController possessingController)
+		public abstract void Initialise();
+
+		/*public InputHandler GetInputHandler()
 		{
-			m_possessingController = possessingController;
 			_inputHandler ??= gameObject.GetOrAddComponent<InputHandler>();
-		}
-
-		public InputHandler GetInputHandler() => _inputHandler;
+			return _inputHandler;
+		}*/
 	}
 }

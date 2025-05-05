@@ -2,10 +2,10 @@
 {
 	public class UiPawn : BasePawn
 	{
-		public override void Initialise(BaseController possessingController)
+		public override void Initialise()
 		{
-			base.Initialise(possessingController);
-			_inputHandler.SetUiPawn(this);
+			// no-op
+			// _inputHandler.SetUiPawn(this);
 		}
 	}
 }

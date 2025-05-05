@@ -58,10 +58,10 @@ namespace Smash.System
 			m_controllers.Remove(index);
 		}
 
-		public PlayerController InitialisePawn(UiPawn uiPawn, int index)
+		public PlayerController AssignPawnToController(CharacterPawn charPawn, UiPawn uiPawn, int index)
 		{
 			var ctr = m_controllers[index];
-			ctr.Initialise(uiPawn);
+			ctr.Initialise(charPawn, uiPawn);
 			return ctr;
 		}
 		

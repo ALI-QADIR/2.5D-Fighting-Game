@@ -15,7 +15,10 @@ namespace Smash.Ui.Panels
 			base.Awake();
 			
 			if (AsyncSceneLoader.HasInstance)
-				AsyncSceneLoader.Instance.OnSceneGroupLoaded += SceneGroupLoaded;
+			{
+				// Debug.Log("Has Instance");
+				AsyncSceneLoader.Instance.OnSceneLoadComplete += SceneGroupLoaded;
+			}
 			
 			_eventDictionary.Add("btn_main_play", OnClickPlayButton);
 			_eventDictionary.Add("btn_tutorial", OnClickTutorialButton);
@@ -33,14 +36,15 @@ namespace Smash.Ui.Panels
 			_backButtonHandler.SetEventArgs("btn_main_quit", this);
 		}
 
-		private void OnDisable()
+		protected override void OnDestroy()
 		{
 			if (AsyncSceneLoader.HasInstance)
-				AsyncSceneLoader.Instance.OnSceneGroupLoaded -= SceneGroupLoaded;
+				AsyncSceneLoader.Instance.OnSceneLoadComplete -= SceneGroupLoaded;
 		}
 
 		private void SceneGroupLoaded()
 		{
+			// Debug.Log("SceneGroupLoaded");
 			OpenPanel();
 		}
 
@@ -52,6 +56,7 @@ namespace Smash.Ui.Panels
 
 		public override void OpenPanel()
 		{
+			// Debug.Log("Open Menu Panel");
 			base.OpenPanel();
 			_input.UI.Cancel.Enable();
 			_input.UI.Retry.Enable();
@@ -81,13 +86,13 @@ namespace Smash.Ui.Panels
 		private void OnClickPlayButton()
 		{
 			_input.UI.Disable();
-			AsyncSceneLoader.Instance.LoadSceneGroupByIndex(2);
+			AsyncSceneLoader.Instance.LoadSceneByIndex(1);
 		}
 
 		private void OnClickTutorialButton()
 		{
 			_input.UI.Disable();
-			AsyncSceneLoader.Instance.LoadSceneGroupByIndex(1);
+			AsyncSceneLoader.Instance.LoadSceneByIndex(1);
 		}
 
 		private void OnClickQuitButton()

@@ -89,10 +89,9 @@ namespace Smash.Player
 		
 		#region Unity Methods
 
-		public override void Initialise(BaseController possessingController)
+		public override void Initialise()
 		{
-			base.Initialise(possessingController);
-			_inputHandler.SetCharacterPawn(this);
+			// _inputHandler.SetCharacterPawn(this);
 			
 			m_tr = transform;
 			m_motor ??= GetComponent<PlayerMotor>();

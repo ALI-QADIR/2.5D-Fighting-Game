@@ -71,7 +71,7 @@ namespace Smash.Ui.Panels
 		{
 			if(!AsyncSceneLoader.HasInstance) return;
 			_input.UI.Disable();
-			AsyncSceneLoader.Instance.LoadSceneGroupByIndex(0);
+			AsyncSceneLoader.Instance.LoadSceneByIndex(0);
 		}
 	}
 }

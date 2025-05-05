@@ -7,7 +7,8 @@ namespace Smash.World.Test
 	public class TestManager : MonoBehaviour
 	{
 		[SerializeField] private int m_playerCount = 2;
-		[SerializeField] private CharacterPawn m_playerPrefab;
+		[SerializeField] private CharacterPawn m_characterPawnPrefab;
+		[SerializeField] private UiPawn m_uiPawnPrefab;
 		
 		private void Start()
 		{
@@ -23,8 +24,10 @@ namespace Smash.World.Test
 
 		private void PlayerJoined(int index)
 		{
-			var player = Instantiate(m_playerPrefab);
-			var ctr = PlayerControllerManager.Instance.AssignPawnToController(player, index);
+			var characterPawn = Instantiate(m_characterPawnPrefab);
+			var uiPawn = Instantiate(m_uiPawnPrefab);
+			var ctr = PlayerControllerManager.Instance.InitialisePawn(uiPawn, index);
+			ctr.SetPawn(characterPawn);
 			ctr.EnablePlayerInputAndDisableUiInput();
 		}
 	}

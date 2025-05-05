@@ -1343,7 +1343,7 @@ MonoBehaviour:
   autoUnparentOnAwake: 1
   m_playerInputManager: {fileID: 1520902692}
   m_pawnPrefab: {fileID: 5991776475819307800, guid: f540c158a155a4542b495a087d590539, type: 3}
-  m_controllerPrefab: {fileID: 2900337790333897636, guid: 24f2b3bd33b539e4cbf9b12625f5d217, type: 3}
+  m_controllerPrefab: {fileID: 449515351122987479, guid: 24f2b3bd33b539e4cbf9b12625f5d217, type: 3}
 --- !u!114 &1520902692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1697,37 +1697,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2706fb9e340b463a99e38b523c9b6d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoUnparentOnAwake: 1
+  m_artificialDelay: 0.25
   m_fill: {fileID: 3886247}
-  m_fillSpeed: 0.5
   m_canvas: {fileID: 615253558}
   m_cam: {fileID: 655785025}
-  m_sceneGroup:
-  - groupName: MainMenu
-    scenes:
-    - sceneReference:
-        asset: {fileID: 102900000, guid: a5243ad567f8edd438dda79b90564ef1, type: 3}
-        guid: a5243ad567f8edd438dda79b90564ef1
-      sceneType: 4
-  - groupName: Tutorial
-    scenes:
-    - sceneReference:
-        asset: {fileID: 102900000, guid: 04fba6b2fe86e494ead6d00cc7c46539, type: 3}
-        guid: 04fba6b2fe86e494ead6d00cc7c46539
-      sceneType: 4
-    - sceneReference:
-        asset: {fileID: 102900000, guid: 4bba85ef0d23c2343a637da2d4c1d46e, type: 3}
-        guid: 4bba85ef0d23c2343a637da2d4c1d46e
-      sceneType: 3
-  - groupName: SpeedRun
-    scenes:
-    - sceneReference:
-        asset: {fileID: 102900000, guid: 96950b662ad62bc4a8bc112053f3d14b, type: 3}
-        guid: 96950b662ad62bc4a8bc112053f3d14b
-      sceneType: 4
-    - sceneReference:
-        asset: {fileID: 102900000, guid: 4bba85ef0d23c2343a637da2d4c1d46e, type: 3}
-        guid: 4bba85ef0d23c2343a637da2d4c1d46e
-      sceneType: 3
+  m_scenes:
+  - sceneReference:
+      asset: {fileID: 102900000, guid: a5243ad567f8edd438dda79b90564ef1, type: 3}
+      guid: a5243ad567f8edd438dda79b90564ef1
+    sceneType: 0
+  - sceneReference:
+      asset: {fileID: 102900000, guid: 04fba6b2fe86e494ead6d00cc7c46539, type: 3}
+      guid: 04fba6b2fe86e494ead6d00cc7c46539
+    sceneType: 2
 --- !u!4 &1704147657
 Transform:
   m_ObjectHideFlags: 0

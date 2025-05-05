@@ -14,16 +14,22 @@ namespace Smash.System
 		{
 			base.Awake();
 			if(AsyncSceneLoader.HasInstance)
-				AsyncSceneLoader.Instance.OnSceneGroupLoaded += SceneGroupLoaded;
+			{
+				// Debug.Log("Has Instance");
+				AsyncSceneLoader.Instance.OnSceneLoadComplete += SceneLoaded;
+			}
 
 			if (PlayerDevicesManager.HasInstance)
+			{
+				// Debug.Log("Has Device Manager Instance");
 				PlayerDevicesManager.Instance.OnPlayerJoined += PlayerJoined;
+			}
 		}
 
 		private void OnDisable()
 		{
 			if(AsyncSceneLoader.HasInstance)
-				AsyncSceneLoader.Instance.OnSceneGroupLoaded -= SceneGroupLoaded;
+				AsyncSceneLoader.Instance.OnSceneLoadComplete -= SceneLoaded;
 			
 			if (PlayerDevicesManager.HasInstance)
 				PlayerDevicesManager.Instance.OnPlayerJoined -= PlayerJoined;
@@ -35,13 +41,16 @@ namespace Smash.System
 		
 		private void PlayerJoined(int index)
 		{
-			var player = Instantiate(m_playerPawnPrefab);
-			var ctr = PlayerControllerManager.Instance.AssignPawnToController(player, index);
+			Debug.Log("Player Joined");
+			var uiPawn = Instantiate(m_playerPawnPrefab);
+			// Debug.Log(index);
+			var ctr = PlayerControllerManager.Instance.InitialisePawn(uiPawn, index);
 			ctr.EnableUiInputAndDisablePlayerInput();
 		}
 		
-		private void SceneGroupLoaded()
+		private void SceneLoaded()
 		{
+			// Debug.Log("Scene Loaded");
 			PlayerDevicesManager.Instance.EnablePlayerJoining(1);
 		}
 

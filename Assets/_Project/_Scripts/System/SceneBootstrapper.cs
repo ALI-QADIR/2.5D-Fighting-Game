@@ -6,7 +6,7 @@ namespace Smash.System
 {
 	public class SceneBootstrapper : ComponentSingleton<SceneBootstrapper>
 	{
-		// [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		private static void Init()
 		{
 			Debug.Log("BootStrapper Init...");

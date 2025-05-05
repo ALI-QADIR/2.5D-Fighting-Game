@@ -1,52 +1,34 @@
 ﻿using Smash.Player.CommandPattern;
 using Smash.Player.CommandPattern.ActionCommands;
+using TripleA.Utils.Extensions;
 using UnityEngine;
 
 namespace Smash.Player
 {
 	[RequireComponent(typeof(ComboActionQueueManager))]
+	[RequireComponent(typeof(InputHandler))]
 	public abstract class BaseController : MonoBehaviour
 	{
 		[Header("Components")]
 		[field: SerializeField] protected ComboActionQueueManager ComboQueueManager { get; private set; }
 
-		protected BasePawn _possessedPawn;
+		protected CharacterPawn _possessedCharacterPawn;
 		protected InputHandler _inputHandler;
 		protected GameplayActionCommandInvoker CommandInvoker { get; private set; }
 
 		protected virtual void Awake()
 		{
 			InitialiseCommandInvoker();
+			_inputHandler ??= gameObject.GetOrAddComponent<InputHandler>();
 			ComboQueueManager ??= GetComponent<ComboActionQueueManager>();
 			ComboQueueManager.SetCommandInvoker(CommandInvoker);
-		}
-
-		public void Initialise(BasePawn pawn)
-		{
-			_possessedPawn = pawn;
-			_possessedPawn.Initialise(this);
-			_inputHandler = pawn.GetInputHandler();
-		}
-
-		public virtual void Initialise(CharacterPawn pawn)
-		{
-			_possessedPawn = pawn;
-			_possessedPawn.Initialise(this);
-			_inputHandler = pawn.GetInputHandler();
-		}
-		
-		public virtual void Initialise(UiPawn pawn)
-		{
-			_possessedPawn = pawn;
-			_possessedPawn.Initialise(this);
-			_inputHandler = pawn.GetInputHandler();
 		}
 
 		public void Dispose()
 		{
 			CommandInvoker.OnCommandExecutionStarted -= OnCommandExecutionStarted;
 			CommandInvoker.OnCommandExecutionFinished -= OnCommandExecutionFinished;
-			Destroy(_possessedPawn.gameObject);
+			Destroy(_possessedCharacterPawn.gameObject);
 			Destroy(gameObject);
 		}
 		

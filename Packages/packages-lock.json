@@ -37,15 +37,6 @@
       "dependencies": {},
       "hash": "5044dbd3d9877a8357352b8440f6912d222d849a"
     },
-    "com.triple-a-studios.scene-manager": {
-      "version": "https://github.com/Triple-A-Studios/TripleA-SceneManager.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.addressables": "1.19.19"
-      },
-      "hash": "8fb91a19fdc64abc88c8625a2b8f4e3ca0c86ede"
-    },
     "com.triple-a-studios.statemachine": {
       "version": "https://github.com/Triple-A-Studios/TripleA-StateMachine.git",
       "depth": 0,
@@ -67,8 +58,8 @@
       "dependencies": {}
     },
     "com.unity.addressables": {
-      "version": "2.4.3",
-      "depth": 1,
+      "version": "2.4.6",
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.profiling.core": "1.0.2",
@@ -77,7 +68,7 @@
         "com.unity.modules.jsonserialize": "1.0.0",
         "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.scriptablebuildpipeline": "2.3.2",
+        "com.unity.scriptablebuildpipeline": "2.3.8",
         "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -222,7 +213,7 @@
     },
     "com.unity.profiling.core": {
       "version": "1.0.2",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -292,8 +283,8 @@
       }
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "2.3.2",
-      "depth": 2,
+      "version": "2.3.8",
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.test-framework": "1.4.5",
