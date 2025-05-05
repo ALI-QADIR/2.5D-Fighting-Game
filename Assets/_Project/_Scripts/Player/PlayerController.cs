@@ -39,13 +39,9 @@ namespace Smash.Player
 			
 			_playerInputComponent.onDeviceLost += DeviceLost;
 			_playerInputComponent.onDeviceRegained += DeviceRegained;
-		}
-
-		protected virtual void Initialise()
-		{
-			_inputActions = _inputActionsController.InitialiseInputActions();
 			
-			PlayerIndex = _playerInputComponent.playerIndex;
+			CommandInvoker.Debugging = m_enableInvokerDebug;
+			ComboQueueManager.Debugging = m_enableQueueDebug;
 		}
 
 		private void OnDestroy()

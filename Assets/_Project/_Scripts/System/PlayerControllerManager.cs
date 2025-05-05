@@ -85,7 +85,7 @@ namespace Smash.System
 
 		private void OnPlayerJoined(PlayerInput input)
 		{
-			PlayerCharacterController ctr = input.GetComponent<PlayerCharacterController>();
+			PlayerController ctr = input.GetComponent<PlayerController>();
 			int playerIndex = input.playerIndex;
 			if (!m_controllers.ContainsValue(ctr))
 			{
