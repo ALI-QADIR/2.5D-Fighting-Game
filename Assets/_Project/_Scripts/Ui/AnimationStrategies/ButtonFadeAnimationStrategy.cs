@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using PrimeTween;
 using Smash.Ui.System;
 using UnityEngine;
