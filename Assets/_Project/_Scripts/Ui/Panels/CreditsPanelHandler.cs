@@ -23,14 +23,14 @@ namespace Smash.Ui.Panels
 		public override void OpenPanel()
 		{
 			base.OpenPanel();
-			_input.UI.Cancel.Enable();
-			_input.UI.Cancel.started += BackButtonPressed;
+			/*_input.UI.Cancel.Enable();
+			_input.UI.Cancel.started += BackButtonPressed;*/
 		}
 
 		public override void ClosePanel()
 		{
 			base.ClosePanel();
-			_input.UI.Cancel.started -= BackButtonPressed;
+			// _input.UI.Cancel.started -= BackButtonPressed;
 		}
 
 		protected override void BackButtonPressed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)

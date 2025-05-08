@@ -45,13 +45,13 @@ namespace Smash.Ui.Panels
 		public override void OpenPanel()
 		{
 			base.OpenPanel();
-			_input.UI.Cancel.Enable();
+			// _input.UI.Cancel.Enable();
 		}
 		
 		public override void ClosePanel()
 		{
 			base.ClosePanel();
-			_input.UI.Cancel.started -= BackButtonPressed;
+			// _input.UI.Cancel.started -= BackButtonPressed;
 		}
 		
 		protected override void BackButtonPressed(InputAction.CallbackContext ctx)
@@ -70,7 +70,7 @@ namespace Smash.Ui.Panels
 		private void OnClickMainMenuButton()
 		{
 			if(!AsyncSceneLoader.HasInstance) return;
-			_input.UI.Disable();
+			// _input.UI.Disable();
 			AsyncSceneLoader.Instance.LoadSceneByIndex(0);
 		}
 	}

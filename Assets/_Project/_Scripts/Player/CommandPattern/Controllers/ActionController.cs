@@ -8,7 +8,7 @@ namespace Smash.Player.CommandPattern.Controllers
 		protected PlayerInputActions InputActions { get; private set; }
 		protected ComboActionQueueManager _comboActionQueueManager;
 
-		public virtual void Initialise(PlayerInputActions inputActions, ComboActionQueueManager comboActionQueueManager)
+		public void Initialise(PlayerInputActions inputActions, ComboActionQueueManager comboActionQueueManager)
 		{
 			InputActions = inputActions;
 			_comboActionQueueManager = comboActionQueueManager;

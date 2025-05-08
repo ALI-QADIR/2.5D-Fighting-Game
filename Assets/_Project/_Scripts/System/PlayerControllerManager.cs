@@ -13,6 +13,8 @@ namespace Smash.System
 		[SerializeField] private CharacterPawn m_pawnPrefab;
 		[SerializeField] private PlayerController m_controllerPrefab;
 		private Dictionary<int, PlayerController> m_controllers;
+		
+		private int m_primaryUiControllerIndex;
 
 		#region Unity Methods
 
@@ -77,6 +79,32 @@ namespace Smash.System
 			var ctr = m_controllers[index];
 			ctr.SetPawn(uiPawn);
 			return ctr;
+		}
+		
+		public void SetAsPrimaryUiController(int ctrPlayerIndex)
+		{
+			m_primaryUiControllerIndex = ctrPlayerIndex;
+		}
+
+		public void EnablePrimaryUiController()
+		{
+			m_controllers[m_primaryUiControllerIndex].EnableUiInputAndDisablePlayerInput();
+		}
+
+		public void DisableAllUiInput()
+		{
+			foreach (var ctr in m_controllers.Values)
+			{
+				ctr.DisableUiInput();
+			}
+		}
+
+		public void DisableAllPlayerInput()
+		{
+			foreach (var ctr in m_controllers.Values)
+			{
+				ctr.DisableUiInput();
+			}
 		}
 
 		#endregion Public Methods

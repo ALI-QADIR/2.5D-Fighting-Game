@@ -58,10 +58,9 @@ namespace Smash.Ui.Panels
 		{
 			// Debug.Log("Open Menu Panel");
 			base.OpenPanel();
-			_input.UI.Cancel.Enable();
+			/*_input.UI.Cancel.Enable();
 			_input.UI.Retry.Enable();
-			_input.UI.Cancel.started += BackButtonPressed;
-			_input.UI.Retry.started += Retry;
+			_input.UI.Cancel.started += BackButtonPressed;*/
 			
 			m_mainMenuHandler.OnOpen();
 		}
@@ -69,8 +68,7 @@ namespace Smash.Ui.Panels
 		public override void ClosePanel()
 		{
 			base.ClosePanel();
-			_input.UI.Cancel.started -= BackButtonPressed;
-			_input.UI.Retry.started -= Retry;
+			// _input.UI.Cancel.started -= BackButtonPressed;
 		}
 
 		protected override void BackButtonPressed(InputAction.CallbackContext ctx)
@@ -78,25 +76,21 @@ namespace Smash.Ui.Panels
 			_backButtonHandler.BackButtonPressed();
 		}
 
-		private void Retry(InputAction.CallbackContext ctx)
-		{
-			m_mainMenuHandler.OnRetry();
-		}
-
 		private void OnClickPlayButton()
 		{
-			_input.UI.Disable();
+			// _input.UI.Disable();
 			AsyncSceneLoader.Instance.LoadSceneByIndex(1);
 		}
 
 		private void OnClickTutorialButton()
 		{
-			_input.UI.Disable();
+			// _input.UI.Disable();
 			AsyncSceneLoader.Instance.LoadSceneByIndex(1);
 		}
 
 		private void OnClickQuitButton()
 		{
+			Debug.Log("Quit");
 			Application.Quit();
 		}
 	}

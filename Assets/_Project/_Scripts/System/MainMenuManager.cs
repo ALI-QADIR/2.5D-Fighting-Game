@@ -45,7 +45,12 @@ namespace Smash.System
 			var uiPawn = Instantiate(m_playerPawnPrefab);
 			// Debug.Log(index);
 			var ctr = PlayerControllerManager.Instance.InitialisePawn(uiPawn, index);
-			ctr.EnableUiInputAndDisablePlayerInput();
+			
+			PlayerControllerManager.Instance.SetAsPrimaryUiController(ctr.PlayerIndex);
+			PlayerControllerManager.Instance.DisableAllPlayerInput();
+			PlayerControllerManager.Instance.DisableAllUiInput();
+			PlayerControllerManager.Instance.EnablePrimaryUiController();
+			// ctr.EnableUiInputAndDisablePlayerInput();
 		}
 		
 		private void SceneLoaded()

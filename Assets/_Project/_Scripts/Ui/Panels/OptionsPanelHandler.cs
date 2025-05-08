@@ -31,8 +31,8 @@ namespace Smash.Ui.Panels
 		public override void OpenPanel()
 		{
 			base.OpenPanel();
-			_input.UI.Cancel.Enable();
-			_input.UI.Cancel.started += BackButtonPressed;
+			// _input.UI.Cancel.Enable();
+			// _input.UI.Cancel.started += BackButtonPressed;
 			
 			m_settingsController.EnableSettingsControl();
 		}
@@ -40,7 +40,7 @@ namespace Smash.Ui.Panels
 		public override void ClosePanel()
 		{
 			base.ClosePanel();
-			_input.UI.Cancel.started -= BackButtonPressed;
+			// _input.UI.Cancel.started -= BackButtonPressed;
 			
 			m_settingsController.DisableSettingsControl();
 		}

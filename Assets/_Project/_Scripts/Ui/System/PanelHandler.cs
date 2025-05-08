@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Smash.StructsAndEnums;
 using Smash.Ui.Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,18 +12,18 @@ namespace Smash.Ui.System
 	{
 		[Header("Animation")] 
 		[SerializeField] protected AnimationStrategy<Action> _animationStrategy;
+		[SerializeField] protected PanelState _panelState;
 
 		[Space(10)]
 		[SerializeField] private ButtonSelectionHandler m_primaryButton;
 		[SerializeField] protected BackButtonHandler _backButtonHandler;
-		private GameObject m_lastSelected;
 
-		protected PlayerInputActions _input;
+		// protected PlayerInputActions _input;
 		
 		protected override void Awake()
 		{
 			base.Awake();
-			_input = new PlayerInputActions();
+			// _input = new PlayerInputActions();
 			gameObject.SetActive(false);
 		}
 
@@ -32,25 +33,11 @@ namespace Smash.Ui.System
 			EventSystem.current.SetSelectedGameObject(m_primaryButton.gameObject);
 		}
 
-		private void OnButtonDeselected(GameObject obj)
-		{
-			m_lastSelected = obj;
-		}
-		
-		protected void OnNavigateStart(InputAction.CallbackContext ctx)
-		{
-			if (EventSystem.current.currentSelectedGameObject != null) return;
-			if (m_lastSelected == null) EventSystem.current.SetSelectedGameObject(m_primaryButton.gameObject);
-			else EventSystem.current.SetSelectedGameObject(m_lastSelected);
-		}
-
 		public virtual void OpenPanel()
 		{
 			_animationStrategy.Activate(OnComplete);
 			
-			ButtonSelectionHandler.OnButtonDeselected += OnButtonDeselected;
-			
-			_input.Player.Disable();
+			/*_input.Player.Disable();
 			_input.UI.Disable();
 			_input.UI.Enable();
 			
@@ -59,27 +46,16 @@ namespace Smash.Ui.System
 			_input.UI.Resume.Disable();
 			_input.UI.HorizontalScroll.Disable();
 			_input.UI.VerticalScroll.Disable();
-			_input.UI.Navigate.Enable();
-			_input.UI.Navigate.performed += OnNavigateStart;
+			_input.UI.Navigate.Enable();*/
 		}
 		
 		public virtual void ClosePanel()
 		{
 			_animationStrategy.Deactivate();
-			
-			ButtonSelectionHandler.OnButtonDeselected -= OnButtonDeselected;
-			
-			_input.UI.Navigate.performed -= OnNavigateStart;
 		}
 		
 		private void OnComplete() => StartCoroutine(SetSelected());
 
 		protected abstract void BackButtonPressed(InputAction.CallbackContext ctx);
-
-		protected override void OnDestroy()
-		{
-			base.OnDestroy();
-			ButtonSelectionHandler.OnButtonDeselected -= OnButtonDeselected;
-		}
 	}
 }

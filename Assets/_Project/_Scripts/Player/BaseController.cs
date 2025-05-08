@@ -14,34 +14,34 @@ namespace Smash.Player
 
 		protected CharacterPawn _possessedCharacterPawn;
 		protected InputHandler _inputHandler;
-		protected GameplayActionCommandInvoker CommandInvoker { get; private set; }
+		protected GameplayActionCommandInvoker GameplayCommandInvoker { get; private set; }
 
 		protected virtual void Awake()
 		{
 			InitialiseCommandInvoker();
 			_inputHandler ??= gameObject.GetOrAddComponent<InputHandler>();
 			ComboQueueManager ??= GetComponent<ComboActionQueueManager>();
-			ComboQueueManager.SetCommandInvoker(CommandInvoker);
+			ComboQueueManager.SetCommandInvoker(GameplayCommandInvoker);
 		}
 
 		public void Dispose()
 		{
-			CommandInvoker.OnCommandExecutionStarted -= OnCommandExecutionStarted;
-			CommandInvoker.OnCommandExecutionFinished -= OnCommandExecutionFinished;
+			GameplayCommandInvoker.OnCommandExecutionStarted -= OnGameplayCommandExecutionStarted;
+			GameplayCommandInvoker.OnCommandExecutionFinished -= OnGameplayCommandExecutionFinished;
 			Destroy(_possessedCharacterPawn.gameObject);
 			Destroy(gameObject);
 		}
 		
 		// public void SetPawn(CharacterPawn pawn) => _possessedPawn = pawn;
 
-		protected void InitialiseCommandInvoker()
+		protected virtual void InitialiseCommandInvoker()
 		{
-			CommandInvoker ??= new GameplayActionCommandInvoker();
-			CommandInvoker.OnCommandExecutionStarted += OnCommandExecutionStarted;
-			CommandInvoker.OnCommandExecutionFinished += OnCommandExecutionFinished;
+			GameplayCommandInvoker ??= new GameplayActionCommandInvoker();
+			GameplayCommandInvoker.OnCommandExecutionStarted += OnGameplayCommandExecutionStarted;
+			GameplayCommandInvoker.OnCommandExecutionFinished += OnGameplayCommandExecutionFinished;
 		}
 
-		protected abstract void OnCommandExecutionStarted(IGameplayActionCommand command);
-		protected abstract void OnCommandExecutionFinished(IGameplayActionCommand command);
+		protected abstract void OnGameplayCommandExecutionStarted(IGameplayActionCommand command);
+		protected abstract void OnGameplayCommandExecutionFinished(IGameplayActionCommand command);
 	}
 }

@@ -38,10 +38,10 @@ namespace Smash.Ui.Panels
 			m_retryButton.SetActive(false);
 			if (SpeedRunManager.HasInstance) ActivateSpeedRunOptionsPanel();
 			
-			_input.UI.Cancel.Enable();
+			/*_input.UI.Cancel.Enable();
 			_input.UI.Resume.Enable();
 			_input.UI.Cancel.started += BackButtonPressed;
-			_input.UI.Resume.started += BackButtonPressed;
+			_input.UI.Resume.started += BackButtonPressed;*/
 			
 			m_settingsController.EnableSettingsControl();
 		}
@@ -49,8 +49,8 @@ namespace Smash.Ui.Panels
 		public override void ClosePanel()
 		{
 			base.ClosePanel();
-			_input.UI.Cancel.started -= BackButtonPressed;
-			_input.UI.Resume.started -= BackButtonPressed;
+			/*_input.UI.Cancel.started -= BackButtonPressed;
+			_input.UI.Resume.started -= BackButtonPressed;*/
 			
 			m_settingsController.DisableSettingsControl();
 		}
@@ -93,7 +93,7 @@ namespace Smash.Ui.Panels
 		private void OnClickMainMenuButton()
 		{
 			if(!AsyncSceneLoader.HasInstance) return;
-			_input.UI.Disable();
+			// _input.UI.Disable();
 			AsyncSceneLoader.Instance.LoadSceneByIndex(0);
 		}
 	}

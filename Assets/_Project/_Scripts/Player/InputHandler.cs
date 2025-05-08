@@ -1,9 +1,10 @@
 ﻿using Smash.Player.States;
+using Smash.Ui.System;
 using UnityEngine;
 
 namespace Smash.Player
 {
-	public class InputHandler : MonoBehaviour
+	public class InputHandler : UiEventInvoker
 	{
 		private CharacterPawn m_charPawn;
 		private UiPawn m_uiPawn;
@@ -17,6 +18,46 @@ namespace Smash.Player
 		{
 			m_uiPawn = uiPawn;
 		}
+
+		#region Ui Pawn Input
+
+		public void HandleCancelButton()
+		{
+			SetEventArgs("btn_main_quit", this);
+			InvokeEvent();
+		}
+
+		public void HandleSubmitButton()
+		{
+			
+		}
+
+		public void HandleHorizontalScrollInput(int direction)
+		{
+			
+		}
+
+		public void HandleVerticalScrollInput(int direction)
+		{
+			
+		}
+		
+		public void HandleShoulderTriggerInput(int direction)
+		{
+			
+		}
+		
+		public void HandleShoulderButtonInput(int direction)
+		{
+			
+		}
+		
+		public void HandleResumeInput()
+		{
+			
+		}
+
+		#endregion Ui Pawn Input
 
 		#region Character Pawn Input
 
