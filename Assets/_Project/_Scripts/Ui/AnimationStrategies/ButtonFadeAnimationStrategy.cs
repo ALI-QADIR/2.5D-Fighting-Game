@@ -41,5 +41,11 @@ namespace Smash.Ui.AnimationStrategies
 				.Group(Tween.Color(m_fadingImage, m_S_ActiveColor, m_S_InactiveColor, _duration))
 				.Group(Tween.Scale(target: m_tr, startValue: m_s_scale, endValue: Vector3.one, duration: _duration));
 		}
+
+		[RuntimeInitializeOnLoadMethod]
+		private static void ScaleInitiator()
+		{
+			m_s_scale = Vector3.one;
+		}
 	}
 }

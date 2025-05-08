@@ -71,7 +71,13 @@ namespace Smash.Ui.System
 			
 			_input.UI.Navigate.performed -= OnNavigateStart;
 		}
-		
+
+		protected override void OnDestroy()
+		{
+			base.OnDestroy();
+			ButtonSelectionHandler.OnButtonDeselected -= OnButtonDeselected;
+		}
+
 		private void OnComplete() => StartCoroutine(SetSelected());
 
 		protected abstract void BackButtonPressed(InputAction.CallbackContext ctx);
