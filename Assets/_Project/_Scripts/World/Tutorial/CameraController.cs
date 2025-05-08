@@ -20,7 +20,7 @@ namespace Smash.World.Tutorial
 			Area.OnAreaEnter += OnAreaEnter;
 		}
 
-		private void OnDisable()
+		private void OnDestroy()
 		{
 			Area.OnAreaEnter -= OnAreaEnter;
 		}

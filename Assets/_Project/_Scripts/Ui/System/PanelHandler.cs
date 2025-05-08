@@ -82,5 +82,9 @@ namespace Smash.Ui.System
 
 		protected abstract void BackButtonPressed(InputAction.CallbackContext ctx);
 
+		protected override void OnDestroy()
+		{
+			ButtonSelectionHandler.OnButtonDeselected -= OnButtonDeselected;
+		}
 	}
 }

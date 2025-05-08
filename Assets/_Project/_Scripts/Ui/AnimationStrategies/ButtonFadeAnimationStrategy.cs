@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using PrimeTween;
 using Smash.Ui.System;
 using UnityEngine;
@@ -43,7 +43,7 @@ namespace Smash.Ui.AnimationStrategies
 		}
 
 		[RuntimeInitializeOnLoadMethod]
-		private static void ScaleInitiator()
+		private static void SetStaticValues()
 		{
 			m_s_scale = Vector3.one;
 		}
