@@ -78,6 +78,7 @@ namespace Smash.Ui.System
 
 		protected override void OnDestroy()
 		{
+			base.OnDestroy();
 			ButtonSelectionHandler.OnButtonDeselected -= OnButtonDeselected;
 		}
 	}

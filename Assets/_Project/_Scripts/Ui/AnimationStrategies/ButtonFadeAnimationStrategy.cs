@@ -43,7 +43,7 @@ namespace Smash.Ui.AnimationStrategies
 		}
 
 		[RuntimeInitializeOnLoadMethod]
-		private static void SetStaticValues()
+		private static void ScaleInitiator()
 		{
 			m_s_scale = Vector3.one;
 		}
