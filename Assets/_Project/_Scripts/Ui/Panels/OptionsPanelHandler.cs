@@ -20,8 +20,6 @@ namespace Smash.Ui.Panels
 			// _eventDictionary.Add("btn_options_sfx_vol", m_settingsController.OnClickSfxVolButton);
 			// _eventDictionary.Add("btn_options_touch_controls", m_settingsController.OnClickTouchControlsButton);
 			// _eventDictionary.Add("btn_main_options", OnClickOptionsButton);
-			
-			// _backButtonHandler.SetEventArgs("btn_options_back", this);
 		}
 
 		protected override void AuthenticateEvent(IGameplayActionCommand uiCommand)
@@ -48,19 +46,10 @@ namespace Smash.Ui.Panels
 			m_settingsController.DisableSettingsControl();
 		}
 
-		protected override void BackButtonPressed()
+		public override void BackButtonPressed()
 		{
-			_backButtonHandler.BackButtonPressed();
-		}
-		
-		private void OnClickBackButton()
-		{
+			base.BackButtonPressed();
 			ClosePanel();
-		}
-
-		private void OnClickOptionsButton()
-		{
-			OpenPanel();
 		}
 	}
 }

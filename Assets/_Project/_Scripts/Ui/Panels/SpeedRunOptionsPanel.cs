@@ -5,7 +5,6 @@ using Smash.System;
 using Smash.Ui.System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Smash.Ui.Panels
 {
@@ -55,13 +54,6 @@ namespace Smash.Ui.Panels
 		{
 			base.ClosePanel();
 			// _input.UI.Cancel.started -= BackButtonPressed;
-		}
-		
-		protected override void BackButtonPressed()
-		{
-			_backButtonHandler.BackButtonPressed();
-			if (AudioManager.HasInstance)
-				AudioManager.Instance.PlayButtonClick();
 		}
 
 		private void StartCountdown()

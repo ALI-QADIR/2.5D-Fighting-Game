@@ -8,12 +8,13 @@ namespace Smash.Ui.System
 {
 	public class UiEventListener : EventListener<IGameplayActionCommand>
 	{
-		protected Dictionary<Type, Action> _eventDictionary = new();
+		protected Dictionary<Type, Action> _eventDictionary;
 			
 		protected override void Awake()
 		{
 			base.Awake();
 			_unityEvent.AddListener(AuthenticateEvent);
+			_eventDictionary = new Dictionary<Type, Action>();
 		}
 
 		protected virtual void AuthenticateEvent(IGameplayActionCommand uiCommand)

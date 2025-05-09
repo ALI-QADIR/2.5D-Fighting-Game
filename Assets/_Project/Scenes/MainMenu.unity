@@ -419,6 +419,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 52614950}
   m_CullTransparentMesh: 1
+--- !u!1 &94047774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 94047776}
+  - component: {fileID: 94047775}
+  m_Layer: 0
+  m_Name: PlayerAuthentication Auto-Instantiated
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &94047775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94047774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c12117f54147e5af175add857a6394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoUnparentOnAwake: 1
+--- !u!4 &94047776
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94047774}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &100107317
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +528,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 100107319}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 793703010}
+        m_TargetAssemblyTypeName: Smash.Ui.Panels.CreditsPanelHandler, Assembly-CSharp
+        m_MethodName: BackButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &100107319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2158,7 +2215,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 278412157}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1886641774}
+        m_TargetAssemblyTypeName: Smash.Ui.System.PanelHandler, Assembly-CSharp
+        m_MethodName: BackButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &278412157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5919,7 +5988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9e9afcee4f472eb77e3e85ecadcb09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
+  m_previousPanel: {fileID: 2089416865}
 --- !u!114 &793703012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5990,7 +6059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9e9afcee4f472eb77e3e85ecadcb09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
+  m_previousPanel: {fileID: 0}
 --- !u!114 &836455408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7879,6 +7948,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85cf32cc57714b3a95da7bedf6e57a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1173132840
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1173132842}
+  - component: {fileID: 1173132841}
+  m_Layer: 0
+  m_Name: LeaderboardServicesHandler Auto-Instantiated
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1173132841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173132840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183e0157055f4ef9884555a4a23fc9e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoUnparentOnAwake: 1
+--- !u!4 &1173132842
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173132840}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1198893590
 GameObject:
   m_ObjectHideFlags: 0
@@ -9284,7 +9398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9e9afcee4f472eb77e3e85ecadcb09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
+  m_previousPanel: {fileID: 0}
 --- !u!114 &1443535309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11957,7 +12071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9e9afcee4f472eb77e3e85ecadcb09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
+  m_previousPanel: {fileID: 2089416865}
 --- !u!114 &1886641774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13802,7 +13916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9e9afcee4f472eb77e3e85ecadcb09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
+  m_previousPanel: {fileID: 0}
 --- !u!114 &2089416867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14417,3 +14531,5 @@ SceneRoots:
   - {fileID: 1587283864}
   - {fileID: 47199816}
   - {fileID: 208843538}
+  - {fileID: 94047776}
+  - {fileID: 1173132842}

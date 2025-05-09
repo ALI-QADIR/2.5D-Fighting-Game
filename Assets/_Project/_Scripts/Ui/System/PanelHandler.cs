@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using Smash.Player.CommandPattern.ActionCommands;
 using Smash.StructsAndEnums;
+using Smash.System;
 using Smash.Ui.Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -23,6 +25,7 @@ namespace Smash.Ui.System
 			base.Awake();
 			_panelState = PanelState.SlidOutToRight;
 			gameObject.SetActive(false);
+			_eventDictionary.Add(typeof(CancelCommand), BackButtonPressed);
 		}
 
 		protected virtual IEnumerator SetSelected()
@@ -34,21 +37,22 @@ namespace Smash.Ui.System
 
 		public virtual void OpenPanel()
 		{
-			_animationStrategy.Activate(OnComplete);
+			_animationStrategy.Activate(OnOpenComplete);
 		}
 		
 		public virtual void ClosePanel()
 		{
-			_animationStrategy.Deactivate();
+			_animationStrategy.Deactivate(OnCloseComplete);
 		}
 		
-		private void OnComplete() => StartCoroutine(SetSelected());
+		private void OnOpenComplete() => StartCoroutine(SetSelected());
 
-		protected virtual void BackButtonPressed(InputAction.CallbackContext _)
+		private void OnCloseComplete()
 		{
-			BackButtonPressed();
+			_panelState = PanelState.SlidOutToRight;
+			gameObject.SetActive(false);
 		}
-		
-		protected abstract void BackButtonPressed();
+
+		public virtual void BackButtonPressed() => _backButtonHandler.HandleBackButton();
 	}
 }

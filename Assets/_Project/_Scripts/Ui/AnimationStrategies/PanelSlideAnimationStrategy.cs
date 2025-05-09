@@ -41,10 +41,8 @@ namespace Smash.Ui.AnimationStrategies
 				.Group(Tween.Position(target: m_tr, startValue: _openTransform.position,
 					endValue: _closeTransform.position, duration: _duration, ease: _ease));
 		
-			_deactivateSequence.OnComplete(target: this, target => target.DisableGameObject());
+			_deactivateSequence.OnComplete(onCompleteAction);
 		}
-		
-		private void DisableGameObject() => gameObject.SetActive(false);
 
 		private void OnValidate()
 		{

@@ -15,7 +15,6 @@ namespace Smash.Ui.Components
 		[SerializeField] private AnimationStrategy<BaseEventData> m_animationStrategy;
 		[SerializeField] private bool m_deactivateOnClick;
 
-		public static event Action<GameObject> OnButtonDeselected;
 
 		protected void Awake()
 		{
@@ -36,7 +35,6 @@ namespace Smash.Ui.Components
 		public void OnDeselect(BaseEventData eventData)
 		{
 			m_animationStrategy.Deactivate();
-			OnButtonDeselected?.Invoke(gameObject);
 		}
 
 		private void ButtonClickSound()

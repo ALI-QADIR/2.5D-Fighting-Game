@@ -20,21 +20,6 @@ namespace Smash.Ui.Panels
 				// Debug.Log("Has Instance");
 				AsyncSceneLoader.Instance.OnSceneLoadComplete += SceneGroupLoaded;
 			}
-			
-			_eventDictionary.Add(typeof(CancelCommand), OnClickQuitButton);
-			/*_eventDictionary.Add("btn_tutorial", OnClickTutorialButton);
-			_eventDictionary.Add("btn_main_quit", OnClickQuitButton);
-			
-			_eventDictionary.Add("btn_main_leaderboard", ClosePanel);
-			_eventDictionary.Add("btn_main_credits", ClosePanel);
-			_eventDictionary.Add("btn_main_options", ClosePanel);
-			
-			_eventDictionary.Add("btn_modes_back", OpenPanel);
-			_eventDictionary.Add("btn_credits_back", OpenPanel);
-			_eventDictionary.Add("btn_options_back", OpenPanel);
-			_eventDictionary.Add("btn_leaderboard_back", OpenPanel);*/
-			
-			// _backButtonHandler.SetEventArgs("btn_main_quit", this);
 		}
 
 		protected override void OnDestroy()
@@ -87,17 +72,12 @@ namespace Smash.Ui.Panels
 			AsyncSceneLoader.Instance.LoadSceneByIndex(1);
 		}
 
-		public void OnClickQuitButton()
+		public override void BackButtonPressed()
 		{
 			Debug.Log("Quit");
 			Application.Quit();
 		}
 
 		#endregion On-Click Methods
-
-		protected override void BackButtonPressed()
-		{
-			_backButtonHandler.BackButtonPressed();
-		}
 	}
 }

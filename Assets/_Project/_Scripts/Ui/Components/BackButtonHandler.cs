@@ -1,12 +1,14 @@
 ﻿using Smash.Ui.System;
+using UnityEngine;
 
 namespace Smash.Ui.Components
 {
-	public class BackButtonHandler : UiEventInvoker
+	public class BackButtonHandler : MonoBehaviour
 	{
-		public void BackButtonPressed()
+		[SerializeField] private PanelHandler m_previousPanel;
+		public void HandleBackButton()
 		{
-			InvokeEvent();
+			m_previousPanel.OpenPanel();
 		}
 	}
 }

@@ -57,13 +57,6 @@ namespace Smash.Ui.Panels
 			
 			m_settingsController.DisableSettingsControl();
 		}
-
-		protected override void BackButtonPressed()
-		{
-			_backButtonHandler.BackButtonPressed();
-			if (AudioManager.HasInstance)
-				AudioManager.Instance.PlayButtonClick();
-		}
 		
 		private void OnClickResumeButton()
 		{
