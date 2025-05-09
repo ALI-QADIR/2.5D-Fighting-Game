@@ -1,4 +1,5 @@
-﻿using Smash.System;
+﻿using Smash.Player.CommandPattern.ActionCommands;
+using Smash.System;
 using UnityEngine;
 
 namespace Smash.Ui.System
@@ -7,19 +8,13 @@ namespace Smash.Ui.System
 	{
 		[Header("Event Channel")]
 		[SerializeField] private UiEventChannel m_eventChannel;
-		[SerializeField] private UiEventArgs m_eventArgs;
-
-		protected virtual void Awake()
-		{
-			m_eventArgs.sender = this;
-		}
+		private IGameplayActionCommand m_uiActionCommand;
 		
-		public void SetEventArgs(string id, MonoBehaviour sender)
+		public void SetEventArgs(IGameplayActionCommand command)
 		{
-			m_eventArgs.sender = sender;
-			m_eventArgs.id = id;
+			m_uiActionCommand = command;
 		}
 
-		protected virtual void InvokeEvent() => m_eventChannel.Invoke(m_eventArgs);
+		protected virtual void InvokeEvent() => m_eventChannel.Invoke(m_uiActionCommand);
 	}
 }

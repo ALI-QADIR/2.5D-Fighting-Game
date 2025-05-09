@@ -11,7 +11,7 @@
 		
 		public void FinishActionExecution(InputHandler inputHandler)
 		{
-			inputHandler.HandleCancelButton();
+			inputHandler.HandleCancelButton(this);
 		}
 	}
 	
@@ -26,7 +26,7 @@
 		
 		public void FinishActionExecution(InputHandler inputHandler)
 		{
-			inputHandler.HandleSubmitButton();
+			inputHandler.HandleSubmitButton(this);
 		}
 	}
 	
@@ -34,12 +34,12 @@
 	{
 		public HorizontalScrollCommand(float direction)
 		{
-			m_direction = direction > 0 ? 1 : -1;
+			this.direction = direction > 0 ? 1 : -1;
 		}
 		public string ActionName { get; } = "HorizontalScroll";
 		public float HeldDuration { get; set; }
 
-		private readonly int m_direction;
+		public readonly int direction;
 
 		public void StartActionExecution(InputHandler inputHandler)
 		{
@@ -47,7 +47,7 @@
 		
 		public void FinishActionExecution(InputHandler inputHandler)
 		{
-			inputHandler.HandleHorizontalScrollInput(m_direction);
+			inputHandler.HandleHorizontalScrollInput(this);
 		}
 	}
 	
@@ -55,12 +55,12 @@
 	{
 		public VerticalScrollCommand(float direction)
 		{
-			m_direction = direction > 0 ? 1 : -1;
+			this.direction = direction > 0 ? 1 : -1;
 		}
 		public string ActionName { get; } = "VerticalScroll";
 		public float HeldDuration { get; set; }
 
-		private readonly int m_direction;
+		public readonly int direction;
 
 		public void StartActionExecution(InputHandler inputHandler)
 		{
@@ -68,7 +68,7 @@
 		
 		public void FinishActionExecution(InputHandler inputHandler)
 		{
-			inputHandler.HandleVerticalScrollInput(m_direction);
+			inputHandler.HandleVerticalScrollInput(this);
 		}
 	}
 	
@@ -89,7 +89,7 @@
 		
 		public void FinishActionExecution(InputHandler inputHandler)
 		{
-			inputHandler.HandleShoulderButtonInput(m_direction);
+			inputHandler.HandleShoulderButtonInput(this);
 		}
 	}
 	
@@ -110,7 +110,7 @@
 		
 		public void FinishActionExecution(InputHandler inputHandler)
 		{
-			inputHandler.HandleShoulderTriggerInput(m_direction);
+			inputHandler.HandleShoulderTriggerInput(this);
 		}
 	}
 	
@@ -125,7 +125,7 @@
 		
 		public void FinishActionExecution(InputHandler inputHandler)
 		{
-			inputHandler.HandleResumeInput();
+			inputHandler.HandleResumeInput(this);
 		}
 	}
 }

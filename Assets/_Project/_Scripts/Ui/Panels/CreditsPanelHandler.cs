@@ -1,4 +1,6 @@
 ﻿using System;
+using Smash.Player.CommandPattern.ActionCommands;
+using Smash.StructsAndEnums;
 using Smash.System;
 using Smash.Ui.System;
 
@@ -9,14 +11,15 @@ namespace Smash.Ui.Panels
 		protected override void Awake()
 		{
 			base.Awake();
-			_eventDictionary.Add("btn_credits_back", OnClickBackButton);
-			_eventDictionary.Add("btn_main_credits", OnClickCreditsButton);
-			_backButtonHandler.SetEventArgs("btn_credits_back", this);
+			// _eventDictionary.Add("btn_credits_back", OnClickBackButton);
+			// _eventDictionary.Add("btn_main_credits", OnClickCreditsButton);
+			// _backButtonHandler.SetEventArgs("btn_credits_back", this);
 		}
 
-		protected override void AuthenticateEvent(UiEventArgs args)
+		protected override void AuthenticateEvent(IGameplayActionCommand uiCommand)
 		{
-			if (_eventDictionary.TryGetValue(args.id.ToLower(), out Action action))
+			if (_panelState != PanelState.Open) return;
+			if (_eventDictionary.TryGetValue(uiCommand.GetType(), out Action action))
 				action?.Invoke();
 		}
 
@@ -33,7 +36,7 @@ namespace Smash.Ui.Panels
 			// _input.UI.Cancel.started -= BackButtonPressed;
 		}
 
-		protected override void BackButtonPressed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+		protected override void BackButtonPressed()
 		{
 			_backButtonHandler.BackButtonPressed();
 		}

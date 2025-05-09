@@ -1,4 +1,5 @@
-﻿using Smash.Player.States;
+﻿using Smash.Player.CommandPattern.ActionCommands;
+using Smash.Player.States;
 using Smash.Ui.System;
 using UnityEngine;
 
@@ -21,40 +22,46 @@ namespace Smash.Player
 
 		#region Ui Pawn Input
 
-		public void HandleCancelButton()
+		public void HandleCancelButton(IGameplayActionCommand command)
 		{
-			SetEventArgs("btn_main_quit", this);
+			SetEventArgs(command);
 			InvokeEvent();
 		}
 
-		public void HandleSubmitButton()
+		public void HandleSubmitButton(IGameplayActionCommand command)
 		{
-			
+			SetEventArgs(command);
+			InvokeEvent();
 		}
 
-		public void HandleHorizontalScrollInput(int direction)
+		public void HandleHorizontalScrollInput(IGameplayActionCommand command)
 		{
-			
+			SetEventArgs(command);
+			InvokeEvent();
 		}
 
-		public void HandleVerticalScrollInput(int direction)
+		public void HandleVerticalScrollInput(IGameplayActionCommand command)
 		{
-			
+			SetEventArgs(command);
+			InvokeEvent();
 		}
 		
-		public void HandleShoulderTriggerInput(int direction)
+		public void HandleShoulderTriggerInput(IGameplayActionCommand command)
 		{
-			
+			SetEventArgs(command);
+			InvokeEvent();
 		}
 		
-		public void HandleShoulderButtonInput(int direction)
+		public void HandleShoulderButtonInput(IGameplayActionCommand command)
 		{
-			
+			SetEventArgs(command);
+			InvokeEvent();
 		}
 		
-		public void HandleResumeInput()
+		public void HandleResumeInput(IGameplayActionCommand command)
 		{
-			
+			SetEventArgs(command);
+			InvokeEvent();
 		}
 
 		#endregion Ui Pawn Input

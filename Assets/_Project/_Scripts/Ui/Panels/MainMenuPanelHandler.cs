@@ -1,8 +1,9 @@
 ﻿using System;
+using Smash.Player.CommandPattern.ActionCommands;
+using Smash.StructsAndEnums;
 using Smash.System;
 using Smash.Ui.System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Smash.Ui.Panels
 {
@@ -20,8 +21,8 @@ namespace Smash.Ui.Panels
 				AsyncSceneLoader.Instance.OnSceneLoadComplete += SceneGroupLoaded;
 			}
 			
-			_eventDictionary.Add("btn_main_play", OnClickPlayButton);
-			_eventDictionary.Add("btn_tutorial", OnClickTutorialButton);
+			_eventDictionary.Add(typeof(CancelCommand), OnClickQuitButton);
+			/*_eventDictionary.Add("btn_tutorial", OnClickTutorialButton);
 			_eventDictionary.Add("btn_main_quit", OnClickQuitButton);
 			
 			_eventDictionary.Add("btn_main_leaderboard", ClosePanel);
@@ -31,9 +32,9 @@ namespace Smash.Ui.Panels
 			_eventDictionary.Add("btn_modes_back", OpenPanel);
 			_eventDictionary.Add("btn_credits_back", OpenPanel);
 			_eventDictionary.Add("btn_options_back", OpenPanel);
-			_eventDictionary.Add("btn_leaderboard_back", OpenPanel);
+			_eventDictionary.Add("btn_leaderboard_back", OpenPanel);*/
 			
-			_backButtonHandler.SetEventArgs("btn_main_quit", this);
+			// _backButtonHandler.SetEventArgs("btn_main_quit", this);
 		}
 
 		protected override void OnDestroy()
@@ -48,9 +49,10 @@ namespace Smash.Ui.Panels
 			OpenPanel();
 		}
 
-		protected override void AuthenticateEvent(UiEventArgs args)
+		protected override void AuthenticateEvent(IGameplayActionCommand uiCommand)
 		{
-			if (_eventDictionary.TryGetValue(args.id.ToLower(), out Action action))
+			if (_panelState != PanelState.Open) return;
+			if (_eventDictionary.TryGetValue(uiCommand.GetType(), out Action action))
 				action?.Invoke();
 		}
 
@@ -71,27 +73,31 @@ namespace Smash.Ui.Panels
 			// _input.UI.Cancel.started -= BackButtonPressed;
 		}
 
-		protected override void BackButtonPressed(InputAction.CallbackContext ctx)
-		{
-			_backButtonHandler.BackButtonPressed();
-		}
+		#region On-Click Methods
 
-		private void OnClickPlayButton()
+		public void OnClickPlayButton()
 		{
 			// _input.UI.Disable();
 			AsyncSceneLoader.Instance.LoadSceneByIndex(1);
 		}
 
-		private void OnClickTutorialButton()
+		public void OnClickTutorialButton()
 		{
 			// _input.UI.Disable();
 			AsyncSceneLoader.Instance.LoadSceneByIndex(1);
 		}
 
-		private void OnClickQuitButton()
+		public void OnClickQuitButton()
 		{
 			Debug.Log("Quit");
 			Application.Quit();
+		}
+
+		#endregion On-Click Methods
+
+		protected override void BackButtonPressed()
+		{
+			_backButtonHandler.BackButtonPressed();
 		}
 	}
 }

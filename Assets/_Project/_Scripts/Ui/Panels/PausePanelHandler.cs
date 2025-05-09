@@ -1,4 +1,6 @@
 ﻿using System;
+using Smash.Player.CommandPattern.ActionCommands;
+using Smash.StructsAndEnums;
 using Smash.System;
 using Smash.Ui.System;
 using UnityEngine;
@@ -13,21 +15,22 @@ namespace Smash.Ui.Panels
 		protected override void Awake()
 		{
 			base.Awake();
-			_eventDictionary.Add("btn_player_pause", OnClickPauseButton);
+			// _eventDictionary.Add("btn_player_pause", OnClickPauseButton);
+			// 
+			// _eventDictionary.Add("btn_pause_resume", OnClickResumeButton);
+			// _eventDictionary.Add("btn_pause_sfx",m_settingsController.OnClickSfxButton);
+			// _eventDictionary.Add("btn_pause_sfx_vol", m_settingsController.OnClickSfxVolButton);
+			// _eventDictionary.Add("btn_pause_touch_controls", m_settingsController.OnClickTouchControlsButton);
+			// _eventDictionary.Add("btn_pause_mainmenu", OnClickMainMenuButton);
+			// _eventDictionary.Add("btn_pause_retry", OnClickRetry);
 			
-			_eventDictionary.Add("btn_pause_resume", OnClickResumeButton);
-			_eventDictionary.Add("btn_pause_sfx",m_settingsController.OnClickSfxButton);
-			_eventDictionary.Add("btn_pause_sfx_vol", m_settingsController.OnClickSfxVolButton);
-			_eventDictionary.Add("btn_pause_touch_controls", m_settingsController.OnClickTouchControlsButton);
-			_eventDictionary.Add("btn_pause_mainmenu", OnClickMainMenuButton);
-			_eventDictionary.Add("btn_pause_retry", OnClickRetry);
-			
-			_backButtonHandler.SetEventArgs("btn_pause_resume", this);
+			// _backButtonHandler.SetEventArgs("btn_pause_resume", this);
 		}
 		
-		protected override void AuthenticateEvent(UiEventArgs args)
+		protected override void AuthenticateEvent(IGameplayActionCommand uiCommand)
 		{
-			if (_eventDictionary.TryGetValue(args.id.ToLower(), out Action action))
+			if (_panelState != PanelState.Open) return;
+			if (_eventDictionary.TryGetValue(uiCommand.GetType(), out Action action))
 				action?.Invoke();
 		}
 		
@@ -55,7 +58,7 @@ namespace Smash.Ui.Panels
 			m_settingsController.DisableSettingsControl();
 		}
 
-		protected override void BackButtonPressed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+		protected override void BackButtonPressed()
 		{
 			_backButtonHandler.BackButtonPressed();
 			if (AudioManager.HasInstance)

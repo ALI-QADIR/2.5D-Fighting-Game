@@ -1,4 +1,6 @@
 ﻿using System;
+using Smash.Player.CommandPattern.ActionCommands;
+using Smash.StructsAndEnums;
 using Smash.System;
 using Smash.Ui.System;
 using TMPro;
@@ -16,15 +18,16 @@ namespace Smash.Ui.Panels
 		{
 			base.Awake();
 			
-			_eventDictionary.Add("btn_speedrun_resume", StartCountdown);
-			_eventDictionary.Add("btn_speedrun_mainmenu", OnClickMainMenuButton);
-			
-			_backButtonHandler.SetEventArgs("btn_speedrun_mainmenu", this);
+			// _eventDictionary.Add("btn_speedrun_resume", StartCountdown);
+			// _eventDictionary.Add("btn_speedrun_mainmenu", OnClickMainMenuButton);
+			// 
+			// _backButtonHandler.SetEventArgs("btn_speedrun_mainmenu", this);
 		}
 		
-		protected override void AuthenticateEvent(UiEventArgs args)
+		protected override void AuthenticateEvent(IGameplayActionCommand uiCommand)
 		{
-			if (_eventDictionary.TryGetValue(args.id.ToLower(), out Action action))
+			if (_panelState != PanelState.Open) return;
+			if (_eventDictionary.TryGetValue(uiCommand.GetType(), out Action action))
 				action?.Invoke();
 		}
 
@@ -54,7 +57,7 @@ namespace Smash.Ui.Panels
 			// _input.UI.Cancel.started -= BackButtonPressed;
 		}
 		
-		protected override void BackButtonPressed(InputAction.CallbackContext ctx)
+		protected override void BackButtonPressed()
 		{
 			_backButtonHandler.BackButtonPressed();
 			if (AudioManager.HasInstance)

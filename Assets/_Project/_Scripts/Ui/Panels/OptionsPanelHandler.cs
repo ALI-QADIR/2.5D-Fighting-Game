@@ -1,4 +1,6 @@
 ﻿using System;
+using Smash.Player.CommandPattern.ActionCommands;
+using Smash.StructsAndEnums;
 using Smash.System;
 using Smash.Ui.System;
 using UnityEngine;
@@ -13,18 +15,19 @@ namespace Smash.Ui.Panels
 		protected override void Awake()
 		{
 			base.Awake();
-			_eventDictionary.Add("btn_options_back", OnClickBackButton);
-			_eventDictionary.Add("btn_options_sfx",m_settingsController.OnClickSfxButton);
-			_eventDictionary.Add("btn_options_sfx_vol", m_settingsController.OnClickSfxVolButton);
-			_eventDictionary.Add("btn_options_touch_controls", m_settingsController.OnClickTouchControlsButton);
-			_eventDictionary.Add("btn_main_options", OnClickOptionsButton);
+			// _eventDictionary.Add("btn_options_back", OnClickBackButton);
+			// _eventDictionary.Add("btn_options_sfx",m_settingsController.OnClickSfxButton);
+			// _eventDictionary.Add("btn_options_sfx_vol", m_settingsController.OnClickSfxVolButton);
+			// _eventDictionary.Add("btn_options_touch_controls", m_settingsController.OnClickTouchControlsButton);
+			// _eventDictionary.Add("btn_main_options", OnClickOptionsButton);
 			
-			_backButtonHandler.SetEventArgs("btn_options_back", this);
+			// _backButtonHandler.SetEventArgs("btn_options_back", this);
 		}
 
-		protected override void AuthenticateEvent(UiEventArgs args)
+		protected override void AuthenticateEvent(IGameplayActionCommand uiCommand)
 		{
-			if (_eventDictionary.TryGetValue(args.id.ToLower(), out Action action))
+			if (_panelState != PanelState.Open) return;
+			if (_eventDictionary.TryGetValue(uiCommand.GetType(), out Action action))
 				action?.Invoke();
 		}
 
@@ -45,7 +48,7 @@ namespace Smash.Ui.Panels
 			m_settingsController.DisableSettingsControl();
 		}
 
-		protected override void BackButtonPressed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+		protected override void BackButtonPressed()
 		{
 			_backButtonHandler.BackButtonPressed();
 		}

@@ -527,9 +527,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_credits_back
-    sender: {fileID: 0}
   m_button: {fileID: 100107318}
   m_animationStrategy: {fileID: 100107327}
   m_deactivateOnClick: 1
@@ -2205,9 +2202,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_options_back
-    sender: {fileID: 0}
   m_button: {fileID: 278412156}
   m_animationStrategy: {fileID: 278412165}
   m_deactivateOnClick: 1
@@ -2753,7 +2747,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 402188613}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2089416865}
+        m_TargetAssemblyTypeName: Smash.Ui.Panels.MainMenuPanelHandler, Assembly-CSharp
+        m_MethodName: ClosePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1886641774}
+        m_TargetAssemblyTypeName: Smash.Ui.Panels.OptionsPanelHandler, Assembly-CSharp
+        m_MethodName: OpenPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &402188616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2767,9 +2785,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_main_options
-    sender: {fileID: 0}
   m_button: {fileID: 402188615}
   m_animationStrategy: {fileID: 402188617}
   m_deactivateOnClick: 1
@@ -4112,7 +4127,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 591005117}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2089416865}
+        m_TargetAssemblyTypeName: Smash.Ui.Panels.MainMenuPanelHandler, Assembly-CSharp
+        m_MethodName: OnClickQuitButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &591005120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4126,9 +4153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_main_quit
-    sender: {fileID: 0}
   m_button: {fileID: 591005119}
   m_animationStrategy: {fileID: 591005121}
   m_deactivateOnClick: 0
@@ -4799,7 +4823,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 711745767}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2089416865}
+        m_TargetAssemblyTypeName: Smash.Ui.Panels.MainMenuPanelHandler, Assembly-CSharp
+        m_MethodName: ClosePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &711745770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4813,9 +4849,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_main_leaderboard
-    sender: {fileID: 0}
   m_button: {fileID: 711745769}
   m_animationStrategy: {fileID: 711745771}
   m_deactivateOnClick: 1
@@ -5887,9 +5920,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: 
-    sender: {fileID: 0}
 --- !u!114 &793703012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5961,9 +5991,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: 
-    sender: {fileID: 0}
 --- !u!114 &836455408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6148,9 +6175,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_modes_back
-    sender: {fileID: 0}
   m_button: {fileID: 843846460}
   m_animationStrategy: {fileID: 843846463}
   m_deactivateOnClick: 1
@@ -6377,9 +6401,6 @@ GameObject:
   - component: {fileID: 906026220}
   - component: {fileID: 906026221}
   - component: {fileID: 906026225}
-  - component: {fileID: 906026224}
-  - component: {fileID: 906026223}
-  - component: {fileID: 906026222}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -6489,7 +6510,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 906026218}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2089416865}
+        m_TargetAssemblyTypeName: Smash.Ui.Panels.MainMenuPanelHandler, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &906026221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6503,60 +6536,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_main_play
-    sender: {fileID: 0}
   m_button: {fileID: 906026220}
-  m_animationStrategy: {fileID: 906026222}
+  m_animationStrategy: {fileID: 906026225}
   m_deactivateOnClick: 0
---- !u!114 &906026222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 906026216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f64cb8a6445e4ef8ad2176ba8995a901, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _duration: 0.25
-  _ease: 3
-  m_fadingImage: {fileID: 719722037}
-  m_scaleAmount: 1.1
---- !u!114 &906026223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 906026216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f64cb8a6445e4ef8ad2176ba8995a901, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _duration: 0.25
-  _ease: 3
-  m_fadingImage: {fileID: 719722037}
-  m_scaleAmount: 1.1
---- !u!114 &906026224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 906026216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f64cb8a6445e4ef8ad2176ba8995a901, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _duration: 0.25
-  _ease: 3
-  m_fadingImage: {fileID: 719722037}
-  m_scaleAmount: 1.1
 --- !u!114 &906026225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6710,9 +6692,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: 
-    sender: {fileID: 0}
   m_button: {fileID: 924280747}
   m_animationStrategy: {fileID: 924280749}
   m_deactivateOnClick: 0
@@ -6792,9 +6771,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_options_sfx
-    sender: {fileID: 0}
   m_button: {fileID: 971565221}
   m_animationStrategy: {fileID: 971565224}
   m_deactivateOnClick: 0
@@ -8199,9 +8175,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: 
-    sender: {fileID: 0}
   m_button: {fileID: 1256407976}
   m_animationStrategy: {fileID: 1256407978}
   m_deactivateOnClick: 0
@@ -9312,9 +9285,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: 
-    sender: {fileID: 0}
 --- !u!114 &1443535309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9447,9 +9417,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_options_touch_controls
-    sender: {fileID: 0}
   m_button: {fileID: 1444875253}
   m_animationStrategy: {fileID: 1444875256}
   m_deactivateOnClick: 0
@@ -9670,9 +9637,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_leaderboard_refresh
-    sender: {fileID: 0}
   m_button: {fileID: 1475261568}
   m_animationStrategy: {fileID: 1475261571}
   m_deactivateOnClick: 0
@@ -11342,7 +11306,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1749531104}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2089416865}
+        m_TargetAssemblyTypeName: Smash.Ui.Panels.MainMenuPanelHandler, Assembly-CSharp
+        m_MethodName: ClosePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 793703010}
+        m_TargetAssemblyTypeName: Smash.Ui.Panels.CreditsPanelHandler, Assembly-CSharp
+        m_MethodName: OpenPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1749531107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11356,9 +11344,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_main_credits
-    sender: {fileID: 0}
   m_button: {fileID: 1749531106}
   m_animationStrategy: {fileID: 1749531108}
   m_deactivateOnClick: 1
@@ -11764,9 +11749,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: 
-    sender: {fileID: 0}
   m_button: {fileID: 1795202223}
   m_animationStrategy: {fileID: 1795202225}
   m_deactivateOnClick: 0
@@ -11976,9 +11958,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: 
-    sender: {fileID: 0}
 --- !u!114 &1886641774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12587,9 +12566,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_leaderboard_back
-    sender: {fileID: 0}
   m_button: {fileID: 1970030152}
   m_animationStrategy: {fileID: 1970030157}
   m_deactivateOnClick: 1
@@ -12888,9 +12864,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: 
-    sender: {fileID: 0}
   m_button: {fileID: 1977955797}
   m_animationStrategy: {fileID: 1977955799}
   m_deactivateOnClick: 0
@@ -13702,7 +13675,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2077408848}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2089416865}
+        m_TargetAssemblyTypeName: Smash.Ui.Panels.MainMenuPanelHandler, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2077408851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13716,9 +13701,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_tutorial
-    sender: {fileID: 0}
   m_button: {fileID: 2077408850}
   m_animationStrategy: {fileID: 2077408852}
   m_deactivateOnClick: 0
@@ -13821,9 +13803,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: 
-    sender: {fileID: 0}
 --- !u!114 &2089416867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14066,9 +14045,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}
-  m_eventArgs:
-    id: btn_options_sfx_vol
-    sender: {fileID: 0}
   m_button: {fileID: 2131154447}
   m_animationStrategy: {fileID: 2131154450}
   m_deactivateOnClick: 0

@@ -17,36 +17,24 @@ namespace Smash.Ui.System
 		[Space(10)]
 		[SerializeField] private ButtonSelectionHandler m_primaryButton;
 		[SerializeField] protected BackButtonHandler _backButtonHandler;
-
-		// protected PlayerInputActions _input;
 		
 		protected override void Awake()
 		{
 			base.Awake();
-			// _input = new PlayerInputActions();
+			_panelState = PanelState.SlidOutToRight;
 			gameObject.SetActive(false);
 		}
 
 		protected virtual IEnumerator SetSelected()
 		{
 			yield return null;
+			_panelState = PanelState.Open;
 			EventSystem.current.SetSelectedGameObject(m_primaryButton.gameObject);
 		}
 
 		public virtual void OpenPanel()
 		{
 			_animationStrategy.Activate(OnComplete);
-			
-			/*_input.Player.Disable();
-			_input.UI.Disable();
-			_input.UI.Enable();
-			
-			_input.UI.Cancel.Disable();
-			_input.UI.Retry.Disable();
-			_input.UI.Resume.Disable();
-			_input.UI.HorizontalScroll.Disable();
-			_input.UI.VerticalScroll.Disable();
-			_input.UI.Navigate.Enable();*/
 		}
 		
 		public virtual void ClosePanel()
@@ -56,6 +44,11 @@ namespace Smash.Ui.System
 		
 		private void OnComplete() => StartCoroutine(SetSelected());
 
-		protected abstract void BackButtonPressed(InputAction.CallbackContext ctx);
+		protected virtual void BackButtonPressed(InputAction.CallbackContext _)
+		{
+			BackButtonPressed();
+		}
+		
+		protected abstract void BackButtonPressed();
 	}
 }

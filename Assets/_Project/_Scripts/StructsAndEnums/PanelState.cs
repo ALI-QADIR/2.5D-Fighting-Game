@@ -3,7 +3,7 @@
 	public enum PanelState
 	{
 		Open = 0,
-		FadeAndScaledOut = 1,
-		SlideOutToRight = 2
+		FadedAndScaledOut = 1,
+		SlidOutToRight = 2
 	}
 }
