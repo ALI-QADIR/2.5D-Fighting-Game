@@ -13,13 +13,13 @@ namespace Smash.World.Test
 		private void Start()
 		{
 			PlayerDevicesManager.Instance.EnablePlayerJoining(m_playerCount);
-			PlayerDevicesManager.Instance.OnPlayerJoined += PlayerJoined;
+			PlayerControllerManager.Instance.OnPlayerJoined += PlayerJoined;
 		}
 		
 		private void OnDisable()
 		{
-			if(PlayerDevicesManager.HasInstance)
-				PlayerDevicesManager.Instance.OnPlayerJoined -= PlayerJoined;
+			if(PlayerControllerManager.HasInstance)
+				PlayerControllerManager.Instance.OnPlayerJoined -= PlayerJoined;
 		}
 
 		private void PlayerJoined(int index)

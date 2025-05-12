@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Smash.Player;
 using TripleA.Utils.Singletons;
 using UnityEngine;
@@ -15,6 +16,10 @@ namespace Smash.System
 		private Dictionary<int, PlayerController> m_controllers;
 		
 		private int m_primaryUiControllerIndex;
+		
+		public event Action<int> OnPlayerJoined; 
+		public event Action<int> OnPlayerRegained; 
+		public event Action<int> OnPlayerLeft; 
 
 		#region Unity Methods
 
@@ -29,14 +34,14 @@ namespace Smash.System
 
 		private void Start()
 		{
-			m_playerInputManager.onPlayerJoined += OnPlayerJoined;
-			m_playerInputManager.onPlayerLeft += OnPlayerLeft;
+			m_playerInputManager.onPlayerJoined += PlayerJoined;
+			m_playerInputManager.onPlayerLeft += PlayerLeft;
 		}
 
 		private void OnDisable()
 		{
-			m_playerInputManager.onPlayerJoined -= OnPlayerJoined;
-			m_playerInputManager.onPlayerLeft -= OnPlayerLeft;
+			m_playerInputManager.onPlayerJoined -= PlayerJoined;
+			m_playerInputManager.onPlayerLeft -= PlayerLeft;
 		}
 		
 		private void OnValidate()
@@ -52,6 +57,7 @@ namespace Smash.System
 		public void AddInputDeviceAndJoinPlayer(int index, InputDevice device)
 		{
 			m_playerInputManager.JoinPlayer(index, -1, null, device);
+			OnPlayerJoined?.Invoke(index);
 		}
 		
 		public void RemoveInputDeviceAndPlayerControllerWithIndex(int index)
@@ -103,15 +109,25 @@ namespace Smash.System
 		{
 			foreach (var ctr in m_controllers.Values)
 			{
-				ctr.DisableUiInput();
+				ctr.DisablePlayerInput();
 			}
+		}
+		
+		public void PlayerDeviceRegained(int index)
+		{
+			OnPlayerRegained?.Invoke(index);
+		}
+		
+		public void PlayerDeviceLost(int index)
+		{
+			OnPlayerLeft?.Invoke(index);
 		}
 
 		#endregion Public Methods
 		
 		#region Private Methods
 
-		private void OnPlayerJoined(PlayerInput input)
+		private void PlayerJoined(PlayerInput input)
 		{
 			PlayerController ctr = input.GetComponent<PlayerController>();
 			int playerIndex = input.playerIndex;
@@ -124,7 +140,7 @@ namespace Smash.System
 			}
 		}
 		
-		private void OnPlayerLeft(PlayerInput input)
+		private void PlayerLeft(PlayerInput input)
 		{
 			Debug.Log("Player Left");
 			int playerIndex = input.playerIndex;

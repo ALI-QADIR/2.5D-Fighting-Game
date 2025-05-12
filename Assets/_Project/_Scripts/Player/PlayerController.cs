@@ -3,6 +3,7 @@ using Smash.Player.CommandPattern;
 using Smash.Player.CommandPattern.ActionCommands;
 using Smash.Player.CommandPattern.Controllers;
 using Smash.Player.Input;
+using Smash.System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -134,11 +135,13 @@ namespace Smash.Player
 		
 		private void DeviceLost(PlayerInput _)
 		{
+			PlayerControllerManager.Instance.PlayerDeviceLost(PlayerIndex);
 			Debug.Log("Device lost");
 		}
 
 		private void DeviceRegained(PlayerInput _)
 		{
+			PlayerControllerManager.Instance.PlayerDeviceRegained(PlayerIndex);
 			Debug.Log("Device regained");
 		}
 	}

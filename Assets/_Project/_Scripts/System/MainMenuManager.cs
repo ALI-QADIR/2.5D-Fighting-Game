@@ -19,10 +19,10 @@ namespace Smash.System
 				AsyncSceneLoader.Instance.OnSceneLoadComplete += SceneLoaded;
 			}
 
-			if (PlayerDevicesManager.HasInstance)
+			if (PlayerControllerManager.HasInstance)
 			{
 				// Debug.Log("Has Device Manager Instance");
-				PlayerDevicesManager.Instance.OnPlayerJoined += PlayerJoined;
+				PlayerControllerManager.Instance.OnPlayerJoined += PlayerJoined;
 			}
 		}
 
@@ -31,8 +31,8 @@ namespace Smash.System
 			if(AsyncSceneLoader.HasInstance)
 				AsyncSceneLoader.Instance.OnSceneLoadComplete -= SceneLoaded;
 			
-			if (PlayerDevicesManager.HasInstance)
-				PlayerDevicesManager.Instance.OnPlayerJoined -= PlayerJoined;
+			if (PlayerControllerManager.HasInstance)
+				PlayerControllerManager.Instance.OnPlayerJoined -= PlayerJoined;
 		}
 
 		#endregion Unity Methods
