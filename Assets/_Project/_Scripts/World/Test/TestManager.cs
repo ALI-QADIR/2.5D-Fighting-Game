@@ -26,7 +26,8 @@ namespace Smash.World.Test
 		{
 			var characterPawn = Instantiate(m_characterPawnPrefab);
 			var uiPawn = Instantiate(m_uiPawnPrefab);
-			var ctr = PlayerControllerManager.Instance.InitialisePawn(uiPawn, index);
+			var ctr = PlayerControllerManager.Instance.InitialisePawn(index);
+			ctr.SetPawn(uiPawn);
 			ctr.SetPawn(characterPawn);
 			ctr.EnablePlayerInputAndDisableUiInput();
 		}

@@ -62,23 +62,24 @@ namespace Smash.Player
 			_playerInputComponent.onDeviceRegained -= DeviceRegained;
 		}
 
-		public void Initialise([NotNull] UiPawn uiPawn)
+		public void Initialise()
 		{
-			_possessedUiPawn = uiPawn;
-			_possessedUiPawn.Initialise();
-			
-			Initialise();
+			_inputActions = _inputActionsController.InitialiseInputActions();
+			PlayerIndex = _playerInputComponent.playerIndex;
+			InitialiseActionControllers();
 		}
 
 		public void SetPawn(CharacterPawn pawn)
 		{
 			_possessedCharacterPawn = pawn;
+			_inputHandler.SetCharacterPawn(_possessedCharacterPawn);
 			_possessedCharacterPawn.Initialise();
 		}
 
 		public void SetPawn(UiPawn pawn)
 		{
 			_possessedUiPawn = pawn;
+			_inputHandler.SetUiPawn(_possessedUiPawn);
 			_possessedUiPawn.Initialise();
 		}
 
@@ -103,14 +104,6 @@ namespace Smash.Player
 		{
 			_inputActionsController.SetPlayerInputEnabled(false);
 		}
-
-		private void Initialise()
-		{
-			_inputActions = _inputActionsController.InitialiseInputActions();
-			PlayerIndex = _playerInputComponent.playerIndex;
-			InitialiseActionControllers();
-		}
-
 		private void InitialiseActionControllers()
 		{
 			ButtonActionControllerComponent.Initialise(_inputActions, ComboQueueManager);
