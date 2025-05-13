@@ -13,10 +13,10 @@ namespace Smash.StructsAndEnums
 	
 	public enum MySceneTypes
 	{
-		MainMenu,
-		SpeedRun,
-		Tutorial,
-		TutorialUi,
-		Bootstrapper,
+		MainMenu = 0,
+		CharacterSelect = 1,
+		Tutorial = 2,
+		TutorialUi = 3,
+		Bootstrapper = 4,
 	}
 }

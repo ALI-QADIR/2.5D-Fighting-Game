@@ -33,6 +33,7 @@ namespace Smash.Player
 		protected override void Awake()
 		{
 			base.Awake();
+			transform.SetParent(PlayerControllerManager.Instance.transform);
 			_inputActionsController ??= GetComponent<PlayerInputActionsController>();
 			_playerInputComponent ??= GetComponent<PlayerInput>();
 			ButtonActionControllerComponent ??= GetComponent<ButtonActionController>();
@@ -60,6 +61,8 @@ namespace Smash.Player
 		{
 			_playerInputComponent.onDeviceLost -= DeviceLost;
 			_playerInputComponent.onDeviceRegained -= DeviceRegained;
+			_inputActionsController.SetUiInputEnabled(false);
+			_inputActionsController.SetPlayerInputEnabled(false);
 		}
 
 		public void Initialise()
@@ -104,6 +107,14 @@ namespace Smash.Player
 		{
 			_inputActionsController.SetPlayerInputEnabled(false);
 		}
+
+		public override void Dispose()
+		{
+			base.Dispose();
+			if (_possessedUiPawn)
+				Destroy(_possessedUiPawn.gameObject);
+		}
+		
 		private void InitialiseActionControllers()
 		{
 			ButtonActionControllerComponent.Initialise(_inputActions, ComboQueueManager);

@@ -63,7 +63,7 @@ namespace Smash.Ui.Panels
 		public void OnClickPlayButton()
 		{
 			// _input.UI.Disable();
-			AsyncSceneLoader.Instance.LoadSceneByIndex(1);
+			AsyncSceneLoader.Instance.LoadSceneByType(MySceneTypes.CharacterSelect);
 		}
 
 		public void OnClickTutorialButton()

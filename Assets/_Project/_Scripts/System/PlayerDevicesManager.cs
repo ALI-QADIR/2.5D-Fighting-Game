@@ -60,6 +60,11 @@ namespace Smash.System
 		{
 			m_joinInputAction.Disable();
 		}
+		
+		public void RemoveDevice(int playerIndex)
+		{
+			m_activeInputDevices.RemoveAt(playerIndex);
+		}
 
 		private void JoinPerformed(InputAction.CallbackContext context)
 		{
@@ -74,7 +79,6 @@ namespace Smash.System
 				for (int i = m_activeInputDevices.Count - 1; i >= CurrentAllowedPlayerCount; i--)
 				{
 					PlayerControllerManager.Instance.RemoveInputDeviceAndPlayerControllerWithIndex(i);
-					m_activeInputDevices.RemoveAt(i);
 				}
 			}
 		}

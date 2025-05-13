@@ -7,6 +7,7 @@
 		
 		public void StartActionExecution(InputHandler inputHandler)
 		{
+			inputHandler.HandleCancelButton();
 		}
 		
 		public void FinishActionExecution(InputHandler inputHandler)

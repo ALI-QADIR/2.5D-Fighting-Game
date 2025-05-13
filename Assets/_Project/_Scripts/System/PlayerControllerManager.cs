@@ -145,6 +145,7 @@ namespace Smash.System
 			Debug.Log("Player Left");
 			int playerIndex = input.playerIndex;
 			m_controllers.Remove(playerIndex);
+			PlayerDevicesManager.Instance.RemoveDevice(playerIndex);
 		}
 
 		#endregion Private Methods

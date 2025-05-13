@@ -50,6 +50,21 @@ namespace Smash.System
         {
             await LoadScene(index: index);
         }
+        
+        public async void LoadSceneByType(MySceneTypes type)
+        {
+            int index = -1;
+            for (int i = 0; i < m_scenes.Length; i++)
+            {
+                if (m_scenes[i].sceneType == type)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            if (index == -1) return;
+            await LoadScene(index);
+        }
 
         private async Task LoadScene(int index)
         {
@@ -57,7 +72,7 @@ namespace Smash.System
             
             await Task.Delay(TimeSpan.FromSeconds(m_artificialDelay));
             
-            await UnloadScene();
+            // await UnloadScene();
             // Debug.Log("Loading Scene");
             
             m_sceneLoadOperationHandle = Addressables.LoadSceneAsync(m_scenes[index].sceneReference.Path, LoadSceneMode.Single, true);

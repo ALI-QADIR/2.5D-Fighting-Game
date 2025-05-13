@@ -24,11 +24,14 @@ namespace Smash.Player
 			ComboQueueManager.SetCommandInvoker(GameplayCommandInvoker);
 		}
 
-		public void Dispose()
+		public virtual void Dispose()
 		{
 			GameplayCommandInvoker.OnCommandExecutionStarted -= OnGameplayCommandExecutionStarted;
 			GameplayCommandInvoker.OnCommandExecutionFinished -= OnGameplayCommandExecutionFinished;
-			Destroy(_possessedCharacterPawn.gameObject);
+			
+			if (_possessedCharacterPawn)
+				Destroy(_possessedCharacterPawn.gameObject);
+			
 			Destroy(gameObject);
 		}
 		

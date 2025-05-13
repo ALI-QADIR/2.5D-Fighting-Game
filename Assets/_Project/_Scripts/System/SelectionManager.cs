@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Smash.System
 {
-	public class MainMenuManager : GameManager<MainMenuManager>
+	public class SelectionManager : GameManager<SelectionManager>
 	{
 		[SerializeField] private UiPawn m_playerPawnPrefab;
 		
@@ -26,7 +26,7 @@ namespace Smash.System
 		protected override void SceneLoaded()
 		{
 			// Debug.Log("Scene Loaded");
-			PlayerDevicesManager.Instance.EnablePlayerJoining(1);
+			PlayerDevicesManager.Instance.EnablePlayerJoining(6);
 		}
 
 		#endregion Private Methods

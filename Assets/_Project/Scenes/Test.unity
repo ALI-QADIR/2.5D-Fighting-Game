@@ -504,7 +504,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_playerCount: 2
-  m_playerPrefab: {fileID: 5991776475819307800, guid: f540c158a155a4542b495a087d590539, type: 3}
+  m_characterPawnPrefab: {fileID: 5991776475819307800, guid: f540c158a155a4542b495a087d590539, type: 3}
+  m_uiPawnPrefab: {fileID: 8633439254740976158, guid: a4efd0fd366aade4a88f150d2e5f0301, type: 3}
 --- !u!4 &488258796
 Transform:
   m_ObjectHideFlags: 0
@@ -1005,7 +1006,7 @@ MonoBehaviour:
   autoUnparentOnAwake: 1
   m_playerInputManager: {fileID: 953483250}
   m_pawnPrefab: {fileID: 5991776475819307800, guid: f540c158a155a4542b495a087d590539, type: 3}
-  m_controllerPrefab: {fileID: 2900337790333897636, guid: 24f2b3bd33b539e4cbf9b12625f5d217, type: 3}
+  m_controllerPrefab: {fileID: 449515351122987479, guid: 24f2b3bd33b539e4cbf9b12625f5d217, type: 3}
 --- !u!1001 &1038544692
 PrefabInstance:
   m_ObjectHideFlags: 0

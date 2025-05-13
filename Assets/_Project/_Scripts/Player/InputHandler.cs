@@ -22,10 +22,17 @@ namespace Smash.Player
 
 		#region Ui Pawn Input
 
+		public void HandleCancelButton()
+		{
+			m_uiPawn.BackHeld(true);
+		}
+
 		public void HandleCancelButton(IGameplayActionCommand command)
 		{
 			SetEventArgs(command);
 			InvokeEvent();
+			m_uiPawn.BackHeldTime = command.HeldDuration;
+			m_uiPawn.BackHeld(false);
 		}
 
 		public void HandleSubmitButton(IGameplayActionCommand command)
