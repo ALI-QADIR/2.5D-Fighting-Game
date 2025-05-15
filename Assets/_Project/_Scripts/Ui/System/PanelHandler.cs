@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 
 namespace Smash.Ui.System
 {
-	public abstract class PanelHandler : UiEventListener
+	public abstract class PanelHandler : UiEventListener, IPanelHandler
 	{
 		[Header("Animation")] 
 		[SerializeField] protected AnimationStrategy<Action> _animationStrategy;

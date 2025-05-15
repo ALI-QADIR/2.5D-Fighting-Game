@@ -84,6 +84,7 @@ namespace Smash.Player
 			_possessedUiPawn = pawn;
 			_inputHandler.SetUiPawn(_possessedUiPawn);
 			_possessedUiPawn.Initialise();
+			_possessedUiPawn.SetIndex(PlayerIndex);
 		}
 
 		public void EnablePlayerInputAndDisableUiInput()

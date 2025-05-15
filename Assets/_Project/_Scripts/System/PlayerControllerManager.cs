@@ -14,6 +14,8 @@ namespace Smash.System
 		[SerializeField] private CharacterPawn m_pawnPrefab;
 		[SerializeField] private PlayerController m_controllerPrefab;
 		private Dictionary<int, PlayerController> m_controllers;
+
+		public int CurrentPlayerCount => m_playerInputManager.playerCount;
 		
 		private int m_primaryUiControllerIndex;
 		

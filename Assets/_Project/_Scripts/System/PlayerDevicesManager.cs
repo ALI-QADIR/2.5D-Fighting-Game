@@ -63,6 +63,7 @@ namespace Smash.System
 		
 		public void RemoveDevice(int playerIndex)
 		{
+			if (m_activeInputDevices.Count < playerIndex + 1) return;
 			m_activeInputDevices.RemoveAt(playerIndex);
 		}
 
