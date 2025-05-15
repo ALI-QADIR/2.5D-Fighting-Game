@@ -1,6 +1,5 @@
 ﻿using System;
 using Smash.Player.Components;
-using Smash.Player.Input;
 using Smash.Player.States;
 using TripleA.Utils.Extensions;
 using TripleA.StateMachine.FSM;
@@ -10,7 +9,7 @@ using UnityEngine;
 namespace Smash.Player
 {
 	[RequireComponent(typeof(PlayerMotor))]
-	public class PlayerPawn : BasePawn
+	public class CharacterPawn : BasePawn
 	{
 		#region Fields
 		
@@ -90,9 +89,10 @@ namespace Smash.Player
 		
 		#region Unity Methods
 
-		public override void Initialise(BaseController possessingController)
+		public override void Initialise()
 		{
-			base.Initialise(possessingController);
+			// _inputHandler.SetCharacterPawn(this);
+			
 			m_tr = transform;
 			m_motor ??= GetComponent<PlayerMotor>();
 			m_ledgeDetector ??= GetComponent<LedgeDetector>();
@@ -155,40 +155,8 @@ namespace Smash.Player
 			m_savedRotation = m_tr.rotation;
 			m_elapsedTime = 0;
 		}
-
-		#region Input
-
-		public override void HandleRightInput() => Direction = Vector3.right;
-
-		public override void HandleLeftInput() => Direction = Vector3.left;
 		
-		public override void HandleDpadNullInput() => Direction = Vector3.zero;
-
-		public override void HandleUpInput()
-		{
-			if (CurrentState is Ledge)
-			{
-				HandleClimb();
-				return;
-			}
-			 // else if (CurrentState is WallSlide)
-			 // {
-				//  wall jump
-				//  return;
-			 // }
-			HandleJumpInput();
-		}
-
-		public override void HandleDownInput()
-		{
-			if (m_motor.IsGrounded())
-			{
-				// pass through platform
-				return;
-			}
-		}
-
-		public override void HandleJumpInput()
+		public void HandleJumpInput()
 		{
 			if (m_numberOfJumps <= 0)
 			{
@@ -222,105 +190,14 @@ namespace Smash.Player
 			HandleJump();
 		}
 
-		public override void HandleMainAttackInputStart()
+		public void HandleClimb()
 		{
-			CurrentStateMachine.MainAttackHold = true;
+			m_isClimbing = true;
+			Vector3 verticalVelocity = m_tr.up * m_climbUpSpeed;
+			Vector3 horizontalVelocity = m_tr.right * m_climbSideSpeed;
+			RemoveVerticalVelocity();
+			m_savedVelocity = horizontalVelocity + verticalVelocity;
 		}
-
-		public override void HandleMainAttackInputEnd(float heldTime)
-		{
-			CurrentStateMachine.MainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
-			CurrentStateMachine.MainAttackHold = false;
-		}
-		
-		public override void HandleSideMainAttackInputStart()
-		{
-			CurrentStateMachine.SideMainAttackHold = true;
-		}
-		
-		public override void HandleSideMainAttackInputEnd(float heldTime)
-		{
-			CurrentStateMachine.SideMainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
-			CurrentStateMachine.SideMainAttackHold = false;
-		}
-		
-		public override void HandleUpMainAttackInputStart()
-		{
-			CurrentStateMachine.UpMainAttackHold = true;
-		}
-		
-		public override void HandleUpMainAttackInputEnd(float heldTime)
-		{
-			CurrentStateMachine.UpMainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
-			CurrentStateMachine.UpMainAttackHold = false;
-		}
-
-		public override void HandleDownMainAttackInputStart()
-		{
-			CurrentStateMachine.DownMainAttackHold = true;
-		}
-
-		public override void HandleDownMainAttackInputEnd(float heldTime)
-		{
-			CurrentStateMachine.DownMainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
-			CurrentStateMachine.DownMainAttackHold = false;
-		}
-
-		public override void HandleSpecialAttackInputStart()
-		{
-			Debug.Log("Special Attack Input Start");
-			CurrentStateMachine.SpecialAttackHold = true;
-		}
-
-		public override void HandleSpecialAttackInputEnd(float heldTime)
-		{
-			Debug.Log("Special Attack Input End");
-			CurrentStateMachine.SpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
-			CurrentStateMachine.SpecialAttackHold = false;
-		}
-
-		public override void HandleSideSpecialAttackInputStart()
-		{
-			CurrentStateMachine.SideSpecialAttackHold = true;
-		}
-
-		public override void HandleSideSpecialAttackInputEnd(float heldTime)
-		{
-			CurrentStateMachine.SideSpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
-			CurrentStateMachine.SideSpecialAttackHold = false;
-		}
-
-		public override void HandleDownSpecialAttackInputStart()
-		{
-			CurrentStateMachine.DownSpecialAttackHold = true;
-		}
-		
-		public override void HandleDownSpecialAttackInputEnd(float heldTime)
-		{
-			CurrentStateMachine.DownSpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
-			CurrentStateMachine.DownSpecialAttackHold = false;
-		}
-		
-		public override void HandleUpSpecialAttackInputStart()
-		{
-			CurrentStateMachine.UpSpecialAttackHold = true;
-		}
-		
-		public override void HandleUpSpecialAttackInputEnd(float heldTime)
-		{
-			CurrentStateMachine.UpSpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
-			CurrentStateMachine.UpSpecialAttackHold = false;
-		}
-
-		public void HandleLaunchInput()
-		{
-			if (m_isLaunching) return;
-			m_isLaunching = true;
-			m_numberOfJumps = 0;
-			HandleLaunch();
-		}
-		
-		#endregion Input
 
 		#region State Setters
 
@@ -682,15 +559,6 @@ namespace Smash.Player
 			RemoveVerticalVelocity();
 			m_savedVelocity += verticalVelocity;
 			// Debug.Log(m_savedVelocity);
-		}
-
-		private void HandleClimb()
-		{
-			m_isClimbing = true;
-			Vector3 verticalVelocity = m_tr.up * m_climbUpSpeed;
-			Vector3 horizontalVelocity = m_tr.right * m_climbSideSpeed;
-			RemoveVerticalVelocity();
-			m_savedVelocity = horizontalVelocity + verticalVelocity;
 		}
 
 		private void HandleLaunch()

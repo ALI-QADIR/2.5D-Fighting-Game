@@ -1,8 +1,9 @@
 ﻿using System;
+using Smash.Player.CommandPattern.ActionCommands;
+using Smash.StructsAndEnums;
 using Smash.System;
 using Smash.Ui.System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Smash.Ui.Panels
 {
@@ -13,36 +14,40 @@ namespace Smash.Ui.Panels
 		protected override void Awake()
 		{
 			base.Awake();
-			OpenPanel();
-			_eventDictionary.Add("btn_main_play", OnClickPlayButton);
-			_eventDictionary.Add("btn_tutorial", OnClickTutorialButton);
-			_eventDictionary.Add("btn_main_quit", OnClickQuitButton);
 			
-			_eventDictionary.Add("btn_main_leaderboard", ClosePanel);
-			_eventDictionary.Add("btn_main_credits", ClosePanel);
-			_eventDictionary.Add("btn_main_options", ClosePanel);
-			
-			_eventDictionary.Add("btn_modes_back", OpenPanel);
-			_eventDictionary.Add("btn_credits_back", OpenPanel);
-			_eventDictionary.Add("btn_options_back", OpenPanel);
-			_eventDictionary.Add("btn_leaderboard_back", OpenPanel);
-			
-			_backButtonHandler.SetEventArgs("btn_main_quit", this);
+			if (AsyncSceneLoader.HasInstance)
+			{
+				// Debug.Log("Has Instance");
+				AsyncSceneLoader.Instance.OnSceneLoadComplete += SceneGroupLoaded;
+			}
 		}
 
-		protected override void AuthenticateEvent(UiEventArgs args)
+		protected override void OnDestroy()
 		{
-			if (_eventDictionary.TryGetValue(args.id.ToLower(), out Action action))
+			if (AsyncSceneLoader.HasInstance)
+				AsyncSceneLoader.Instance.OnSceneLoadComplete -= SceneGroupLoaded;
+		}
+
+		private void SceneGroupLoaded()
+		{
+			// Debug.Log("SceneGroupLoaded");
+			OpenPanel();
+		}
+
+		protected override void AuthenticateEvent(IGameplayActionCommand uiCommand)
+		{
+			if (_panelState != PanelState.Open) return;
+			if (_eventDictionary.TryGetValue(uiCommand.GetType(), out Action action))
 				action?.Invoke();
 		}
 
 		public override void OpenPanel()
 		{
+			// Debug.Log("Open Menu Panel");
 			base.OpenPanel();
-			_input.UI.Cancel.Enable();
+			/*_input.UI.Cancel.Enable();
 			_input.UI.Retry.Enable();
-			_input.UI.Cancel.started += BackButtonPressed;
-			_input.UI.Retry.started += Retry;
+			_input.UI.Cancel.started += BackButtonPressed;*/
 			
 			m_mainMenuHandler.OnOpen();
 		}
@@ -50,35 +55,29 @@ namespace Smash.Ui.Panels
 		public override void ClosePanel()
 		{
 			base.ClosePanel();
-			_input.UI.Cancel.started -= BackButtonPressed;
-			_input.UI.Retry.started -= Retry;
+			// _input.UI.Cancel.started -= BackButtonPressed;
 		}
 
-		protected override void BackButtonPressed(InputAction.CallbackContext ctx)
+		#region On-Click Methods
+
+		public void OnClickPlayButton()
 		{
-			_backButtonHandler.BackButtonPressed();
+			// _input.UI.Disable();
+			AsyncSceneLoader.Instance.LoadSceneByType(MySceneTypes.CharacterSelect);
 		}
 
-		private void Retry(InputAction.CallbackContext ctx)
+		public void OnClickTutorialButton()
 		{
-			m_mainMenuHandler.OnRetry();
+			// _input.UI.Disable();
+			AsyncSceneLoader.Instance.LoadSceneByIndex(1);
 		}
 
-		private void OnClickPlayButton()
+		public override void BackButtonPressed()
 		{
-			_input.UI.Disable();
-			AsyncSceneLoader.Instance.LoadSceneGroupByIndex(2);
-		}
-
-		private void OnClickTutorialButton()
-		{
-			_input.UI.Disable();
-			AsyncSceneLoader.Instance.LoadSceneGroupByIndex(1);
-		}
-
-		private void OnClickQuitButton()
-		{
+			Debug.Log("Quit");
 			Application.Quit();
 		}
+
+		#endregion On-Click Methods
 	}
 }

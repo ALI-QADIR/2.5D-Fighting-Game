@@ -1,9 +1,10 @@
 ﻿using System;
+using Smash.Player.CommandPattern.ActionCommands;
+using Smash.StructsAndEnums;
 using Smash.System;
 using Smash.Ui.System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Smash.Ui.Panels
 {
@@ -16,15 +17,16 @@ namespace Smash.Ui.Panels
 		{
 			base.Awake();
 			
-			_eventDictionary.Add("btn_speedrun_resume", StartCountdown);
-			_eventDictionary.Add("btn_speedrun_mainmenu", OnClickMainMenuButton);
-			
-			_backButtonHandler.SetEventArgs("btn_speedrun_mainmenu", this);
+			// _eventDictionary.Add("btn_speedrun_resume", StartCountdown);
+			// _eventDictionary.Add("btn_speedrun_mainmenu", OnClickMainMenuButton);
+			// 
+			// _backButtonHandler.SetEventArgs("btn_speedrun_mainmenu", this);
 		}
 		
-		protected override void AuthenticateEvent(UiEventArgs args)
+		protected override void AuthenticateEvent(IGameplayActionCommand uiCommand)
 		{
-			if (_eventDictionary.TryGetValue(args.id.ToLower(), out Action action))
+			if (_panelState != PanelState.Open) return;
+			if (_eventDictionary.TryGetValue(uiCommand.GetType(), out Action action))
 				action?.Invoke();
 		}
 
@@ -45,20 +47,13 @@ namespace Smash.Ui.Panels
 		public override void OpenPanel()
 		{
 			base.OpenPanel();
-			_input.UI.Cancel.Enable();
+			// _input.UI.Cancel.Enable();
 		}
 		
 		public override void ClosePanel()
 		{
 			base.ClosePanel();
-			_input.UI.Cancel.started -= BackButtonPressed;
-		}
-		
-		protected override void BackButtonPressed(InputAction.CallbackContext ctx)
-		{
-			_backButtonHandler.BackButtonPressed();
-			if (AudioManager.HasInstance)
-				AudioManager.Instance.PlayButtonClick();
+			// _input.UI.Cancel.started -= BackButtonPressed;
 		}
 
 		private void StartCountdown()
@@ -70,8 +65,8 @@ namespace Smash.Ui.Panels
 		private void OnClickMainMenuButton()
 		{
 			if(!AsyncSceneLoader.HasInstance) return;
-			_input.UI.Disable();
-			AsyncSceneLoader.Instance.LoadSceneGroupByIndex(0);
+			// _input.UI.Disable();
+			AsyncSceneLoader.Instance.LoadSceneByIndex(0);
 		}
 	}
 }

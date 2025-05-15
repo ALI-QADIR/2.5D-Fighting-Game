@@ -1,4 +1,5 @@
 ﻿using System;
+using Smash.Player.CommandPattern.ActionCommands;
 using Smash.System;
 using Smash.Ui.System;
 using UnityEngine;
@@ -13,12 +14,12 @@ namespace Smash.Player.Input
 		protected override void Awake()
 		{
 			base.Awake();
-			_eventDictionary.Add("btn_pause_resume", OnResume);
+			// _eventDictionary.Add("btn_pause_resume", OnResume);
 		}
 		
-		protected override void AuthenticateEvent(UiEventArgs args)
+		protected override void AuthenticateEvent(IGameplayActionCommand uiCommand)
 		{
-			if (_eventDictionary.TryGetValue(args.id.ToLower(), out Action action))
+			if (_eventDictionary.TryGetValue(uiCommand.GetType(), out Action action))
 				action?.Invoke();
 		}
 		

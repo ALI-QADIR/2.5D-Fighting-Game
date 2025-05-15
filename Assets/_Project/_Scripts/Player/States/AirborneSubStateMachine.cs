@@ -30,7 +30,7 @@ namespace Smash.Player.States
 
 		#endregion Base States
 
-		public AirborneSubStateMachine(PlayerPawn pawn) : base(pawn)
+		public AirborneSubStateMachine(CharacterPawn pawn) : base(pawn)
 		{
 			_stateMachine = new StateMachine();
 			

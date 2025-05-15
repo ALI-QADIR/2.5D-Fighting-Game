@@ -10,12 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 6168442543825379366}
   - component: {fileID: 6253768598967610822}
-  - component: {fileID: 2900337790333897636}
   - component: {fileID: 1289368125731603549}
   - component: {fileID: 7066033461056179908}
   - component: {fileID: 3933780579439335045}
   - component: {fileID: 8797537056396316964}
+  - component: {fileID: 8250523655032828882}
   - component: {fileID: 8851318336808331550}
+  - component: {fileID: 449515351122987479}
+  - component: {fileID: 2110548122740596263}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -156,26 +158,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &2900337790333897636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4671264533724570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01d9e53c58d746149c4fc20017cda2b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <ComboQueueManager>k__BackingField: {fileID: 7066033461056179908}
-  <ButtonActionControllerComponent>k__BackingField: {fileID: 3933780579439335045}
-  <DPadActionControllerComponent>k__BackingField: {fileID: 8797537056396316964}
-  m_inputActionsController: {fileID: 1289368125731603549}
-  m_playerInputComponent: {fileID: 6253768598967610822}
-  <PlayerIndex>k__BackingField: 0
-  m_enableInvokerDebug: 1
-  m_enableQueueDebug: 0
 --- !u!114 &1289368125731603549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +211,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fe0a60dce024a3fa631c3dd6c75a70c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8250523655032828882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4671264533724570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1b9a195abf494387166e892874733a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8851318336808331550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,3 +235,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b360cdfeacbd44d69b7c6514549f9387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &449515351122987479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4671264533724570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0e9f6f6dff740e79030ccda4c9543df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ComboQueueManager>k__BackingField: {fileID: 7066033461056179908}
+  _inputActionsController: {fileID: 1289368125731603549}
+  _playerInputComponent: {fileID: 6253768598967610822}
+  <ButtonActionControllerComponent>k__BackingField: {fileID: 3933780579439335045}
+  <DPadActionControllerComponent>k__BackingField: {fileID: 8797537056396316964}
+  <UiActionControllerComponent>k__BackingField: {fileID: 0}
+  m_enableInvokerDebug: 0
+  m_enableQueueDebug: 0
+--- !u!114 &2110548122740596263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4671264533724570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 575826b31af9494582e0e7498b98e6ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}

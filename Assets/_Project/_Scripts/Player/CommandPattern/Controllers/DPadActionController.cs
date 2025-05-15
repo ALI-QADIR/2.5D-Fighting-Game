@@ -1,17 +1,9 @@
 using Smash.Player.CommandPattern.ActionCommands;
+using Smash.StructsAndEnums;
 using UnityEngine.InputSystem;
 
 namespace Smash.Player.CommandPattern.Controllers
 {
-	public enum DPadDirection
-	{
-		None,
-		Up,
-		Down,
-		Left,
-		Right
-	}
-	
 	public class DPadActionController : ActionController
 	{
 		private float m_horizontalInput;

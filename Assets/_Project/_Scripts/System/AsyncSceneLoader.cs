@@ -1,38 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Smash.Services;
 using Smash.StructsAndEnums;
-using TripleA.SceneManagement.AdditiveSceneManagement;
 using TripleA.Utils.Singletons;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Smash.System
 {
-    public class AsyncSceneLoader : GenericSingleton<AsyncSceneLoader>
+    public class AsyncSceneLoader : PersistentSingleton<AsyncSceneLoader>
     {
+        [SerializeField] private float m_artificialDelay = 0.25f;
         [SerializeField] private Image m_fill;
-        [SerializeField] private float m_fillSpeed = 0.5f;
         [SerializeField] private Canvas m_canvas;
         [SerializeField] private Camera m_cam;
-        [SerializeField] private MySceneGroup[] m_sceneGroup;
+        [SerializeField] private SceneData<MySceneTypes>[] m_scenes;
+        
+        private AsyncOperationHandle<SceneInstance> m_sceneLoadOperationHandle;
+        private AsyncOperationHandle<SceneInstance> m_sceneUnloadOperationHandle;
 
-        private float m_targetProgress;
-        private bool m_isLoading;
-        
-        private MySceneGroupManager m_sceneGroupManager;
-        
-        public event Action OnSceneGroupLoaded;
+        public event Action OnSceneLoadComplete;
+        public event Action OnCanvasDisabled;
 
         protected override void Awake()
         {
             base.Awake();
-            OnSceneGroupLoaded += () => Debug.Log("Scene Group Loaded");
-            m_sceneGroupManager = new(new List<string>{"AsyncSceneLoader"});
-            m_sceneGroupManager.OnSceneGroupLoaded += OnSceneGroupLoaded;
-            m_sceneGroupManager.OnSceneUnloaded += sceneName => Debug.Log($"Unloaded : {sceneName}");
-            m_sceneGroupManager.OnSceneLoaded += sceneName => Debug.Log($"Loaded : {sceneName}");
+            OnSceneLoadComplete += () => Debug.Log("Scene Loaded");
         }
 
         private async void Start()
@@ -40,57 +37,93 @@ namespace Smash.System
             EnableLoadingCanvas();
             int count = 0;
             bool isInitialised = false;
-            while (count < 3 && !isInitialised)
+            do
             {
+                // Debug.Log($"Initializing Authentication - {count}");
                 count++;
                 isInitialised = await PlayerAuthentication.Instance.InitializeUnityAuthentication();
-            }
-            await LoadSceneGroup(0);
-        }
-
-        private void Update()
-        {
-            if (!m_isLoading) return;
-            
-            float currentFillAmount = m_fill.fillAmount;
-            float progressDifference = Mathf.Abs(currentFillAmount - m_targetProgress);
-
-            float dynamicFillSpeed = progressDifference * m_fillSpeed;
-            
-            m_fill.fillAmount = Mathf.Lerp(currentFillAmount, m_targetProgress, Time.deltaTime * dynamicFillSpeed);
+            } while (count < 3 && !isInitialised); 
+            LoadSceneByIndex(0);
         }
         
-        public async void LoadSceneGroupByIndex(int index)
+        public async void LoadSceneByIndex(int index)
         {
-            await LoadSceneGroup(index: index);
+            await LoadScene(index: index);
+        }
+        
+        public async void LoadSceneByType(MySceneTypes type)
+        {
+            int index = -1;
+            for (int i = 0; i < m_scenes.Length; i++)
+            {
+                if (m_scenes[i].sceneType == type)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            if (index == -1) return;
+            await LoadScene(index);
         }
 
-        private async Task LoadSceneGroup(int index)
+        private async Task LoadScene(int index)
         {
-            m_fill.fillAmount = 0f;
-            m_targetProgress = 1f;
-
-            if (index < 0 || index >= m_sceneGroup.Length)
-            {
-                Debug.LogError($"Invalid Scene Group Index: {index}");
-                return;
-            }
-
-            LoadingProgress progress = new();
-            progress.Progressed += target => m_targetProgress = Mathf.Max(target, m_targetProgress);
-            
             EnableLoadingCanvas();
+            
+            await Task.Delay(TimeSpan.FromSeconds(m_artificialDelay));
+            
+            // await UnloadScene();
+            // Debug.Log("Loading Scene");
+            
+            m_sceneLoadOperationHandle = Addressables.LoadSceneAsync(m_scenes[index].sceneReference.Path, LoadSceneMode.Single, true);
 
-            await m_sceneGroupManager.LoadScenes(m_sceneGroup[index], progress, MySceneTypes.ActiveScene, false, 0.5f);
-
-            await Task.Delay(1000);
+            while (m_sceneLoadOperationHandle.PercentComplete < 0.9f)
+            {
+                m_fill.fillAmount = m_sceneLoadOperationHandle.PercentComplete;
+                await Task.Delay(100);
+            }
+            
+            m_fill.fillAmount = 1;
+            await Task.Delay(TimeSpan.FromSeconds(m_artificialDelay));
+            OnSceneLoadComplete?.Invoke();
             
             EnableLoadingCanvas(false);
+            
+            OnCanvasDisabled?.Invoke();
+        }
+
+        private async Task UnloadScene()
+        {
+            // Debug.Log("Unloading Scene");
+            if (m_sceneLoadOperationHandle.IsValid() && SceneManager.GetActiveScene().name == m_sceneLoadOperationHandle.Result.Scene.name)
+            {
+                Debug.Log("Unloading Addressable Scene");
+                m_sceneUnloadOperationHandle = Addressables.UnloadSceneAsync(m_sceneLoadOperationHandle);
+
+                while (!m_sceneUnloadOperationHandle.IsDone)
+                {
+                    await Task.Delay(100);
+                }
+            }
+            /*else
+            {
+                Debug.Log("Unloading Regular Scene");
+                var operation = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+                if (operation != null)
+                {
+                    while (!operation.isDone)
+                    {
+                        await Task.Delay(100);
+                    }
+                }
+            }*/
+            // Debug.Log("Unloaded Scene");
         }
 
         private void EnableLoadingCanvas(bool enable = true)
         {
-            m_isLoading = enable;
+            // TODO: Animate
+            m_fill.fillAmount = 0;
             m_cam.gameObject.SetActive(enable);
             m_canvas.gameObject.SetActive(enable);
         }

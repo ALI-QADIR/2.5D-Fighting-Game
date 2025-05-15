@@ -3,7 +3,7 @@
 	// TODO: later check if the attack state logic is same, then rather than using so many separate methods for each attack state, pass in the type of the attack state
 	public class MainAttackStart : PlayerBaseState
 	{
-		public MainAttackStart(PlayerPawn pawn) : base(pawn)
+		public MainAttackStart(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -17,7 +17,7 @@
 	
 	public class MainAttackEnd : PlayerBaseState
 	{
-		public MainAttackEnd(PlayerPawn pawn) : base(pawn)
+		public MainAttackEnd(CharacterPawn pawn) : base(pawn)
 		{
 		}
 		
@@ -37,7 +37,7 @@
 
 	public class SideMainAttackStart : PlayerBaseState
 	{
-		public SideMainAttackStart(PlayerPawn pawn) : base(pawn)
+		public SideMainAttackStart(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -51,7 +51,7 @@
 	
 	public class SideMainAttackEnd : PlayerBaseState
 	{
-		public SideMainAttackEnd(PlayerPawn pawn) : base(pawn)
+		public SideMainAttackEnd(CharacterPawn pawn) : base(pawn)
 		{
 		}
 		
@@ -71,7 +71,7 @@
 	
 	public class UpMainAttackStart : PlayerBaseState
 	{
-		public UpMainAttackStart(PlayerPawn pawn) : base(pawn)
+		public UpMainAttackStart(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -85,7 +85,7 @@
 	
 	public class UpMainAttackEnd : PlayerBaseState
 	{
-		public UpMainAttackEnd(PlayerPawn pawn) : base(pawn)
+		public UpMainAttackEnd(CharacterPawn pawn) : base(pawn)
 		{
 		}
 		
@@ -105,7 +105,7 @@
 	
 	public class DownMainAttackStart : PlayerBaseState
 	{
-		public DownMainAttackStart(PlayerPawn pawn) : base(pawn)
+		public DownMainAttackStart(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -119,7 +119,7 @@
 	
 	public class DownMainAttackEnd : PlayerBaseState
 	{
-		public DownMainAttackEnd(PlayerPawn pawn) : base(pawn)
+		public DownMainAttackEnd(CharacterPawn pawn) : base(pawn)
 		{
 		}
 		
@@ -139,7 +139,7 @@
 	
 	public class SpecialAttackStart : PlayerBaseState
 	{
-		public SpecialAttackStart(PlayerPawn pawn) : base(pawn)
+		public SpecialAttackStart(CharacterPawn pawn) : base(pawn)
 		{
 		}	
 		
@@ -153,7 +153,7 @@
 	
 	public class SpecialAttackEnd : PlayerBaseState
 	{
-		public SpecialAttackEnd(PlayerPawn pawn) : base(pawn)
+		public SpecialAttackEnd(CharacterPawn pawn) : base(pawn)
 		{
 		}
 		
@@ -173,7 +173,7 @@
 	
 	public class SideSpecialAttackStart : PlayerBaseState
 	{
-		public SideSpecialAttackStart(PlayerPawn pawn) : base(pawn)
+		public SideSpecialAttackStart(CharacterPawn pawn) : base(pawn)
 		{
 		}
 		
@@ -187,7 +187,7 @@
 	
 	public class SideSpecialAttackEnd : PlayerBaseState
 	{
-		public SideSpecialAttackEnd(PlayerPawn pawn) : base(pawn)
+		public SideSpecialAttackEnd(CharacterPawn pawn) : base(pawn)
 		{
 		}
 		
@@ -207,7 +207,7 @@
 
 	public class UpSpecialAttackStart : PlayerBaseState
 	{
-		public UpSpecialAttackStart(PlayerPawn pawn) : base(pawn)
+		public UpSpecialAttackStart(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -221,7 +221,7 @@
 	
 	public class UpSpecialAttackEnd : PlayerBaseState
 	{
-		public UpSpecialAttackEnd(PlayerPawn pawn) : base(pawn)
+		public UpSpecialAttackEnd(CharacterPawn pawn) : base(pawn)
 		{
 		}
 		
@@ -241,7 +241,7 @@
 	
 	public class DownSpecialAttackStart : PlayerBaseState
 	{
-		public DownSpecialAttackStart(PlayerPawn pawn) : base(pawn)
+		public DownSpecialAttackStart(CharacterPawn pawn) : base(pawn)
 		{
 		}
 
@@ -255,7 +255,7 @@
 	
 	public class DownSpecialAttackEnd : PlayerBaseState
 	{
-		public DownSpecialAttackEnd(PlayerPawn pawn) : base(pawn)
+		public DownSpecialAttackEnd(CharacterPawn pawn) : base(pawn)
 		{
 		}
 		

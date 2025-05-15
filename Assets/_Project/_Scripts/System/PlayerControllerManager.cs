@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Smash.Player;
 using TripleA.Utils.Singletons;
 using UnityEngine;
@@ -10,16 +11,24 @@ namespace Smash.System
 	public class PlayerControllerManager : PersistentSingleton<PlayerControllerManager>
 	{
 		[SerializeField] private PlayerInputManager m_playerInputManager;
-		[SerializeField] private PlayerPawn m_pawnPrefab;
+		[SerializeField] private CharacterPawn m_pawnPrefab;
 		[SerializeField] private PlayerController m_controllerPrefab;
-		private Dictionary<int, BaseController> m_controllers;
+		private Dictionary<int, PlayerController> m_controllers;
+
+		public int CurrentPlayerCount => m_playerInputManager.playerCount;
+		
+		private int m_primaryUiControllerIndex;
+		
+		public event Action<int> OnPlayerJoined; 
+		public event Action<int> OnPlayerRegained; 
+		public event Action<int> OnPlayerLeft; 
 
 		#region Unity Methods
 
 		protected override void Awake()
 		{
 			base.Awake();
-			m_controllers = new Dictionary<int, BaseController>();
+			m_controllers = new Dictionary<int, PlayerController>();
 			m_playerInputManager ??= GetComponent<PlayerInputManager>();
 
 			m_playerInputManager.playerPrefab = m_controllerPrefab.gameObject;
@@ -27,14 +36,14 @@ namespace Smash.System
 
 		private void Start()
 		{
-			m_playerInputManager.onPlayerJoined += OnPlayerJoined;
-			m_playerInputManager.onPlayerLeft += OnPlayerLeft;
+			m_playerInputManager.onPlayerJoined += PlayerJoined;
+			m_playerInputManager.onPlayerLeft += PlayerLeft;
 		}
 
 		private void OnDisable()
 		{
-			m_playerInputManager.onPlayerJoined -= OnPlayerJoined;
-			m_playerInputManager.onPlayerLeft -= OnPlayerLeft;
+			m_playerInputManager.onPlayerJoined -= PlayerJoined;
+			m_playerInputManager.onPlayerLeft -= PlayerLeft;
 		}
 		
 		private void OnValidate()
@@ -50,6 +59,7 @@ namespace Smash.System
 		public void AddInputDeviceAndJoinPlayer(int index, InputDevice device)
 		{
 			m_playerInputManager.JoinPlayer(index, -1, null, device);
+			OnPlayerJoined?.Invoke(index);
 		}
 		
 		public void RemoveInputDeviceAndPlayerControllerWithIndex(int index)
@@ -58,11 +68,68 @@ namespace Smash.System
 			m_controllers.Remove(index);
 		}
 
+		public PlayerController InitialisePawn(int index)
+		{
+			var ctr = m_controllers[index];
+			ctr.Initialise();
+			return ctr;
+		}
+		
+		public PlayerController AssignCharPawnToController(CharacterPawn charPawn, int index)
+		{
+			var ctr = m_controllers[index];
+			ctr.SetPawn(charPawn);
+			return ctr;
+		}
+		
+		public PlayerController AssignUiPawnToController(UiPawn uiPawn, int index)
+		{
+			var ctr = m_controllers[index];
+			ctr.SetPawn(uiPawn);
+			return ctr;
+		}
+		
+		public void SetAsPrimaryUiController(int ctrPlayerIndex)
+		{
+			m_primaryUiControllerIndex = ctrPlayerIndex;
+		}
+
+		public void EnablePrimaryUiController()
+		{
+			m_controllers[m_primaryUiControllerIndex].EnableUiInputAndDisablePlayerInput();
+		}
+
+		public void DisableAllUiInput()
+		{
+			foreach (var ctr in m_controllers.Values)
+			{
+				ctr.DisableUiInput();
+			}
+		}
+
+		public void DisableAllPlayerInput()
+		{
+			foreach (var ctr in m_controllers.Values)
+			{
+				ctr.DisablePlayerInput();
+			}
+		}
+		
+		public void PlayerDeviceRegained(int index)
+		{
+			OnPlayerRegained?.Invoke(index);
+		}
+		
+		public void PlayerDeviceLost(int index)
+		{
+			OnPlayerLeft?.Invoke(index);
+		}
+
 		#endregion Public Methods
 		
 		#region Private Methods
 
-		private void OnPlayerJoined(PlayerInput input)
+		private void PlayerJoined(PlayerInput input)
 		{
 			PlayerController ctr = input.GetComponent<PlayerController>();
 			int playerIndex = input.playerIndex;
@@ -75,11 +142,12 @@ namespace Smash.System
 			}
 		}
 		
-		private void OnPlayerLeft(PlayerInput input)
+		private void PlayerLeft(PlayerInput input)
 		{
 			Debug.Log("Player Left");
 			int playerIndex = input.playerIndex;
 			m_controllers.Remove(playerIndex);
+			PlayerDevicesManager.Instance.RemoveDevice(playerIndex);
 		}
 
 		#endregion Private Methods

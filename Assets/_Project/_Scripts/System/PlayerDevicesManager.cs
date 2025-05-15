@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TripleA.Utils.Singletons;
 using UnityEngine;
@@ -27,12 +28,12 @@ namespace Smash.System
 			m_activeInputDevices = new List<InputDevice>();
 
 			m_joinInputAction = new InputAction(binding: "/*/*");
+			EnablePlayerJoining(0);
 		}
 
 		private void Start()
 		{
 			m_joinInputAction.started += JoinPerformed;
-			EnablePlayerJoining(2); // TODO
 		}
 
 		private void OnDisable()
@@ -59,6 +60,12 @@ namespace Smash.System
 		{
 			m_joinInputAction.Disable();
 		}
+		
+		public void RemoveDevice(int playerIndex)
+		{
+			if (m_activeInputDevices.Count < playerIndex + 1) return;
+			m_activeInputDevices.RemoveAt(playerIndex);
+		}
 
 		private void JoinPerformed(InputAction.CallbackContext context)
 		{
@@ -73,7 +80,6 @@ namespace Smash.System
 				for (int i = m_activeInputDevices.Count - 1; i >= CurrentAllowedPlayerCount; i--)
 				{
 					PlayerControllerManager.Instance.RemoveInputDeviceAndPlayerControllerWithIndex(i);
-					m_activeInputDevices.RemoveAt(i);
 				}
 			}
 		}

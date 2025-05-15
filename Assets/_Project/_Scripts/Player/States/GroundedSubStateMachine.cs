@@ -15,7 +15,7 @@ namespace Smash.Player.States
 
 		#endregion Base States
 		
-		public GroundedSubStateMachine(PlayerPawn pawn) : base(pawn)
+		public GroundedSubStateMachine(CharacterPawn pawn) : base(pawn)
 		{
 			_stateMachine = new StateMachine();
 

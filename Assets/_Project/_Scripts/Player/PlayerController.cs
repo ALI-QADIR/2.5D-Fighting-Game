@@ -1,115 +1,153 @@
+﻿using JetBrains.Annotations;
+using Smash.Player.CommandPattern;
 using Smash.Player.CommandPattern.ActionCommands;
 using Smash.Player.CommandPattern.Controllers;
 using Smash.Player.Input;
+using Smash.System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Smash.Player
 {
-	[RequireComponent(typeof(ButtonActionController))]
-	[RequireComponent(typeof(DPadActionController))]
-	[RequireComponent(typeof(PlayerInputActionsController))]
 	[RequireComponent(typeof(PlayerInput))]
+	[RequireComponent(typeof(PlayerInputActionsController))]
 	public class PlayerController : BaseController
 	{
+		[SerializeField] protected PlayerInputActionsController _inputActionsController;
+		[SerializeField] protected PlayerInput _playerInputComponent;
 		[field: SerializeField] private ButtonActionController ButtonActionControllerComponent { get; set; }
 		[field: SerializeField] private DPadActionController DPadActionControllerComponent { get; set; }
-		[SerializeField] private PlayerInputActionsController m_inputActionsController;
-		[SerializeField] private PlayerInput m_playerInputComponent;
+		[field: SerializeField] private UiActionController UiActionControllerComponent { get; set; }
 
-		[Header("Controller Properties")]
-		[field: SerializeField]
-		public int PlayerIndex { get; private set; }
-
-		private PlayerInputActions m_inputActions;
 
 		[Header("Debug")] 
 		[SerializeField] private bool m_enableInvokerDebug = true;
 		[SerializeField] private bool m_enableQueueDebug = true;
-
-		#region Unity Methods
+		
+		protected PlayerInputActions _inputActions;
+		protected UiPawn _possessedUiPawn;
+		protected UiActionCommandInvoker UiCommandInvoker { get; private set; }
+		
+		public int PlayerIndex { get; private set; }
 
 		protected override void Awake()
 		{
 			base.Awake();
+			transform.SetParent(PlayerControllerManager.Instance.transform);
+			_inputActionsController ??= GetComponent<PlayerInputActionsController>();
+			_playerInputComponent ??= GetComponent<PlayerInput>();
 			ButtonActionControllerComponent ??= GetComponent<ButtonActionController>();
 			DPadActionControllerComponent ??= GetComponent<DPadActionController>();
-			m_playerInputComponent.onDeviceLost += DeviceLost;
-			m_playerInputComponent.onDeviceRegained += DeviceRegained;
+			UiActionControllerComponent ??= GetComponent<UiActionController>();
 			
-			CommandInvoker.Debugging = m_enableInvokerDebug;
+			_playerInputComponent.onDeviceLost += DeviceLost;
+			_playerInputComponent.onDeviceRegained += DeviceRegained;
+			
+			_playerInputComponent.onDeviceLost += DeviceLost;
+			_playerInputComponent.onDeviceRegained += DeviceRegained;
+			
+			GameplayCommandInvoker.Debugging = m_enableInvokerDebug;
 			ComboQueueManager.Debugging = m_enableQueueDebug;
+		}
+
+		protected override void InitialiseCommandInvoker()
+		{
+			base.InitialiseCommandInvoker();
+			UiCommandInvoker ??= new UiActionCommandInvoker();
+			UiCommandInvoker.OnCommandExecutionFinished += UiCommandExecutionFinished;
 		}
 
 		private void OnDestroy()
 		{
-			m_playerInputComponent.onDeviceLost -= DeviceLost;
-			m_playerInputComponent.onDeviceRegained -= DeviceRegained;
-		}
-
-		#endregion Unity Methods
-
-		#region Public Methods
-
-		public override void Initialise(PlayerPawn pawn)
-		{
-			base.Initialise(pawn);
-			Initialise();
+			_playerInputComponent.onDeviceLost -= DeviceLost;
+			_playerInputComponent.onDeviceRegained -= DeviceRegained;
+			_inputActionsController.SetUiInputEnabled(false);
+			_inputActionsController.SetPlayerInputEnabled(false);
 		}
 
 		public void Initialise()
 		{
-			m_inputActionsController ??= GetComponent<PlayerInputActionsController>();
-			m_inputActions = m_inputActionsController.InitialiseInputActions();
-			
-			m_playerInputComponent ??= GetComponent<PlayerInput>();
-			PlayerIndex = m_playerInputComponent.playerIndex;
-			
+			_inputActions = _inputActionsController.InitialiseInputActions();
+			PlayerIndex = _playerInputComponent.playerIndex;
 			InitialiseActionControllers();
 		}
-		
+
+		public void SetPawn(CharacterPawn pawn)
+		{
+			_possessedCharacterPawn = pawn;
+			_inputHandler.SetCharacterPawn(_possessedCharacterPawn);
+			_possessedCharacterPawn.Initialise();
+		}
+
+		public void SetPawn(UiPawn pawn)
+		{
+			_possessedUiPawn = pawn;
+			_inputHandler.SetUiPawn(_possessedUiPawn);
+			_possessedUiPawn.Initialise();
+			_possessedUiPawn.SetIndex(PlayerIndex);
+		}
+
 		public void EnablePlayerInputAndDisableUiInput()
 		{
-			m_inputActionsController.SetUiInputEnabled(false);
-			m_inputActionsController.SetPlayerInputEnabled(true);
+			_inputActionsController.SetUiInputEnabled(false);
+			_inputActionsController.SetPlayerInputEnabled(true);
 		}
-		
+
 		public void EnableUiInputAndDisablePlayerInput()
 		{
-			m_inputActionsController.SetPlayerInputEnabled(false);
-			m_inputActionsController.SetUiInputEnabled(true);
+			_inputActionsController.SetPlayerInputEnabled(false);
+			_inputActionsController.SetUiInputEnabled(true);
 		}
 
-		#endregion  Public Methods
+		public void DisableUiInput()
+		{
+			_inputActionsController.SetUiInputEnabled(false);
+		}
 
-		#region Private Methods
+		public void DisablePlayerInput()
+		{
+			_inputActionsController.SetPlayerInputEnabled(false);
+		}
 
+		public override void Dispose()
+		{
+			base.Dispose();
+			if (_possessedUiPawn)
+				Destroy(_possessedUiPawn.gameObject);
+		}
+		
 		private void InitialiseActionControllers()
 		{
-			ButtonActionControllerComponent.Initialise(m_inputActions, ComboQueueManager);
-			DPadActionControllerComponent.Initialise(m_inputActions, ComboQueueManager);
+			ButtonActionControllerComponent.Initialise(_inputActions, ComboQueueManager);
+			DPadActionControllerComponent.Initialise(_inputActions, ComboQueueManager);
+			UiActionControllerComponent.Initialise(_inputActions, ComboQueueManager);
 		}
 
-		protected override void OnCommandExecutionStarted(IGameplayActionCommand command)
+		protected override void OnGameplayCommandExecutionStarted(IGameplayActionCommand command)
 		{
-			command.StartActionExecution(_possessedPawn);
+			command.StartActionExecution(_inputHandler);
 		}
 
-		protected override void OnCommandExecutionFinished(IGameplayActionCommand command)
+		protected override void OnGameplayCommandExecutionFinished(IGameplayActionCommand command)
 		{
-			command.FinishActionExecution(_possessedPawn);
+			command.FinishActionExecution(_inputHandler);
 		}
 
+		private void UiCommandExecutionFinished(IGameplayActionCommand command)
+		{
+			command.FinishActionExecution(_inputHandler);
+		}
+		
 		private void DeviceLost(PlayerInput _)
 		{
+			PlayerControllerManager.Instance.PlayerDeviceLost(PlayerIndex);
 			Debug.Log("Device lost");
 		}
 
 		private void DeviceRegained(PlayerInput _)
 		{
+			PlayerControllerManager.Instance.PlayerDeviceRegained(PlayerIndex);
 			Debug.Log("Device regained");
 		}
-
-		#endregion Private Methods
 	}
 }
