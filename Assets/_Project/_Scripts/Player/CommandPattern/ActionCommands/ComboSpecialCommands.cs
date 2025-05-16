@@ -4,15 +4,21 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "Combo Side Special";
 		public float HeldDuration { get; set; }
+		private readonly int direction;
+		
+		public ComboSideSpecialCommand(int direction)
+		{
+			this.direction = direction;
+		}
 		
 		public void StartActionExecution(InputHandler inputHandler)
 		{
-			inputHandler.HandleSideSpecialAttackInputStart();
+			inputHandler.HandleSideSpecialAttackInputStart(direction);
 		}
 
 		public void FinishActionExecution(InputHandler inputHandler)
 		{
-			inputHandler.HandleSideSpecialAttackInputEnd(HeldDuration);
+			inputHandler.HandleSideSpecialAttackInputEnd(HeldDuration, direction);
 		}
 	}
 	
@@ -52,15 +58,21 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "Combo Side Main";
 		public float HeldDuration { get; set; }
+		private readonly int direction;
+		
+		public ComboSideMainCommand(int direction)
+		{
+			this.direction = direction;
+		}
 		
 		public void StartActionExecution(InputHandler inputHandler)
 		{
-			inputHandler.HandleSideMainAttackInputStart();
+			inputHandler.HandleSideMainAttackInputStart(direction);
 		}
 		
 		public void FinishActionExecution(InputHandler inputHandler)
 		{
-			inputHandler.HandleSideMainAttackInputEnd(HeldDuration);
+			inputHandler.HandleSideMainAttackInputEnd(HeldDuration, direction);
 		}
 	}
 	

@@ -30,11 +30,6 @@ namespace Smash.World.Tutorial
 			Area.OnAreaEnter -= OnAreaEnter;
 		}
 
-		private void OnDestroy()
-		{
-			Area.OnAreaEnter -= OnAreaEnter;
-		}
-
 		private void OnAreaEnter(Vector3 obj)
 		{
 			Tween.Position(m_tr, obj, m_duration, m_ease);

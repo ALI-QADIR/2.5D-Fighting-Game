@@ -142,7 +142,7 @@ namespace Smash.Player
 
 		#region Public Methods
 		
-		public void Rotate(float angle)
+		public void Rotate(int angle)
 		{
 			if (angle == 0) return;
 			if (CurrentState is Ledge && !m_isJumping) return;

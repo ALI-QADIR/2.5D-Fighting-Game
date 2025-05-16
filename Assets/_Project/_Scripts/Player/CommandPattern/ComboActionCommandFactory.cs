@@ -5,10 +5,10 @@ namespace Smash.Player.CommandPattern
 {
 	public class ComboActionCommandFactory : MonoBehaviour
 	{
-		public IGameplayActionCommand CreateSideSpecialCommand()
+		public IGameplayActionCommand CreateSideSpecialCommand(int direction)
 		{
 			// Debug.Log("Create Side Special Command");
-			return new ComboSideSpecialCommand();
+			return new ComboSideSpecialCommand(direction);
 		}
 		
 		public IGameplayActionCommand CreateDownSpecialCommand()
@@ -23,9 +23,9 @@ namespace Smash.Player.CommandPattern
 			return new ComboUpSpecialCommand();
 		}
 
-		public IGameplayActionCommand CreateSideMainCommand()
+		public IGameplayActionCommand CreateSideMainCommand(int direction)
 		{
-			return new ComboSideMainCommand();
+			return new ComboSideMainCommand(direction);
 		}
 		
 		public IGameplayActionCommand CreateDownMainCommand()
