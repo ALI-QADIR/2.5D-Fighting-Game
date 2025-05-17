@@ -176,6 +176,7 @@ namespace Smash.Player
 			
 			m_numberOfJumps--;
 			m_isJumping = true;
+			m_motor.ShouldAdjustForGround = false;
 			/* // Wall jumping logic
 			 if (CurrentState is WallSlide or Ledge || (CurrentState is Rising or Apex && IsWallDetected()) || m_wallJumpBufferTimer.IsRunning)
 			{
@@ -203,9 +204,6 @@ namespace Smash.Player
 
 		public void SetInAir()
 		{
-			if (IsClimbing()) m_graphicsController.SetClimbing();
-			else m_graphicsController.SetJumping();
-			
 			m_currentMoveSpeed = m_isLaunching ? 0 : m_airSpeed;
 			m_gravity = m_airGravity;
 			m_acceleration = m_airAcceleration;
@@ -214,8 +212,6 @@ namespace Smash.Player
 
 		public void SetOnGround()
 		{
-			m_graphicsController.SetOnGround();
-			
 			m_numberOfJumps = m_maxNumberOfJumps;
 			m_currentMoveSpeed = m_groundSpeed;
 			m_acceleration = m_groundAcceleration;
@@ -224,6 +220,7 @@ namespace Smash.Player
 			m_currentFallSpeed = 0f;
 			
 			RemoveVerticalVelocity();
+			m_motor.ShouldAdjustForGround = true;
 			
 			m_isJumping = false;
 			m_isLaunching = false;
@@ -231,40 +228,24 @@ namespace Smash.Player
 			HandleJumpBuffer();
 		}
 
-		public void SetRunning()
-		{
-			m_graphicsController.SetRunning();
-		}
-
-		public void SetIdle() => m_graphicsController.SetIdle();
-
 		public void SetMainAttackWindup()
 		{
-			// Debug.Log("Dashing");
 			Debug.Log("Main Attack Hold Start");
-			// Play Attack Windup animation
-			m_graphicsController.SetDashing();
 			RemoveVerticalVelocity();
 			m_gravity = 0f;
 		}
 
-		// Call this when main attack animation has to finish
 		public void SetMainAttackExecute()
 		{
-			// Play attack execution animation
 			Debug.Log("Main Attack End");
-			// m_graphicsController.
 		}
 
 		public void SetMainAttackFinish()
 		{
-			// end attack execution animation
 			Debug.Log("Main Attack Finished");
 			CurrentStateMachine.MainAttackHold = false;
 			CurrentStateMachine.MainAttackTap = false;
-			// Debug.Log("Dash Ended");
 			SetGravity();
-			HandleJumpBuffer();
 		}
 
 		public void SetSideMainAttackWindUp()
@@ -422,10 +403,7 @@ namespace Smash.Player
 		{
 			m_currentFallSpeed = m_maxFallSpeed;
 			m_currentMoveSpeed = m_airSpeed;
-			m_graphicsController.SetFalling();
 		}
-
-		public void SetCoyote() => m_graphicsController.SetFalling();
 
 		public void SetCrashingFall()
 		{
@@ -437,8 +415,6 @@ namespace Smash.Player
 		{
 			if (isLedge)
 			{
-				m_graphicsController.SetOnLedge();
-				
 				RemoveVerticalVelocity();
 				m_ledgeDetector.SetOnLedge();
 				m_currentFallSpeed = 0;
@@ -485,7 +461,7 @@ namespace Smash.Player
 
 		#region Private Methods
 
-		private bool IsClimbing()
+		public bool IsClimbing()
 		{
 			bool temp = m_isClimbing;
 			m_isClimbing = false;
@@ -616,8 +592,8 @@ namespace Smash.Player
 		{
 			m_stateMachine = new StateMachine();
 
-			m_groundedState = new GroundedSubStateMachine(this);
-			m_airborneState = new AirborneSubStateMachine(this);
+			m_groundedState = new GroundedSubStateMachine(this, m_graphicsController);
+			m_airborneState = new AirborneSubStateMachine(this, m_graphicsController);
 			m_initState = new PlayerInit();
 			
 			FuncPredicate groundToAirborne = new(() => 

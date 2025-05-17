@@ -1,9 +1,12 @@
-﻿namespace Smash.Player.States
+﻿using Smash.Player.Components;
+using UnityEngine;
+
+namespace Smash.Player.States
 {
 	// TODO: later check if the attack state logic is same, then rather than using so many separate methods for each attack state, pass in the type of the attack state
 	public class MainAttackStart : PlayerBaseState
 	{
-		public MainAttackStart(CharacterPawn pawn) : base(pawn)
+		public MainAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -12,12 +15,15 @@
 			base.OnEnter();
 			_pawn.CurrentState = this;
 			_pawn.SetMainAttackWindup();
+			_graphicsController.SetMainAttackWindUp();
 		}
 	}
 	
 	public class MainAttackEnd : PlayerBaseState
 	{
-		public MainAttackEnd(CharacterPawn pawn) : base(pawn)
+		public float ElapsedTime { get; private set; }
+		
+		public MainAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 		
@@ -25,19 +31,28 @@
 		{
 			base.OnEnter();
 			_pawn.CurrentState = this;
+			ElapsedTime = 0f;
 			_pawn.SetMainAttackExecute();
+			_graphicsController.SetMainAttackFinish();
+		}
+
+		public override void OnUpdate()
+		{
+			base.OnUpdate();
+			ElapsedTime += Time.deltaTime;
 		}
 
 		public override void OnExit()
 		{
 			base.OnExit();
 			_pawn.SetMainAttackFinish();
+			ElapsedTime = 0f;
 		}
 	}
 
 	public class SideMainAttackStart : PlayerBaseState
 	{
-		public SideMainAttackStart(CharacterPawn pawn) : base(pawn)
+		public SideMainAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -51,7 +66,7 @@
 	
 	public class SideMainAttackEnd : PlayerBaseState
 	{
-		public SideMainAttackEnd(CharacterPawn pawn) : base(pawn)
+		public SideMainAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 		
@@ -71,7 +86,7 @@
 	
 	public class UpMainAttackStart : PlayerBaseState
 	{
-		public UpMainAttackStart(CharacterPawn pawn) : base(pawn)
+		public UpMainAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -85,7 +100,7 @@
 	
 	public class UpMainAttackEnd : PlayerBaseState
 	{
-		public UpMainAttackEnd(CharacterPawn pawn) : base(pawn)
+		public UpMainAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 		
@@ -105,7 +120,7 @@
 	
 	public class DownMainAttackStart : PlayerBaseState
 	{
-		public DownMainAttackStart(CharacterPawn pawn) : base(pawn)
+		public DownMainAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -119,7 +134,7 @@
 	
 	public class DownMainAttackEnd : PlayerBaseState
 	{
-		public DownMainAttackEnd(CharacterPawn pawn) : base(pawn)
+		public DownMainAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 		
@@ -139,7 +154,7 @@
 	
 	public class SpecialAttackStart : PlayerBaseState
 	{
-		public SpecialAttackStart(CharacterPawn pawn) : base(pawn)
+		public SpecialAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}	
 		
@@ -148,12 +163,15 @@
 			base.OnEnter();
 			_pawn.CurrentState = this;
 			_pawn.SetSpecialAttackWindup();
+			_graphicsController.SetSpecialAttackWindUp();
 		}
 	}
 	
 	public class SpecialAttackEnd : PlayerBaseState
 	{
-		public SpecialAttackEnd(CharacterPawn pawn) : base(pawn)
+		public float ElapsedTime { get; private set; }
+
+		public SpecialAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 		
@@ -161,19 +179,28 @@
 		{
 			base.OnEnter();
 			_pawn.CurrentState = this;
+			ElapsedTime = 0;
 			_pawn.SetSpecialAttackExecute();
+			_graphicsController.SetSpecialAttackFinish();
+		}
+
+		public override void OnUpdate()
+		{
+			base.OnUpdate();
+			ElapsedTime += Time.deltaTime;
 		}
 
 		public override void OnExit()
 		{
 			base.OnExit();
+			ElapsedTime = 0;
 			_pawn.SetSpecialAttackFinish();
 		}
 	}
 	
 	public class SideSpecialAttackStart : PlayerBaseState
 	{
-		public SideSpecialAttackStart(CharacterPawn pawn) : base(pawn)
+		public SideSpecialAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 		
@@ -187,7 +214,7 @@
 	
 	public class SideSpecialAttackEnd : PlayerBaseState
 	{
-		public SideSpecialAttackEnd(CharacterPawn pawn) : base(pawn)
+		public SideSpecialAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 		
@@ -207,7 +234,7 @@
 
 	public class UpSpecialAttackStart : PlayerBaseState
 	{
-		public UpSpecialAttackStart(CharacterPawn pawn) : base(pawn)
+		public UpSpecialAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -221,7 +248,7 @@
 	
 	public class UpSpecialAttackEnd : PlayerBaseState
 	{
-		public UpSpecialAttackEnd(CharacterPawn pawn) : base(pawn)
+		public UpSpecialAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 		
@@ -241,7 +268,7 @@
 	
 	public class DownSpecialAttackStart : PlayerBaseState
 	{
-		public DownSpecialAttackStart(CharacterPawn pawn) : base(pawn)
+		public DownSpecialAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -255,7 +282,7 @@
 	
 	public class DownSpecialAttackEnd : PlayerBaseState
 	{
-		public DownSpecialAttackEnd(CharacterPawn pawn) : base(pawn)
+		public DownSpecialAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 		
