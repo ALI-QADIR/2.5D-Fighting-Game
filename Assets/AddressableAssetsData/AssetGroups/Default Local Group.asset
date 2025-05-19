@@ -50,11 +50,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4bba85ef0d23c2343a637da2d4c1d46e
-    m_Address: Assets/_Project/Scenes/CharacterSelectScreen.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6daec3202ea980d4cb6cfb60d77b13ec
     m_Address: Assets/_Project/FrictionLess.physicMaterial
     m_ReadOnly: 0
