@@ -1,8 +1,10 @@
-﻿namespace Smash.Player.States
+﻿using Smash.Player.Components;
+
+namespace Smash.Player.States
 {
 	public class GroundEntry : PlayerBaseState
 	{
-		public GroundEntry(CharacterPawn pawn) : base(pawn)
+		public GroundEntry(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -10,12 +12,13 @@
 		{
 			base.OnEnter();
 			_pawn.SetOnGround();
+			_graphicsController.SetOnGround();
 		}
 	}
 	
 	public class Idle : PlayerBaseState
 	{
-		public Idle(CharacterPawn pawn) : base(pawn)
+		public Idle(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -23,13 +26,13 @@
 		{
 			base.OnEnter();
 			_pawn.CurrentState = this;
-			_pawn.SetIdle();
+			_graphicsController.SetIdle();
 		}
 	}
 	
 	public class Moving : PlayerBaseState
 	{
-		public Moving(CharacterPawn pawn) : base(pawn)
+		public Moving(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 		
@@ -37,13 +40,13 @@
 		{
 			base.OnEnter();
 			_pawn.CurrentState = this;
-			_pawn.SetRunning();
+			_graphicsController.SetRunning();
 		}
 	}
 
 	public class GroundExit : PlayerBaseState
 	{
-		public GroundExit(CharacterPawn pawn) : base(pawn)
+		public GroundExit(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 	}

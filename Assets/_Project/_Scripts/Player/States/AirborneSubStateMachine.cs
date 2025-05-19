@@ -1,4 +1,5 @@
-﻿using TripleA.StateMachine.FSM;
+﻿using Smash.Player.Components;
+using TripleA.StateMachine.FSM;
 
 namespace Smash.Player.States
 {
@@ -30,7 +31,7 @@ namespace Smash.Player.States
 
 		#endregion Base States
 
-		public AirborneSubStateMachine(CharacterPawn pawn) : base(pawn)
+		public AirborneSubStateMachine(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 			_stateMachine = new StateMachine();
 			
@@ -82,14 +83,14 @@ namespace Smash.Player.States
 		protected override void CreateStates()
 		{
 			base.CreateStates();
-			_entry = new AirEntry(_pawn);
-			_exit = new AirExit(_pawn);
-			m_rising = new Rising(_pawn);
-			m_falling = new Falling(_pawn);
-			m_coyote = new Coyote(_pawn);
-			m_apex = new Apex(_pawn);
-			m_ledge = new Ledge(_pawn);
-			m_wallSlide = new WallSlide(_pawn);
+			_entry = new AirEntry(_pawn, _graphicsController);
+			_exit = new AirExit(_pawn, _graphicsController);
+			m_rising = new Rising(_pawn, _graphicsController);
+			m_falling = new Falling(_pawn, _graphicsController);
+			m_coyote = new Coyote(_pawn, _graphicsController);
+			m_apex = new Apex(_pawn, _graphicsController);
+			m_ledge = new Ledge(_pawn, _graphicsController);
+			m_wallSlide = new WallSlide(_pawn, _graphicsController);
 		}
 		
 		protected override void CreateTransitions()
@@ -124,12 +125,12 @@ namespace Smash.Player.States
 			_anyToMainAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && MainAttackHold);
 			_anyToMainAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && MainAttackTap);
 			_mainAttackStartToEndCondition = new FuncPredicate(() => !MainAttackHold);
-			_mainAttackEndToEntryCondition = new FuncPredicate(() => true); // wait for duration to be completed
+			_mainAttackEndToEntryCondition = new FuncPredicate(() => _mainAttackEnd.ElapsedTime >= _mainAttackDuration); // wait for duration to be completed
 			
 			_anyToSideMainAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideMainAttackHold);
 			_anyToSideMainAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideMainAttackTap);
 			_sideMainAttackStartToEndCondition = new FuncPredicate(() => !SideMainAttackHold);
-			_sideMainAttackEndToEntryCondition = new FuncPredicate(() => true); // wait for duration to be completed
+			_sideMainAttackEndToEntryCondition = new FuncPredicate(() => _specialAttackEnd.ElapsedTime >= _specialAttackDuration); // wait for duration to be completed
 			
 			_anyToUpMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackHold);
 			_anyToUpMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackTap);

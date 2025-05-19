@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using Smash.Player.Components;
+using UnityEngine;
 
 namespace Smash.Player.States
 {
 	public class AirEntry : PlayerBaseState
 	{
-		public AirEntry(CharacterPawn pawn) : base(pawn)
+		public AirEntry(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -17,7 +18,7 @@ namespace Smash.Player.States
 	
 	public class Rising : PlayerBaseState
 	{
-		public Rising(CharacterPawn pawn) : base(pawn)
+		public Rising(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -26,12 +27,14 @@ namespace Smash.Player.States
 			base.OnEnter();
 			_pawn.CurrentState = this;
 			_pawn.SetInAir();
+			if(_pawn.IsClimbing()) _graphicsController.SetClimbing();
+			else _graphicsController.SetJumping();
 		}
 	}
 	
 	public class Falling : PlayerBaseState
 	{
-		public Falling(CharacterPawn pawn) : base(pawn)
+		public Falling(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -40,6 +43,7 @@ namespace Smash.Player.States
 			base.OnEnter();
 			_pawn.CurrentState = this;
 			_pawn.SetFalling();
+			_graphicsController.SetFalling();
 		}
 	}
 	
@@ -47,7 +51,7 @@ namespace Smash.Player.States
 	{
 		public float ElapsedTime { get; private set; }
 
-		public Coyote(CharacterPawn pawn) : base(pawn)
+		public Coyote(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -57,7 +61,7 @@ namespace Smash.Player.States
 			base.OnEnter();
 			ElapsedTime = 0f;
 			_pawn.CurrentState = this;
-			_pawn.SetCoyote();
+			_graphicsController.SetFalling();
 		}
 		
 		public override void OnUpdate()
@@ -71,7 +75,7 @@ namespace Smash.Player.States
 	{
 		public float ElapsedTime { get; private set; }
 
-		public Apex(CharacterPawn pawn) : base(pawn)
+		public Apex(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -100,7 +104,7 @@ namespace Smash.Player.States
 
 	public class Ledge : PlayerBaseState
 	{
-		public Ledge(CharacterPawn pawn) : base(pawn)
+		public Ledge(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -109,6 +113,7 @@ namespace Smash.Player.States
 			base.OnEnter();
 			_pawn.CurrentState = this;
 			_pawn.SetOnLedge(true);
+			_graphicsController.SetOnLedge();
 		}
 
 		public override void OnExit()
@@ -120,7 +125,7 @@ namespace Smash.Player.States
 	
 	public class WallSlide : PlayerBaseState
 	{
-		public WallSlide(CharacterPawn pawn) : base(pawn)
+		public WallSlide(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
@@ -140,7 +145,7 @@ namespace Smash.Player.States
     
 	public class AirExit : PlayerBaseState
 	{
-		public AirExit(CharacterPawn pawn) : base(pawn)
+		public AirExit(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 	}

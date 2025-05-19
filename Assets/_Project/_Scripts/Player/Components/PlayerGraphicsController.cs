@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Smash.StructsAndEnums;
 using UnityEngine;
 
@@ -11,141 +10,123 @@ namespace Smash.Player.Components
 		[SerializeField] private Animator m_animator;
 		[SerializeField] private AudioSource m_audioSource;
 		
-		[Header("GraphicsData")]
-		[SerializeField] private List<GraphicsProperty> m_graphicsProperties = new();
-
-		private int m_jumps;
+		private int m_groundEntryBoolHash;
+		private int m_ledgeGrabTriggerHash;
+		private int m_climbTriggerHash;
+		private int m_isMovingBoolHash;
+		private int m_isRisingBoolHash;
+		private int m_isFallingBoolHash;
 		
-		private GraphicsProperty m_currentGraphicsProperty;
-		
-		private int m_idleAnimationIndex;
-		private int m_landAnimationIndex;
-		private int m_runningAnimationIndex;
-		private int m_dashAnimationIndex;
-		private int m_fallingAnimationIndex;
-		private int m_ledgeAnimationIndex;
-		private int m_jumpingAnimationIndex;
-		private int m_flipAnimationIndex;
-		private int m_climbAnimationIndex;
-		private int m_wallSlideAnimationIndex;
+		private int m_mainAttackStartTriggerHash;
+		private int m_mainAttackFinishTriggerHash;
 
+		private int m_specialAttackStartTriggerHash;
+		private int m_specialAttackFinishTriggerHash;
+		
 		private void Awake()
 		{
-			if (m_animator == null)
+			
+			m_groundEntryBoolHash = Animator.StringToHash("GroundEntry");
+			m_ledgeGrabTriggerHash = Animator.StringToHash("LedgeGrab");
+			m_climbTriggerHash = Animator.StringToHash("Climb");
+			m_isMovingBoolHash = Animator.StringToHash("IsMoving");
+			m_isRisingBoolHash = Animator.StringToHash("IsRising");
+			m_isFallingBoolHash = Animator.StringToHash("IsFalling");
+			
+			m_mainAttackStartTriggerHash = Animator.StringToHash("MainAttackStart");
+			m_mainAttackFinishTriggerHash = Animator.StringToHash("MainAttackFinish");
+			
+			m_specialAttackStartTriggerHash = Animator.StringToHash("SpecialAttackStart");
+			m_specialAttackFinishTriggerHash = Animator.StringToHash("SpecialAttackFinish");
+			
+			if (!m_animator)
 			{
 				throw new ArgumentNullException(nameof(m_animator));
 			}
 
-			if (m_audioSource == null)
+			if (!m_audioSource)
 			{
 				throw new ArgumentNullException(nameof(m_audioSource));
 			}
-
-			foreach (var property in m_graphicsProperties)
-			{
-				property.SetAnimationHash();
-			}
-			
-			m_idleAnimationIndex = GetIndexByState(GraphicState.Idle);
-			m_landAnimationIndex = GetIndexByState(GraphicState.Land);
-			m_runningAnimationIndex = GetIndexByState(GraphicState.Running);
-			m_dashAnimationIndex = GetIndexByState(GraphicState.Dash);
-			m_fallingAnimationIndex = GetIndexByState(GraphicState.Fall);
-			m_ledgeAnimationIndex = GetIndexByState(GraphicState.Ledge);
-			m_jumpingAnimationIndex = GetIndexByState(GraphicState.Jump);
-			m_flipAnimationIndex = GetIndexByState(GraphicState.Flip);
-			m_climbAnimationIndex = GetIndexByState(GraphicState.Climb);
-			m_wallSlideAnimationIndex = GetIndexByState(GraphicState.WallSlide);
-			
-			m_currentGraphicsProperty = m_graphicsProperties[m_idleAnimationIndex];
 		}
-		
-		private int GetIndexByState(GraphicState state) => m_graphicsProperties.FindIndex(x => x.State == state);
 
 		public void SetOnGround()
 		{
-			m_jumps = 0;
-			if (m_landAnimationIndex == -1) return;
-			
-			PlayGraphicAtIndex(m_landAnimationIndex);
+			Debug.Log("Ground Entry");
+			m_animator.SetBool(m_isFallingBoolHash, false);
+			m_animator.SetBool(m_groundEntryBoolHash, true);
+			m_animator.SetBool(m_isRisingBoolHash, false);
 		}
 
 		public void SetIdle()
 		{
-			if (m_idleAnimationIndex == -1) return;
-			
-			PlayGraphicAtIndex(m_idleAnimationIndex);
+			m_animator.SetBool(m_isMovingBoolHash, false);
 		}
 
 		public void SetRunning()
 		{
-			if (m_runningAnimationIndex == -1) return;
-			
-			PlayGraphicAtIndex(m_runningAnimationIndex);
+			m_animator.SetBool(m_isMovingBoolHash, true);
 		}
 
 		public void SetDashing()
 		{
-			if (m_dashAnimationIndex == -1) return;
-			
-			PlayGraphicAtIndex(m_dashAnimationIndex);
 		}
 
 		public void SetFalling()
 		{
-			if (m_fallingAnimationIndex == -1) return;
-			
-			PlayGraphicAtIndex(m_fallingAnimationIndex);
-		}
-
-		public void SetOnLedge()
-		{
-			m_jumps = 1;
-			if (m_ledgeAnimationIndex == -1) return;
-			
-			PlayGraphicAtIndex(m_ledgeAnimationIndex);
+			m_animator.SetBool(m_groundEntryBoolHash, false);
+			m_animator.SetBool(m_isFallingBoolHash, true);
+			m_animator.SetBool(m_isRisingBoolHash, false);
 		}
 
 		public void SetJumping()
 		{
-			m_jumps++;
-			
-			if (m_jumpingAnimationIndex == -1) return;
-			var index = m_jumpingAnimationIndex;
-			
-			if (m_jumps > 1)
-			{
-				if (m_flipAnimationIndex != -1)
-					index = m_flipAnimationIndex;
-			}
-			PlayGraphicAtIndex(index);
+			m_animator.SetBool(m_groundEntryBoolHash, false);
+			m_animator.SetBool(m_isFallingBoolHash, false);
+			m_animator.SetBool(m_isRisingBoolHash, true);
+		}
+
+		public void SetOnLedge()
+		{
+			m_animator.SetBool(m_groundEntryBoolHash, false);
+			m_animator.SetBool(m_isFallingBoolHash, false);
+			m_animator.SetTrigger(m_ledgeGrabTriggerHash);
 		}
 
 		public void SetClimbing()
 		{
-			if (m_climbAnimationIndex == -1) return;
-			
-			PlayGraphicAtIndex(m_climbAnimationIndex);
+			m_animator.SetTrigger(m_climbTriggerHash);
+			m_animator.SetBool(m_isFallingBoolHash, false);
+			m_animator.SetBool(m_isRisingBoolHash, false);
 		}
 		
 		public void SetWallSliding()
 		{
-			if (m_wallSlideAnimationIndex == -1) return;
-			
-			PlayGraphicAtIndex(m_wallSlideAnimationIndex);
 		}
 
-		private void PlayGraphicAtIndex(int index)
+		#region Attack State Setters
+
+		public void SetMainAttackWindUp()
 		{
-			m_currentGraphicsProperty.StopParticle();
-			m_currentGraphicsProperty.StopSound(ref m_audioSource);
-			
-			m_currentGraphicsProperty = m_graphicsProperties[index];
-			
-			m_currentGraphicsProperty.PlayAnimation(ref m_animator);
-			m_currentGraphicsProperty.PlaySound(ref m_audioSource);
-			m_currentGraphicsProperty.PlayParticle();
+			m_animator.SetTrigger(m_mainAttackStartTriggerHash);
 		}
+		
+		public void SetMainAttackFinish()
+		{
+			m_animator.SetTrigger(m_mainAttackFinishTriggerHash);
+		}
+
+		public void SetSpecialAttackWindUp()
+		{
+			m_animator.SetTrigger(m_specialAttackStartTriggerHash);
+		}
+
+		public void SetSpecialAttackFinish()
+		{
+			m_animator.SetTrigger(m_specialAttackFinishTriggerHash);
+		}
+
+		#endregion Attack State Setters
 	}
 
 	[Serializable]

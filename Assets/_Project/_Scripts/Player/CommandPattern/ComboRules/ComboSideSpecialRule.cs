@@ -8,6 +8,8 @@ namespace Smash.Player.CommandPattern.ComboRules
 	public class ComboSideSpecialRule : ComboSpecialRule
 	{
 		public override string RuleName { get; } = "Combo Side Special Rule";
+
+		private int m_direction;
 		
 		public ComboSideSpecialRule(ComboActionCommandFactory factory) : base(factory)
 		{
@@ -34,13 +36,15 @@ namespace Smash.Player.CommandPattern.ComboRules
 			
 			var firstCommand = sequenceArray[0];
 			var secondCommand = sequenceArray[1];
+			
+			m_direction = secondCommand is DPadLeftActionCommand ? -1 : 1;
 
 			return firstCommand is SouthButtonActionCommand && secondCommand is DPadLeftActionCommand or DPadRightActionCommand;
 		}
 
 		public override IGameplayActionCommand GetResultingComboCommand()
 		{
-			return _factory.CreateSideSpecialCommand();
+			return _factory.CreateSideSpecialCommand(m_direction);
 		}
 	}
 }

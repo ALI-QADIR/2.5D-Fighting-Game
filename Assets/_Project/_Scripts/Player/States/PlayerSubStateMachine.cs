@@ -1,4 +1,5 @@
-﻿using TripleA.StateMachine.FSM;
+﻿using Smash.Player.Components;
+using TripleA.StateMachine.FSM;
 
 namespace Smash.Player.States
 {
@@ -6,6 +7,9 @@ namespace Smash.Player.States
 	{
 		protected StateMachine _stateMachine;
 		protected bool _dashPressed;
+
+		protected float _mainAttackDuration = 0.7f;
+		protected float _specialAttackDuration = 0.94f;
 
 		#region Transition Booleans
 
@@ -132,35 +136,35 @@ namespace Smash.Player.States
 
 		#endregion Attack States
 
-		protected PlayerSubStateMachine(CharacterPawn pawn) : base(pawn)
+		protected PlayerSubStateMachine(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
 
 		protected virtual void CreateStates()
 		{
-			_mainAttackStart = new MainAttackStart(_pawn);
-			_mainAttackEnd = new MainAttackEnd(_pawn);
+			_mainAttackStart = new MainAttackStart(_pawn, _graphicsController);
+			_mainAttackEnd = new MainAttackEnd(_pawn, _graphicsController);
 			
-			_sideMainAttackStart = new SideMainAttackStart(_pawn);
-			_sideMainAttackEnd = new SideMainAttackEnd(_pawn);
+			_sideMainAttackStart = new SideMainAttackStart(_pawn, _graphicsController);
+			_sideMainAttackEnd = new SideMainAttackEnd(_pawn, _graphicsController);
 			
-			_upMainAttackStart = new UpMainAttackStart(_pawn);
-			_upMainAttackEnd = new UpMainAttackEnd(_pawn);
+			_upMainAttackStart = new UpMainAttackStart(_pawn, _graphicsController);
+			_upMainAttackEnd = new UpMainAttackEnd(_pawn, _graphicsController);
 			
-			_downMainAttackStart = new DownMainAttackStart(_pawn);
-			_downMainAttackEnd = new DownMainAttackEnd(_pawn);
+			_downMainAttackStart = new DownMainAttackStart(_pawn, _graphicsController);
+			_downMainAttackEnd = new DownMainAttackEnd(_pawn, _graphicsController);
 			
-			_specialAttackStart = new SpecialAttackStart(_pawn);
-			_specialAttackEnd = new SpecialAttackEnd(_pawn);
+			_specialAttackStart = new SpecialAttackStart(_pawn, _graphicsController);
+			_specialAttackEnd = new SpecialAttackEnd(_pawn, _graphicsController);
 			
-			_sideSpecialAttackStart = new SideSpecialAttackStart(_pawn);
-			_sideSpecialAttackEnd = new SideSpecialAttackEnd(_pawn);
+			_sideSpecialAttackStart = new SideSpecialAttackStart(_pawn, _graphicsController);
+			_sideSpecialAttackEnd = new SideSpecialAttackEnd(_pawn, _graphicsController);
 			
-			_upSpecialAttackStart = new UpSpecialAttackStart(_pawn);
-			_upSpecialAttackEnd = new UpSpecialAttackEnd(_pawn);
+			_upSpecialAttackStart = new UpSpecialAttackStart(_pawn, _graphicsController);
+			_upSpecialAttackEnd = new UpSpecialAttackEnd(_pawn, _graphicsController);
 			
-			_downSpecialAttackStart = new DownSpecialAttackStart(_pawn);
-			_downSpecialAttackEnd = new DownSpecialAttackEnd(_pawn);
+			_downSpecialAttackStart = new DownSpecialAttackStart(_pawn, _graphicsController);
+			_downSpecialAttackEnd = new DownSpecialAttackEnd(_pawn, _graphicsController);
 		}
 		
 		protected virtual void CreateTransitions() {}

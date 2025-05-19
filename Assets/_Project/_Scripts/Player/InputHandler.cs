@@ -118,13 +118,15 @@ namespace Smash.Player
 			m_charPawn.CurrentStateMachine.MainAttackHold = false;
 		}
 		
-		public void HandleSideMainAttackInputStart()
+		public void HandleSideMainAttackInputStart(int direction)
 		{
+			m_charPawn.Rotate(direction);
 			m_charPawn.CurrentStateMachine.SideMainAttackHold = true;
 		}
 		
-		public void HandleSideMainAttackInputEnd(float heldTime)
+		public void HandleSideMainAttackInputEnd(float heldTime, int direction)
 		{
+			m_charPawn.Rotate(direction);
 			m_charPawn.CurrentStateMachine.SideMainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
 			m_charPawn.CurrentStateMachine.SideMainAttackHold = false;
 		}
@@ -164,13 +166,15 @@ namespace Smash.Player
 			m_charPawn.CurrentStateMachine.SpecialAttackHold = false;
 		}
 
-		public void HandleSideSpecialAttackInputStart()
+		public void HandleSideSpecialAttackInputStart(int direction)
 		{
+			m_charPawn.Rotate(direction);
 			m_charPawn.CurrentStateMachine.SideSpecialAttackHold = true;
 		}
 
-		public void HandleSideSpecialAttackInputEnd(float heldTime)
+		public void HandleSideSpecialAttackInputEnd(float heldTime, int direction)
 		{
+			m_charPawn.Rotate(direction);
 			m_charPawn.CurrentStateMachine.SideSpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
 			m_charPawn.CurrentStateMachine.SideSpecialAttackHold = false;
 		}

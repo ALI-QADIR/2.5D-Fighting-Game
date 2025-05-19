@@ -505,7 +505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerCount: 2
   m_characterPawnPrefab: {fileID: 5991776475819307800, guid: f540c158a155a4542b495a087d590539, type: 3}
-  m_uiPawnPrefab: {fileID: 8633439254740976158, guid: a4efd0fd366aade4a88f150d2e5f0301, type: 3}
+  m_uiPawnPrefab: {fileID: 8502294829018829628, guid: a4efd0fd366aade4a88f150d2e5f0301, type: 3}
 --- !u!4 &488258796
 Transform:
   m_ObjectHideFlags: 0
