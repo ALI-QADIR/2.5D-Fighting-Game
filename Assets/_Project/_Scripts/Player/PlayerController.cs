@@ -25,7 +25,6 @@ namespace Smash.Player
 		[SerializeField] private bool m_enableQueueDebug = true;
 		
 		protected PlayerInputActions _inputActions;
-		protected UiPawn _possessedUiPawn;
 		protected UiActionCommandInvoker UiCommandInvoker { get; private set; }
 		
 		public int PlayerIndex { get; private set; }
@@ -62,26 +61,14 @@ namespace Smash.Player
 			_inputActionsController.SetPlayerInputEnabled(false);
 		}
 
-		public void Initialise()
+		public void Initialise(BasePawn pawn)
 		{
 			_inputActions = _inputActionsController.InitialiseInputActions();
+			_possessedPawn = pawn;
+			_possessedPawn.Initialise();
 			PlayerIndex = _playerInputComponent.playerIndex;
+			_possessedPawn.SetIndex(PlayerIndex);
 			InitialiseActionControllers();
-		}
-
-		public void SetPawn(CharacterPawn pawn)
-		{
-			_possessedCharacterPawn = pawn;
-			_inputHandler.SetCharacterPawn(_possessedCharacterPawn);
-			_possessedCharacterPawn.Initialise();
-		}
-
-		public void SetPawn(UiPawn pawn)
-		{
-			_possessedUiPawn = pawn;
-			_inputHandler.SetUiPawn(_possessedUiPawn);
-			_possessedUiPawn.Initialise();
-			_possessedUiPawn.SetIndex(PlayerIndex);
 		}
 
 		public void EnablePlayerInputAndDisableUiInput()
@@ -105,13 +92,6 @@ namespace Smash.Player
 		{
 			_inputActionsController.SetPlayerInputEnabled(false);
 		}
-
-		public override void Dispose()
-		{
-			base.Dispose();
-			if (_possessedUiPawn)
-				Destroy(_possessedUiPawn.gameObject);
-		}
 		
 		private void InitialiseActionControllers()
 		{
@@ -122,17 +102,17 @@ namespace Smash.Player
 
 		protected override void OnGameplayCommandExecutionStarted(IGameplayActionCommand command)
 		{
-			command.StartActionExecution(_inputHandler);
+			command.StartActionExecution(_possessedPawn);
 		}
 
 		protected override void OnGameplayCommandExecutionFinished(IGameplayActionCommand command)
 		{
-			command.FinishActionExecution(_inputHandler);
+			command.FinishActionExecution(_possessedPawn);
 		}
 
 		private void UiCommandExecutionFinished(IGameplayActionCommand command)
 		{
-			command.FinishActionExecution(_inputHandler);
+			command.FinishActionExecution(_possessedPawn);
 		}
 		
 		private void DeviceLost(PlayerInput _)

@@ -8,7 +8,6 @@ namespace Smash.Player.Components
 	{
 		[Header("References")]
 		[SerializeField] private Animator m_animator;
-		[SerializeField] private AudioSource m_audioSource;
 		
 		private int m_groundEntryBoolHash;
 		private int m_ledgeGrabTriggerHash;
@@ -43,16 +42,10 @@ namespace Smash.Player.Components
 			{
 				throw new ArgumentNullException(nameof(m_animator));
 			}
-
-			if (!m_audioSource)
-			{
-				throw new ArgumentNullException(nameof(m_audioSource));
-			}
 		}
 
 		public void SetOnGround()
 		{
-			Debug.Log("Ground Entry");
 			m_animator.SetBool(m_isFallingBoolHash, false);
 			m_animator.SetBool(m_groundEntryBoolHash, true);
 			m_animator.SetBool(m_isRisingBoolHash, false);

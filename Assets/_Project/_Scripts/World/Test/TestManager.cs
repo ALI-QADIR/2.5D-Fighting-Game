@@ -8,7 +8,6 @@ namespace Smash.World.Test
 	{
 		[SerializeField] private int m_playerCount = 2;
 		[SerializeField] private CharacterPawn m_characterPawnPrefab;
-		[SerializeField] private UiPawn m_uiPawnPrefab;
 		
 		private void Start()
 		{
@@ -24,12 +23,9 @@ namespace Smash.World.Test
 
 		private void PlayerJoined(int index)
 		{
-			var characterPawn = Instantiate(m_characterPawnPrefab);
-			var uiPawn = Instantiate(m_uiPawnPrefab);
-			var ctr = PlayerControllerManager.Instance.InitialisePawn(index);
-			ctr.SetPawn(uiPawn);
-			ctr.SetPawn(characterPawn);
-			ctr.EnablePlayerInputAndDisableUiInput();
+			/*var characterPawn = Instantiate(m_characterPawnPrefab);
+			var ctr = PlayerControllerManager.Instance.InitialisePawn(index, characterPawn);
+			ctr.EnablePlayerInputAndDisableUiInput();*/
 		}
 	}
 }

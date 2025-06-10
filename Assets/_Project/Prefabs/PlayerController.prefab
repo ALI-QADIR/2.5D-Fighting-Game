@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 8250523655032828882}
   - component: {fileID: 8851318336808331550}
   - component: {fileID: 449515351122987479}
-  - component: {fileID: 2110548122740596263}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -252,19 +251,6 @@ MonoBehaviour:
   _playerInputComponent: {fileID: 6253768598967610822}
   <ButtonActionControllerComponent>k__BackingField: {fileID: 3933780579439335045}
   <DPadActionControllerComponent>k__BackingField: {fileID: 8797537056396316964}
-  <UiActionControllerComponent>k__BackingField: {fileID: 0}
+  <UiActionControllerComponent>k__BackingField: {fileID: 8250523655032828882}
   m_enableInvokerDebug: 0
   m_enableQueueDebug: 0
---- !u!114 &2110548122740596263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4671264533724570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 575826b31af9494582e0e7498b98e6ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_eventChannel: {fileID: 11400000, guid: c20b1eb0fed58f743b21854c861e9986, type: 2}

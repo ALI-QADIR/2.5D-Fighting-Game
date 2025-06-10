@@ -39,8 +39,7 @@ namespace Smash.System
 			uiPawn.SetIndex(index);
 			uiPawn.SetStatus(PlayerStatus.Selecting);
 			// Debug.Log(index);
-			var ctr = PlayerControllerManager.Instance.InitialisePawn(index);
-			ctr.SetPawn(uiPawn);
+			var ctr = PlayerControllerManager.Instance.InitialisePawn(index, uiPawn);
 			PlayerControllerManager.Instance.DisableAllPlayerInput();
 			PlayerControllerManager.Instance.DisableAllUiInput();
 			ctr.EnableUiInputAndDisablePlayerInput();

@@ -1,4 +1,5 @@
 ﻿using System;
+using Smash.Player.AttackStrategies;
 using Smash.Player.Components;
 using Smash.Player.States;
 using TripleA.Utils.Extensions;
@@ -48,7 +49,7 @@ namespace Smash.Player
 		[Header("Apex")]
 		[SerializeField] private float m_apexTime = 0.05f;
 		[SerializeField, Range(0,1)] private float m_apexSpeedBoostRatio = 0.05f;
-
+		
 		private float m_currentMoveSpeed;
 		private float m_gravity;
 		private float m_currentFallSpeed;
@@ -72,16 +73,22 @@ namespace Smash.Player
 		private AirborneSubStateMachine m_airborneState;
 		private PlayerInit m_initState;
 
+		#region AttackStrategies
+
+		[HideInInspector] public AttackStrategy mainAttackStrategy;
+
+		#endregion AttackStrategies
+
 		#endregion Fields
 
 		#region Properties
 		
 		public float CoyoteTime => m_coyoteTime;
 		public float ApexTime => m_apexTime; 
-		public Vector3 Direction { get; set; }
 		public IState CurrentState { get; set; }
-
 		public PlayerSubStateMachine CurrentStateMachine { get; set; }
+
+		private Vector3 Direction { get; set; }
 
 		#endregion Properties
 		
@@ -93,22 +100,16 @@ namespace Smash.Player
 		{
 			// _inputHandler.SetCharacterPawn(this);
 			
-			m_tr = transform;
-			m_motor ??= GetComponent<PlayerMotor>();
-			m_ledgeDetector ??= GetComponent<LedgeDetector>();
-			m_wallDetector ??= GetComponent<WallDetector>();
-			m_ceilingDetector ??= GetComponent<CeilingDetector>();
-			m_graphicsController ??= GetComponent<PlayerGraphicsController>();
+			SetUpComponents();
 
-			m_currentMoveSpeed = m_groundSpeed;
-			m_gravity = m_airGravity;
-			m_currentFallSpeed = m_maxFallSpeed;
-			m_acceleration = m_groundAcceleration;
-			m_numberOfJumps = m_maxNumberOfJumps;
+			SetUpVariables();
 
-			m_jumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
-			m_wallJumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
+			SetUpTimers();
+
+			SetUpGraphics();
 			
+			SetUpAttackStrategies();
+
 			SetUpStateMachine();
 		}
 
@@ -141,22 +142,45 @@ namespace Smash.Player
 		#endregion Unity Methods
 
 		#region Public Methods
-		
-		public void Rotate(int angle)
+
+		#region Input Handler
+
+		public override void SetIndex(int index)
 		{
-			if (angle == 0) return;
-			if (CurrentState is Ledge && !m_isJumping) return;
-			
-			float lookAngle = Mathf.Approximately(angle, -1.0f) ? 179f : 0f;
-			if (Mathf.Approximately(m_currentLookAngle, lookAngle)) return;
-			
-			m_currentLookAngle = lookAngle;
-			m_targetRotation = Quaternion.Euler(0f, lookAngle, 0f);
-			m_savedRotation = m_tr.rotation;
-			m_elapsedTime = 0;
+			PlayerIndex = index;
+		}
+
+		public override void HandleRightInput() => Direction = Vector3.right;
+
+		public override void HandleLeftInput() => Direction = Vector3.left;
+		
+		public override void HandleDpadNullInput() => Direction = Vector3.zero;
+
+		public override void HandleUpInput()
+		{
+			if (CurrentState is Ledge)
+			{
+				HandleClimb();
+				return;
+			}
+			// else if (CurrentState is WallSlide)
+			// {
+			//  wall jump
+			//  return;
+			// }
+			HandleJumpInput();
+		}
+
+		public override void HandleDownInput()
+		{
+			// if (m_motor.IsGrounded())
+			// {
+			// pass through platform
+			// return;
+			// }
 		}
 		
-		public void HandleJumpInput()
+		public override void HandleJumpInput()
 		{
 			if (m_numberOfJumps <= 0)
 			{
@@ -191,14 +215,101 @@ namespace Smash.Player
 			HandleJump();
 		}
 
-		public void HandleClimb()
+		public override void HandleMainAttackInputStart()
 		{
-			m_isClimbing = true;
-			Vector3 verticalVelocity = m_tr.up * m_climbUpSpeed;
-			Vector3 horizontalVelocity = m_tr.right * m_climbSideSpeed;
-			RemoveVerticalVelocity();
-			m_savedVelocity = horizontalVelocity + verticalVelocity;
+			CurrentStateMachine.MainAttackHold = true;
 		}
+
+		public override void HandleMainAttackInputEnd(float heldTime)
+		{
+			CurrentStateMachine.MainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.MainAttackHold = false;
+		}
+		
+		public override void HandleSideMainAttackInputStart(int direction)
+		{
+			Rotate(direction);
+			CurrentStateMachine.SideMainAttackHold = true;
+		}
+		
+		public override void HandleSideMainAttackInputEnd(float heldTime, int direction)
+		{
+			Rotate(direction);
+			CurrentStateMachine.SideMainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.SideMainAttackHold = false;
+		}
+		
+		public override void HandleUpMainAttackInputStart()
+		{
+			CurrentStateMachine.UpMainAttackHold = true;
+		}
+		
+		public override void HandleUpMainAttackInputEnd(float heldTime)
+		{
+			CurrentStateMachine.UpMainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.UpMainAttackHold = false;
+		}
+
+		public override void HandleDownMainAttackInputStart()
+		{
+			CurrentStateMachine.DownMainAttackHold = true;
+		}
+
+		public override void HandleDownMainAttackInputEnd(float heldTime)
+		{
+			CurrentStateMachine.DownMainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.DownMainAttackHold = false;
+		}
+
+		public override void HandleSpecialAttackInputStart()
+		{
+			Debug.Log("Special Attack Input Start");
+			CurrentStateMachine.SpecialAttackHold = true;
+		}
+
+		public override void HandleSpecialAttackInputEnd(float heldTime)
+		{
+			Debug.Log("Special Attack Input End");
+			CurrentStateMachine.SpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.SpecialAttackHold = false;
+		}
+
+		public override void HandleSideSpecialAttackInputStart(int direction)
+		{
+			Rotate(direction);
+			CurrentStateMachine.SideSpecialAttackHold = true;
+		}
+
+		public override void HandleSideSpecialAttackInputEnd(float heldTime, int direction)
+		{
+			Rotate(direction);
+			CurrentStateMachine.SideSpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.SideSpecialAttackHold = false;
+		}
+
+		public override void HandleDownSpecialAttackInputStart()
+		{
+			CurrentStateMachine.DownSpecialAttackHold = true;
+		}
+		
+		public override void HandleDownSpecialAttackInputEnd(float heldTime)
+		{
+			CurrentStateMachine.DownSpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.DownSpecialAttackHold = false;
+		}
+		
+		public override void HandleUpSpecialAttackInputStart()
+		{
+			CurrentStateMachine.UpSpecialAttackHold = true;
+		}
+		
+		public override void HandleUpSpecialAttackInputEnd(float heldTime)
+		{
+			CurrentStateMachine.UpSpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
+			CurrentStateMachine.UpSpecialAttackHold = false;
+		}
+		
+		#endregion Input Handler
 
 		#region State Setters
 
@@ -460,6 +571,29 @@ namespace Smash.Player
 		#endregion Public Methods
 
 		#region Private Methods
+		
+		private void Rotate(int angle)
+		{
+			if (angle == 0) return;
+			if (CurrentState is Ledge && !m_isJumping) return;
+			
+			float lookAngle = Mathf.Approximately(angle, -1.0f) ? 179f : 0f;
+			if (Mathf.Approximately(m_currentLookAngle, lookAngle)) return;
+			
+			m_currentLookAngle = lookAngle;
+			m_targetRotation = Quaternion.Euler(0f, lookAngle, 0f);
+			m_savedRotation = m_tr.rotation;
+			m_elapsedTime = 0;
+		}
+
+		private void HandleClimb()
+		{
+			m_isClimbing = true;
+			Vector3 verticalVelocity = m_tr.up * m_climbUpSpeed;
+			Vector3 horizontalVelocity = m_tr.right * m_climbSideSpeed;
+			RemoveVerticalVelocity();
+			m_savedVelocity = horizontalVelocity + verticalVelocity;
+		}
 
 		public bool IsClimbing()
 		{
@@ -586,6 +720,47 @@ namespace Smash.Player
 		private void RemoveVerticalVelocity()
 		{
 			m_savedVelocity = Vector3Math.RemoveDotVector(m_savedVelocity, m_tr.up);
+		}
+		
+		private void SetUpGraphics()
+		{
+			Instantiate(m_properties.characterModel, m_tr.position, Quaternion.identity, m_tr);
+			var animator = GetComponent<Animator>();
+			animator.avatar = m_properties.avatar;
+			animator.runtimeAnimatorController = m_properties.animatorController;
+		}
+
+		private void SetUpAttackStrategies()
+		{
+			mainAttackStrategy = Instantiate(m_properties.mainAttackStrategy, m_tr.position, m_tr.rotation, m_tr);
+			mainAttackStrategy.gameObject.layer = gameObject.layer;
+			mainAttackStrategy.Initialise(m_properties.targetLayers);
+		}
+
+		private void SetUpTimers()
+		{
+			m_jumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
+			m_wallJumpBufferTimer = new CountDownTimer(m_jumpBufferTime);
+		}
+
+		private void SetUpVariables()
+		{
+			m_currentMoveSpeed = m_groundSpeed;
+			m_gravity = m_airGravity;
+			m_currentFallSpeed = m_maxFallSpeed;
+			m_acceleration = m_groundAcceleration;
+			m_numberOfJumps = m_maxNumberOfJumps;
+		}
+
+		private void SetUpComponents()
+		{
+			m_tr = transform;
+			m_motor ??= GetComponent<PlayerMotor>();
+			m_ledgeDetector ??= GetComponent<LedgeDetector>();
+			m_wallDetector ??= GetComponent<WallDetector>();
+			m_ceilingDetector ??= GetComponent<CeilingDetector>();
+			m_graphicsController ??= GetComponent<PlayerGraphicsController>();
+			m_properties.SetTargetLayers(gameObject.layer);
 		}
 
 		private void SetUpStateMachine()

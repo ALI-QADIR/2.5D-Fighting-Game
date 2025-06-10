@@ -2,6 +2,7 @@
   "dependencies": {
     "com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#4.1.1",
     "com.kyrylokuzyk.primetween": "file:../Assets/Plugins/PrimeTween/internal/com.kyrylokuzyk.primetween.tgz",
+    "com.triple-a-studios.animation-events": "https://github.com/Triple-A-Studios/TripleA-AnimationEvent.git",
     "com.triple-a-studios.core-setup": "https://github.com/Triple-A-Studios/TripleA-CoreSetup.git",
     "com.triple-a-studios.event-systems": "git+https://github.com/Triple-A-Studios/TripleA-EventSystems.git",
     "com.triple-a-studios.improved-timers": "git+https://github.com/Triple-A-Studios/TripleA-ImprovedTimers.git",

@@ -5,12 +5,12 @@
 		public string ActionName { get; } = "Cancel";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(InputHandler inputHandler)
+		public void StartActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleCancelButton();
 		}
 		
-		public void FinishActionExecution(InputHandler inputHandler)
+		public void FinishActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleCancelButton(this);
 		}
@@ -21,11 +21,11 @@
 		public string ActionName { get; } = "Submit";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(InputHandler inputHandler)
+		public void StartActionExecution(IInputHandler inputHandler)
 		{
 		}
 		
-		public void FinishActionExecution(InputHandler inputHandler)
+		public void FinishActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleSubmitButton(this);
 		}
@@ -42,11 +42,11 @@
 
 		public readonly int direction;
 
-		public void StartActionExecution(InputHandler inputHandler)
+		public void StartActionExecution(IInputHandler inputHandler)
 		{
 		}
 		
-		public void FinishActionExecution(InputHandler inputHandler)
+		public void FinishActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleHorizontalScrollInput(this);
 		}
@@ -63,11 +63,11 @@
 
 		public readonly int direction;
 
-		public void StartActionExecution(InputHandler inputHandler)
+		public void StartActionExecution(IInputHandler inputHandler)
 		{
 		}
 		
-		public void FinishActionExecution(InputHandler inputHandler)
+		public void FinishActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleVerticalScrollInput(this);
 		}
@@ -84,11 +84,11 @@
 
 		private readonly int m_direction;
 
-		public void StartActionExecution(InputHandler inputHandler)
+		public void StartActionExecution(IInputHandler inputHandler)
 		{
 		}
 		
-		public void FinishActionExecution(InputHandler inputHandler)
+		public void FinishActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleShoulderButtonInput(this);
 		}
@@ -105,11 +105,11 @@
 
 		private readonly int m_direction;
 
-		public void StartActionExecution(InputHandler inputHandler)
+		public void StartActionExecution(IInputHandler inputHandler)
 		{
 		}
 		
-		public void FinishActionExecution(InputHandler inputHandler)
+		public void FinishActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleShoulderTriggerInput(this);
 		}
@@ -120,11 +120,11 @@
 		public string ActionName { get; } = "Resume";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(InputHandler inputHandler)
+		public void StartActionExecution(IInputHandler inputHandler)
 		{
 		}
 		
-		public void FinishActionExecution(InputHandler inputHandler)
+		public void FinishActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleResumeInput(this);
 		}

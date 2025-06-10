@@ -33,6 +33,7 @@ namespace Smash.Player.States
 			_pawn.CurrentState = this;
 			ElapsedTime = 0f;
 			_pawn.SetMainAttackExecute();
+			_pawn.mainAttackStrategy.OnBegin();
 			_graphicsController.SetMainAttackFinish();
 		}
 
@@ -40,6 +41,13 @@ namespace Smash.Player.States
 		{
 			base.OnUpdate();
 			ElapsedTime += Time.deltaTime;
+		}
+		
+
+		public override void OnFixedUpdate()
+		{
+			base.OnFixedUpdate();
+			_pawn.mainAttackStrategy.OnFixedUpdate();
 		}
 
 		public override void OnExit()

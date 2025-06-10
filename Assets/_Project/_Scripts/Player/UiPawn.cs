@@ -1,7 +1,7 @@
 ﻿using System;
+using Smash.Player.CommandPattern.ActionCommands;
 using Smash.StructsAndEnums;
 using TMPro;
-using TripleA.Utils.Observables.Primaries;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,30 +12,50 @@ namespace Smash.Player
 		[SerializeField] private Image m_statusImage;
 		[SerializeField] private TMP_Text m_statusText;
 		[SerializeField] private TMP_Text m_indexText;
-		private ObservableBool m_backHeld;
 
 		private PlayerStatus m_status;
-		private int m_index;
-		
-		public float BackHeldTime { get; set; }
 
 		public override void Initialise()
 		{
-			// no-op
-			// _inputHandler.SetUiPawn(this);
-			m_backHeld = new ObservableBool(false);
 		}
-
-		public void BackHeld(bool held)
+		
+		public override void SetIndex(int index)
 		{
-			m_backHeld.Set(held);
-		}
-
-		public void SetIndex(int index)
-		{
-			m_index = index;
+			PlayerIndex = index;
 			index++;
 			m_indexText.SetText("p" + index);
+		}
+
+		public override void HandleCancelButton()
+		{
+		}
+
+		public override void HandleCancelButton(IGameplayActionCommand command)
+		{
+		}
+
+		public override void HandleSubmitButton(IGameplayActionCommand command)
+		{
+		}
+
+		public override void HandleHorizontalScrollInput(IGameplayActionCommand command)
+		{
+		}
+
+		public override void HandleVerticalScrollInput(IGameplayActionCommand command)
+		{
+		}
+
+		public override void HandleShoulderTriggerInput(IGameplayActionCommand command)
+		{
+		}
+
+		public override void HandleShoulderButtonInput(IGameplayActionCommand command)
+		{
+		}
+
+		public override void HandleResumeInput(IGameplayActionCommand command)
+		{
 		}
 
 		public void SetStatus(PlayerStatus status)

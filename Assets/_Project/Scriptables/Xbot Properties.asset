@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3639f2aa628f17742b9f7a9e5d7d2881, type: 3}
+  m_Name: Xbot Properties
+  m_EditorClassIdentifier: 
+  characterName: X Bot
+  characterModel: {fileID: 532613934511650735, guid: a6f3489aff270eb45923ac65251d5b1a, type: 3}
+  animatorController: {fileID: 9100000, guid: 6e20c9be780a00e458f57658c4205868, type: 2}
+  avatar: {fileID: 9000000, guid: 93cc80add8c14e849a2c33440e7a31fd, type: 3}
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  mainAttackStrategy: {fileID: 3097966296594181064, guid: abd254a39683d194c8032a6915d07482, type: 3}

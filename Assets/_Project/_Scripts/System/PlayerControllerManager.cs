@@ -11,13 +11,11 @@ namespace Smash.System
 	public class PlayerControllerManager : PersistentSingleton<PlayerControllerManager>
 	{
 		[SerializeField] private PlayerInputManager m_playerInputManager;
-		[SerializeField] private CharacterPawn m_pawnPrefab;
 		[SerializeField] private PlayerController m_controllerPrefab;
+		[SerializeField] private BasePawn m_pawnPrefab;
 		private Dictionary<int, PlayerController> m_controllers;
 
 		public int CurrentPlayerCount => m_playerInputManager.playerCount;
-		
-		private int m_primaryUiControllerIndex;
 		
 		public event Action<int> OnPlayerJoined; 
 		public event Action<int> OnPlayerRegained; 
@@ -68,35 +66,25 @@ namespace Smash.System
 			m_controllers.Remove(index);
 		}
 
-		public PlayerController InitialisePawn(int index)
+		public PlayerController InitialisePawn(int index, BasePawn pawn)
 		{
 			var ctr = m_controllers[index];
-			ctr.Initialise();
+			ctr.Initialise(pawn);
 			return ctr;
 		}
 		
 		public PlayerController AssignCharPawnToController(CharacterPawn charPawn, int index)
 		{
 			var ctr = m_controllers[index];
-			ctr.SetPawn(charPawn);
+			// ctr.SetPawn(charPawn);
 			return ctr;
 		}
 		
 		public PlayerController AssignUiPawnToController(UiPawn uiPawn, int index)
 		{
 			var ctr = m_controllers[index];
-			ctr.SetPawn(uiPawn);
+			// ctr.SetPawn(uiPawn);
 			return ctr;
-		}
-		
-		public void SetAsPrimaryUiController(int ctrPlayerIndex)
-		{
-			m_primaryUiControllerIndex = ctrPlayerIndex;
-		}
-
-		public void EnablePrimaryUiController()
-		{
-			m_controllers[m_primaryUiControllerIndex].EnableUiInputAndDisablePlayerInput();
 		}
 
 		public void DisableAllUiInput()
@@ -136,9 +124,9 @@ namespace Smash.System
 			if (!m_controllers.ContainsValue(ctr))
 			{
 				m_controllers.Add(playerIndex, ctr);
-				/*var pawn = Instantiate(m_pawnPrefab, Vector3.zero, Quaternion.identity);
+				var pawn = Instantiate(m_pawnPrefab, Vector3.zero, Quaternion.identity);
 				ctr.Initialise(pawn);
-				ctr.EnablePlayerInputAndDisableUiInput();*/
+				ctr.EnablePlayerInputAndDisableUiInput();
 			}
 		}
 		

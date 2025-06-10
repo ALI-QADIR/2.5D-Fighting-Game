@@ -11,12 +11,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 			this.direction = direction;
 		}
 		
-		public void StartActionExecution(InputHandler inputHandler)
+		public void StartActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleSideSpecialAttackInputStart(direction);
 		}
 
-		public void FinishActionExecution(InputHandler inputHandler)
+		public void FinishActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleSideSpecialAttackInputEnd(HeldDuration, direction);
 		}
@@ -27,12 +27,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "Combo Up Special";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(InputHandler inputHandler)
+		public void StartActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleUpSpecialAttackInputStart();
 		}
 		
-		public void FinishActionExecution(InputHandler inputHandler)
+		public void FinishActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleUpSpecialAttackInputEnd(HeldDuration);
 		}
@@ -43,12 +43,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "Combo Down Special";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(InputHandler inputHandler)
+		public void StartActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleDownSpecialAttackInputStart();
 		}
 		
-		public void FinishActionExecution(InputHandler inputHandler)
+		public void FinishActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleDownSpecialAttackInputEnd(HeldDuration);
 		}
@@ -65,12 +65,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 			this.direction = direction;
 		}
 		
-		public void StartActionExecution(InputHandler inputHandler)
+		public void StartActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleSideMainAttackInputStart(direction);
 		}
 		
-		public void FinishActionExecution(InputHandler inputHandler)
+		public void FinishActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleSideMainAttackInputEnd(HeldDuration, direction);
 		}
@@ -81,12 +81,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "Combo Up Main";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(InputHandler inputHandler)
+		public void StartActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleUpMainAttackInputStart();
 		}
 		
-		public void FinishActionExecution(InputHandler inputHandler)
+		public void FinishActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleUpMainAttackInputEnd(HeldDuration);
 		}
@@ -97,12 +97,12 @@ namespace Smash.Player.CommandPattern.ActionCommands
 		public string ActionName { get; } = "Combo Down Main";
 		public float HeldDuration { get; set; }
 		
-		public void StartActionExecution(InputHandler inputHandler)
+		public void StartActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleDownMainAttackInputStart();
 		}
 		
-		public void FinishActionExecution(InputHandler inputHandler)
+		public void FinishActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleDownMainAttackInputEnd(HeldDuration);
 		}
