@@ -64,6 +64,7 @@ namespace Smash.Player
 		private Vector3 m_velocity, m_savedVelocity;
 		private Quaternion m_savedRotation, m_targetRotation;
 		
+		private LayerMask m_targetLayers;
 		private Transform m_tr;
 		private StateMachine m_stateMachine;
 		private CountDownTimer m_jumpBufferTimer;
@@ -72,12 +73,6 @@ namespace Smash.Player
 		private GroundedSubStateMachine m_groundedState;
 		private AirborneSubStateMachine m_airborneState;
 		private PlayerInit m_initState;
-
-		#region AttackStrategies
-
-		[HideInInspector] public AttackStrategy mainAttackStrategy;
-
-		#endregion AttackStrategies
 
 		#endregion Fields
 
@@ -91,7 +86,13 @@ namespace Smash.Player
 		private Vector3 Direction { get; set; }
 
 		#endregion Properties
-		
+
+		#region AttackStrategies
+
+		[HideInInspector] public AttackStrategy mainAttackStrategy;
+		[HideInInspector] public AttackStrategy specialAttackStrategy;
+
+		#endregion AttackStrategies
 		public event Action<bool> OnDash = delegate { };
 		
 		#region Unity Methods
@@ -712,10 +713,7 @@ namespace Smash.Player
 				m_acceleration * Time.fixedDeltaTime);
 		}
 
-		private Vector3 GetMovementVelocity()
-		{
-			return Direction * m_currentMoveSpeed;
-		}
+		private Vector3 GetMovementVelocity() => Direction * m_currentMoveSpeed;
 
 		private void RemoveVerticalVelocity()
 		{
@@ -732,9 +730,14 @@ namespace Smash.Player
 
 		private void SetUpAttackStrategies()
 		{
-			mainAttackStrategy = Instantiate(m_properties.mainAttackStrategy, m_tr.position, m_tr.rotation, m_tr);
-			mainAttackStrategy.gameObject.layer = gameObject.layer;
-			mainAttackStrategy.Initialise(m_properties.targetLayers);
+			mainAttackStrategy = AttackStrategyFactory.CreateAttackStrategy()
+				.WithScanner(m_properties.mainAttackStrategyData.ScanningStrategy, m_tr, m_properties.targetLayers)
+				.WithAbilityEffect(m_properties.mainAttackStrategyData.AbilityEffects);
+			
+			specialAttackStrategy = AttackStrategyFactory.CreateAttackStrategy()
+				.WithScanner(m_properties.specialAttackStrategyData.ScanningStrategy, m_tr, m_properties.targetLayers)
+				.WithAbilityEffect(m_properties.specialAttackStrategyData.AbilityEffects);
+			
 		}
 
 		private void SetUpTimers()
@@ -760,7 +763,7 @@ namespace Smash.Player
 			m_wallDetector ??= GetComponent<WallDetector>();
 			m_ceilingDetector ??= GetComponent<CeilingDetector>();
 			m_graphicsController ??= GetComponent<PlayerGraphicsController>();
-			m_properties.SetTargetLayers(gameObject.layer);
+			SetTargetLayers();
 		}
 
 		private void SetUpStateMachine()
@@ -784,6 +787,23 @@ namespace Smash.Player
 			AddTransition(m_airborneState, m_groundedState, airborneToGround);
 			
 			m_stateMachine.SetState(m_initState);
+		}
+		
+		public void SetTargetLayers()
+		{
+			int selfLayer = gameObject.layer;
+			int layerMask = Physics.AllLayers;
+		    
+			for (int i = 0; i < 32; i++)
+			{
+				if (Physics.GetIgnoreLayerCollision(selfLayer, i))
+					layerMask &= ~(1 << i);
+			}
+		    
+			int ignoreLayer = LayerMask.NameToLayer("Ignore Raycast");
+			layerMask &= ~(1 << ignoreLayer);
+
+			m_targetLayers = layerMask;
 		}
 
 		private void AddTransition(IState from, IState to, IPredicate condition) =>

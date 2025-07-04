@@ -1,0 +1,29 @@
+{
+    "name": "com.TripleA.Smash",
+    "rootNamespace": "Smash",
+    "references": [
+        "GUID:bad8d30211e8bbc4fa13c94604135617",
+        "GUID:84efa3faab19cef42aca8084adddeb5c",
+        "GUID:166d01f6116c79c4ebb6a3a363020f10",
+        "GUID:195eea98c6f292142b53c518c24a6d9f",
+        "GUID:f56d77a89ab140640a16deaf02f7e1b4",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:5540e30183c82e84b954c033c388e06c",
+        "GUID:2073209246492244c9ad62c89d8d37bb",
+        "GUID:caca889fed6088d40b22c2d7e2909c31",
+        "GUID:9e24947de15b9834991c9d8411ea37cf",
+        "GUID:84651a3751eca9349aac36a66bba901b",
+        "GUID:80ecb87cae9c44d19824e70ea7229748",
+        "GUID:fe25561d224ed4743af4c60938a59d0b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

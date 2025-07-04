@@ -18,5 +18,39 @@ MonoBehaviour:
   avatar: {fileID: 9000000, guid: 93cc80add8c14e849a2c33440e7a31fd, type: 3}
   targetLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
-  mainAttackStrategy: {fileID: 3097966296594181064, guid: abd254a39683d194c8032a6915d07482, type: 3}
+    m_Bits: 2147483649
+  mainAttackStrategyData:
+    <AnimDuration>k__BackingField: 0.7
+    <ScanningStrategy>k__BackingField:
+      rid: 4153748323236839527
+    <AbilityEffects>k__BackingField:
+    - rid: 4153748323236839528
+  specialAttackStrategyData:
+    <AnimDuration>k__BackingField: 0.94
+    <ScanningStrategy>k__BackingField:
+      rid: 4153748323236839529
+    <AbilityEffects>k__BackingField:
+    - rid: 4153748323236839530
+  references:
+    version: 2
+    RefIds:
+    - rid: 4153748323236839527
+      type: {class: BoxScanningStrategy, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
+      data:
+        <ScannerPrefab>k__BackingField: {fileID: 0}
+        <CenterOffset>k__BackingField: {x: 0, y: 0, z: 0}
+        dimensions: {x: 0.5, y: 0.35, z: 0.5}
+    - rid: 4153748323236839528
+      type: {class: DamageEffect, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
+      data:
+        damage: 10
+    - rid: 4153748323236839529
+      type: {class: BoxScanningStrategy, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
+      data:
+        <ScannerPrefab>k__BackingField: {fileID: 0}
+        <CenterOffset>k__BackingField: {x: 0, y: 0, z: 0}
+        dimensions: {x: 1, y: 0.35, z: 0.5}
+    - rid: 4153748323236839530
+      type: {class: DamageEffect, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
+      data:
+        damage: 10

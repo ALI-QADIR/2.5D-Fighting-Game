@@ -130,7 +130,7 @@ namespace Smash.Player.States
 			_anyToSideMainAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideMainAttackHold);
 			_anyToSideMainAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideMainAttackTap);
 			_sideMainAttackStartToEndCondition = new FuncPredicate(() => !SideMainAttackHold);
-			_sideMainAttackEndToEntryCondition = new FuncPredicate(() => _specialAttackEnd.ElapsedTime >= _specialAttackDuration); // wait for duration to be completed
+			_sideMainAttackEndToEntryCondition = new FuncPredicate(() => true); // wait for duration to be completed
 			
 			_anyToUpMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackHold);
 			_anyToUpMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackTap);
@@ -145,7 +145,7 @@ namespace Smash.Player.States
 			_anyToSpecialAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && SpecialAttackHold);
 			_anyToSpecialAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && SpecialAttackTap);
 			_specialAttackStartToEndCondition = new FuncPredicate(() => !SpecialAttackHold);
-			_specialAttackEndToEntryCondition = new FuncPredicate(() => true);
+			_specialAttackEndToEntryCondition = new FuncPredicate(() => _specialAttackEnd.ElapsedTime >= _specialAttackDuration);
 			
 			_anyToSideSpecialAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideSpecialAttackHold);
 			_anyToSideSpecialAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideSpecialAttackTap);

@@ -1,6 +1,7 @@
 using Smash.Player.AttackStrategies;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Smash.Player
 {
@@ -14,22 +15,7 @@ namespace Smash.Player
         public LayerMask targetLayers;
 
         [Header("Attack Strategies")] 
-        public AttackStrategy mainAttackStrategy;
-
-        public void SetTargetLayers(int selfLayer)
-        {
-            int layerMask = Physics.AllLayers;
-		    
-            for (int i = 0; i < 32; i++)
-            {
-                if (Physics.GetIgnoreLayerCollision(selfLayer, i))
-                    layerMask &= ~(1 << i);
-            }
-		    
-            int ignoreLayer = LayerMask.NameToLayer("Ignore Raycast");
-            layerMask &= ~(1 << ignoreLayer);
-
-            targetLayers = layerMask;
-        }
+        public AttackStrategyData mainAttackStrategyData;
+        public AttackStrategyData specialAttackStrategyData;
     }
 }
