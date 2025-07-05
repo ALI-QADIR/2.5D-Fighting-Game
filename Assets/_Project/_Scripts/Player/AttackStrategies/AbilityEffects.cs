@@ -18,8 +18,8 @@ namespace Smash.Player.AttackStrategies
 
 		public override void Execute(Collider collider)
 		{
-			collider.TryGetComponent<CharacterHealth>(out var health);
-			health.TakeDamage(10);
+			if (collider.TryGetComponent<CharacterHealth>(out var health))
+				health.TakeDamage(10);
 		}
 	}
 }

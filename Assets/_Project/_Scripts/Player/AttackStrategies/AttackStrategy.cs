@@ -22,14 +22,15 @@ namespace Smash.Player.AttackStrategies
 
 		public void OnFixedUpdate()
 		{
-			// if (!CanAttack) return;
+			if (!CanAttack) return;
 			
 			int hitCount = scanner.Cast();
+			Debug.Log(hitCount);
 			
 			for (int i = 0; i < hitCount; i++)
 			{
 				var result = scanner.results[i];
-				if (!m_hits.Contains(result))
+				if (result != null && !m_hits.Contains(result))
 				{
 					ApplyEffects(result);
 				}

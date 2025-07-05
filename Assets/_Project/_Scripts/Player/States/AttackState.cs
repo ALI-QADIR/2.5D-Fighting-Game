@@ -201,7 +201,6 @@ namespace Smash.Player.States
 		public override void OnFixedUpdate()
 		{
 			base.OnFixedUpdate();
-			Debug.Log("OnFixedUpdate");
 			_pawn.specialAttackStrategy.OnFixedUpdate();
 		}
 

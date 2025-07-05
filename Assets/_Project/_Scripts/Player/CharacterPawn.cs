@@ -64,7 +64,7 @@ namespace Smash.Player
 		private Vector3 m_velocity, m_savedVelocity;
 		private Quaternion m_savedRotation, m_targetRotation;
 		
-		private LayerMask m_targetLayers;
+		private int m_targetLayers;
 		private Transform m_tr;
 		private StateMachine m_stateMachine;
 		private CountDownTimer m_jumpBufferTimer;
@@ -90,7 +90,13 @@ namespace Smash.Player
 		#region AttackStrategies
 
 		[HideInInspector] public AttackStrategy mainAttackStrategy;
+		[HideInInspector] public AttackStrategy sideMainAttackStrategy;
+		[HideInInspector] public AttackStrategy upMainAttackStrategy;
+		[HideInInspector] public AttackStrategy downMainAttackStrategy;
 		[HideInInspector] public AttackStrategy specialAttackStrategy;
+		[HideInInspector] public AttackStrategy sideSpecialAttackStrategy;
+		[HideInInspector] public AttackStrategy upSpecialAttackStrategy;
+		[HideInInspector] public AttackStrategy downSpecialAttackStrategy;
 
 		#endregion AttackStrategies
 		public event Action<bool> OnDash = delegate { };
@@ -731,11 +737,11 @@ namespace Smash.Player
 		private void SetUpAttackStrategies()
 		{
 			mainAttackStrategy = AttackStrategyFactory.CreateAttackStrategy()
-				.WithScanner(m_properties.mainAttackStrategyData.ScanningStrategy, m_tr, m_properties.targetLayers)
+				.WithScanner(m_properties.mainAttackStrategyData.ScanningStrategy, m_tr, m_targetLayers)
 				.WithAbilityEffect(m_properties.mainAttackStrategyData.AbilityEffects);
 			
 			specialAttackStrategy = AttackStrategyFactory.CreateAttackStrategy()
-				.WithScanner(m_properties.specialAttackStrategyData.ScanningStrategy, m_tr, m_properties.targetLayers)
+				.WithScanner(m_properties.specialAttackStrategyData.ScanningStrategy, m_tr, m_targetLayers)
 				.WithAbilityEffect(m_properties.specialAttackStrategyData.AbilityEffects);
 			
 		}
