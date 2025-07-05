@@ -4,7 +4,7 @@ namespace Smash.Player.Components
 {
 	public class SphereHurtBox : Scanner
 	{
-		public float radius;
+		[ReadOnly] public float radius;
 		
 		public override int Cast()
 		{
