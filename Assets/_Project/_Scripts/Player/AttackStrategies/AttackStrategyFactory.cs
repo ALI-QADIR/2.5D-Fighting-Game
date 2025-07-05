@@ -13,10 +13,9 @@ namespace Smash.Player.AttackStrategies
 
 		public static AttackStrategy WithScanner(this AttackStrategy strategy, ScanningStrategy scanningStrategy, Transform parent, int targetLayer = Physics.AllLayers)
 		{
-			strategy.scanner = ScannerFactory.CreateScanner(scanningStrategy.scannerPrefab, parent)
-				.WithOffset(scanningStrategy.centerOffset)
-				.WithTargetLayer(targetLayer)
-				.WithDimensions(scanningStrategy.dimensions);
+			strategy.scanner = scanningStrategy.CreateScanner(parent)
+				.WithOffset(scanningStrategy.CenterOffset)
+				.WithTargetLayer(targetLayer);
 			return strategy;
 		}
 		

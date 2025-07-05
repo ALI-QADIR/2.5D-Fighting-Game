@@ -5,8 +5,7 @@ namespace Smash.Player.Components
 	public abstract class Scanner : MonoBehaviour
 	{
 		public Collider[] results = new Collider[6];
-		public int layerMask;
-		public Vector3 dimensions;
+		[HideInInspector] public int layerMask;
 
 		public abstract int Cast();
 	}
