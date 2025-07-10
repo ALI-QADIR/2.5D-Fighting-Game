@@ -7,6 +7,8 @@ namespace Smash.Player.Components
 		[ReadOnly] public Collider[] results = new Collider[6];
 		[HideInInspector] public int layerMask;
 
-		public abstract int Cast();
+		public abstract int Scan();
+
+		public abstract void Emit();
 	}
 }

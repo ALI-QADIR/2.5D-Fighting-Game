@@ -6,7 +6,7 @@ namespace Smash.Player.Components
 	{
 		public static T CreateScanner<T>(T original, Transform parent) where T : Scanner
 		{
-			return Object.Instantiate(original, parent);
+			return Object.Instantiate(original, parent.position, parent.rotation, parent);
 		}
 
 		public static Scanner WithOffset(this Scanner scanner, Vector3 offset)
@@ -33,6 +33,19 @@ namespace Smash.Player.Components
 			scanner.transform.localScale = Vector3.one * radius;
 			scanner.radius = radius;
 			return scanner;
+		}
+		
+		public static ProjectileSpawner WithSpeedAndMaxDistance(this ProjectileSpawner projectile, float speed, float maxDistance)
+		{
+			projectile.speed = speed;
+			projectile.maxDistance = maxDistance;
+			return projectile;
+		}
+
+		public static ProjectileSpawner WithProjectilePrefab(this ProjectileSpawner projectile, Projectile prefab)
+		{
+			projectile.projectilePrefab = prefab;
+			return projectile;
 		}
 	}
 }

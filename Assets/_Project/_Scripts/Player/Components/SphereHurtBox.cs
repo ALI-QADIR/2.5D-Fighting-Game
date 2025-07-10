@@ -6,13 +6,18 @@ namespace Smash.Player.Components
 	{
 		[ReadOnly] public float radius;
 		
-		public override int Cast()
+		public override int Scan()
 		{
 			Debug.Log("OverlapSphere");
 			return Physics.OverlapSphereNonAlloc(position: transform.position, 
 				radius: radius, 
 				results: results, 
 				layerMask: layerMask);
+		}
+
+		public override void Emit()
+		{
+			// no-op
 		}
 	}
 }

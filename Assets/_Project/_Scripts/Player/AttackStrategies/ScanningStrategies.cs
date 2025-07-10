@@ -13,6 +13,24 @@ namespace Smash.Player.AttackStrategies
 	}
 	
 	[Serializable]
+	public class ProjectileScanningStrategy : ScanningStrategy
+	{
+		[field: SerializeReference] private ProjectileSpawner m_prefab;
+		[field: SerializeField] private float m_radius;
+		[SerializeField] private float m_projectileSpeed;
+		[SerializeField] private float m_maxDistance;
+		[SerializeReference] private Projectile m_projectilePrefab; 
+
+		public override Scanner CreateScanner(Transform parent)
+		{
+			return ScannerFactory.CreateScanner(m_prefab, parent)
+				.WithSpeedAndMaxDistance(m_projectileSpeed, m_maxDistance)
+				.WithProjectilePrefab(m_projectilePrefab)
+				.WithRadius(m_radius);
+		}
+	}
+	
+	[Serializable]
 	public class BoxScanningStrategy : ScanningStrategy
 	{
 		[field: SerializeReference] private CubeHurtBox m_prefab;

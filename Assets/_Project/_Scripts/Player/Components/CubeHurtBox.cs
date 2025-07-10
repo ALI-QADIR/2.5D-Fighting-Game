@@ -6,7 +6,7 @@ namespace Smash.Player.Components
 	{
 		[ReadOnly] public Vector3 halfExtents;
 		
-		public override int Cast()
+		public override int Scan()
 		{
 			Debug.Log("OverlapBox");
 			return Physics.OverlapBoxNonAlloc(
@@ -15,6 +15,11 @@ namespace Smash.Player.Components
 				orientation: transform.rotation,
 				mask: layerMask,
 				results: results);
+		}
+
+		public override void Emit()
+		{
+			// no-op
 		}
 	}
 }

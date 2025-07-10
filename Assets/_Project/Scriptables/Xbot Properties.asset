@@ -22,9 +22,15 @@ MonoBehaviour:
   mainAttackStrategyData:
     <AnimDuration>k__BackingField: 0.7
     <ScanningStrategy>k__BackingField:
-      rid: 4153748347411497047
+      rid: 4153748456985329757
     <AbilityEffects>k__BackingField:
     - rid: 4153748347411497049
+  sideMainAttackStrategyData:
+    <AnimDuration>k__BackingField: 0.55
+    <ScanningStrategy>k__BackingField:
+      rid: 4153748456985329758
+    <AbilityEffects>k__BackingField:
+    - rid: 4153748456985329759
   specialAttackStrategyData:
     <AnimDuration>k__BackingField: 0.94
     <ScanningStrategy>k__BackingField:
@@ -40,17 +46,30 @@ MonoBehaviour:
         <CenterOffset>k__BackingField: {x: 2, y: 1, z: 0}
         m_prefab: {fileID: 3392012914999762302, guid: ebbc42508f193544aba1a44bb6aad690, type: 3}
         m_halfExtents: {x: 1, y: 2, z: 1}
-    - rid: 4153748347411497047
-      type: {class: BoxScanningStrategy, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
-      data:
-        <CenterOffset>k__BackingField: {x: 1, y: 1, z: 0}
-        m_prefab: {fileID: 3392012914999762302, guid: ebbc42508f193544aba1a44bb6aad690, type: 3}
-        m_halfExtents: {x: 0.5, y: 0.5, z: 1}
     - rid: 4153748347411497048
       type: {class: DamageEffect, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
       data:
         damage: 10
     - rid: 4153748347411497049
+      type: {class: DamageEffect, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
+      data:
+        damage: 10
+    - rid: 4153748456985329757
+      type: {class: BoxScanningStrategy, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
+      data:
+        <CenterOffset>k__BackingField: {x: 1, y: 1, z: 0}
+        m_prefab: {fileID: 3392012914999762302, guid: ebbc42508f193544aba1a44bb6aad690, type: 3}
+        m_halfExtents: {x: 1, y: 0.5, z: 1}
+    - rid: 4153748456985329758
+      type: {class: ProjectileScanningStrategy, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
+      data:
+        <CenterOffset>k__BackingField: {x: 1, y: 1, z: 0}
+        m_prefab: {fileID: 3334382288930538699, guid: bb1381b38d36de144b4dea916edb02c8, type: 3}
+        m_radius: 0.5
+        m_projectileSpeed: 30
+        m_maxDistance: 20
+        m_projectilePrefab: {fileID: 3681310503184111825, guid: 4b865bd47d2a09046bea900c19347087, type: 3}
+    - rid: 4153748456985329759
       type: {class: DamageEffect, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
       data:
         damage: 10

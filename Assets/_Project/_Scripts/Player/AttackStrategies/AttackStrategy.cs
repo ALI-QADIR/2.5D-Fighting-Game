@@ -24,7 +24,7 @@ namespace Smash.Player.AttackStrategies
 		{
 			if (!CanAttack) return;
 			
-			int hitCount = scanner.Cast();
+			int hitCount = scanner.Scan();
 			Debug.Log(hitCount);
 			
 			for (int i = 0; i < hitCount; i++)
@@ -39,6 +39,7 @@ namespace Smash.Player.AttackStrategies
 
 		public void Attack()
 		{
+			scanner.Emit();
 		}
 
 		public void OnExit()

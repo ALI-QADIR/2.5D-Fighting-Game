@@ -93,7 +93,7 @@ namespace Smash.Player.States
 			_anyToSideMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && SideMainAttackHold);
 			_anyToSideMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && SideMainAttackTap);
 			_sideMainAttackStartToEndCondition = new FuncPredicate(() => !SideMainAttackHold);
-			_sideMainAttackEndToEntryCondition = new FuncPredicate(() => true); // wait for duration to be completed
+			_sideMainAttackEndToEntryCondition = new FuncPredicate(() => _sideMainAttackEnd.ElapsedTime >= _sideMainAttackDuration); // wait for duration to be completed
 			
 			_anyToUpMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackHold);
 			_anyToUpMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackTap);

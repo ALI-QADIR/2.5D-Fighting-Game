@@ -740,6 +740,10 @@ namespace Smash.Player
 				.WithScanner(m_properties.mainAttackStrategyData.ScanningStrategy, m_tr, m_targetLayers)
 				.WithAbilityEffect(m_properties.mainAttackStrategyData.AbilityEffects);
 			
+			sideMainAttackStrategy = AttackStrategyFactory.CreateAttackStrategy()
+				.WithScanner(m_properties.sideMainAttackStrategyData.ScanningStrategy, m_tr, m_targetLayers)
+				.WithAbilityEffect(m_properties.sideMainAttackStrategyData.AbilityEffects);
+			
 			specialAttackStrategy = AttackStrategyFactory.CreateAttackStrategy()
 				.WithScanner(m_properties.specialAttackStrategyData.ScanningStrategy, m_tr, m_targetLayers)
 				.WithAbilityEffect(m_properties.specialAttackStrategyData.AbilityEffects);

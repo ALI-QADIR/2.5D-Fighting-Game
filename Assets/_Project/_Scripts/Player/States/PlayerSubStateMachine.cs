@@ -10,6 +10,7 @@ namespace Smash.Player.States
 
 		protected float _mainAttackDuration = 0.7f;
 		protected float _specialAttackDuration = 0.94f;
+		protected float _sideMainAttackDuration = 0.55f;
 
 		#region Transition Booleans
 
