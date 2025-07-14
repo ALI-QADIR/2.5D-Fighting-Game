@@ -16,12 +16,13 @@ namespace Smash.Player.AttackStrategies
 			strategy.scanner = scanningStrategy.CreateScanner(parent)
 				.WithOffset(scanningStrategy.CenterOffset)
 				.WithTargetLayer(targetLayer);
+			strategy.SetAbilityContextInScanner();
 			return strategy;
 		}
 		
 		public static AttackStrategy WithAbilityEffect(this AttackStrategy strategy, List<AbilityEffect> abilityEffects)
 		{
-			strategy.abilityEffects = abilityEffects;
+			strategy.CreateAbilityContext(abilityEffects);
 			return strategy;
 		}
 	}

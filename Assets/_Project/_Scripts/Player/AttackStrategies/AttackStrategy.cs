@@ -1,40 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Smash.Player.Components;
-using UnityEngine;
 
 namespace Smash.Player.AttackStrategies
 {
 	public class AttackStrategy : IAttackStrategy
 	{
 		public Scanner scanner;
-		public List<AbilityEffect> abilityEffects = new();
 
-		private HashSet<Collider> m_hits = new();
+		private AbilityContext m_abilityContext;
 
 		public bool CanAttack { get; set; }
 
 		public void OnEnter()
 		{
-			Debug.Log("OnEnter");
-			m_hits.Clear();
+			m_abilityContext.Clear();
 		}
 
 		public void OnFixedUpdate()
 		{
 			if (!CanAttack) return;
 			
-			int hitCount = scanner.Scan();
-			Debug.Log(hitCount);
-			
-			for (int i = 0; i < hitCount; i++)
-			{
-				var result = scanner.results[i];
-				if (result != null && !m_hits.Contains(result))
-				{
-					ApplyEffects(result);
-				}
-			}
+			scanner.Scan();
 		}
 
 		public void Attack()
@@ -45,22 +31,23 @@ namespace Smash.Player.AttackStrategies
 		public void OnExit()
 		{
 		}
-
-		private void ApplyEffects(Collider result)
+		
+		public void SetAbilityContextInScanner()
 		{
-			foreach (var effect in abilityEffects)
-			{
-				effect.Execute(result);
-			}
-			m_hits.Add(result);
+			if (!scanner) return;
+			if (m_abilityContext == null) return;
+			scanner.context = m_abilityContext;
 		}
-	}
-	
-	[Serializable]
-	public class AttackStrategyData
-	{
-		[field: SerializeField] public float AnimDuration { get; private set; } 
-		[field: SerializeReference] public ScanningStrategy ScanningStrategy { get; private set; }
-		[field: SerializeReference] public List<AbilityEffect> AbilityEffects{ get; private set; }
+		
+		public void CreateAbilityContext(List<AbilityEffect> abilityEffectsList)
+		{
+			m_abilityContext = new AbilityContext(abilityEffectsList);
+			SetAbilityContextInScanner();
+		}
+
+		public void SetAbilityModifier(float heldTime)
+		{
+			m_abilityContext.SetAbilityModifier(heldTime);
+		}
 	}
 }

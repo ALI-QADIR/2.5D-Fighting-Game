@@ -16,9 +16,6 @@ MonoBehaviour:
   characterModel: {fileID: 532613934511650735, guid: a6f3489aff270eb45923ac65251d5b1a, type: 3}
   animatorController: {fileID: 9100000, guid: 6e20c9be780a00e458f57658c4205868, type: 2}
   avatar: {fileID: 9000000, guid: 93cc80add8c14e849a2c33440e7a31fd, type: 3}
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 2147483649
   mainAttackStrategyData:
     <AnimDuration>k__BackingField: 0.7
     <ScanningStrategy>k__BackingField:
@@ -49,11 +46,79 @@ MonoBehaviour:
     - rid: 4153748347411497048
       type: {class: DamageEffect, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
       data:
-        damage: 10
+        <IsSelfEffect>k__BackingField: 0
+        m_maxDamage: 10
+        m_damageCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0.2
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.16424619
+          - serializedVersion: 3
+            time: 0.4
+            value: 0.3
+            inSlope: 0.48404706
+            outSlope: 0.48404706
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.2169771
+          - serializedVersion: 3
+            time: 0.8
+            value: 1
+            inSlope: 3.4485044
+            outSlope: 3.4485044
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.071849555
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
     - rid: 4153748347411497049
       type: {class: DamageEffect, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
       data:
-        damage: 10
+        <IsSelfEffect>k__BackingField: 0
+        m_maxDamage: 10
+        m_damageCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0.2
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.16424619
+          - serializedVersion: 3
+            time: 0.4
+            value: 0.3
+            inSlope: 0.48404706
+            outSlope: 0.48404706
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.2169771
+          - serializedVersion: 3
+            time: 0.8
+            value: 1
+            inSlope: 3.4485044
+            outSlope: 3.4485044
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.071849555
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
     - rid: 4153748456985329757
       type: {class: BoxScanningStrategy, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
       data:
@@ -72,4 +137,38 @@ MonoBehaviour:
     - rid: 4153748456985329759
       type: {class: DamageEffect, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
       data:
-        damage: 10
+        <IsSelfEffect>k__BackingField: 0
+        m_maxDamage: 10
+        m_damageCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0.2
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.16424619
+          - serializedVersion: 3
+            time: 0.4
+            value: 0.3
+            inSlope: 0.48404706
+            outSlope: 0.48404706
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.2169771
+          - serializedVersion: 3
+            time: 0.8
+            value: 1
+            inSlope: 3.4485044
+            outSlope: 3.4485044
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.071849555
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4

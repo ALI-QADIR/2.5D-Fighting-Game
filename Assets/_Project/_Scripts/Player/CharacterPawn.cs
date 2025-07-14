@@ -231,6 +231,7 @@ namespace Smash.Player
 		{
 			CurrentStateMachine.MainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
 			CurrentStateMachine.MainAttackHold = false;
+			mainAttackStrategy.SetAbilityModifier(heldTime);
 		}
 		
 		public override void HandleSideMainAttackInputStart(int direction)
@@ -244,6 +245,7 @@ namespace Smash.Player
 			Rotate(direction);
 			CurrentStateMachine.SideMainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
 			CurrentStateMachine.SideMainAttackHold = false;
+			sideMainAttackStrategy.SetAbilityModifier(heldTime);
 		}
 		
 		public override void HandleUpMainAttackInputStart()
@@ -279,6 +281,7 @@ namespace Smash.Player
 			Debug.Log("Special Attack Input End");
 			CurrentStateMachine.SpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
 			CurrentStateMachine.SpecialAttackHold = false;
+			specialAttackStrategy.SetAbilityModifier(heldTime);
 		}
 
 		public override void HandleSideSpecialAttackInputStart(int direction)

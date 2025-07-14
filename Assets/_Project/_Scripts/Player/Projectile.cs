@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Smash.Player.Components;
+using UnityEngine;
 
-namespace Smash.Player.Components
+namespace Smash.Player
 {
 	public class Projectile : MonoBehaviour
 	{
@@ -20,11 +21,13 @@ namespace Smash.Player.Components
 
 		private void FixedUpdate()
 		{
-			Physics.OverlapSphereNonAlloc(
+			int hits = Physics.OverlapSphereNonAlloc(
 				transform.position, 
 				spawner.radius, 
 				spawner.results,
 				spawner.layerMask);
+			
+			spawner.OnScan(hits);
 		}
 	}
 }

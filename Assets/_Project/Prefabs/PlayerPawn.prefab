@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 8228131811739052616}
   - component: {fileID: 8341290951283876547}
   - component: {fileID: 3036866046919688394}
+  - component: {fileID: -1570270125453371028}
   - component: {fileID: -5974730325868678277}
   m_Layer: 6
   m_Name: PlayerPawn
@@ -109,6 +110,7 @@ MonoBehaviour:
   m_ceilingDetector: {fileID: 851043534711153540}
   m_wallDetector: {fileID: 1977780103577655877}
   m_graphicsController: {fileID: 8228131811739052616}
+  m_abilityEffectApplier: {fileID: 0}
   m_properties: {fileID: 11400000, guid: b269f71dd16356745947ddfe21ba67d5, type: 2}
   m_groundGravity: 0
   m_groundSpeed: 5
@@ -322,6 +324,18 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   m_pawn: {fileID: 5991776475819307800}
+--- !u!114 &-1570270125453371028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2686585324151597656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e4c58c7f659476c966d78bb7f673863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-5974730325868678277
 MonoBehaviour:
   m_ObjectHideFlags: 0

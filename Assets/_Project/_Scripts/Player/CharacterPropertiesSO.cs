@@ -1,7 +1,6 @@
 using Smash.Player.AttackStrategies;
 using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Smash.Player
 {
@@ -12,7 +11,6 @@ namespace Smash.Player
         public GameObject characterModel;
         public AnimatorController animatorController;
         public Avatar avatar;
-        public LayerMask targetLayers;
 
         [Header("Attack Strategies")] 
         public AttackStrategyData mainAttackStrategyData;

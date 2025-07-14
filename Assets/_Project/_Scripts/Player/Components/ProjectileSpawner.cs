@@ -8,10 +8,10 @@ namespace Smash.Player.Components
 		[ReadOnly] public float maxDistance;
 		[ReadOnly] public Projectile projectilePrefab;
 		
-		public override int Scan()
+		public override void Scan()
 		{
 			Debug.Log("Projectile");
-			return 0;
+			
 		}
 
 		public override void Emit()
