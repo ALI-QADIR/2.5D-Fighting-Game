@@ -359,11 +359,13 @@ namespace Smash.Player
 		public void SetMainAttackExecute()
 		{
 			Debug.Log("Main Attack End");
+			EnableMovement(false);
 		}
 
 		public void SetMainAttackFinish()
 		{
 			Debug.Log("Main Attack Finished");
+			EnableMovement(true);
 			CurrentStateMachine.MainAttackHold = false;
 			CurrentStateMachine.MainAttackTap = false;
 			SetGravity();
@@ -377,11 +379,13 @@ namespace Smash.Player
 		public void SetSideMainAttackExecute()
 		{
 			Debug.Log("Side Main Attack Execute");
+			EnableMovement(false);
 		}
 
 		public void SetSideMainAttackFinish()
 		{
 			Debug.Log("Side Main Attack Finish");
+			EnableMovement(true);
 			CurrentStateMachine.SideMainAttackHold = false;
 			CurrentStateMachine.SideMainAttackTap = false;
 			SetGravity();
@@ -395,11 +399,13 @@ namespace Smash.Player
 		public void SetUpMainAttackExecute()
 		{
 			Debug.Log("up Main Attack Execute");
+			EnableMovement(false);
 		}
 
 		public void SetUpMainAttackFinish()
 		{
 			Debug.Log("Up Main Attack Finish");
+			EnableMovement(true);
 			CurrentStateMachine.UpMainAttackHold = false;
 			CurrentStateMachine.UpMainAttackTap = false;
 			SetGravity();
@@ -413,11 +419,13 @@ namespace Smash.Player
 		public void SetDownMainAttackExecute()
 		{
 			Debug.Log("Down Main Attack Execute");
+			EnableMovement(false);
 		}
 
 		public void SetDownMainAttackFinish()
 		{
 			Debug.Log("Down Main Attack Finish");
+			EnableMovement(true);
 			CurrentStateMachine.DownMainAttackHold = false;
 			CurrentStateMachine.DownMainAttackTap = false;
 			SetGravity();
@@ -438,6 +446,7 @@ namespace Smash.Player
 		{
 			// Play attack execution animation
 			Debug.Log("Special Attack End");
+			EnableMovement(false);
 			// m_graphicsController.
 		}
 
@@ -447,6 +456,7 @@ namespace Smash.Player
 			Debug.Log("Special Attack Finished");
 			CurrentStateMachine.SpecialAttackHold = false;
 			CurrentStateMachine.SpecialAttackTap = false;
+			EnableMovement(true);
 			// Debug.Log("Dash Ended");
 			SetGravity();
 			HandleJumpBuffer();
@@ -460,11 +470,13 @@ namespace Smash.Player
 		public void SetSideSpecialAttackExecute()
 		{
 			Debug.Log("Side Special Attack Execute");
+			EnableMovement(false);
 		}
 
 		public void SetSideSpecialAttackFinish()
 		{
 			Debug.Log("Side Special Attack Finish");
+			EnableMovement(true);
 			CurrentStateMachine.SideSpecialAttackHold = false;
 			CurrentStateMachine.SideSpecialAttackTap = false;
 			SetGravity();
@@ -478,11 +490,13 @@ namespace Smash.Player
 		public void SetUpSpecialAttackExecute()
 		{
 			Debug.Log("up Special Attack Execute");
+			EnableMovement(false);
 		}
 
 		public void SetUpSpecialAttackFinish()
 		{
 			Debug.Log("Up Special Attack Finish");
+			EnableMovement(true);
 			CurrentStateMachine.UpSpecialAttackHold = false;
 			CurrentStateMachine.UpSpecialAttackTap = false;
 			SetGravity();
@@ -496,11 +510,13 @@ namespace Smash.Player
 		public void SetDownSpecialAttackExecute()
 		{
 			Debug.Log("Down Special Attack Execute");
+			EnableMovement(false);
 		}
 
 		public void SetDownSpecialAttackFinish()
 		{
 			Debug.Log("Down Special Attack Finish");
+			EnableMovement(true);
 			CurrentStateMachine.DownSpecialAttackHold = false;
 			CurrentStateMachine.DownSpecialAttackTap = false;
 			SetGravity();
@@ -665,7 +681,7 @@ namespace Smash.Player
 
 		private void CheckRotation()
 		{
-			if (CurrentState is Ledge or MainAttackStart) return;
+			if (!CurrentStateAllowsRotation()) return;
 			if(Direction ==  Vector3.zero) return;
 			Vector3 inputRotation = Vector3.zero;
 			inputRotation.y = Direction.x > 0f ? 0 : 179f;
@@ -727,6 +743,18 @@ namespace Smash.Player
 		private void RemoveVerticalVelocity()
 		{
 			m_savedVelocity = Vector3Math.RemoveDotVector(m_savedVelocity, m_tr.up);
+		}
+
+		private bool CurrentStateAllowsRotation()
+		{
+			return CurrentState is Idle or Moving or Rising or Falling or Coyote or Apex or WallSlide
+				or SideMainAttackEnd or SideSpecialAttackEnd;
+		}
+		
+		private void EnableMovement(bool enable)
+		{
+			var speed = m_motor.IsGrounded() ? m_groundSpeed : m_airSpeed;
+			m_currentMoveSpeed = enable ? speed: 0f;
 		}
 		
 		private void SetUpGraphics()
