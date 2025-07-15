@@ -1,4 +1,4 @@
-﻿using Smash.Player.AttackStrategies;
+﻿using Smash.Player.AbilityStrategies;
 using UnityEngine;
 
 namespace Smash.Player.Components

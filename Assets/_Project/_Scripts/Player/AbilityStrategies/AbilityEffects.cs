@@ -2,7 +2,7 @@
 using Smash.Player.Components;
 using UnityEngine;
 
-namespace Smash.Player.AttackStrategies
+namespace Smash.Player.AbilityStrategies
 {
 	[Serializable]
 	public abstract class AbilityEffect

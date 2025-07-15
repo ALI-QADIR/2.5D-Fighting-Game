@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Smash.Player.AttackStrategies
+namespace Smash.Player.AbilityStrategies
 {
 	public class AbilityContext
 	{

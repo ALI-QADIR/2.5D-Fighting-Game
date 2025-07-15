@@ -19,28 +19,28 @@ namespace Smash.Player.Components
 			switch (attackType)
 			{
 				case "MainAttack":
-					m_pawn.mainAttackStrategy.CanAttack = true;
+					m_pawn.mainAbilityStrategy.CanAttack = true;
 					break;
 				case "SideMainAttack":
-					m_pawn.sideMainAttackStrategy.CanAttack = true;
+					m_pawn.sideMainAbilityStrategy.CanAttack = true;
 					break;
 				case "UpMainAttack":
-					m_pawn.upMainAttackStrategy.CanAttack = true;
+					m_pawn.upMainAbilityStrategy.CanAttack = true;
 					break;
 				case "DownMainAttack":
-					m_pawn.downMainAttackStrategy.CanAttack = true;
+					m_pawn.downMainAbilityStrategy.CanAttack = true;
 					break;
 				case "SpecialAttack":
-					m_pawn.specialAttackStrategy.CanAttack = true;
+					m_pawn.specialAbilityStrategy.CanAttack = true;
 					break;
 				case "SideSpecialAttack":
-					m_pawn.sideSpecialAttackStrategy.CanAttack = true;
+					m_pawn.sideSpecialAbilityStrategy.CanAttack = true;
 					break;
 				case "UpSpecialAttack":
-					m_pawn.upSpecialAttackStrategy.CanAttack = true;
+					m_pawn.upSpecialAbilityStrategy.CanAttack = true;
 					break;
 				case "DownSpecialAttack":
-					m_pawn.downSpecialAttackStrategy.CanAttack = true;
+					m_pawn.downSpecialAbilityStrategy.CanAttack = true;
 					break;
 				default:
 					throw new ArgumentOutOfRangeException(nameof(attackType), attackType, "Invalid attack type string");
@@ -52,28 +52,28 @@ namespace Smash.Player.Components
 			switch (attackType)
 			{
 				case "MainAttack":
-					m_pawn.mainAttackStrategy.CanAttack = false;
+					m_pawn.mainAbilityStrategy.CanAttack = false;
 					break;
 				case "SideMainAttack":
-					m_pawn.sideMainAttackStrategy.CanAttack = false;
+					m_pawn.sideMainAbilityStrategy.CanAttack = false;
 					break;
 				case "UpMainAttack":
-					m_pawn.upMainAttackStrategy.CanAttack = false;
+					m_pawn.upMainAbilityStrategy.CanAttack = false;
 					break;
 				case "DownMainAttack":
-					m_pawn.downMainAttackStrategy.CanAttack = false;
+					m_pawn.downMainAbilityStrategy.CanAttack = false;
 					break;
 				case "SpecialAttack":
-					m_pawn.specialAttackStrategy.CanAttack = false;
+					m_pawn.specialAbilityStrategy.CanAttack = false;
 					break;
 				case "SideSpecialAttack":
-					m_pawn.sideSpecialAttackStrategy.CanAttack = false;
+					m_pawn.sideSpecialAbilityStrategy.CanAttack = false;
 					break;
 				case "UpSpecialAttack":
-					m_pawn.upSpecialAttackStrategy.CanAttack = false;
+					m_pawn.upSpecialAbilityStrategy.CanAttack = false;
 					break;
 				case "DownSpecialAttack":
-					m_pawn.downSpecialAttackStrategy.CanAttack = false;
+					m_pawn.downSpecialAbilityStrategy.CanAttack = false;
 					break;
 				default:
 					throw new ArgumentOutOfRangeException(nameof(attackType), attackType, "Invalid attack type string");
@@ -85,28 +85,28 @@ namespace Smash.Player.Components
 			switch (attackType)
 			{
 				case "MainAttack":
-					m_pawn.mainAttackStrategy.Attack();
+					m_pawn.mainAbilityStrategy.Attack();
 					break;
 				case "SideMainAttack":
-					m_pawn.sideMainAttackStrategy.Attack();
+					m_pawn.sideMainAbilityStrategy.Attack();
 					break;
 				case "UpMainAttack":
-					m_pawn.upMainAttackStrategy.Attack();
+					m_pawn.upMainAbilityStrategy.Attack();
 					break;
 				case "DownMainAttack":
-					m_pawn.downMainAttackStrategy.Attack();
+					m_pawn.downMainAbilityStrategy.Attack();
 					break;
 				case "SpecialAttack":
-					m_pawn.specialAttackStrategy.Attack();
+					m_pawn.specialAbilityStrategy.Attack();
 					break;
 				case "SideSpecialAttack":
-					m_pawn.sideSpecialAttackStrategy.Attack();
+					m_pawn.sideSpecialAbilityStrategy.Attack();
 					break;
 				case "UpSpecialAttack":
-					m_pawn.upSpecialAttackStrategy.Attack();
+					m_pawn.upSpecialAbilityStrategy.Attack();
 					break;
 				case "DownSpecialAttack":
-					m_pawn.downSpecialAttackStrategy.Attack();
+					m_pawn.downSpecialAbilityStrategy.Attack();
 					break;
 				default:
 					throw new ArgumentOutOfRangeException(nameof(attackType), attackType, "Invalid attack type string");

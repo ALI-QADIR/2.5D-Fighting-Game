@@ -16,35 +16,29 @@ MonoBehaviour:
   characterModel: {fileID: 532613934511650735, guid: a6f3489aff270eb45923ac65251d5b1a, type: 3}
   animatorController: {fileID: 9100000, guid: 6e20c9be780a00e458f57658c4205868, type: 2}
   avatar: {fileID: 9000000, guid: 93cc80add8c14e849a2c33440e7a31fd, type: 3}
-  mainAttackStrategyData:
-    <AnimDuration>k__BackingField: 0.7
+  mainAbilityStrategyData:
+    <AnimDuration>k__BackingField: 0
     <ScanningStrategy>k__BackingField:
-      rid: 4153748456985329757
+      rid: 4153748571275657319
     <AbilityEffects>k__BackingField:
-    - rid: 4153748347411497049
-  sideMainAttackStrategyData:
-    <AnimDuration>k__BackingField: 0.55
+    - rid: 4153748571275657314
+  sideMainAbilityStrategyData:
+    <AnimDuration>k__BackingField: 0
     <ScanningStrategy>k__BackingField:
-      rid: 4153748456985329758
+      rid: 4153748571275657318
     <AbilityEffects>k__BackingField:
-    - rid: 4153748456985329759
-  specialAttackStrategyData:
-    <AnimDuration>k__BackingField: 0.94
+    - rid: 4153748571275657315
+  specialAbilityStrategyData:
+    <AnimDuration>k__BackingField: 0
     <ScanningStrategy>k__BackingField:
-      rid: 4153748323236839529
+      rid: 4153748571275657317
     <AbilityEffects>k__BackingField:
-    - rid: 4153748347411497048
+    - rid: 4153748571275657316
   references:
     version: 2
     RefIds:
-    - rid: 4153748323236839529
-      type: {class: BoxScanningStrategy, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
-      data:
-        <CenterOffset>k__BackingField: {x: 2, y: 1, z: 0}
-        m_prefab: {fileID: 3392012914999762302, guid: ebbc42508f193544aba1a44bb6aad690, type: 3}
-        m_halfExtents: {x: 1, y: 2, z: 1}
-    - rid: 4153748347411497048
-      type: {class: DamageEffect, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
+    - rid: 4153748571275657314
+      type: {class: DamageEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
         <IsSelfEffect>k__BackingField: 0
         m_maxDamage: 10
@@ -54,35 +48,35 @@ MonoBehaviour:
           - serializedVersion: 3
             time: 0
             value: 0.2
-            inSlope: 0
-            outSlope: 0
+            inSlope: 0.0800798
+            outSlope: 0.0800798
             tangentMode: 0
             weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.16424619
+            inWeight: 0
+            outWeight: 0.30119058
           - serializedVersion: 3
-            time: 0.4
-            value: 0.3
-            inSlope: 0.48404706
-            outSlope: 0.48404706
+            time: 0.6
+            value: 0.4
+            inSlope: 0.8582238
+            outSlope: 0.8582238
             tangentMode: 0
             weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.2169771
+            inWeight: 0.13065445
+            outWeight: 0.24597181
           - serializedVersion: 3
-            time: 0.8
+            time: 1
             value: 1
-            inSlope: 3.4485044
-            outSlope: 3.4485044
+            inSlope: 2.311814
+            outSlope: 2.311814
             tangentMode: 0
             weightedMode: 0
-            inWeight: 0.071849555
+            inWeight: 0.11940748
             outWeight: 0
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-    - rid: 4153748347411497049
-      type: {class: DamageEffect, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
+    - rid: 4153748571275657315
+      type: {class: DamageEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
         <IsSelfEffect>k__BackingField: 0
         m_maxDamage: 10
@@ -92,83 +86,89 @@ MonoBehaviour:
           - serializedVersion: 3
             time: 0
             value: 0.2
-            inSlope: 0
-            outSlope: 0
+            inSlope: 0.0800798
+            outSlope: 0.0800798
             tangentMode: 0
             weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.16424619
+            inWeight: 0
+            outWeight: 0.30119058
           - serializedVersion: 3
-            time: 0.4
-            value: 0.3
-            inSlope: 0.48404706
-            outSlope: 0.48404706
+            time: 0.6
+            value: 0.4
+            inSlope: 0.8582238
+            outSlope: 0.8582238
             tangentMode: 0
             weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.2169771
+            inWeight: 0.13065445
+            outWeight: 0.24597181
           - serializedVersion: 3
-            time: 0.8
+            time: 1
             value: 1
-            inSlope: 3.4485044
-            outSlope: 3.4485044
+            inSlope: 2.311814
+            outSlope: 2.311814
             tangentMode: 0
             weightedMode: 0
-            inWeight: 0.071849555
+            inWeight: 0.11940748
             outWeight: 0
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-    - rid: 4153748456985329757
-      type: {class: BoxScanningStrategy, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
+    - rid: 4153748571275657316
+      type: {class: DamageEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <IsSelfEffect>k__BackingField: 0
+        m_maxDamage: 10
+        m_damageCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0.2
+            inSlope: 0.0800798
+            outSlope: 0.0800798
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.30119058
+          - serializedVersion: 3
+            time: 0.6
+            value: 0.4
+            inSlope: 0.8582238
+            outSlope: 0.8582238
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.13065445
+            outWeight: 0.24597181
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 2.311814
+            outSlope: 2.311814
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.11940748
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+    - rid: 4153748571275657317
+      type: {class: SphereScanningStrategy, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
         <CenterOffset>k__BackingField: {x: 1, y: 1, z: 0}
-        m_prefab: {fileID: 3392012914999762302, guid: ebbc42508f193544aba1a44bb6aad690, type: 3}
-        m_halfExtents: {x: 1, y: 0.5, z: 1}
-    - rid: 4153748456985329758
-      type: {class: ProjectileScanningStrategy, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
+        m_prefab: {fileID: 5135671406773843300, guid: 6d14f318ce054f74b80cb91291eddeba, type: 3}
+        m_radius: 1
+    - rid: 4153748571275657318
+      type: {class: ProjectileScanningStrategy, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
-        <CenterOffset>k__BackingField: {x: 1, y: 1, z: 0}
+        <CenterOffset>k__BackingField: {x: 0.5, y: 1, z: 0}
         m_prefab: {fileID: 3334382288930538699, guid: bb1381b38d36de144b4dea916edb02c8, type: 3}
         m_radius: 0.5
-        m_projectileSpeed: 30
+        m_projectileSpeed: 5
         m_maxDistance: 20
         m_projectilePrefab: {fileID: 3681310503184111825, guid: 4b865bd47d2a09046bea900c19347087, type: 3}
-    - rid: 4153748456985329759
-      type: {class: DamageEffect, ns: Smash.Player.AttackStrategies, asm: com.TripleA.Smash}
+    - rid: 4153748571275657319
+      type: {class: BoxScanningStrategy, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
-        <IsSelfEffect>k__BackingField: 0
-        m_maxDamage: 10
-        m_damageCurve:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 0
-            value: 0.2
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.16424619
-          - serializedVersion: 3
-            time: 0.4
-            value: 0.3
-            inSlope: 0.48404706
-            outSlope: 0.48404706
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0.33333334
-            outWeight: 0.2169771
-          - serializedVersion: 3
-            time: 0.8
-            value: 1
-            inSlope: 3.4485044
-            outSlope: 3.4485044
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0.071849555
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
+        <CenterOffset>k__BackingField: {x: 1, y: 1, z: 0}
+        m_prefab: {fileID: 3392012914999762302, guid: ebbc42508f193544aba1a44bb6aad690, type: 3}
+        m_halfExtents: {x: 1, y: 0.3, z: 0.5}

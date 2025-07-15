@@ -1,5 +1,5 @@
 ﻿using System;
-using Smash.Player.AttackStrategies;
+using Smash.Player.AbilityStrategies;
 using Smash.Player.Components;
 using Smash.Player.States;
 using TripleA.Utils.Extensions;
@@ -89,14 +89,14 @@ namespace Smash.Player
 
 		#region AttackStrategies
 
-		[HideInInspector] public AttackStrategy mainAttackStrategy;
-		[HideInInspector] public AttackStrategy sideMainAttackStrategy;
-		[HideInInspector] public AttackStrategy upMainAttackStrategy;
-		[HideInInspector] public AttackStrategy downMainAttackStrategy;
-		[HideInInspector] public AttackStrategy specialAttackStrategy;
-		[HideInInspector] public AttackStrategy sideSpecialAttackStrategy;
-		[HideInInspector] public AttackStrategy upSpecialAttackStrategy;
-		[HideInInspector] public AttackStrategy downSpecialAttackStrategy;
+		[HideInInspector] public AbilityStrategy mainAbilityStrategy;
+		[HideInInspector] public AbilityStrategy sideMainAbilityStrategy;
+		[HideInInspector] public AbilityStrategy upMainAbilityStrategy;
+		[HideInInspector] public AbilityStrategy downMainAbilityStrategy;
+		[HideInInspector] public AbilityStrategy specialAbilityStrategy;
+		[HideInInspector] public AbilityStrategy sideSpecialAbilityStrategy;
+		[HideInInspector] public AbilityStrategy upSpecialAbilityStrategy;
+		[HideInInspector] public AbilityStrategy downSpecialAbilityStrategy;
 
 		#endregion AttackStrategies
 		public event Action<bool> OnDash = delegate { };
@@ -231,7 +231,7 @@ namespace Smash.Player
 		{
 			CurrentStateMachine.MainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
 			CurrentStateMachine.MainAttackHold = false;
-			mainAttackStrategy.SetAbilityModifier(heldTime);
+			mainAbilityStrategy.SetAbilityModifier(heldTime);
 		}
 		
 		public override void HandleSideMainAttackInputStart(int direction)
@@ -245,7 +245,7 @@ namespace Smash.Player
 			Rotate(direction);
 			CurrentStateMachine.SideMainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
 			CurrentStateMachine.SideMainAttackHold = false;
-			sideMainAttackStrategy.SetAbilityModifier(heldTime);
+			sideMainAbilityStrategy.SetAbilityModifier(heldTime);
 		}
 		
 		public override void HandleUpMainAttackInputStart()
@@ -281,7 +281,7 @@ namespace Smash.Player
 			Debug.Log("Special Attack Input End");
 			CurrentStateMachine.SpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
 			CurrentStateMachine.SpecialAttackHold = false;
-			specialAttackStrategy.SetAbilityModifier(heldTime);
+			specialAbilityStrategy.SetAbilityModifier(heldTime);
 		}
 
 		public override void HandleSideSpecialAttackInputStart(int direction)
@@ -739,17 +739,17 @@ namespace Smash.Player
 
 		private void SetUpAttackStrategies()
 		{
-			mainAttackStrategy = AttackStrategyFactory.CreateAttackStrategy()
-				.WithScanner(m_properties.mainAttackStrategyData.ScanningStrategy, m_tr, m_targetLayers)
-				.WithAbilityEffect(m_properties.mainAttackStrategyData.AbilityEffects);
+			mainAbilityStrategy = AbilityStrategyFactory.CreateAttackStrategy()
+				.WithScanner(m_properties.mainAbilityStrategyData.ScanningStrategy, m_tr, m_targetLayers)
+				.WithAbilityEffect(m_properties.mainAbilityStrategyData.AbilityEffects);
 			
-			sideMainAttackStrategy = AttackStrategyFactory.CreateAttackStrategy()
-				.WithScanner(m_properties.sideMainAttackStrategyData.ScanningStrategy, m_tr, m_targetLayers)
-				.WithAbilityEffect(m_properties.sideMainAttackStrategyData.AbilityEffects);
+			sideMainAbilityStrategy = AbilityStrategyFactory.CreateAttackStrategy()
+				.WithScanner(m_properties.sideMainAbilityStrategyData.ScanningStrategy, m_tr, m_targetLayers)
+				.WithAbilityEffect(m_properties.sideMainAbilityStrategyData.AbilityEffects);
 			
-			specialAttackStrategy = AttackStrategyFactory.CreateAttackStrategy()
-				.WithScanner(m_properties.specialAttackStrategyData.ScanningStrategy, m_tr, m_targetLayers)
-				.WithAbilityEffect(m_properties.specialAttackStrategyData.AbilityEffects);
+			specialAbilityStrategy = AbilityStrategyFactory.CreateAttackStrategy()
+				.WithScanner(m_properties.specialAbilityStrategyData.ScanningStrategy, m_tr, m_targetLayers)
+				.WithAbilityEffect(m_properties.specialAbilityStrategyData.AbilityEffects);
 			
 		}
 
@@ -783,8 +783,15 @@ namespace Smash.Player
 		{
 			m_stateMachine = new StateMachine();
 
-			m_groundedState = new GroundedSubStateMachine(this, m_graphicsController);
-			m_airborneState = new AirborneSubStateMachine(this, m_graphicsController);
+			m_groundedState = new GroundedSubStateMachine(this, m_graphicsController,
+				m_properties.mainAbilityStrategyData.AnimDuration,
+				m_properties.sideMainAbilityStrategyData.AnimDuration,
+				m_properties.specialAbilityStrategyData.AnimDuration);
+			
+			m_airborneState = new AirborneSubStateMachine(this, m_graphicsController,
+				m_properties.mainAbilityStrategyData.AnimDuration,
+				m_properties.sideMainAbilityStrategyData.AnimDuration,
+				m_properties.specialAbilityStrategyData.AnimDuration);
 			m_initState = new PlayerInit();
 			
 			FuncPredicate groundToAirborne = new(() => 

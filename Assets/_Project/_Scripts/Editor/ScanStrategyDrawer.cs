@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Smash.Player.AttackStrategies;
+using Smash.Player.AbilityStrategies;
 using UnityEditor;
 using UnityEngine;
 

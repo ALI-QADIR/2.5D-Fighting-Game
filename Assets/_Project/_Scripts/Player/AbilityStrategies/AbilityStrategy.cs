@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Smash.Player.Components;
 
-namespace Smash.Player.AttackStrategies
+namespace Smash.Player.AbilityStrategies
 {
-	public class AttackStrategy : IAttackStrategy
+	public class AbilityStrategy
 	{
 		public Scanner scanner;
 

@@ -1,6 +1,7 @@
-using Smash.Player.AttackStrategies;
+using Smash.Player.AbilityStrategies;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Smash.Player
 {
@@ -13,8 +14,8 @@ namespace Smash.Player
         public Avatar avatar;
 
         [Header("Attack Strategies")] 
-        public AttackStrategyData mainAttackStrategyData;
-        public AttackStrategyData sideMainAttackStrategyData;
-        public AttackStrategyData specialAttackStrategyData;
+        public AbilityStrategyData mainAbilityStrategyData;
+        public AbilityStrategyData sideMainAbilityStrategyData;
+        public AbilityStrategyData specialAbilityStrategyData;
     }
 }

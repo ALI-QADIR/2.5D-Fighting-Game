@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Smash.Player.AttackStrategies
+namespace Smash.Player.AbilityStrategies
 {
 	[Serializable]
-	public class AttackStrategyData
+	public class AbilityStrategyData
 	{
 		[field: SerializeField] public float AnimDuration { get; private set; } 
 		[field: SerializeReference] public ScanningStrategy ScanningStrategy { get; private set; }

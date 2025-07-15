@@ -33,7 +33,7 @@ namespace Smash.Player.States
 			_pawn.CurrentState = this;
 			ElapsedTime = 0f;
 			_pawn.SetMainAttackExecute();
-			_pawn.mainAttackStrategy.OnEnter();
+			_pawn.mainAbilityStrategy.OnEnter();
 			_graphicsController.SetMainAttackFinish();
 		}
 
@@ -46,14 +46,14 @@ namespace Smash.Player.States
 		public override void OnFixedUpdate()
 		{
 			base.OnFixedUpdate();
-			_pawn.mainAttackStrategy.OnFixedUpdate();
+			_pawn.mainAbilityStrategy.OnFixedUpdate();
 		}
 
 		public override void OnExit()
 		{
 			base.OnExit();
 			_pawn.SetMainAttackFinish();
-			_pawn.mainAttackStrategy.OnExit();
+			_pawn.mainAbilityStrategy.OnExit();
 			ElapsedTime = 0f;
 		}
 	}
@@ -88,7 +88,7 @@ namespace Smash.Player.States
 			ElapsedTime = 0f;
 			_pawn.SetSideMainAttackExecute();
 			_graphicsController.SetSideMainAttackFinish();
-			_pawn.sideMainAttackStrategy.OnEnter();
+			_pawn.sideMainAbilityStrategy.OnEnter();
 		}
 
 		public override void OnUpdate()
@@ -100,14 +100,14 @@ namespace Smash.Player.States
 		public override void OnFixedUpdate()
 		{
 			base.OnFixedUpdate();
-			_pawn.sideMainAttackStrategy.OnFixedUpdate();
+			_pawn.sideMainAbilityStrategy.OnFixedUpdate();
 		}
 
 		public override void OnExit()
 		{
 			base.OnExit();
 			_pawn.SetSideMainAttackFinish();
-			_pawn.sideMainAttackStrategy.OnExit();
+			_pawn.sideMainAbilityStrategy.OnExit();
 			ElapsedTime = 0;
 		}
 	}
@@ -209,7 +209,7 @@ namespace Smash.Player.States
 			_pawn.CurrentState = this;
 			ElapsedTime = 0;
 			_pawn.SetSpecialAttackExecute();
-			_pawn.specialAttackStrategy.OnEnter();
+			_pawn.specialAbilityStrategy.OnEnter();
 			_graphicsController.SetSpecialAttackFinish();
 		}
 
@@ -222,7 +222,7 @@ namespace Smash.Player.States
 		public override void OnFixedUpdate()
 		{
 			base.OnFixedUpdate();
-			_pawn.specialAttackStrategy.OnFixedUpdate();
+			_pawn.specialAbilityStrategy.OnFixedUpdate();
 		}
 
 		public override void OnExit()

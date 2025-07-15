@@ -2,7 +2,7 @@
 using Smash.Player.Components;
 using UnityEngine;
 
-namespace Smash.Player.AttackStrategies
+namespace Smash.Player.AbilityStrategies
 {
 	[Serializable]
 	public abstract class ScanningStrategy
@@ -35,6 +35,7 @@ namespace Smash.Player.AttackStrategies
 	{
 		[field: SerializeReference] private CubeHurtBox m_prefab;
 		[field: SerializeField] private Vector3 m_halfExtents;
+		
 		public override Scanner CreateScanner(Transform parent)
 		{
 			return ScannerFactory.CreateScanner(m_prefab, parent)
