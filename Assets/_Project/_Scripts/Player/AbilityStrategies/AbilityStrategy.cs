@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Smash.Player.Components;
+using UnityEngine;
 
 namespace Smash.Player.AbilityStrategies
 {
@@ -10,6 +11,11 @@ namespace Smash.Player.AbilityStrategies
 		private AbilityContext m_abilityContext;
 
 		public bool CanAttack { get; set; }
+
+		public AbilityStrategy()
+		{
+			m_abilityContext = new AbilityContext();
+		}
 
 		public void OnEnter()
 		{
@@ -35,14 +41,18 @@ namespace Smash.Player.AbilityStrategies
 		public void SetAbilityContextInScanner()
 		{
 			if (!scanner) return;
-			if (m_abilityContext == null) return;
 			scanner.context = m_abilityContext;
 		}
 		
-		public void CreateAbilityContext(List<AbilityEffect> abilityEffectsList)
+		public void SetOwningCollider(Collider collider)
 		{
-			m_abilityContext = new AbilityContext(abilityEffectsList);
-			SetAbilityContextInScanner();
+			if (m_abilityContext == null) return;
+			m_abilityContext.ownerCollider = collider;
+		}
+		
+		public void SetAbilityContext(List<AbilityEffect> abilityEffectsList)
+		{
+			m_abilityContext.abilityEffects = abilityEffectsList;
 		}
 
 		public void SetAbilityModifier(float heldTime)

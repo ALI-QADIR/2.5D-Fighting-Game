@@ -7,7 +7,7 @@ namespace Smash.Player.AbilityStrategies
 	[Serializable]
 	public abstract class AbilityEffect
 	{
-		[field: SerializeField] public bool IsSelfEffect { get; private set; }
+		[field: SerializeField, InspectorReadOnly] public bool IsSelfEffect { get; protected set; }
 		public float HeldDuration { protected get; set; }
 		protected float _modifier;
 		
@@ -32,6 +32,31 @@ namespace Smash.Player.AbilityStrategies
 		protected override void ModifyEffect()
 		{
 			_modifier = m_damageCurve.Evaluate(HeldDuration / 3f); // TODO: remove magic numbers
+		}
+	}
+	
+	[Serializable]
+	public class JumpEffect : AbilityEffect
+	{
+		[SerializeField] private float m_maxJumpForce;
+
+		public JumpEffect()
+		{
+			IsSelfEffect = true;
+		}
+		
+		public override void Execute(Collider collider)
+		{
+			ModifyEffect();
+			if (collider.TryGetComponent<CharacterPawn>(out var pawn))
+			{
+				pawn.HandleJumpAbility(m_maxJumpForce * _modifier);
+			}
+		}
+
+		protected override void ModifyEffect()
+		{
+			_modifier = Mathf.Lerp(0.5f, 1, HeldDuration / 3f); // TODO: remove magic numbers
 		}
 	}
 

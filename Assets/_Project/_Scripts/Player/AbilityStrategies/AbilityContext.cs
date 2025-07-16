@@ -5,12 +5,12 @@ namespace Smash.Player.AbilityStrategies
 {
 	public class AbilityContext
 	{
-		private readonly List<AbilityEffect> abilityEffects;
+		public List<AbilityEffect> abilityEffects;
 		private HashSet<Collider> m_hits;
+		public Collider ownerCollider;
 
-		public AbilityContext(List<AbilityEffect> abilityEffects)
+		public AbilityContext()
 		{
-			this.abilityEffects = abilityEffects;
 			m_hits = new HashSet<Collider>();
 		}
 		
@@ -24,6 +24,11 @@ namespace Smash.Player.AbilityStrategies
 			if (m_hits.Contains(result)) return;
 			foreach (var abilityEffect in abilityEffects)
 			{
+				if (abilityEffect.IsSelfEffect)
+				{
+					abilityEffect.Execute(ownerCollider);
+					continue;
+				}
 				abilityEffect.Execute(result);
 			}
 			m_hits.Add(result);

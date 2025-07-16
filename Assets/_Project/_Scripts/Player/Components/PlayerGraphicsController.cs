@@ -22,6 +22,9 @@ namespace Smash.Player.Components
 		private int m_sideMainAttackStartTriggerHash;
 		private int m_sideMainAttackFinishTriggerHash;
 		
+		private int m_upMainAttackStartTriggerHash;
+		private int m_upMainAttackFinishTriggerHash;
+		
 		private int m_specialAttackStartTriggerHash;
 		private int m_specialAttackFinishTriggerHash;
 		
@@ -43,6 +46,9 @@ namespace Smash.Player.Components
 			
 			m_sideMainAttackStartTriggerHash = Animator.StringToHash("SideMainAttackStart");
 			m_sideMainAttackFinishTriggerHash = Animator.StringToHash("SideMainAttackFinish");
+			
+			m_upMainAttackStartTriggerHash = Animator.StringToHash("UpMainAttackStart");
+			m_upMainAttackFinishTriggerHash = Animator.StringToHash("UpMainAttackFinish");
 			
 			if (!m_animator)
 			{
@@ -123,6 +129,16 @@ namespace Smash.Player.Components
 		public void SetSideMainAttackFinish()
 		{
 			m_animator.SetTrigger(m_sideMainAttackFinishTriggerHash);
+		}
+		
+		public void SetUpMainAttackWindUp()
+		{
+			m_animator.SetTrigger(m_upMainAttackStartTriggerHash);
+		}
+		
+		public void SetUpMainAttackFinish()
+		{
+			m_animator.SetTrigger(m_upMainAttackFinishTriggerHash);
 		}
 
 		public void SetSpecialAttackWindUp()

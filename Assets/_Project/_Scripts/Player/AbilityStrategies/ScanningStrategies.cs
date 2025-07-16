@@ -54,4 +54,15 @@ namespace Smash.Player.AbilityStrategies
 				.WithRadius(m_radius);
 		}
 	}
+	
+	[Serializable]
+	public class NullScanningStrategy : ScanningStrategy
+	{
+		[field: SerializeReference] private NullScanner m_prefab;
+
+		public override Scanner CreateScanner(Transform parent)
+		{
+			return ScannerFactory.CreateScanner(m_prefab, parent);
+		}
+	}
 }

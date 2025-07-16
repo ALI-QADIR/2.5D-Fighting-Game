@@ -32,8 +32,9 @@ namespace Smash.Player.States
 		#endregion Base States
 
 		public AirborneSubStateMachine(CharacterPawn pawn, PlayerGraphicsController graphicsController,
-			float mainAttackDuration, float sideMainAttackDuration, float specialAttackDuration) : base(pawn,
-			graphicsController, mainAttackDuration, sideMainAttackDuration, specialAttackDuration)
+			float mainAttackDuration, float sideMainAttackDuration, float upMainAttackDuration,
+			float specialAttackDuration) : base(pawn, graphicsController, mainAttackDuration, sideMainAttackDuration,
+			upMainAttackDuration, specialAttackDuration)
 		{
 			_stateMachine = new StateMachine();
 			

@@ -11,7 +11,6 @@ namespace Smash.Player.Components
 		public override void Scan()
 		{
 			Debug.Log("Projectile");
-			
 		}
 
 		public override void Emit()

@@ -150,6 +150,16 @@ namespace Smash.Player
 
 		#region Public Methods
 
+		#region AbilityEffects
+
+		public void HandleJumpAbility(float power)
+		{
+			m_motor.ShouldAdjustForGround = false;
+			HandleJump(power);
+		}
+
+		#endregion
+		
 		#region Input Handler
 
 		public override void SetIndex(int index)
@@ -219,7 +229,7 @@ namespace Smash.Player
 				Rotate(lookAngle);
 			}
 			*/
-			HandleJump();
+			HandleJump(m_jumpPower);
 		}
 
 		public override void HandleMainAttackInputStart()
@@ -257,6 +267,7 @@ namespace Smash.Player
 		{
 			CurrentStateMachine.UpMainAttackTap = heldTime <= 0.2f; // TODO: remove magic number
 			CurrentStateMachine.UpMainAttackHold = false;
+			upMainAbilityStrategy.SetAbilityModifier(heldTime);
 		}
 
 		public override void HandleDownMainAttackInputStart()
@@ -399,7 +410,7 @@ namespace Smash.Player
 		public void SetUpMainAttackExecute()
 		{
 			Debug.Log("up Main Attack Execute");
-			EnableMovement(false);
+			EnableMovement(true);
 		}
 
 		public void SetUpMainAttackFinish()
@@ -688,10 +699,10 @@ namespace Smash.Player
 			m_targetRotation = Quaternion.Euler(inputRotation);
 		}
 		
-		private void HandleJump()
+		private void HandleJump(float jumpPower)
 		{
 			m_isClimbing = false;
-			Vector3 verticalVelocity = m_tr.up * m_jumpPower;
+			Vector3 verticalVelocity = m_tr.up * jumpPower;
 			RemoveVerticalVelocity();
 			m_savedVelocity += verticalVelocity;
 			// Debug.Log(m_savedVelocity);
@@ -767,17 +778,31 @@ namespace Smash.Player
 
 		private void SetUpAttackStrategies()
 		{
+			if (!TryGetComponent<Collider>(out var myCollider))
+			{
+				Debug.LogError("No collider found on character");
+				Debug.Break();
+			}
+
 			mainAbilityStrategy = AbilityStrategyFactory.CreateAttackStrategy()
 				.WithScanner(m_properties.mainAbilityStrategyData.ScanningStrategy, m_tr, m_targetLayers)
-				.WithAbilityEffect(m_properties.mainAbilityStrategyData.AbilityEffects);
+				.WithAbilityEffect(m_properties.mainAbilityStrategyData.AbilityEffects)
+				.WithOwningCollider(myCollider);
 			
 			sideMainAbilityStrategy = AbilityStrategyFactory.CreateAttackStrategy()
 				.WithScanner(m_properties.sideMainAbilityStrategyData.ScanningStrategy, m_tr, m_targetLayers)
-				.WithAbilityEffect(m_properties.sideMainAbilityStrategyData.AbilityEffects);
+				.WithAbilityEffect(m_properties.sideMainAbilityStrategyData.AbilityEffects)
+				.WithOwningCollider(myCollider);
+			
+			upMainAbilityStrategy = AbilityStrategyFactory.CreateAttackStrategy()
+				.WithScanner(m_properties.upMainAbilityStrategyData.ScanningStrategy, m_tr, m_targetLayers)
+				.WithAbilityEffect(m_properties.upMainAbilityStrategyData.AbilityEffects)
+				.WithOwningCollider(myCollider);
 			
 			specialAbilityStrategy = AbilityStrategyFactory.CreateAttackStrategy()
 				.WithScanner(m_properties.specialAbilityStrategyData.ScanningStrategy, m_tr, m_targetLayers)
-				.WithAbilityEffect(m_properties.specialAbilityStrategyData.AbilityEffects);
+				.WithAbilityEffect(m_properties.specialAbilityStrategyData.AbilityEffects)
+				.WithOwningCollider(myCollider);
 			
 		}
 
@@ -812,14 +837,17 @@ namespace Smash.Player
 			m_stateMachine = new StateMachine();
 
 			m_groundedState = new GroundedSubStateMachine(this, m_graphicsController,
-				m_properties.mainAbilityStrategyData.AnimDuration,
-				m_properties.sideMainAbilityStrategyData.AnimDuration,
-				m_properties.specialAbilityStrategyData.AnimDuration);
+				mainAttackDuration: m_properties.mainAbilityStrategyData.AnimDuration,
+				sideMainAttackDuration: m_properties.sideMainAbilityStrategyData.AnimDuration,
+				upMainAttackDuration: m_properties.upMainAbilityStrategyData.AnimDuration,
+				specialAttackDuration: m_properties.specialAbilityStrategyData.AnimDuration);
 			
 			m_airborneState = new AirborneSubStateMachine(this, m_graphicsController,
-				m_properties.mainAbilityStrategyData.AnimDuration,
-				m_properties.sideMainAbilityStrategyData.AnimDuration,
-				m_properties.specialAbilityStrategyData.AnimDuration);
+				mainAttackDuration: m_properties.mainAbilityStrategyData.AnimDuration,
+				sideMainAttackDuration: m_properties.sideMainAbilityStrategyData.AnimDuration,
+				upMainAttackDuration: m_properties.upMainAbilityStrategyData.AnimDuration,
+				specialAttackDuration: m_properties.specialAbilityStrategyData.AnimDuration);
+			
 			m_initState = new PlayerInit();
 			
 			FuncPredicate groundToAirborne = new(() => 
@@ -837,7 +865,7 @@ namespace Smash.Player
 			m_stateMachine.SetState(m_initState);
 		}
 		
-		public void SetTargetLayers()
+		private void SetTargetLayers()
 		{
 			int selfLayer = gameObject.layer;
 			int layerMask = Physics.AllLayers;

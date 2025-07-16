@@ -123,11 +123,13 @@ namespace Smash.Player.States
 			base.OnEnter();
 			_pawn.CurrentState = this;
 			_pawn.SetUpMainAttackWindUp();
+			_graphicsController.SetUpMainAttackWindUp();
 		}
 	}
 	
 	public class UpMainAttackEnd : PlayerBaseState
 	{
+		public float ElapsedTime { get; private set; }
 		public UpMainAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
@@ -136,13 +138,30 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			_pawn.CurrentState = this;
+			ElapsedTime = 0f;
 			_pawn.SetUpMainAttackExecute();
+			_graphicsController.SetUpMainAttackFinish();
+			_pawn.upMainAbilityStrategy.OnEnter();
+		}
+
+		public override void OnUpdate()
+		{
+			base.OnUpdate();
+			ElapsedTime += Time.deltaTime;
+		}
+
+		public override void OnFixedUpdate()
+		{
+			base.OnFixedUpdate();
+			_pawn.upMainAbilityStrategy.OnFixedUpdate();
 		}
 
 		public override void OnExit()
 		{
 			base.OnExit();
 			_pawn.SetUpMainAttackFinish();
+			_pawn.upMainAbilityStrategy.OnExit();
+			ElapsedTime = 0;
 		}
 	}
 	

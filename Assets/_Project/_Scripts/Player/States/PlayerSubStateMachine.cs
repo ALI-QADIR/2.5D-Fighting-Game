@@ -11,6 +11,7 @@ namespace Smash.Player.States
 		protected readonly float _mainAttackDuration;
 		protected readonly float _specialAttackDuration;
 		protected readonly float _sideMainAttackDuration;
+		protected readonly float _upMainAttackDuration;
 
 		#region Transition Booleans
 
@@ -138,12 +139,13 @@ namespace Smash.Player.States
 		#endregion Attack States
 
 		protected PlayerSubStateMachine(CharacterPawn pawn, PlayerGraphicsController graphicsController,
-			float mainAttackDuration, float sideMainAttackDuration, float specialAttackDuration) : base(pawn,
+			float mainAttackDuration, float sideMainAttackDuration, float upMainAttackDuration, float specialAttackDuration) : base(pawn,
 			graphicsController)
 		{
 			_mainAttackDuration = mainAttackDuration;
 			_sideMainAttackDuration = sideMainAttackDuration;
 			_specialAttackDuration = specialAttackDuration;
+			_upMainAttackDuration = upMainAttackDuration;
 		}
 
 		protected virtual void CreateStates()

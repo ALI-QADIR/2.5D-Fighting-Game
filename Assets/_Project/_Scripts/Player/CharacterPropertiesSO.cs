@@ -16,6 +16,7 @@ namespace Smash.Player
         [Header("Attack Strategies")] 
         public AbilityStrategyData mainAbilityStrategyData;
         public AbilityStrategyData sideMainAbilityStrategyData;
+        public AbilityStrategyData upMainAbilityStrategyData;
         public AbilityStrategyData specialAbilityStrategyData;
     }
 }

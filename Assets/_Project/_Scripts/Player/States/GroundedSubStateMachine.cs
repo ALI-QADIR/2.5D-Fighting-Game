@@ -17,8 +17,9 @@ namespace Smash.Player.States
 		#endregion Base States
 		
 		public GroundedSubStateMachine(CharacterPawn pawn, PlayerGraphicsController graphicsController,
-			float mainAttackDuration, float sideMainAttackDuration, float specialAttackDuration) : base(pawn,
-			graphicsController, mainAttackDuration, sideMainAttackDuration, specialAttackDuration)
+			float mainAttackDuration, float sideMainAttackDuration, float upMainAttackDuration,
+			float specialAttackDuration) : base(pawn, graphicsController, mainAttackDuration, sideMainAttackDuration,
+			upMainAttackDuration, specialAttackDuration)
 		{
 			_stateMachine = new StateMachine();
 
@@ -100,7 +101,7 @@ namespace Smash.Player.States
 			_anyToUpMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackHold);
 			_anyToUpMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackTap);
 			_upMainAttackStartToEndCondition = new FuncPredicate(() => !UpMainAttackHold);
-			_upMainAttackEndToEntryCondition = new FuncPredicate(() => true); // wait for duration to be completed
+			_upMainAttackEndToEntryCondition = new FuncPredicate(() => _upMainAttackEnd.ElapsedTime >= _upMainAttackDuration); // wait for duration to be completed
 			
 			_anyToDownMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownMainAttackHold);
 			_anyToDownMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownMainAttackTap);

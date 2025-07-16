@@ -22,7 +22,13 @@ namespace Smash.Player.AbilityStrategies
 		
 		public static AbilityStrategy WithAbilityEffect(this AbilityStrategy strategy, List<AbilityEffect> abilityEffects)
 		{
-			strategy.CreateAbilityContext(abilityEffects);
+			strategy.SetAbilityContext(abilityEffects);
+			return strategy;
+		}
+		
+		public static AbilityStrategy WithOwningCollider(this AbilityStrategy strategy, Collider collider)
+		{
+			strategy.SetOwningCollider(collider);
 			return strategy;
 		}
 	}
