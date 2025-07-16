@@ -13,7 +13,7 @@ namespace Smash.Player.AbilityStrategies
 
 		public void OnEnter()
 		{
-			m_abilityContext.Clear();
+			m_abilityContext.ClearHashSet();
 		}
 
 		public void OnFixedUpdate()

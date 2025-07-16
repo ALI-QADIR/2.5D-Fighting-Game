@@ -4,7 +4,7 @@ namespace Smash.Player.Components
 {
 	public class CubeHurtBox : Scanner
 	{
-		[ReadOnly] public Vector3 halfExtents;
+		[InspectorReadOnly] public Vector3 halfExtents;
 		
 		public override void Scan()
 		{

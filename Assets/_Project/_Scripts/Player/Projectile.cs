@@ -5,9 +5,9 @@ namespace Smash.Player
 {
 	public class Projectile : MonoBehaviour
 	{
-		[ReadOnly] public float speed;
-		[ReadOnly] public float maxDistance;
-		[ReadOnly] public ProjectileSpawner spawner;
+		[InspectorReadOnly] public float speed;
+		[InspectorReadOnly] public float maxDistance;
+		[InspectorReadOnly] public ProjectileSpawner spawner;
 
 		private float m_distanceTravelled;
 

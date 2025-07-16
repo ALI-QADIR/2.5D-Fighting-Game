@@ -4,9 +4,9 @@ namespace Smash.Player.Components
 {
 	public class ProjectileSpawner : SphereHurtBox
 	{
-		[ReadOnly] public float speed;
-		[ReadOnly] public float maxDistance;
-		[ReadOnly] public Projectile projectilePrefab;
+		[InspectorReadOnly] public float speed;
+		[InspectorReadOnly] public float maxDistance;
+		[InspectorReadOnly] public Projectile projectilePrefab;
 		
 		public override void Scan()
 		{

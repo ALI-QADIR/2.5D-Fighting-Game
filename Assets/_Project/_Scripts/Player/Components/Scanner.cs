@@ -5,7 +5,7 @@ namespace Smash.Player.Components
 {
 	public abstract class Scanner : MonoBehaviour
 	{
-		[ReadOnly] public Collider[] results = new Collider[6];
+		[InspectorReadOnly] public Collider[] results = new Collider[6];
 		[HideInInspector] public int layerMask;
 		public AbilityContext context;
 

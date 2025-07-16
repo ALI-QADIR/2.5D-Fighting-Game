@@ -17,19 +17,19 @@ MonoBehaviour:
   animatorController: {fileID: 9100000, guid: 6e20c9be780a00e458f57658c4205868, type: 2}
   avatar: {fileID: 9000000, guid: 93cc80add8c14e849a2c33440e7a31fd, type: 3}
   mainAbilityStrategyData:
-    <AnimDuration>k__BackingField: 0
+    <AnimDuration>k__BackingField: 0.7
     <ScanningStrategy>k__BackingField:
       rid: 4153748571275657319
     <AbilityEffects>k__BackingField:
     - rid: 4153748571275657314
   sideMainAbilityStrategyData:
-    <AnimDuration>k__BackingField: 0
+    <AnimDuration>k__BackingField: 0.94
     <ScanningStrategy>k__BackingField:
       rid: 4153748571275657318
     <AbilityEffects>k__BackingField:
     - rid: 4153748571275657315
   specialAbilityStrategyData:
-    <AnimDuration>k__BackingField: 0
+    <AnimDuration>k__BackingField: 0.94
     <ScanningStrategy>k__BackingField:
       rid: 4153748571275657317
     <AbilityEffects>k__BackingField:

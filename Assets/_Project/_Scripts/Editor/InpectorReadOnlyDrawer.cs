@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Smash.Editor
 {
-	[CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
-	public class ReadOnlyDrawer : PropertyDrawer
+	[CustomPropertyDrawer(typeof(InspectorReadOnlyAttribute))]
+	public class InspectorReadOnlyDrawer : PropertyDrawer
 	{
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 		{

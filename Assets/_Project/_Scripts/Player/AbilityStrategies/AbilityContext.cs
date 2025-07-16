@@ -14,7 +14,7 @@ namespace Smash.Player.AbilityStrategies
 			m_hits = new HashSet<Collider>();
 		}
 		
-		public void Clear()
+		public void ClearHashSet()
 		{
 			m_hits.Clear();
 		}
