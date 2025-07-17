@@ -22,7 +22,7 @@ namespace Smash.Player.AbilityStrategies
 		
 		public static AbilityStrategy WithAbilityEffect(this AbilityStrategy strategy, List<AbilityEffect> abilityEffects)
 		{
-			strategy.SetAbilityContext(abilityEffects);
+			strategy.SetAbilityEffectsInContext(abilityEffects);
 			return strategy;
 		}
 		

@@ -38,6 +38,7 @@ namespace Smash.Player.AbilityStrategies
 	[Serializable]
 	public class JumpEffect : AbilityEffect
 	{
+		[SerializeField] private float m_minJumpForce;
 		[SerializeField] private float m_maxJumpForce;
 
 		public JumpEffect()

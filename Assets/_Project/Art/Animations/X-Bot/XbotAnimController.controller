@@ -64,6 +64,8 @@ AnimatorState:
   - {fileID: 8930306675212788892}
   m_StateMachineBehaviours:
   - {fileID: 4390189183205468640}
+  - {fileID: -7237201576042021887}
+  - {fileID: 8980311283701330280}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -200,6 +202,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-7237201576042021887
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 806668011d1b44a4824b98c10fe14d94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventName: Begin_Up_Main_Attack
+  triggerTime: 0.55
 --- !u!114 &-6947644107946056475
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -212,7 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806668011d1b44a4824b98c10fe14d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventName: BeginMainAttack
+  eventName: Begin_Main_Attack
   triggerTime: 0.05
 --- !u!1101 &-5586275947289834480
 AnimatorStateTransition:
@@ -1111,7 +1127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806668011d1b44a4824b98c10fe14d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventName: EndSpecialAttack
+  eventName: End_Special_Attack
   triggerTime: 0.4
 --- !u!114 &1751187945340184971
 MonoBehaviour:
@@ -1125,7 +1141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806668011d1b44a4824b98c10fe14d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventName: EndMainAttack
+  eventName: End_Main_Attack
   triggerTime: 0.4
 --- !u!1101 &2205569661588859769
 AnimatorStateTransition:
@@ -1321,7 +1337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806668011d1b44a4824b98c10fe14d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventName: EmitSideMainAttack
+  eventName: One_Shot_Side_Main_Attack
   triggerTime: 0.5
 --- !u!1102 &3945365597028821356
 AnimatorState:
@@ -1435,8 +1451,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806668011d1b44a4824b98c10fe14d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventName: EmitUpMainAttack
-  triggerTime: 0.175
+  eventName: One_Shot_Up_Main_Attack
+  triggerTime: 0.35
 --- !u!1101 &4442107451774557696
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1868,7 +1884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806668011d1b44a4824b98c10fe14d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventName: BeginSpecialAttack
+  eventName: Begin_Special_Attack
   triggerTime: 0.05
 --- !u!1101 &8022223419411052562
 AnimatorStateTransition:
@@ -1943,6 +1959,20 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &8980311283701330280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 806668011d1b44a4824b98c10fe14d94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventName: End_UP_Main_Attack
+  triggerTime: 0.8
 --- !u!1101 &9133647828344404477
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

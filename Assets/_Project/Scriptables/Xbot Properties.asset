@@ -29,11 +29,12 @@ MonoBehaviour:
     <AbilityEffects>k__BackingField:
     - rid: 4153748571275657315
   upMainAbilityStrategyData:
-    <AnimDuration>k__BackingField: 1.44
+    <AnimDuration>k__BackingField: 0.9
     <ScanningStrategy>k__BackingField:
-      rid: 4153748594198315095
+      rid: 4153748617570549855
     <AbilityEffects>k__BackingField:
     - rid: 4153748594198315100
+    - rid: 4153748617570549856
   specialAbilityStrategyData:
     <AnimDuration>k__BackingField: 0.94
     <ScanningStrategy>k__BackingField:
@@ -178,14 +179,53 @@ MonoBehaviour:
         <CenterOffset>k__BackingField: {x: 1, y: 1, z: 0}
         m_prefab: {fileID: 3392012914999762302, guid: ebbc42508f193544aba1a44bb6aad690, type: 3}
         m_halfExtents: {x: 1, y: 0.3, z: 0.5}
-    - rid: 4153748594198315095
-      type: {class: NullScanningStrategy, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
-      data:
-        <CenterOffset>k__BackingField: {x: 0, y: 0, z: 0}
-        m_prefab: {fileID: -5264158173422641984, guid: 7daa837439ef97c4a8cec1dec868b40f, type: 3}
     - rid: 4153748594198315100
       type: {class: JumpEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
         <IsSelfEffect>k__BackingField: 1
         m_minJumpForce: 0
         m_maxJumpForce: 30
+    - rid: 4153748617570549855
+      type: {class: BoxScanningStrategy, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <CenterOffset>k__BackingField: {x: 0.5, y: 0.9, z: 0}
+        m_prefab: {fileID: 3392012914999762302, guid: ebbc42508f193544aba1a44bb6aad690, type: 3}
+        m_halfExtents: {x: 0.5, y: 0.3, z: 0.5}
+    - rid: 4153748617570549856
+      type: {class: DamageEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <IsSelfEffect>k__BackingField: 0
+        m_maxDamage: 10
+        m_damageCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0.2
+            inSlope: 0.0800798
+            outSlope: 0.0800798
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.30119058
+          - serializedVersion: 3
+            time: 0.6
+            value: 0.4
+            inSlope: 0.8582238
+            outSlope: 0.8582238
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.13065445
+            outWeight: 0.24597181
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 2.311814
+            outSlope: 2.311814
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.11940748
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4

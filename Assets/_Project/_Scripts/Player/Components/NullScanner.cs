@@ -4,9 +4,6 @@
 	{
 		public override void Scan() { }
 
-		public override void Emit()
-		{
-			context.ApplyEffects(context.ownerCollider);
-		}
+		public override void Emit() { }
 	}
 }

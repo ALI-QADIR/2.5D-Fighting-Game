@@ -8,14 +8,9 @@ namespace Smash.Player.AbilityStrategies
 	{
 		public Scanner scanner;
 
-		private AbilityContext m_abilityContext;
+		private readonly AbilityContext m_abilityContext = new();
 
-		public bool CanAttack { get; set; }
-
-		public AbilityStrategy()
-		{
-			m_abilityContext = new AbilityContext();
-		}
+		public bool CanScan { get; set; }
 
 		public void OnEnter()
 		{
@@ -24,7 +19,7 @@ namespace Smash.Player.AbilityStrategies
 
 		public void OnFixedUpdate()
 		{
-			if (!CanAttack) return;
+			if (!CanScan) return;
 			
 			scanner.Scan();
 		}
@@ -32,6 +27,7 @@ namespace Smash.Player.AbilityStrategies
 		public void Attack()
 		{
 			scanner.Emit();
+			m_abilityContext.ApplySelfEffects();
 		}
 
 		public void OnExit()
@@ -50,9 +46,9 @@ namespace Smash.Player.AbilityStrategies
 			m_abilityContext.ownerCollider = collider;
 		}
 		
-		public void SetAbilityContext(List<AbilityEffect> abilityEffectsList)
+		public void SetAbilityEffectsInContext(List<AbilityEffect> abilityEffectsList)
 		{
-			m_abilityContext.abilityEffects = abilityEffectsList;
+			m_abilityContext.SetAbilityEffects(abilityEffectsList);
 		}
 
 		public void SetAbilityModifier(float heldTime)

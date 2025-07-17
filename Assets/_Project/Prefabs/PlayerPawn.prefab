@@ -236,14 +236,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eventList:
-  - eventName: BeginMainAttack
+  - eventName: Begin_Main_Attack
     onAnimationEvent:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3036866046919688394}
           m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
             com.TripleA.Smash
-          m_MethodName: BeginAttack
+          m_MethodName: BeginAbilityScan
           m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -253,14 +253,14 @@ MonoBehaviour:
             m_StringArgument: MainAttack
             m_BoolArgument: 0
           m_CallState: 2
-  - eventName: EndMainAttack
+  - eventName: End_Main_Attack
     onAnimationEvent:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3036866046919688394}
           m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
             com.TripleA.Smash
-          m_MethodName: EndAttack
+          m_MethodName: EndAbilityScan
           m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -270,48 +270,31 @@ MonoBehaviour:
             m_StringArgument: MainAttack
             m_BoolArgument: 0
           m_CallState: 2
-  - eventName: BeginSpecialAttack
+  - eventName: One_Shot_Main_Attack
     onAnimationEvent:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3036866046919688394}
           m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
             com.TripleA.Smash
-          m_MethodName: BeginAttack
+          m_MethodName: ExecuteOneShotAbilityEffect
           m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: SpecialAttack
+            m_StringArgument: MainAttack
             m_BoolArgument: 0
           m_CallState: 2
-  - eventName: EndSpecialAttack
+  - eventName: Begin_Side_Main_Attack
     onAnimationEvent:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3036866046919688394}
           m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
             com.TripleA.Smash
-          m_MethodName: EndAttack
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: SpecialAttack
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventName: EmitSideMainAttack
-    onAnimationEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 3036866046919688394}
-          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
-            com.TripleA.Smash
-          m_MethodName: ExecuteOneHitAttack
+          m_MethodName: BeginAbilityScan
           m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -321,14 +304,48 @@ MonoBehaviour:
             m_StringArgument: SideMainAttack
             m_BoolArgument: 0
           m_CallState: 2
-  - eventName: EmitUpMainAttack
+  - eventName: End_Side_Main_Attack
     onAnimationEvent:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3036866046919688394}
           m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
             com.TripleA.Smash
-          m_MethodName: ExecuteOneHitAttack
+          m_MethodName: EndAbilityScan
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: SideMainAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: One_Shot_Side_Main_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: ExecuteOneShotAbilityEffect
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: SideMainAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: Begin_Up_Main_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: BeginAbilityScan
           m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -336,6 +353,295 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: UpMainAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: End_Up_Main_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: EndAbilityScan
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: UpMainAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: One_Shot_Up_Main_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: ExecuteOneShotAbilityEffect
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: UpMainAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: Begin_Down_Main_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: BeginAbilityScan
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: DownMainAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: End_Down_Main_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: EndAbilityScan
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: DownMainAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: One_Shot_Down_Main_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: ExecuteOneShotAbilityEffect
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: DownMainAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: Begin_Special_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: BeginAbilityScan
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: SpecialAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: End_Special_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: EndAbilityScan
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: SpecialAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: One_Shot_Special_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: ExecuteOneShotAbilityEffect
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: SpecialAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: Begin_Side_Special_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: BeginAbilityScan
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: SideSpecialAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: End_Side_Special_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: EndAbilityScan
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: SideSpecialAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: One_Shot_Side_Special_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: ExecuteOneShotAbilityEffect
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: SideSpecialAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: Begin_Up_Special_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: BeginAbilityScan
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: UpSpecialAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: End_Up_Special_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: EndAbilityScan
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: UpSpecialAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: One_Shot_Up_Special_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: ExecuteOneShotAbilityEffect
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: UpSpecialAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: Begin_Down_Special_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: BeginAbilityScan
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: DownSpecialAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: End_Down_Special_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: EndAbilityScan
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: EndSpecialAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventName: One_Shot_Down_Special_Attack
+    onAnimationEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3036866046919688394}
+          m_TargetAssemblyTypeName: Smash.Player.Components.AnimationEventReceiver,
+            com.TripleA.Smash
+          m_MethodName: ExecuteOneShotAbilityEffect
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: DownSpecialAttack
             m_BoolArgument: 0
           m_CallState: 2
   m_pawn: {fileID: 5991776475819307800}

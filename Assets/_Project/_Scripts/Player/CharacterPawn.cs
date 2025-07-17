@@ -156,6 +156,7 @@ namespace Smash.Player
 		{
 			m_motor.ShouldAdjustForGround = false;
 			HandleJump(power);
+			SetInAir();
 		}
 
 		#endregion
@@ -411,6 +412,7 @@ namespace Smash.Player
 		{
 			Debug.Log("up Main Attack Execute");
 			EnableMovement(true);
+			
 		}
 
 		public void SetUpMainAttackFinish()
@@ -851,7 +853,7 @@ namespace Smash.Player
 			m_initState = new PlayerInit();
 			
 			FuncPredicate groundToAirborne = new(() => 
-				m_stateMachine.CurrentState is GroundedSubStateMachine && !m_motor.IsGrounded());
+				m_stateMachine.CurrentState is GroundedSubStateMachine && !m_motor.IsGrounded() && CurrentState is not UpMainAttackEnd);
 			FuncPredicate airborneToGround = new(() => 
 				m_stateMachine.CurrentState is AirborneSubStateMachine && m_motor.IsGrounded());
 			

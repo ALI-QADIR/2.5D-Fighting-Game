@@ -5,15 +5,11 @@ namespace Smash.Player.AbilityStrategies
 {
 	public class AbilityContext
 	{
-		public List<AbilityEffect> abilityEffects;
-		private HashSet<Collider> m_hits;
+		public List<AbilityEffect> otherAbilityEffects = new();
+		public List<AbilityEffect> selfAbilityEffects = new();
+		private HashSet<Collider> m_hits = new();
 		public Collider ownerCollider;
 
-		public AbilityContext()
-		{
-			m_hits = new HashSet<Collider>();
-		}
-		
 		public void ClearHashSet()
 		{
 			m_hits.Clear();
@@ -22,21 +18,42 @@ namespace Smash.Player.AbilityStrategies
 		public void ApplyEffects(Collider result)
 		{
 			if (m_hits.Contains(result)) return;
-			foreach (var abilityEffect in abilityEffects)
+			foreach (var abilityEffect in otherAbilityEffects)
 			{
-				if (abilityEffect.IsSelfEffect)
-				{
-					abilityEffect.Execute(ownerCollider);
-					continue;
-				}
 				abilityEffect.Execute(result);
 			}
 			m_hits.Add(result);
 		}
+
+		public void ApplySelfEffects()
+		{
+			foreach (var abilityEffect in selfAbilityEffects)
+			{
+				abilityEffect.Execute(ownerCollider);
+			}
+		}
+		
+		public void SetAbilityEffects(List<AbilityEffect> abilityEffectsList)
+		{
+			foreach (var abilityEffect in abilityEffectsList)
+			{
+				if (abilityEffect.IsSelfEffect)
+				{
+					selfAbilityEffects.Add(abilityEffect);
+					continue;
+				}
+				otherAbilityEffects.Add(abilityEffect);
+			}
+		}
 		
 		public void SetAbilityModifier(float heldTime)
 		{
-			foreach (var abilityEffect in abilityEffects)
+			foreach (var abilityEffect in otherAbilityEffects)
+			{
+				abilityEffect.HeldDuration = heldTime;
+			}
+
+			foreach (var abilityEffect in selfAbilityEffects)
 			{
 				abilityEffect.HeldDuration = heldTime;
 			}
