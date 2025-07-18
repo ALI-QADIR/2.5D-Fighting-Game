@@ -20,7 +20,7 @@ namespace Smash.Player.AbilityStrategies
 			if (m_hits.Contains(result)) return;
 			foreach (var abilityEffect in otherAbilityEffects)
 			{
-				abilityEffect.Execute(result);
+				abilityEffect.Execute(result, ownerCollider);
 			}
 			m_hits.Add(result);
 		}
@@ -29,7 +29,7 @@ namespace Smash.Player.AbilityStrategies
 		{
 			foreach (var abilityEffect in selfAbilityEffects)
 			{
-				abilityEffect.Execute(ownerCollider);
+				abilityEffect.Execute(ownerCollider, null);
 			}
 		}
 		

@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventName: Begin_Up_Main_Attack
-  triggerTime: 0.55
+  triggerTime: 0.3
 --- !u!114 &-6947644107946056475
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1972,7 +1972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventName: End_UP_Main_Attack
-  triggerTime: 0.8
+  triggerTime: 0.63
 --- !u!1101 &9133647828344404477
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

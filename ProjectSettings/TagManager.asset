@@ -8,15 +8,15 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - TestPlayer
   - Water
   - UI
-  - Player
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player 0
+  - Player 1
+  - Player 2
+  - Player 3
+  - Player 4
+  - Player 5
   - 
   - 
   - 

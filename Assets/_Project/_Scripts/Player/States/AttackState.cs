@@ -249,6 +249,7 @@ namespace Smash.Player.States
 			base.OnExit();
 			ElapsedTime = 0;
 			_pawn.SetSpecialAttackFinish();
+			_pawn.specialAbilityStrategy.OnExit();
 		}
 	}
 	

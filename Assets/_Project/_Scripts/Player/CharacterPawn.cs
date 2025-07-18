@@ -101,11 +101,21 @@ namespace Smash.Player
 		#endregion AttackStrategies
 		public event Action<bool> OnDash = delegate { };
 		
+		private bool m_isInitialised;
+		
 		#region Unity Methods
+
+		private void Awake()
+		{
+			Initialise();
+		}
 
 		public override void Initialise()
 		{
 			// _inputHandler.SetCharacterPawn(this);
+			if (m_isInitialised)
+				return;
+			m_isInitialised = true;
 			
 			SetUpComponents();
 
@@ -158,8 +168,22 @@ namespace Smash.Player
 			HandleJump(power);
 			SetInAir();
 		}
+		
+		public void HandleTossUpAbility(float power)
+		{
+			m_motor.ShouldAdjustForGround = false;
+			HandleJump(power);
+			SetInAir();
+		}
 
-		#endregion
+		public void HandleKnockBack(float force, float direction)
+		{
+			var directionVector = direction > 0 ? Vector3.right : Vector3.left;
+			RemoveHorizontalVelocity();
+			m_savedVelocity += directionVector * force;
+		}
+
+		#endregion AbilityEffects
 		
 		#region Input Handler
 
@@ -757,6 +781,11 @@ namespace Smash.Player
 		{
 			m_savedVelocity = Vector3Math.RemoveDotVector(m_savedVelocity, m_tr.up);
 		}
+		
+		private void RemoveHorizontalVelocity()
+		{
+			m_savedVelocity = Vector3Math.RemoveDotVector(m_savedVelocity, m_tr.right);
+		}
 
 		private bool CurrentStateAllowsRotation()
 		{
@@ -831,6 +860,7 @@ namespace Smash.Player
 			m_wallDetector ??= GetComponent<WallDetector>();
 			m_ceilingDetector ??= GetComponent<CeilingDetector>();
 			m_graphicsController ??= GetComponent<PlayerGraphicsController>();
+			SetSelfLayer();
 			SetTargetLayers();
 		}
 
@@ -865,6 +895,13 @@ namespace Smash.Player
 			AddTransition(m_airborneState, m_groundedState, airborneToGround);
 			
 			m_stateMachine.SetState(m_initState);
+		}
+
+		private void SetSelfLayer()
+		{
+			string layerName = PlayerIndex == -1 ? "TestPlayer" : $"Player {PlayerIndex}";
+			var layerMask = LayerMask.NameToLayer(layerName);
+			gameObject.layer = layerMask;
 		}
 		
 		private void SetTargetLayers()
