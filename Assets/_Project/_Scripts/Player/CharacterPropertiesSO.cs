@@ -1,7 +1,6 @@
 using Smash.Player.AbilityStrategies;
 using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Smash.Player
 {
@@ -18,5 +17,6 @@ namespace Smash.Player
         public AbilityStrategyData sideMainAbilityStrategyData;
         public AbilityStrategyData upMainAbilityStrategyData;
         public AbilityStrategyData specialAbilityStrategyData;
+        public AbilityStrategyData upSpecialAbilityStrategyData;
     }
 }

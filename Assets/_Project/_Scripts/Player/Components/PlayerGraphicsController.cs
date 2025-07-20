@@ -28,6 +28,9 @@ namespace Smash.Player.Components
 		private int m_specialAttackStartTriggerHash;
 		private int m_specialAttackFinishTriggerHash;
 		
+		private int m_upSpecialAttackStartTriggerHash;
+		private int m_upSpecialAttackFinishTriggerHash;
+		
 		private void Awake()
 		{
 			
@@ -41,14 +44,17 @@ namespace Smash.Player.Components
 			m_mainAttackStartTriggerHash = Animator.StringToHash("MainAttackStart");
 			m_mainAttackFinishTriggerHash = Animator.StringToHash("MainAttackFinish");
 			
-			m_specialAttackStartTriggerHash = Animator.StringToHash("SpecialAttackStart");
-			m_specialAttackFinishTriggerHash = Animator.StringToHash("SpecialAttackFinish");
-			
 			m_sideMainAttackStartTriggerHash = Animator.StringToHash("SideMainAttackStart");
 			m_sideMainAttackFinishTriggerHash = Animator.StringToHash("SideMainAttackFinish");
 			
 			m_upMainAttackStartTriggerHash = Animator.StringToHash("UpMainAttackStart");
 			m_upMainAttackFinishTriggerHash = Animator.StringToHash("UpMainAttackFinish");
+			
+			m_specialAttackStartTriggerHash = Animator.StringToHash("SpecialAttackStart");
+			m_specialAttackFinishTriggerHash = Animator.StringToHash("SpecialAttackFinish");
+			
+			m_upSpecialAttackStartTriggerHash = Animator.StringToHash("UpSpecialAttackStart");
+			m_upSpecialAttackFinishTriggerHash = Animator.StringToHash("UpSpecialAttackFinish");
 			
 			if (!m_animator)
 			{
@@ -149,6 +155,17 @@ namespace Smash.Player.Components
 		public void SetSpecialAttackFinish()
 		{
 			m_animator.SetTrigger(m_specialAttackFinishTriggerHash);
+		}
+
+		public void SetUpSpecialAttackWindUp()
+		{
+			m_animator.SetTrigger(m_upSpecialAttackStartTriggerHash);
+		}
+		
+
+		public void SetUpSpecialAttackFinish()
+		{
+			m_animator.SetTrigger(m_upSpecialAttackFinishTriggerHash);
 		}
 
 		#endregion Attack State Setters

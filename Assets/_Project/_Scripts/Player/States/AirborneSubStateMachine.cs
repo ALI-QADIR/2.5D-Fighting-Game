@@ -33,8 +33,9 @@ namespace Smash.Player.States
 
 		public AirborneSubStateMachine(CharacterPawn pawn, PlayerGraphicsController graphicsController,
 			float mainAttackDuration, float sideMainAttackDuration, float upMainAttackDuration,
-			float specialAttackDuration) : base(pawn, graphicsController, mainAttackDuration, sideMainAttackDuration,
-			upMainAttackDuration, specialAttackDuration)
+			float specialAttackDuration, float upSpecialAttackDuration) : 
+			base(pawn, graphicsController, mainAttackDuration, sideMainAttackDuration, upMainAttackDuration, 
+				specialAttackDuration, upSpecialAttackDuration)
 		{
 			_stateMachine = new StateMachine();
 			
@@ -158,7 +159,7 @@ namespace Smash.Player.States
 			_anyToUpSpecialAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpSpecialAttackHold);
 			_anyToUpSpecialAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpSpecialAttackTap);
 			_upSpecialAttackStartToEndCondition = new FuncPredicate(() => !UpSpecialAttackHold);
-			_upSpecialAttackEndToEntryCondition = new FuncPredicate(() => true);
+			_upSpecialAttackEndToEntryCondition = new FuncPredicate(() => _upSpecialAttackEnd.ElapsedTime >= _upSpecialAttackDuration);
 			
 			_anyToDownSpecialAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownSpecialAttackHold);
 			_anyToDownSpecialAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownSpecialAttackTap);

@@ -49,6 +49,7 @@ namespace Smash.Player.AbilityStrategies
 		
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
+			ModifyEffect();
 			if (collider.TryGetComponent<CharacterPawn>(out var pawn))
 			{
 				pawn.HandleJumpAbility(m_maxJumpForce * _modifier);

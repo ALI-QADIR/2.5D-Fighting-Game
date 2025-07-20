@@ -36,7 +36,7 @@ namespace Smash.Player.Components
 					// m_pawn.sideSpecialAbilityStrategy.CanScan = true;
 					break;
 				case "UpSpecialAttack":
-					// m_pawn.upSpecialAbilityStrategy.CanScan = true;
+					m_pawn.upSpecialAbilityStrategy.CanScan = true;
 					break;
 				case "DownSpecialAttack":
 					// m_pawn.downSpecialAbilityStrategy.CanScan = true;
@@ -69,7 +69,7 @@ namespace Smash.Player.Components
 					// m_pawn.sideSpecialAbilityStrategy.CanScan = false;
 					break;
 				case "UpSpecialAttack":
-					// m_pawn.upSpecialAbilityStrategy.CanScan = false;
+					m_pawn.upSpecialAbilityStrategy.CanScan = false;
 					break;
 				case "DownSpecialAttack":
 					// m_pawn.downSpecialAbilityStrategy.CanScan = false;
@@ -102,7 +102,7 @@ namespace Smash.Player.Components
 					// m_pawn.sideSpecialAbilityStrategy.Attack();
 					break;
 				case "UpSpecialAttack":
-					// m_pawn.upSpecialAbilityStrategy.Attack();
+					m_pawn.upSpecialAbilityStrategy.Attack();
 					break;
 				case "DownSpecialAttack":
 					// m_pawn.downSpecialAbilityStrategy.Attack();

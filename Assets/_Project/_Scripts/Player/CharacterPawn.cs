@@ -835,6 +835,11 @@ namespace Smash.Player
 				.WithAbilityEffect(m_properties.specialAbilityStrategyData.AbilityEffects)
 				.WithOwningCollider(myCollider);
 			
+			upSpecialAbilityStrategy = AbilityStrategyFactory.CreateAttackStrategy()
+				.WithScanner(m_properties.upSpecialAbilityStrategyData.ScanningStrategy, m_tr, m_targetLayers)
+				.WithAbilityEffect(m_properties.upSpecialAbilityStrategyData.AbilityEffects)
+				.WithOwningCollider(myCollider);
+			
 		}
 
 		private void SetUpTimers()
@@ -872,13 +877,15 @@ namespace Smash.Player
 				mainAttackDuration: m_properties.mainAbilityStrategyData.AnimDuration,
 				sideMainAttackDuration: m_properties.sideMainAbilityStrategyData.AnimDuration,
 				upMainAttackDuration: m_properties.upMainAbilityStrategyData.AnimDuration,
-				specialAttackDuration: m_properties.specialAbilityStrategyData.AnimDuration);
+				specialAttackDuration: m_properties.specialAbilityStrategyData.AnimDuration,
+				upSpecialAttackDuration: m_properties.upSpecialAbilityStrategyData.AnimDuration);
 			
 			m_airborneState = new AirborneSubStateMachine(this, m_graphicsController,
 				mainAttackDuration: m_properties.mainAbilityStrategyData.AnimDuration,
 				sideMainAttackDuration: m_properties.sideMainAbilityStrategyData.AnimDuration,
 				upMainAttackDuration: m_properties.upMainAbilityStrategyData.AnimDuration,
-				specialAttackDuration: m_properties.specialAbilityStrategyData.AnimDuration);
+				specialAttackDuration: m_properties.specialAbilityStrategyData.AnimDuration,
+				upSpecialAttackDuration: m_properties.upSpecialAbilityStrategyData.AnimDuration);
 			
 			m_initState = new PlayerInit();
 			

@@ -22,6 +22,7 @@ MonoBehaviour:
       rid: 4153748571275657319
     <AbilityEffects>k__BackingField:
     - rid: 4153748571275657314
+    - rid: 4153748638621237342
   sideMainAbilityStrategyData:
     <AnimDuration>k__BackingField: 0.94
     <ScanningStrategy>k__BackingField:
@@ -29,13 +30,12 @@ MonoBehaviour:
     <AbilityEffects>k__BackingField:
     - rid: 4153748571275657315
     - rid: 4153748638621237334
-    - rid: 4153748638621237335
+    - rid: 4153748638621237344
   upMainAbilityStrategyData:
     <AnimDuration>k__BackingField: 0.9
     <ScanningStrategy>k__BackingField:
       rid: 4153748617570549855
     <AbilityEffects>k__BackingField:
-    - rid: 4153748594198315100
     - rid: 4153748617570549856
     - rid: 4153748638621237332
   specialAbilityStrategyData:
@@ -44,6 +44,13 @@ MonoBehaviour:
       rid: 4153748571275657317
     <AbilityEffects>k__BackingField:
     - rid: 4153748571275657316
+    - rid: 4153748638621237341
+  upSpecialAbilityStrategyData:
+    <AnimDuration>k__BackingField: 1.2
+    <ScanningStrategy>k__BackingField:
+      rid: 4153748687172403288
+    <AbilityEffects>k__BackingField:
+    - rid: 4153748687172403287
   references:
     version: 2
     RefIds:
@@ -179,14 +186,9 @@ MonoBehaviour:
     - rid: 4153748571275657319
       type: {class: BoxScanningStrategy, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
-        <CenterOffset>k__BackingField: {x: 1, y: 1, z: 0}
+        <CenterOffset>k__BackingField: {x: 0.7, y: 1, z: 0}
         m_prefab: {fileID: 3392012914999762302, guid: ebbc42508f193544aba1a44bb6aad690, type: 3}
-        m_halfExtents: {x: 1, y: 0.3, z: 0.5}
-    - rid: 4153748594198315100
-      type: {class: JumpEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
-      data:
-        <IsSelfEffect>k__BackingField: 1
-        m_maxJumpForce: 30
+        m_halfExtents: {x: 0.5, y: 0.3, z: 0.5}
     - rid: 4153748617570549855
       type: {class: BoxScanningStrategy, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
@@ -240,9 +242,29 @@ MonoBehaviour:
       type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
         <IsSelfEffect>k__BackingField: 0
-        m_force: 30
-    - rid: 4153748638621237335
+        m_force: 15
+    - rid: 4153748638621237341
+      type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <IsSelfEffect>k__BackingField: 0
+        m_force: 40
+    - rid: 4153748638621237342
+      type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <IsSelfEffect>k__BackingField: 0
+        m_force: 20
+    - rid: 4153748638621237344
       type: {class: TossUpEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
         <IsSelfEffect>k__BackingField: 0
         m_force: 20
+    - rid: 4153748687172403287
+      type: {class: JumpEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <IsSelfEffect>k__BackingField: 1
+        m_maxJumpForce: 50
+    - rid: 4153748687172403288
+      type: {class: NullScanningStrategy, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <CenterOffset>k__BackingField: {x: 0, y: 0, z: 0}
+        m_prefab: {fileID: -5264158173422641984, guid: 7daa837439ef97c4a8cec1dec868b40f, type: 3}
