@@ -16,7 +16,7 @@ namespace Smash.Player
 		
 		[Header("References")]
 		[SerializeField] private PlayerMotor m_motor;
-		[SerializeField] private LedgeDetector m_ledgeDetector;
+		// [SerializeField] private LedgeDetector m_ledgeDetector;
 		[SerializeField] private CeilingDetector m_ceilingDetector;
 		[SerializeField] private WallDetector m_wallDetector;
 		[SerializeField] private PlayerGraphicsController m_graphicsController;
@@ -59,8 +59,8 @@ namespace Smash.Player
 		private float m_currentLookAngle;
 		private int m_numberOfJumps;
 		private bool m_isJumping;
-		private bool m_isLaunching;
-		private bool m_isClimbing;
+		// private bool m_isLaunching;
+		// private bool m_isClimbing;
 		private Vector3 m_velocity, m_savedVelocity;
 		private Quaternion m_savedRotation, m_targetRotation;
 		
@@ -141,7 +141,7 @@ namespace Smash.Player
 			// Todo: One-Way Platforms
 			// Todo: Wall Clipping
 			
-			CheckForLedge();
+			// CheckForLedge();
 			CheckWallSlide();
 			CheckForCeiling();
 			CheckRotation();
@@ -200,11 +200,11 @@ namespace Smash.Player
 
 		public override void HandleUpInput()
 		{
-			if (CurrentState is Ledge)
+			/*if (CurrentState is Ledge)
 			{
 				HandleClimb();
 				return;
-			}
+			}*/
 			// else if (CurrentState is WallSlide)
 			// {
 			//  wall jump
@@ -237,7 +237,7 @@ namespace Smash.Player
 				m_jumpBufferTimer.Start();
 				return;
 			}
-			if (CurrentState is not Coyote && (!m_isJumping || !m_isLaunching) && m_stateMachine.CurrentState is AirborneSubStateMachine) 
+			if (CurrentState is not Coyote && !m_isJumping && m_stateMachine.CurrentState is AirborneSubStateMachine) 
 				m_numberOfJumps--;
 			
 			m_numberOfJumps--;
@@ -246,7 +246,7 @@ namespace Smash.Player
 			/* // Wall jumping logic
 			 if (CurrentState is WallSlide or Ledge || (CurrentState is Rising or Apex && IsWallDetected()) || m_wallJumpBufferTimer.IsRunning)
 			{
-				// TODO: Fix Z drift when wall Jumping => for now rigid body -> freeze z position
+				// Fix Z drift when wall Jumping => for now rigid body -> freeze z position
 				float jumpDirectionMultiplier = m_wallJumpBufferTimer.IsRunning ? 0.8f : -1f;
 				Vector3 horizontalVelocity = m_tr.right * (m_wallJumpSideSpeed * jumpDirectionMultiplier);
 				m_savedVelocity += horizontalVelocity;
@@ -361,7 +361,7 @@ namespace Smash.Player
 
 		public void SetInAir()
 		{
-			m_currentMoveSpeed = m_isLaunching ? 0 : m_airSpeed;
+			m_currentMoveSpeed = m_airSpeed;
 			m_gravity = m_airGravity;
 			m_acceleration = m_airAcceleration;
 			m_currentFallSpeed = m_maxFallSpeed;
@@ -380,7 +380,7 @@ namespace Smash.Player
 			m_motor.ShouldAdjustForGround = true;
 			
 			m_isJumping = false;
-			m_isLaunching = false;
+			// m_isLaunching = false;
 
 			HandleJumpBuffer();
 		}
@@ -590,11 +590,11 @@ namespace Smash.Player
 			if (isLedge)
 			{
 				RemoveVerticalVelocity();
-				m_ledgeDetector.SetOnLedge();
+				// m_ledgeDetector.SetOnLedge();
 				m_currentFallSpeed = 0;
 				m_currentMoveSpeed = 0;
 				m_numberOfJumps = 1;
-				m_ledgeDetector.ResetSensorHits();
+				// m_ledgeDetector.ResetSensorHits();
 				m_isJumping = false;
 			}
 			else
@@ -628,7 +628,8 @@ namespace Smash.Player
 			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.up) <= 0f && !m_motor.IsGrounded();
 		public bool IsMoving() => 
 			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.right) != 0f && m_motor.IsGrounded();
-		public bool IsLedgeGrab() => m_ledgeDetector.IsLedgeDetected();
+		
+		// public bool IsLedgeGrab() => m_ledgeDetector.IsLedgeDetected();
 		public bool IsWallDetected() => m_wallDetector.IsWallDetected();
 
 		#endregion Public Methods
@@ -638,7 +639,7 @@ namespace Smash.Player
 		private void Rotate(int angle)
 		{
 			if (angle == 0) return;
-			if (CurrentState is Ledge && !m_isJumping) return;
+			if (/*CurrentState is Ledge && */!m_isJumping) return;
 			
 			float lookAngle = Mathf.Approximately(angle, -1.0f) ? 179f : 0f;
 			if (Mathf.Approximately(m_currentLookAngle, lookAngle)) return;
@@ -649,31 +650,31 @@ namespace Smash.Player
 			m_elapsedTime = 0;
 		}
 
-		private void HandleClimb()
+		/*private void HandleClimb()
 		{
 			m_isClimbing = true;
 			Vector3 verticalVelocity = m_tr.up * m_climbUpSpeed;
 			Vector3 horizontalVelocity = m_tr.right * m_climbSideSpeed;
 			RemoveVerticalVelocity();
 			m_savedVelocity = horizontalVelocity + verticalVelocity;
-		}
+		}*/
 
-		public bool IsClimbing()
+		/*public bool IsClimbing()
 		{
 			bool temp = m_isClimbing;
 			m_isClimbing = false;
 			return temp;
-		}
+		}*/
 		
-		private void CheckForLedge()
+		/*private void CheckForLedge()
 		{
 			if (CurrentState is Falling or Apex or Coyote)
 				m_ledgeDetector.CheckForLedge();
-		}
+		}*/
 
 		private void CheckWallSlide()
 		{
-			if (CurrentState is Ledge) return;
+			// if (CurrentState is Ledge) return;
 			if (CurrentState is Falling or WallSlide or Rising or Apex)
 			{
 				m_wallDetector.ResetSensorHits();
@@ -727,7 +728,7 @@ namespace Smash.Player
 		
 		private void HandleJump(float jumpPower)
 		{
-			m_isClimbing = false;
+			// m_isClimbing = false;
 			Vector3 verticalVelocity = m_tr.up * jumpPower;
 			RemoveVerticalVelocity();
 			m_savedVelocity += verticalVelocity;
@@ -861,7 +862,7 @@ namespace Smash.Player
 		{
 			m_tr = transform;
 			m_motor ??= GetComponent<PlayerMotor>();
-			m_ledgeDetector ??= GetComponent<LedgeDetector>();
+			// m_ledgeDetector ??= GetComponent<LedgeDetector>();
 			m_wallDetector ??= GetComponent<WallDetector>();
 			m_ceilingDetector ??= GetComponent<CeilingDetector>();
 			m_graphicsController ??= GetComponent<PlayerGraphicsController>();

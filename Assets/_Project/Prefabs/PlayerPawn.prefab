@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3564180302612928421}
   - component: {fileID: 5991776475819307800}
   - component: {fileID: 8875285976668337261}
-  - component: {fileID: 4069767105276759520}
   - component: {fileID: 851043534711153540}
   - component: {fileID: 1977780103577655877}
   - component: {fileID: 8228131811739052616}
@@ -105,7 +104,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_motor: {fileID: 8875285976668337261}
-  m_ledgeDetector: {fileID: 4069767105276759520}
   m_ceilingDetector: {fileID: 851043534711153540}
   m_wallDetector: {fileID: 1977780103577655877}
   m_graphicsController: {fileID: 8228131811739052616}
@@ -143,24 +141,6 @@ MonoBehaviour:
   m_radius: 0.4
   m_stepHeight: 0.35
   m_slopeLimit: 60
---- !u!114 &4069767105276759520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2686585324151597656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e50003980e934a088bae6ef5c9a4b633, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_height: 1.8
-  m_radius: 0.4
-  m_lineHeight: 0.8
-  m_upOffset: 0.3
-  m_forwardOffset: 0.4
-  m_debug: 0
 --- !u!114 &851043534711153540
 MonoBehaviour:
   m_ObjectHideFlags: 0

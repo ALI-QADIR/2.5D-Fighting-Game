@@ -3,7 +3,14 @@ using UnityEngine;
 
 namespace Smash.Player.States
 {
-	public class AirEntry : PlayerBaseState
+	public class AirState : PlayerBaseState
+	{
+		protected AirState(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
+		{
+		}
+	}
+	
+	public class AirEntry : AirState
 	{
 		public AirEntry(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -16,7 +23,7 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class Rising : PlayerBaseState
+	public class Rising : AirState
 	{
 		public Rising(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -27,12 +34,13 @@ namespace Smash.Player.States
 			base.OnEnter();
 			_pawn.CurrentState = this;
 			_pawn.SetInAir();
-			if(_pawn.IsClimbing()) _graphicsController.SetClimbing();
-			else _graphicsController.SetJumping();
+			// if(_pawn.IsClimbing()) _graphicsController.SetClimbing();
+			// else _graphicsController.SetJumping();
+			_graphicsController.SetJumping();
 		}
 	}
 	
-	public class Falling : PlayerBaseState
+	public class Falling : AirState
 	{
 		public Falling(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -47,7 +55,7 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class Coyote : PlayerBaseState
+	public class Coyote : AirState
 	{
 		public float ElapsedTime { get; private set; }
 
@@ -71,7 +79,7 @@ namespace Smash.Player.States
 		}
 	}
 
-	public class Apex : PlayerBaseState
+	public class Apex : AirState
 	{
 		public float ElapsedTime { get; private set; }
 
@@ -102,7 +110,7 @@ namespace Smash.Player.States
 		}
 	}
 
-	public class Ledge : PlayerBaseState
+	/*public class Ledge : AirState
 	{
 		public Ledge(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -121,9 +129,9 @@ namespace Smash.Player.States
 			base.OnExit();
 			_pawn.SetOnLedge(false);
 		}
-	}
+	}*/
 	
-	public class WallSlide : PlayerBaseState
+	public class WallSlide : AirState
 	{
 		public WallSlide(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -143,7 +151,7 @@ namespace Smash.Player.States
 		}
 	}
     
-	public class AirExit : PlayerBaseState
+	public class AirExit : AirState
 	{
 		public AirExit(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
