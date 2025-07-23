@@ -104,12 +104,12 @@ namespace Smash.Player.Components
 			m_animator.SetTrigger(m_ledgeGrabTriggerHash);
 		}
 
-		public void SetClimbing()
+		/*public void SetClimbing()
 		{
 			m_animator.SetTrigger(m_climbTriggerHash);
 			m_animator.SetBool(m_isFallingBoolHash, false);
 			m_animator.SetBool(m_isRisingBoolHash, false);
-		}
+		}*/
 		
 		public void SetWallSliding()
 		{
