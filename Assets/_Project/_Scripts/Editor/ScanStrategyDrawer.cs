@@ -22,7 +22,7 @@ namespace Smash.Editor
             var typeName = property.managedReferenceFullTypename;
             var displayName = GetShortTypeName(typeName);
 
-            if (EditorGUI.DropdownButton(typeRect, new GUIContent(displayName ?? "Select Effect Type"), FocusType.Keyboard)) {
+            if (EditorGUI.DropdownButton(typeRect, new GUIContent(displayName ?? "Select Strategy Type"), FocusType.Keyboard)) {
                 var menu = new GenericMenu();
                 if (m_s_typeMap == null || m_s_typeMap.Count == 0) {
                     menu.AddDisabledItem(new GUIContent("No Scanning Strategies available"));

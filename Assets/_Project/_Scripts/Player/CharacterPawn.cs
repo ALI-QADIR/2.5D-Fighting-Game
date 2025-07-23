@@ -607,7 +607,6 @@ namespace Smash.Player
 		{
 			if (isWallSliding)
 			{
-				m_graphicsController.SetWallSliding();
 				m_currentFallSpeed = m_wallSlideSpeed;
 				m_numberOfJumps = 1;
 				m_wallJumpBufferTimer.Reset();
@@ -639,7 +638,7 @@ namespace Smash.Player
 		private void Rotate(int angle)
 		{
 			if (angle == 0) return;
-			if (/*CurrentState is Ledge && */!m_isJumping) return;
+			/*if (CurrentState is Ledge && !m_isJumping) return;*/
 			
 			float lookAngle = Mathf.Approximately(angle, -1.0f) ? 179f : 0f;
 			if (Mathf.Approximately(m_currentLookAngle, lookAngle)) return;
