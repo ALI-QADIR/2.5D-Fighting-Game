@@ -3,8 +3,16 @@ using UnityEngine;
 
 namespace Smash.Player.States
 {
-	// TODO: later check if the attack state logic is same, then rather than using so many separate methods for each attack state, pass in the type of the attack state
-	public class MainAttackStart : PlayerBaseState
+	public class AttackState : PlayerBaseState
+	{
+		public float ElapsedTime { get; protected set; }
+		
+		protected AttackState(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
+		{
+		}
+	}
+	
+	public class MainAttackStart : AttackState
 	{
 		public MainAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -19,9 +27,8 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class MainAttackEnd : PlayerBaseState
+	public class MainAttackEnd : AttackState
 	{
-		public float ElapsedTime { get; private set; }
 		
 		public MainAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -58,7 +65,7 @@ namespace Smash.Player.States
 		}
 	}
 
-	public class SideMainAttackStart : PlayerBaseState
+	public class SideMainAttackStart : AttackState
 	{
 		public SideMainAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -73,10 +80,8 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class SideMainAttackEnd : PlayerBaseState
+	public class SideMainAttackEnd : AttackState
 	{
-		public float ElapsedTime { get; private set; }
-		
 		public SideMainAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
@@ -112,7 +117,7 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class UpMainAttackStart : PlayerBaseState
+	public class UpMainAttackStart : AttackState
 	{
 		public UpMainAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -127,9 +132,8 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class UpMainAttackEnd : PlayerBaseState
+	public class UpMainAttackEnd : AttackState
 	{
-		public float ElapsedTime { get; private set; }
 		public UpMainAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
@@ -165,7 +169,7 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class DownMainAttackStart : PlayerBaseState
+	public class DownMainAttackStart : AttackState
 	{
 		public DownMainAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -179,7 +183,7 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class DownMainAttackEnd : PlayerBaseState
+	public class DownMainAttackEnd : AttackState
 	{
 		public DownMainAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -199,7 +203,7 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class SpecialAttackStart : PlayerBaseState
+	public class SpecialAttackStart : AttackState
 	{
 		public SpecialAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -214,9 +218,8 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class SpecialAttackEnd : PlayerBaseState
+	public class SpecialAttackEnd : AttackState
 	{
-		public float ElapsedTime { get; private set; }
 
 		public SpecialAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -253,7 +256,7 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class SideSpecialAttackStart : PlayerBaseState
+	public class SideSpecialAttackStart : AttackState
 	{
 		public SideSpecialAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -267,7 +270,7 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class SideSpecialAttackEnd : PlayerBaseState
+	public class SideSpecialAttackEnd : AttackState
 	{
 		public SideSpecialAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -287,7 +290,7 @@ namespace Smash.Player.States
 		}
 	}
 
-	public class UpSpecialAttackStart : PlayerBaseState
+	public class UpSpecialAttackStart : AttackState
 	{
 		public UpSpecialAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -302,9 +305,8 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class UpSpecialAttackEnd : PlayerBaseState
+	public class UpSpecialAttackEnd : AttackState
 	{
-		public float ElapsedTime { get; private set; }
 		public UpSpecialAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
@@ -340,7 +342,7 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class DownSpecialAttackStart : PlayerBaseState
+	public class DownSpecialAttackStart : AttackState
 	{
 		public DownSpecialAttackStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
@@ -354,7 +356,7 @@ namespace Smash.Player.States
 		}
 	}
 	
-	public class DownSpecialAttackEnd : PlayerBaseState
+	public class DownSpecialAttackEnd : AttackState
 	{
 		public DownSpecialAttackEnd(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{

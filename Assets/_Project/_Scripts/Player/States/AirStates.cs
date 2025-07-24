@@ -142,6 +142,7 @@ namespace Smash.Player.States
 			base.OnEnter();
 			_pawn.CurrentState = this;
 			_pawn.SetWallSliding(true);
+			_graphicsController.SetWallSliding();
 		}
 
 		public override void OnExit()

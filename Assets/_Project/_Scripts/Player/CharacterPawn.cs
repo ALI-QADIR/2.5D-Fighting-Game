@@ -138,8 +138,6 @@ namespace Smash.Player
 		private void FixedUpdate()
 		{
 			m_stateMachine.OnFixedUpdate();
-			// Todo: One-Way Platforms
-			// Todo: Wall Clipping
 			
 			// CheckForLedge();
 			CheckWallSlide();
@@ -231,9 +229,9 @@ namespace Smash.Player
 				return;
 			}
 
-			if (CurrentState is MainAttackStart)
+			if (CurrentState is AttackState)
 			{
-				if (m_jumpBufferTimer.IsRunning) m_jumpBufferTimer.Reset();	
+				if (m_jumpBufferTimer.IsRunning) m_jumpBufferTimer.Reset();
 				m_jumpBufferTimer.Start();
 				return;
 			}
@@ -387,7 +385,8 @@ namespace Smash.Player
 
 		public void SetMainAttackWindup()
 		{
-			Debug.Log("Main Attack Hold Start");
+			Debug.Log("Main Attack Wind Up");
+			EnableMovement(false);
 			RemoveVerticalVelocity();
 			m_gravity = 0f;
 		}
@@ -410,6 +409,7 @@ namespace Smash.Player
 		public void SetSideMainAttackWindUp()
 		{
 			Debug.Log("Side Main Attack Windup");
+			EnableMovement(false);
 		}
 		
 		public void SetSideMainAttackExecute()
@@ -430,6 +430,7 @@ namespace Smash.Player
 		public void SetUpMainAttackWindUp()
 		{
 			Debug.Log("Up Main Attack Windup");
+			EnableMovement(false);
 		}
 		
 		public void SetUpMainAttackExecute()
@@ -451,6 +452,7 @@ namespace Smash.Player
 		public void SetDownMainAttackWindUp()
 		{
 			Debug.Log("Down Main Attack Windup");
+			EnableMovement(false);
 		}
 		
 		public void SetDownMainAttackExecute()
@@ -470,31 +472,24 @@ namespace Smash.Player
 		
 		public void SetSpecialAttackWindup()
 		{
-			// Debug.Log("Dashing");
 			Debug.Log("Special Attack Wind Up");
-			// Play Attack Windup animation
-			// m_graphicsController.SetDashing();
+			EnableMovement(false);
 			RemoveVerticalVelocity();
 			m_gravity = 0f;
 		}
 
-		// Call this when Special attack animation has to finish
 		public void SetSpecialAttackExecute()
 		{
-			// Play attack execution animation
 			Debug.Log("Special Attack End");
 			EnableMovement(false);
-			// m_graphicsController.
 		}
 
 		public void SetSpecialAttackFinish()
 		{
-			// end attack execution animation
 			Debug.Log("Special Attack Finished");
 			CurrentStateMachine.SpecialAttackHold = false;
 			CurrentStateMachine.SpecialAttackTap = false;
 			EnableMovement(true);
-			// Debug.Log("Dash Ended");
 			SetGravity();
 			HandleJumpBuffer();
 		}
@@ -502,6 +497,7 @@ namespace Smash.Player
 		public void SetSideSpecialAttackWindUp()
 		{
 			Debug.Log("Side Special Attack Windup");
+			EnableMovement(false);
 		}
 		
 		public void SetSideSpecialAttackExecute()
@@ -522,6 +518,7 @@ namespace Smash.Player
 		public void SetUpSpecialAttackWindUp()
 		{
 			Debug.Log("Up Special Attack Windup");
+			EnableMovement(false);
 		}
 		
 		public void SetUpSpecialAttackExecute()
@@ -542,6 +539,7 @@ namespace Smash.Player
 		public void SetDownSpecialAttackWindUp()
 		{
 			Debug.Log("Down Special Attack Windup");
+			EnableMovement(false);
 		}
 		
 		public void SetDownSpecialAttackExecute()
@@ -768,7 +766,7 @@ namespace Smash.Player
 
 		private void AdjustHorizontalVelocity(ref Vector3 horizontalVelocity)
 		{
-			if (CurrentState is MainAttackStart) return;
+			// if (CurrentState is MainAttackStart) return;
 			
 			m_velocity = GetMovementVelocity();
 			horizontalVelocity = Vector3.MoveTowards(horizontalVelocity, m_velocity, 
@@ -789,8 +787,8 @@ namespace Smash.Player
 
 		private bool CurrentStateAllowsRotation()
 		{
-			return CurrentState is Idle or Moving or Rising or Falling or Coyote or Apex or WallSlide
-				or SideMainAttackEnd or SideSpecialAttackEnd;
+			return CurrentState is Idle or Moving or Rising or Falling or Coyote or Apex
+				or SideMainAttackEnd or SideSpecialAttackEnd or SideMainAttackStart or SideSpecialAttackStart;
 		}
 		
 		private void EnableMovement(bool enable)
@@ -890,7 +888,7 @@ namespace Smash.Player
 			m_initState = new PlayerInit();
 			
 			FuncPredicate groundToAirborne = new(() => 
-				m_stateMachine.CurrentState is GroundedSubStateMachine && !m_motor.IsGrounded() && CurrentState is not UpMainAttackEnd);
+				m_stateMachine.CurrentState is GroundedSubStateMachine && !m_motor.IsGrounded() && CurrentState is not AttackState);
 			FuncPredicate airborneToGround = new(() => 
 				m_stateMachine.CurrentState is AirborneSubStateMachine && m_motor.IsGrounded());
 			
