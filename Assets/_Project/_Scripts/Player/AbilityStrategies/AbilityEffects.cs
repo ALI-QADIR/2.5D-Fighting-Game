@@ -73,7 +73,7 @@ namespace Smash.Player.AbilityStrategies
 			ModifyEffect();
 			if (collider.TryGetComponent(out CharacterPawn pawn))
 			{
-				pawn.HandleKnockBack(m_force, directionX);
+				pawn.HandleKnockBack(m_force * _modifier, directionX, _modifier);
 			}
 			else if (collider.TryGetComponent<Rigidbody>(out var rb))
 			{
@@ -85,6 +85,7 @@ namespace Smash.Player.AbilityStrategies
 		private void CalculateDirection(Vector3 effectedColliderPos, Vector3 effectOwnerPos, out float directionX)
 		{
 			directionX = (effectedColliderPos - effectOwnerPos).x;
+			directionX = directionX > 0 ? 1 : -1;
 		}
 
 		protected override void ModifyEffect()

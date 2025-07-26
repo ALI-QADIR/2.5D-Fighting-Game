@@ -181,8 +181,9 @@ namespace Smash.Player
 			SetInAir();
 		}
 
-		public void HandleKnockBack(float force, float direction)
+		public void HandleKnockBack(float force, float direction, float modifier)
 		{
+			m_graphicsController.SetKnockBackParameters(direction, 1/modifier);
 			m_isKnockedBack = true;
 			var directionVector = direction > 0 ? Vector3.right : Vector3.left;
 			RemoveHorizontalVelocity();
