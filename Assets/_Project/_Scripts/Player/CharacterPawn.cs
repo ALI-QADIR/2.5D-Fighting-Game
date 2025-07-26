@@ -59,6 +59,8 @@ namespace Smash.Player
 		private float m_currentLookAngle;
 		private int m_numberOfJumps;
 		private bool m_isJumping;
+		private bool m_isKnockedBack;
+		private bool m_isTossedUp;
 		// private bool m_isLaunching;
 		// private bool m_isClimbing;
 		private Vector3 m_velocity, m_savedVelocity;
@@ -158,6 +160,10 @@ namespace Smash.Player
 
 		#region Public Methods
 
+		public void ResetKnockBackBool() => m_isKnockedBack = false;
+
+		public void ResetTossUpBool() => m_isTossedUp = false;
+
 		#region AbilityEffects
 
 		public void HandleJumpAbility(float power)
@@ -169,6 +175,7 @@ namespace Smash.Player
 		
 		public void HandleTossUpAbility(float power)
 		{
+			m_isTossedUp = true;
 			m_motor.ShouldAdjustForGround = false;
 			HandleJump(power);
 			SetInAir();
@@ -176,6 +183,7 @@ namespace Smash.Player
 
 		public void HandleKnockBack(float force, float direction)
 		{
+			m_isKnockedBack = true;
 			var directionVector = direction > 0 ? Vector3.right : Vector3.left;
 			RemoveHorizontalVelocity();
 			m_savedVelocity += directionVector * force;
@@ -628,6 +636,9 @@ namespace Smash.Player
 		
 		// public bool IsLedgeGrab() => m_ledgeDetector.IsLedgeDetected();
 		public bool IsWallDetected() => m_wallDetector.IsWallDetected();
+
+		public bool IsKnockedBack() => m_isKnockedBack;
+		public bool IsTossedUp() => m_isTossedUp;
 
 		#endregion Public Methods
 

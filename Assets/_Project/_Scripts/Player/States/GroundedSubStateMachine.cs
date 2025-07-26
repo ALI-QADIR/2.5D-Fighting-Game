@@ -129,6 +129,9 @@ namespace Smash.Player.States
 			_downSpecialAttackStartToEndCondition = new FuncPredicate(() => !DownSpecialAttackHold);
 			_downSpecialAttackEndToEntryCondition = new FuncPredicate(() => true);
 			
+			_anyToKnockBackCondition = new FuncPredicate(() => _stateMachine.CurrentState is not TossUpStart && _pawn.IsKnockedBack());
+			_knockBackToEntryCondition = new FuncPredicate(() => !_pawn.IsKnockedBack());
+			
 			/*m_dashToIdleCondition = new FuncPredicate(() =>
 				_stateMachine.CurrentState is Dash && !_pawn.IsMoving() && m_dash.IsFinished);
 			m_dashToMovingCondition = new FuncPredicate(() =>

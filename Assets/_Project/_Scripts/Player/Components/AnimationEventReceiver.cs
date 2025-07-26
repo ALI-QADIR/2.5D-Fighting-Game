@@ -13,6 +13,21 @@ namespace Smash.Player.Components
 			m_pawn ??= gameObject.GetOrAddComponent<CharacterPawn>();
 		}
 
+		public void HurtAnimationComplete(string hurtType)
+		{
+			switch (hurtType)
+			{
+				case "KnockBack":
+					m_pawn.ResetKnockBackBool();
+					break;
+				case "TossUp":
+					m_pawn.ResetTossUpBool();
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(hurtType), hurtType, "Invalid hurt type string");
+			}
+		}
+
 		public void BeginAbilityScan(string abilityType)
 		{
 			switch (abilityType)

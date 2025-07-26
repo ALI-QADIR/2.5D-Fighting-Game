@@ -138,6 +138,14 @@ namespace Smash.Player.States
 		#endregion
 
 		#endregion Attack States
+		
+		#region Hurt States
+		
+		protected KnockBack _knockBack;
+		protected FuncPredicate _anyToKnockBackCondition;
+		protected FuncPredicate _knockBackToEntryCondition;
+		
+		#endregion Hurt States
 
 		protected PlayerSubStateMachine(CharacterPawn pawn, PlayerGraphicsController graphicsController,
 			float mainAttackDuration, float sideMainAttackDuration, float upMainAttackDuration, 
@@ -176,6 +184,8 @@ namespace Smash.Player.States
 			
 			_downSpecialAttackStart = new DownSpecialAttackStart(_pawn, _graphicsController);
 			_downSpecialAttackEnd = new DownSpecialAttackEnd(_pawn, _graphicsController);
+			
+			_knockBack = new KnockBack(_pawn, _graphicsController);
 		}
 		
 		protected virtual void CreateTransitions() {}
@@ -221,6 +231,9 @@ namespace Smash.Player.States
 			AddAnyTransition(_downSpecialAttackEnd, _anyToDownSpecialAttackEndCondition);
 			AddTransition(_downSpecialAttackStart, _downSpecialAttackEnd, _downSpecialAttackStartToEndCondition);
 			AddTransition(_downSpecialAttackEnd, _entry, _downSpecialAttackEndToEntryCondition);
+			
+			AddAnyTransition(_knockBack, _anyToKnockBackCondition);
+			AddTransition(_knockBack, _entry, _knockBackToEntryCondition);
 		}
 
 		public override void OnEnter()

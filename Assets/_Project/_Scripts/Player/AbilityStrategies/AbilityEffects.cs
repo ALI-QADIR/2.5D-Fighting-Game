@@ -86,6 +86,11 @@ namespace Smash.Player.AbilityStrategies
 		{
 			directionX = (effectedColliderPos - effectOwnerPos).x;
 		}
+
+		protected override void ModifyEffect()
+		{
+			_modifier = Mathf.Lerp(0.5f, 1, HeldDuration / 3f);
+		}
 	}
 	
 	public class TossUpEffect : AbilityEffect

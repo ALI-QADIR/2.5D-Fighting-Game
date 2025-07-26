@@ -15,6 +15,8 @@ namespace Smash.Player.Components
 		private int m_isMovingBoolHash;
 		private int m_isRisingBoolHash;
 		private int m_isFallingBoolHash;
+		private int m_knockBackTriggerHash;
+		private int m_tossUpTriggerHash;
 		
 		private int m_mainAttackStartTriggerHash;
 		private int m_mainAttackFinishTriggerHash;
@@ -40,6 +42,8 @@ namespace Smash.Player.Components
 			m_isMovingBoolHash = Animator.StringToHash("IsMoving");
 			m_isRisingBoolHash = Animator.StringToHash("IsRising");
 			m_isFallingBoolHash = Animator.StringToHash("IsFalling");
+			m_knockBackTriggerHash = Animator.StringToHash("KnockBack");
+			m_tossUpTriggerHash = Animator.StringToHash("TossUp");
 			
 			m_mainAttackStartTriggerHash = Animator.StringToHash("MainAttackStart");
 			m_mainAttackFinishTriggerHash = Animator.StringToHash("MainAttackFinish");
@@ -109,6 +113,15 @@ namespace Smash.Player.Components
 			m_animator.SetTrigger(m_climbTriggerHash);
 			m_animator.SetBool(m_isFallingBoolHash, false);
 			m_animator.SetBool(m_isRisingBoolHash, false);
+		}
+		
+		public void SetKnockBack()
+		{
+			m_animator.SetTrigger(m_knockBackTriggerHash);
+		}
+		
+		public void SetTossUp()
+		{
 		}
 		
 		public void SetWallSliding()
