@@ -1,7 +1,5 @@
 ﻿using System;
-using JetBrains.Annotations;
 using Smash.Player.Components;
-using TripleA.Utils.Extensions;
 using UnityEngine;
 
 namespace Smash.Player.AbilityStrategies
@@ -94,21 +92,34 @@ namespace Smash.Player.AbilityStrategies
 		}
 	}
 	
+	[Serializable]
 	public class TossUpEffect : AbilityEffect
 	{
 		[SerializeField] private float m_force;
 		
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
+			CalculateDirection(collider.transform.position, effectOwner.transform.position, out var directionX);
 			ModifyEffect();
 			if (collider.TryGetComponent(out CharacterPawn pawn))
 			{
-				pawn.HandleTossUpAbility(m_force);
+				pawn.HandleTossUpAbility(m_force, directionX, _modifier);
 			}
 			else if (collider.TryGetComponent(out Rigidbody rb))
 			{
 				rb.AddForce(Vector3.up * m_force, ForceMode.Impulse);
 			}
+		}
+
+		private void CalculateDirection(Vector3 effectedColliderPos, Vector3 effectOwnerPos, out float directionX)
+		{
+			directionX = (effectedColliderPos - effectOwnerPos).x;
+			directionX = directionX > 0 ? 1 : -1;
+		}
+
+		protected override void ModifyEffect()
+		{
+			_modifier = Mathf.Lerp(0.5f, 1, HeldDuration / 3f);
 		}
 	}
 

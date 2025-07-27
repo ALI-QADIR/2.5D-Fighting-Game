@@ -15,6 +15,7 @@ namespace Smash.Player.Components
 
 		public void HurtAnimationComplete(string hurtType)
 		{
+			Debug.Log(hurtType);
 			switch (hurtType)
 			{
 				case "KnockBack":

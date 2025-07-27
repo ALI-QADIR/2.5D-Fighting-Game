@@ -129,8 +129,13 @@ namespace Smash.Player.States
 			_downSpecialAttackStartToEndCondition = new FuncPredicate(() => !DownSpecialAttackHold);
 			_downSpecialAttackEndToEntryCondition = new FuncPredicate(() => true);
 			
-			_anyToKnockBackCondition = new FuncPredicate(() => _stateMachine.CurrentState is not TossUpStart && _pawn.IsKnockedBack());
+			_anyToKnockBackCondition = new FuncPredicate(() => _stateMachine.CurrentState is not 
+				(TossUpStart or TossUpEnd or KnockBack) && _pawn.IsKnockedBack());
 			_knockBackToEntryCondition = new FuncPredicate(() => !_pawn.IsKnockedBack());
+			
+			_anyToTossUpStartCondition = new FuncPredicate(() =>_stateMachine.CurrentState is not (TossUpEnd or TossUpStart) && _pawn.IsTossedUp());
+			_tossUpStartToEndCondition = new FuncPredicate(() =>_pawn.IsGrounded() && _tossUpStart.ElapseTime > K_TOSS_UP_SANITY_CHECK);
+			_tossUpEndToEntryCondition = new FuncPredicate(() => !_pawn.IsTossedUp());
 			
 			/*m_dashToIdleCondition = new FuncPredicate(() =>
 				_stateMachine.CurrentState is Dash && !_pawn.IsMoving() && m_dash.IsFinished);

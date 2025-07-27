@@ -145,6 +145,13 @@ namespace Smash.Player.States
 		protected FuncPredicate _anyToKnockBackCondition;
 		protected FuncPredicate _knockBackToEntryCondition;
 		
+		protected TossUpStart _tossUpStart;
+		protected TossUpEnd _tossUpEnd;
+		protected const float K_TOSS_UP_SANITY_CHECK = 0.2f;
+		protected FuncPredicate _anyToTossUpStartCondition;
+		protected FuncPredicate _tossUpStartToEndCondition;
+		protected FuncPredicate _tossUpEndToEntryCondition;
+		
 		#endregion Hurt States
 
 		protected PlayerSubStateMachine(CharacterPawn pawn, PlayerGraphicsController graphicsController,
@@ -186,6 +193,9 @@ namespace Smash.Player.States
 			_downSpecialAttackEnd = new DownSpecialAttackEnd(_pawn, _graphicsController);
 			
 			_knockBack = new KnockBack(_pawn, _graphicsController);
+			
+			_tossUpStart = new TossUpStart(_pawn, _graphicsController);
+			_tossUpEnd = new TossUpEnd(_pawn, _graphicsController);
 		}
 		
 		protected virtual void CreateTransitions() {}
@@ -234,6 +244,10 @@ namespace Smash.Player.States
 			
 			AddAnyTransition(_knockBack, _anyToKnockBackCondition);
 			AddTransition(_knockBack, _entry, _knockBackToEntryCondition);
+			
+			AddAnyTransition(_tossUpStart, _anyToTossUpStartCondition);
+			AddTransition(_tossUpStart, _tossUpEnd, _tossUpStartToEndCondition);
+			AddTransition(_tossUpEnd, _entry, _tossUpEndToEntryCondition);
 		}
 
 		public override void OnEnter()

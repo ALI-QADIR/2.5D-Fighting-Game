@@ -1,4 +1,5 @@
 ﻿using Smash.Player.Components;
+using UnityEngine;
 
 namespace Smash.Player.States
 {
@@ -25,6 +26,7 @@ namespace Smash.Player.States
 	
 	public class TossUpStart : HurtState
 	{
+		public float ElapseTime { get; private set; }
 		public TossUpStart(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
@@ -33,7 +35,14 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			_pawn.CurrentState = this;
-			_graphicsController.SetTossUp();
+			_graphicsController.SetTossUpStart();
+			ElapseTime = 0f;
+		}
+
+		public override void OnUpdate()
+		{
+			base.OnUpdate();
+			ElapseTime += Time.deltaTime;
 		}
 	}
 	
@@ -47,6 +56,7 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			_pawn.CurrentState = this;
+			_graphicsController.SetTossUpFinish();
 		}
 	}
 	

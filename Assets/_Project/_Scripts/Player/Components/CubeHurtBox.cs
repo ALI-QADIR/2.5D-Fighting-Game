@@ -8,7 +8,7 @@ namespace Smash.Player.Components
 		
 		public override void Scan()
 		{
-			Debug.Log("OverlapBox");
+			// Debug.Log("OverlapBox");
 			int hits = Physics.OverlapBoxNonAlloc(
 				center: transform.position, 
 				halfExtents: halfExtents, 

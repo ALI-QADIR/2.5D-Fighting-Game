@@ -15,7 +15,11 @@ namespace Smash.Player.Components
 		private int m_isMovingBoolHash;
 		private int m_isRisingBoolHash;
 		private int m_isFallingBoolHash;
-		private int m_tossUpTriggerHash;
+		
+		private int m_tossUpStartTriggerHash;
+		private int m_tossUpEndTriggerHash;
+		private int m_tossUpDirectionParamHash;
+		private int m_tossUpAnimSpeedParamHash;
 		
 		private int m_knockBackTriggerHash;
 		private int m_knockBackDirectionParamHash;
@@ -45,7 +49,11 @@ namespace Smash.Player.Components
 			m_isMovingBoolHash = Animator.StringToHash("IsMoving");
 			m_isRisingBoolHash = Animator.StringToHash("IsRising");
 			m_isFallingBoolHash = Animator.StringToHash("IsFalling");
-			m_tossUpTriggerHash = Animator.StringToHash("TossUp");
+			
+			m_tossUpStartTriggerHash = Animator.StringToHash("TossUpStart");
+			m_tossUpEndTriggerHash = Animator.StringToHash("TossUpEnd");
+			m_tossUpDirectionParamHash = Animator.StringToHash("TossUpDirection");
+			m_tossUpAnimSpeedParamHash = Animator.StringToHash("TossUpAnimSpeed");
 			
 			m_knockBackTriggerHash = Animator.StringToHash("KnockBack");
 			m_knockBackDirectionParamHash = Animator.StringToHash("KnockBackDirection");
@@ -132,8 +140,21 @@ namespace Smash.Player.Components
 			m_animator.SetTrigger(m_knockBackTriggerHash);
 		}
 		
-		public void SetTossUp()
+		public void SetTossUpParameters(float direction, float animSpeed)
 		{
+			m_animator.SetFloat(m_tossUpDirectionParamHash, direction);
+			m_animator.SetFloat(m_tossUpAnimSpeedParamHash, animSpeed);
+		}
+		
+		public void SetTossUpStart()
+		{
+			m_animator.SetTrigger(m_tossUpStartTriggerHash);
+		}
+		
+		public void SetTossUpFinish()
+		{
+			Debug.Log("SetTossUpFinish");
+			m_animator.SetTrigger(m_tossUpEndTriggerHash);
 		}
 		
 		public void SetWallSliding()

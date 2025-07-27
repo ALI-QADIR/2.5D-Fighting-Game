@@ -167,7 +167,13 @@ namespace Smash.Player.States
 			_downSpecialAttackEndToEntryCondition = new FuncPredicate(() => true);
 			
 			// in air no knock back only toss up
-			_anyToKnockBackCondition = new FuncPredicate(() => _stateMachine.CurrentState is not TossUpStart && _pawn.IsKnockedBack());
+			_anyToKnockBackCondition = new FuncPredicate(() => _stateMachine.CurrentState is not 
+				(TossUpStart or TossUpEnd or KnockBack) && _pawn.IsKnockedBack());
+			
+			_anyToTossUpStartCondition = new FuncPredicate(() => _stateMachine.CurrentState is not
+				(TossUpStart or TossUpEnd) && _pawn.IsTossedUp());
+			_tossUpStartToEndCondition = new FuncPredicate(() => _pawn.IsGrounded() && _tossUpStart.ElapseTime > K_TOSS_UP_SANITY_CHECK);
+			_tossUpEndToEntryCondition = new FuncPredicate(() => !_pawn.IsTossedUp());
 		}
 
 		protected override void AddTransitions()

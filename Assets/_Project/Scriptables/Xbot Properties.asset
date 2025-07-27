@@ -22,7 +22,7 @@ MonoBehaviour:
       rid: 4153748571275657319
     <AbilityEffects>k__BackingField:
     - rid: 4153748571275657314
-    - rid: 4153748638621237342
+    - rid: 4153748820480491611
   sideMainAbilityStrategyData:
     <AnimDuration>k__BackingField: 0.94
     <ScanningStrategy>k__BackingField:
@@ -248,11 +248,6 @@ MonoBehaviour:
       data:
         <IsSelfEffect>k__BackingField: 0
         m_force: 40
-    - rid: 4153748638621237342
-      type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
-      data:
-        <IsSelfEffect>k__BackingField: 0
-        m_force: 20
     - rid: 4153748638621237344
       type: {class: TossUpEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
@@ -268,3 +263,8 @@ MonoBehaviour:
       data:
         <CenterOffset>k__BackingField: {x: 0, y: 0, z: 0}
         m_prefab: {fileID: -5264158173422641984, guid: 7daa837439ef97c4a8cec1dec868b40f, type: 3}
+    - rid: 4153748820480491611
+      type: {class: TossUpEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <IsSelfEffect>k__BackingField: 0
+        m_force: 30
