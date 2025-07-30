@@ -1131,7 +1131,7 @@ BlendTree:
   m_Name: Toss Up Start Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 10c9a80b2cbc3fc4fa2fdddb9f4a4542, type: 3}
+    m_Motion: {fileID: -203655887218126122, guid: 2c566c45a6450a247a259f2e80129905, type: 3}
     m_Threshold: -1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -1139,7 +1139,7 @@ BlendTree:
     m_DirectBlendParameter: KnockBackAnimSpeed
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 2c566c45a6450a247a259f2e80129905, type: 3}
+    m_Motion: {fileID: -203655887218126122, guid: 459b8490073ea9c4889af07c8e74131b, type: 3}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -1150,7 +1150,7 @@ BlendTree:
   m_BlendParameterY: KnockBackAnimSpeed
   m_MinThreshold: -1
   m_MaxThreshold: 1
-  m_UseAutomaticThresholds: 1
+  m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
 --- !u!1102 &-717800003129309933
@@ -1685,7 +1685,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.049999952
+  m_TransitionDuration: 0.15
   m_TransitionOffset: 0
   m_ExitTime: 0.98141503
   m_HasExitTime: 0
@@ -1788,7 +1788,7 @@ BlendTree:
   m_Name: Toss Up End Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: -6894513051456882905, guid: 10c9a80b2cbc3fc4fa2fdddb9f4a4542, type: 3}
+    m_Motion: {fileID: 3442287474041793104, guid: 2c566c45a6450a247a259f2e80129905, type: 3}
     m_Threshold: -1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1.5
@@ -1796,7 +1796,7 @@ BlendTree:
     m_DirectBlendParameter: KnockBackAnimSpeed
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 3442287474041793104, guid: 2c566c45a6450a247a259f2e80129905, type: 3}
+    m_Motion: {fileID: -5220258131720099477, guid: 459b8490073ea9c4889af07c8e74131b, type: 3}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1.5
@@ -1936,7 +1936,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: c7ccbe5b6717bf14e83e1b2e77075653, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: 4c0619cc987dc2947a2050cf4cbee9ca, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1978,7 +1978,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 4251384598170728049, guid: c7ccbe5b6717bf14e83e1b2e77075653, type: 3}
+  m_Motion: {fileID: 8740300401192556408, guid: 4c0619cc987dc2947a2050cf4cbee9ca, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -2625,7 +2625,7 @@ BlendTree:
   m_Name: Toss Up End Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 6455db2e86be5b14dbefb6084db4afa3, type: 3}
+    m_Motion: {fileID: -203655887218126122, guid: 4c4e2d1de01d8d44e8ce4daa3909f120, type: 3}
     m_Threshold: -1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1.5
@@ -2633,7 +2633,7 @@ BlendTree:
     m_DirectBlendParameter: KnockBackAnimSpeed
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 4c4e2d1de01d8d44e8ce4daa3909f120, type: 3}
+    m_Motion: {fileID: -203655887218126122, guid: 6455db2e86be5b14dbefb6084db4afa3, type: 3}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1.5

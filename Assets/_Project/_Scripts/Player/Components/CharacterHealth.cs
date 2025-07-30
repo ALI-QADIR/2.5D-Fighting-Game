@@ -4,7 +4,7 @@ namespace Smash.Player.Components
 {
 	public class CharacterHealth : MonoBehaviour
 	{
-		[field: SerializeField] public float Health { get; set; }
+		[field: SerializeField] public float Health { get; private set; }
 
 		public void TakeDamage(float damage)
 		{

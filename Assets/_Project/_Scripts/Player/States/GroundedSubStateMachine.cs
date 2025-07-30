@@ -91,51 +91,33 @@ namespace Smash.Player.States
 
 			_anyToMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && MainAttackHold);
 			_anyToMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && MainAttackTap);
-			_mainAttackStartToEndCondition = new FuncPredicate(() => !MainAttackHold);
-			_mainAttackEndToEntryCondition = new FuncPredicate(() => _mainAttackEnd.ElapsedTime >= _mainAttackDuration); // wait for duration to be completed
 			
 			_anyToSideMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && SideMainAttackHold);
 			_anyToSideMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && SideMainAttackTap);
-			_sideMainAttackStartToEndCondition = new FuncPredicate(() => !SideMainAttackHold);
-			_sideMainAttackEndToEntryCondition = new FuncPredicate(() => _sideMainAttackEnd.ElapsedTime >= _sideMainAttackDuration); // wait for duration to be completed
 			
 			_anyToUpMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackHold);
 			_anyToUpMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackTap);
-			_upMainAttackStartToEndCondition = new FuncPredicate(() => !UpMainAttackHold);
-			_upMainAttackEndToEntryCondition = new FuncPredicate(() => _upMainAttackEnd.ElapsedTime >= _upMainAttackDuration); // wait for duration to be completed
 			
 			_anyToDownMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownMainAttackHold);
 			_anyToDownMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownMainAttackTap);
-			_downMainAttackStartToEndCondition = new FuncPredicate(() => !DownMainAttackHold);
-			_downMainAttackEndToEntryCondition = new FuncPredicate(() => true); // wait for duration to be completed
 			
 			_anyToSpecialAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && SpecialAttackHold);
 			_anyToSpecialAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && SpecialAttackTap);
-			_specialAttackStartToEndCondition = new FuncPredicate(() => !SpecialAttackHold);
-			_specialAttackEndToEntryCondition = new FuncPredicate(() => _specialAttackEnd.ElapsedTime >= _specialAttackDuration);
 			
 			_anyToSideSpecialAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && SideSpecialAttackHold);
 			_anyToSideSpecialAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && SideSpecialAttackTap);
-			_sideSpecialAttackStartToEndCondition = new FuncPredicate(() => !SideSpecialAttackHold);
-			_sideSpecialAttackEndToEntryCondition = new FuncPredicate(() => true);
 			
 			_anyToUpSpecialAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpSpecialAttackHold);
 			_anyToUpSpecialAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpSpecialAttackTap);
-			_upSpecialAttackStartToEndCondition = new FuncPredicate(() => !UpSpecialAttackHold);
-			_upSpecialAttackEndToEntryCondition = new FuncPredicate(() => _upSpecialAttackEnd.ElapsedTime >= _upSpecialAttackDuration);
 			
 			_anyToDownSpecialAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownSpecialAttackHold);
 			_anyToDownSpecialAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownSpecialAttackTap);
-			_downSpecialAttackStartToEndCondition = new FuncPredicate(() => !DownSpecialAttackHold);
-			_downSpecialAttackEndToEntryCondition = new FuncPredicate(() => true);
 			
 			_anyToKnockBackCondition = new FuncPredicate(() => _stateMachine.CurrentState is not 
 				(TossUpStart or TossUpEnd or KnockBack) && _pawn.IsKnockedBack());
 			_knockBackToEntryCondition = new FuncPredicate(() => !_pawn.IsKnockedBack());
 			
-			_anyToTossUpStartCondition = new FuncPredicate(() =>_stateMachine.CurrentState is not (TossUpEnd or TossUpStart) && _pawn.IsTossedUp());
-			_tossUpStartToEndCondition = new FuncPredicate(() =>_pawn.IsGrounded() && _tossUpStart.ElapseTime > K_TOSS_UP_SANITY_CHECK);
-			_tossUpEndToEntryCondition = new FuncPredicate(() => !_pawn.IsTossedUp());
+			base.CreateTransitions();
 			
 			/*m_dashToIdleCondition = new FuncPredicate(() =>
 				_stateMachine.CurrentState is Dash && !_pawn.IsMoving() && m_dash.IsFinished);

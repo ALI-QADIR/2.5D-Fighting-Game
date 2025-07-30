@@ -128,52 +128,33 @@ namespace Smash.Player.States
 
 			_anyToMainAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && MainAttackHold);
 			_anyToMainAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && MainAttackTap);
-			_mainAttackStartToEndCondition = new FuncPredicate(() => !MainAttackHold);
-			_mainAttackEndToEntryCondition = new FuncPredicate(() => _mainAttackEnd.ElapsedTime >= _mainAttackDuration); // wait for duration to be completed
 			
 			_anyToSideMainAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideMainAttackHold);
 			_anyToSideMainAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideMainAttackTap);
-			_sideMainAttackStartToEndCondition = new FuncPredicate(() => !SideMainAttackHold);
-			_sideMainAttackEndToEntryCondition = new FuncPredicate(() => _sideMainAttackEnd.ElapsedTime >= _sideMainAttackDuration); // wait for duration to be completed
 			
 			_anyToUpMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackHold);
 			_anyToUpMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackTap);
-			_upMainAttackStartToEndCondition = new FuncPredicate(() => !UpMainAttackHold);
-			_upMainAttackEndToEntryCondition = new FuncPredicate(() => true); // wait for duration to be completed
 			
 			_anyToDownMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownMainAttackHold);
 			_anyToDownMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownMainAttackTap);
-			_downMainAttackStartToEndCondition = new FuncPredicate(() => !DownMainAttackHold);
-			_downMainAttackEndToEntryCondition = new FuncPredicate(() => true); // wait for duration to be completed
 			
 			_anyToSpecialAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && SpecialAttackHold);
 			_anyToSpecialAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && SpecialAttackTap);
-			_specialAttackStartToEndCondition = new FuncPredicate(() => !SpecialAttackHold);
-			_specialAttackEndToEntryCondition = new FuncPredicate(() => _specialAttackEnd.ElapsedTime >= _specialAttackDuration);
 			
 			_anyToSideSpecialAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideSpecialAttackHold);
 			_anyToSideSpecialAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideSpecialAttackTap);
-			_sideSpecialAttackStartToEndCondition = new FuncPredicate(() => !SideSpecialAttackHold);
-			_sideSpecialAttackEndToEntryCondition = new FuncPredicate(() => true);
 			
 			_anyToUpSpecialAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpSpecialAttackHold);
 			_anyToUpSpecialAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpSpecialAttackTap);
-			_upSpecialAttackStartToEndCondition = new FuncPredicate(() => !UpSpecialAttackHold);
-			_upSpecialAttackEndToEntryCondition = new FuncPredicate(() => _upSpecialAttackEnd.ElapsedTime >= _upSpecialAttackDuration);
 			
 			_anyToDownSpecialAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownSpecialAttackHold);
 			_anyToDownSpecialAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownSpecialAttackTap);
-			_downSpecialAttackStartToEndCondition = new FuncPredicate(() => !DownSpecialAttackHold);
-			_downSpecialAttackEndToEntryCondition = new FuncPredicate(() => true);
 			
 			// in air no knock back only toss up
 			_anyToKnockBackCondition = new FuncPredicate(() => _stateMachine.CurrentState is not 
 				(TossUpStart or TossUpEnd or KnockBack) && _pawn.IsKnockedBack());
 			
-			_anyToTossUpStartCondition = new FuncPredicate(() => _stateMachine.CurrentState is not
-				(TossUpStart or TossUpEnd) && _pawn.IsTossedUp());
-			_tossUpStartToEndCondition = new FuncPredicate(() => _pawn.IsGrounded() && _tossUpStart.ElapseTime > K_TOSS_UP_SANITY_CHECK);
-			_tossUpEndToEntryCondition = new FuncPredicate(() => !_pawn.IsTossedUp());
+			base.CreateTransitions();
 		}
 
 		protected override void AddTransitions()

@@ -8,11 +8,11 @@ namespace Smash.Player.States
 		protected StateMachine _stateMachine;
 		protected bool _dashPressed;
 
-		protected readonly float _mainAttackDuration;
-		protected readonly float _sideMainAttackDuration;
-		protected readonly float _upMainAttackDuration;
-		protected readonly float _specialAttackDuration;
-		protected readonly float _upSpecialAttackDuration;
+		private readonly float _mainAttackDuration;
+		private readonly float _sideMainAttackDuration;
+		private readonly float _upMainAttackDuration;
+		private readonly float _specialAttackDuration;
+		private readonly float _upSpecialAttackDuration;
 
 		#region Transition Booleans
 
@@ -43,114 +43,114 @@ namespace Smash.Player.States
 
 		#region Main Attack
 
-		protected MainAttackStart _mainAttackStart;
-		protected MainAttackEnd _mainAttackEnd;
+		private MainAttackStart m_mainAttackStart;
+		private MainAttackEnd m_mainAttackEnd;
 
 		protected FuncPredicate _anyToMainAttackStartCondition;
 		protected FuncPredicate _anyToMainAttackEndCondition;
-		protected FuncPredicate _mainAttackStartToEndCondition;
-		protected FuncPredicate _mainAttackEndToEntryCondition;
+		private FuncPredicate m_mainAttackStartToEndCondition;
+		private FuncPredicate m_mainAttackEndToEntryCondition;
 
 		#endregion Main Attack
 
 		#region Side Main Attack
 
-		protected SideMainAttackStart _sideMainAttackStart;
-		protected SideMainAttackEnd _sideMainAttackEnd;
+		private SideMainAttackStart m_sideMainAttackStart;
+		private SideMainAttackEnd m_sideMainAttackEnd;
 
 		protected FuncPredicate _anyToSideMainAttackStartCondition;
 		protected FuncPredicate _anyToSideMainAttackEndCondition;
-		protected FuncPredicate _sideMainAttackStartToEndCondition;
-		protected FuncPredicate _sideMainAttackEndToEntryCondition;
+		private FuncPredicate m_sideMainAttackStartToEndCondition;
+		private FuncPredicate m_sideMainAttackEndToEntryCondition;
 
 		#endregion Side Main Attack
 
 		#region Up Main Attack
 
-		protected UpMainAttackStart _upMainAttackStart;
-		protected UpMainAttackEnd _upMainAttackEnd;
+		private UpMainAttackStart m_upMainAttackStart;
+		private UpMainAttackEnd m_upMainAttackEnd;
 
 		protected FuncPredicate _anyToUpMainAttackStartCondition;
 		protected FuncPredicate _anyToUpMainAttackEndCondition;
-		protected FuncPredicate _upMainAttackStartToEndCondition;
-		protected FuncPredicate _upMainAttackEndToEntryCondition;
+		private FuncPredicate m_upMainAttackStartToEndCondition;
+		private FuncPredicate m_upMainAttackEndToEntryCondition;
 
 		#endregion Up Main Attack
 
 		#region Down Main Attack
 
-		protected DownMainAttackStart _downMainAttackStart;
-		protected DownMainAttackEnd _downMainAttackEnd;
+		private DownMainAttackStart m_downMainAttackStart;
+		private DownMainAttackEnd m_downMainAttackEnd;
 
 		protected FuncPredicate _anyToDownMainAttackStartCondition;
 		protected FuncPredicate _anyToDownMainAttackEndCondition;
-		protected FuncPredicate _downMainAttackStartToEndCondition;
-		protected FuncPredicate _downMainAttackEndToEntryCondition;
+		private FuncPredicate m_downMainAttackStartToEndCondition;
+		private FuncPredicate m_downMainAttackEndToEntryCondition;
 
 		#endregion Down Main Attack
 
 		#region Special Attack
 
-		protected SpecialAttackStart _specialAttackStart;
-		protected SpecialAttackEnd _specialAttackEnd;
+		private SpecialAttackStart m_specialAttackStart;
+		private SpecialAttackEnd m_specialAttackEnd;
 
 		protected FuncPredicate _anyToSpecialAttackStartCondition;
 		protected FuncPredicate _anyToSpecialAttackEndCondition;
-		protected FuncPredicate _specialAttackStartToEndCondition;
-		protected FuncPredicate _specialAttackEndToEntryCondition;
+		private FuncPredicate m_specialAttackStartToEndCondition;
+		private FuncPredicate m_specialAttackEndToEntryCondition;
 
 		#endregion
 
 		#region Side Special Attack
 
-		protected SideSpecialAttackStart _sideSpecialAttackStart;
-		protected SideSpecialAttackEnd _sideSpecialAttackEnd;
+		private SideSpecialAttackStart m_sideSpecialAttackStart;
+		private SideSpecialAttackEnd m_sideSpecialAttackEnd;
 
 		protected FuncPredicate _anyToSideSpecialAttackStartCondition;
 		protected FuncPredicate _anyToSideSpecialAttackEndCondition;
-		protected FuncPredicate _sideSpecialAttackStartToEndCondition;
-		protected FuncPredicate _sideSpecialAttackEndToEntryCondition;
+		private FuncPredicate m_sideSpecialAttackStartToEndCondition;
+		private FuncPredicate m_sideSpecialAttackEndToEntryCondition;
 
 		#endregion
 
 		#region Up Special Attack
 
-		protected UpSpecialAttackStart _upSpecialAttackStart;
-		protected UpSpecialAttackEnd _upSpecialAttackEnd;
+		private UpSpecialAttackStart m_upSpecialAttackStart;
+		private UpSpecialAttackEnd m_upSpecialAttackEnd;
 
 		protected FuncPredicate _anyToUpSpecialAttackStartCondition;
 		protected FuncPredicate _anyToUpSpecialAttackEndCondition;
-		protected FuncPredicate _upSpecialAttackStartToEndCondition;
-		protected FuncPredicate _upSpecialAttackEndToEntryCondition;
+		private FuncPredicate m_upSpecialAttackStartToEndCondition;
+		private FuncPredicate m_upSpecialAttackEndToEntryCondition;
 
 		#endregion
 
 		#region Down Special Attack
 
-		protected DownSpecialAttackStart _downSpecialAttackStart;
-		protected DownSpecialAttackEnd _downSpecialAttackEnd;
+		private DownSpecialAttackStart m_downSpecialAttackStart;
+		private DownSpecialAttackEnd m_downSpecialAttackEnd;
 
 		protected FuncPredicate _anyToDownSpecialAttackStartCondition;
 		protected FuncPredicate _anyToDownSpecialAttackEndCondition;
-		protected FuncPredicate _downSpecialAttackStartToEndCondition;
-		protected FuncPredicate _downSpecialAttackEndToEntryCondition;
+		private FuncPredicate m_downSpecialAttackStartToEndCondition;
+		private FuncPredicate m_downSpecialAttackEndToEntryCondition;
 
 		#endregion
 
 		#endregion Attack States
 		
 		#region Hurt States
-		
-		protected KnockBack _knockBack;
+
+		private KnockBack m_knockBack;
 		protected FuncPredicate _anyToKnockBackCondition;
 		protected FuncPredicate _knockBackToEntryCondition;
-		
-		protected TossUpStart _tossUpStart;
-		protected TossUpEnd _tossUpEnd;
-		protected const float K_TOSS_UP_SANITY_CHECK = 0.2f;
-		protected FuncPredicate _anyToTossUpStartCondition;
-		protected FuncPredicate _tossUpStartToEndCondition;
-		protected FuncPredicate _tossUpEndToEntryCondition;
+
+		private TossUpStart m_tossUpStart;
+		private TossUpEnd m_tossUpEnd;
+		private const float k_Toss_Up_Sanity_Check = 0.2f;
+		private FuncPredicate m_anyToTossUpStartCondition;
+		private FuncPredicate m_tossUpStartToEndCondition;
+		private FuncPredicate m_tossUpEndToEntryCondition;
 		
 		#endregion Hurt States
 
@@ -168,86 +168,115 @@ namespace Smash.Player.States
 
 		protected virtual void CreateStates()
 		{
-			_mainAttackStart = new MainAttackStart(_pawn, _graphicsController);
-			_mainAttackEnd = new MainAttackEnd(_pawn, _graphicsController);
+			m_mainAttackStart = new MainAttackStart(_pawn, _graphicsController);
+			m_mainAttackEnd = new MainAttackEnd(_pawn, _graphicsController);
 			
-			_sideMainAttackStart = new SideMainAttackStart(_pawn, _graphicsController);
-			_sideMainAttackEnd = new SideMainAttackEnd(_pawn, _graphicsController);
+			m_sideMainAttackStart = new SideMainAttackStart(_pawn, _graphicsController);
+			m_sideMainAttackEnd = new SideMainAttackEnd(_pawn, _graphicsController);
 			
-			_upMainAttackStart = new UpMainAttackStart(_pawn, _graphicsController);
-			_upMainAttackEnd = new UpMainAttackEnd(_pawn, _graphicsController);
+			m_upMainAttackStart = new UpMainAttackStart(_pawn, _graphicsController);
+			m_upMainAttackEnd = new UpMainAttackEnd(_pawn, _graphicsController);
 			
-			_downMainAttackStart = new DownMainAttackStart(_pawn, _graphicsController);
-			_downMainAttackEnd = new DownMainAttackEnd(_pawn, _graphicsController);
+			m_downMainAttackStart = new DownMainAttackStart(_pawn, _graphicsController);
+			m_downMainAttackEnd = new DownMainAttackEnd(_pawn, _graphicsController);
 			
-			_specialAttackStart = new SpecialAttackStart(_pawn, _graphicsController);
-			_specialAttackEnd = new SpecialAttackEnd(_pawn, _graphicsController);
+			m_specialAttackStart = new SpecialAttackStart(_pawn, _graphicsController);
+			m_specialAttackEnd = new SpecialAttackEnd(_pawn, _graphicsController);
 			
-			_sideSpecialAttackStart = new SideSpecialAttackStart(_pawn, _graphicsController);
-			_sideSpecialAttackEnd = new SideSpecialAttackEnd(_pawn, _graphicsController);
+			m_sideSpecialAttackStart = new SideSpecialAttackStart(_pawn, _graphicsController);
+			m_sideSpecialAttackEnd = new SideSpecialAttackEnd(_pawn, _graphicsController);
 			
-			_upSpecialAttackStart = new UpSpecialAttackStart(_pawn, _graphicsController);
-			_upSpecialAttackEnd = new UpSpecialAttackEnd(_pawn, _graphicsController);
+			m_upSpecialAttackStart = new UpSpecialAttackStart(_pawn, _graphicsController);
+			m_upSpecialAttackEnd = new UpSpecialAttackEnd(_pawn, _graphicsController);
 			
-			_downSpecialAttackStart = new DownSpecialAttackStart(_pawn, _graphicsController);
-			_downSpecialAttackEnd = new DownSpecialAttackEnd(_pawn, _graphicsController);
+			m_downSpecialAttackStart = new DownSpecialAttackStart(_pawn, _graphicsController);
+			m_downSpecialAttackEnd = new DownSpecialAttackEnd(_pawn, _graphicsController);
 			
-			_knockBack = new KnockBack(_pawn, _graphicsController);
+			m_knockBack = new KnockBack(_pawn, _graphicsController);
 			
-			_tossUpStart = new TossUpStart(_pawn, _graphicsController);
-			_tossUpEnd = new TossUpEnd(_pawn, _graphicsController);
+			m_tossUpStart = new TossUpStart(_pawn, _graphicsController);
+			m_tossUpEnd = new TossUpEnd(_pawn, _graphicsController);
 		}
-		
-		protected virtual void CreateTransitions() {}
+
+		protected virtual void CreateTransitions()
+		{
+			m_mainAttackStartToEndCondition = new FuncPredicate(() => !MainAttackHold);
+			m_mainAttackEndToEntryCondition = new FuncPredicate(() => m_mainAttackEnd.ElapsedTime >= _mainAttackDuration);
+			
+			m_sideMainAttackStartToEndCondition = new FuncPredicate(() => !SideMainAttackHold);
+			m_sideMainAttackEndToEntryCondition = new FuncPredicate(() => m_sideMainAttackEnd.ElapsedTime >= _sideMainAttackDuration);
+			
+			m_upMainAttackStartToEndCondition = new FuncPredicate(() => !UpMainAttackHold);
+			m_upMainAttackEndToEntryCondition = new FuncPredicate(() => m_upMainAttackEnd.ElapsedTime >= _upMainAttackDuration);
+			
+			m_downMainAttackStartToEndCondition = new FuncPredicate(() => !DownMainAttackHold);
+			m_downMainAttackEndToEntryCondition = new FuncPredicate(() => true); // wait for duration to be completed
+			
+			m_specialAttackStartToEndCondition = new FuncPredicate(() => !SpecialAttackHold);
+			m_specialAttackEndToEntryCondition = new FuncPredicate(() => m_specialAttackEnd.ElapsedTime >= _specialAttackDuration);
+			
+			m_sideSpecialAttackStartToEndCondition = new FuncPredicate(() => !SideSpecialAttackHold);
+			m_sideSpecialAttackEndToEntryCondition = new FuncPredicate(() => true);
+			
+			m_upSpecialAttackStartToEndCondition = new FuncPredicate(() => !UpSpecialAttackHold);
+			m_upSpecialAttackEndToEntryCondition = new FuncPredicate(() => m_upSpecialAttackEnd.ElapsedTime >= _upSpecialAttackDuration);
+			
+			m_downSpecialAttackStartToEndCondition = new FuncPredicate(() => !DownSpecialAttackHold);
+			m_downSpecialAttackEndToEntryCondition = new FuncPredicate(() => true);
+			
+			m_anyToTossUpStartCondition = new FuncPredicate(() => _stateMachine.CurrentState is not (TossUpStart or TossUpEnd) && _pawn.IsTossedUp());
+			m_tossUpStartToEndCondition = new FuncPredicate(() => _pawn.IsGrounded() && m_tossUpStart.ElapseTime > k_Toss_Up_Sanity_Check);
+			m_tossUpEndToEntryCondition = new FuncPredicate(() => !_pawn.IsTossedUp());
+		}
 
 		protected virtual void AddTransitions()
 		{
-			AddAnyTransition(_mainAttackStart, _anyToMainAttackStartCondition);
-			AddAnyTransition(_mainAttackEnd, _anyToMainAttackEndCondition);
-			AddTransition(_mainAttackStart, _mainAttackEnd, _mainAttackStartToEndCondition);
-			AddTransition(_mainAttackEnd, _entry, _mainAttackEndToEntryCondition);
+			AddAnyTransition(m_mainAttackStart, _anyToMainAttackStartCondition);
+			AddAnyTransition(m_mainAttackEnd, _anyToMainAttackEndCondition);
+			AddTransition(m_mainAttackStart, m_mainAttackEnd, m_mainAttackStartToEndCondition);
+			AddTransition(m_mainAttackEnd, _entry, m_mainAttackEndToEntryCondition);
 			
-			AddAnyTransition(_sideMainAttackStart, _anyToSideMainAttackStartCondition);
-			AddAnyTransition(_sideMainAttackEnd, _anyToSideMainAttackEndCondition);
-			AddTransition(_sideMainAttackStart, _sideMainAttackEnd, _sideMainAttackStartToEndCondition);
-			AddTransition(_sideMainAttackEnd, _entry, _sideMainAttackEndToEntryCondition);
+			AddAnyTransition(m_sideMainAttackStart, _anyToSideMainAttackStartCondition);
+			AddAnyTransition(m_sideMainAttackEnd, _anyToSideMainAttackEndCondition);
+			AddTransition(m_sideMainAttackStart, m_sideMainAttackEnd, m_sideMainAttackStartToEndCondition);
+			AddTransition(m_sideMainAttackEnd, _entry, m_sideMainAttackEndToEntryCondition);
 			
-			AddAnyTransition(_upMainAttackStart, _anyToUpMainAttackStartCondition);
-			AddAnyTransition(_upMainAttackEnd, _anyToUpMainAttackEndCondition);
-			AddTransition(_upMainAttackStart, _upMainAttackEnd, _upMainAttackStartToEndCondition);
-			AddTransition(_upMainAttackEnd, _entry, _upMainAttackEndToEntryCondition);
+			AddAnyTransition(m_upMainAttackStart, _anyToUpMainAttackStartCondition);
+			AddAnyTransition(m_upMainAttackEnd, _anyToUpMainAttackEndCondition);
+			AddTransition(m_upMainAttackStart, m_upMainAttackEnd, m_upMainAttackStartToEndCondition);
+			AddTransition(m_upMainAttackEnd, _entry, m_upMainAttackEndToEntryCondition);
 			
-			AddAnyTransition(_downMainAttackStart, _anyToDownMainAttackStartCondition);
-			AddAnyTransition(_downMainAttackEnd, _anyToDownMainAttackEndCondition);
-			AddTransition(_downMainAttackStart, _downMainAttackEnd, _downMainAttackStartToEndCondition);
-			AddTransition(_downMainAttackEnd, _entry, _downMainAttackEndToEntryCondition);
+			AddAnyTransition(m_downMainAttackStart, _anyToDownMainAttackStartCondition);
+			AddAnyTransition(m_downMainAttackEnd, _anyToDownMainAttackEndCondition);
+			AddTransition(m_downMainAttackStart, m_downMainAttackEnd, m_downMainAttackStartToEndCondition);
+			AddTransition(m_downMainAttackEnd, _entry, m_downMainAttackEndToEntryCondition);
 			
-			AddAnyTransition(_specialAttackStart, _anyToSpecialAttackStartCondition);
-			AddAnyTransition(_specialAttackEnd, _anyToSpecialAttackEndCondition);
-			AddTransition(_specialAttackStart, _specialAttackEnd, _specialAttackStartToEndCondition);
-			AddTransition(_specialAttackEnd, _entry, _specialAttackEndToEntryCondition);
+			AddAnyTransition(m_specialAttackStart, _anyToSpecialAttackStartCondition);
+			AddAnyTransition(m_specialAttackEnd, _anyToSpecialAttackEndCondition);
+			AddTransition(m_specialAttackStart, m_specialAttackEnd, m_specialAttackStartToEndCondition);
+			AddTransition(m_specialAttackEnd, _entry, m_specialAttackEndToEntryCondition);
 			
-			AddAnyTransition(_sideSpecialAttackStart, _anyToSideSpecialAttackStartCondition);
-			AddAnyTransition(_sideSpecialAttackEnd, _anyToSideSpecialAttackEndCondition);
-			AddTransition(_sideSpecialAttackStart, _sideSpecialAttackEnd, _sideSpecialAttackStartToEndCondition);
-			AddTransition(_sideSpecialAttackEnd, _entry, _sideSpecialAttackEndToEntryCondition);
+			AddAnyTransition(m_sideSpecialAttackStart, _anyToSideSpecialAttackStartCondition);
+			AddAnyTransition(m_sideSpecialAttackEnd, _anyToSideSpecialAttackEndCondition);
+			AddTransition(m_sideSpecialAttackStart, m_sideSpecialAttackEnd, m_sideSpecialAttackStartToEndCondition);
+			AddTransition(m_sideSpecialAttackEnd, _entry, m_sideSpecialAttackEndToEntryCondition);
 			
-			AddAnyTransition(_upSpecialAttackStart, _anyToUpSpecialAttackStartCondition);
-			AddAnyTransition(_upSpecialAttackEnd, _anyToUpSpecialAttackEndCondition);
-			AddTransition(_upSpecialAttackStart, _upSpecialAttackEnd, _upSpecialAttackStartToEndCondition);
-			AddTransition(_upSpecialAttackEnd, _entry, _upSpecialAttackEndToEntryCondition);
+			AddAnyTransition(m_upSpecialAttackStart, _anyToUpSpecialAttackStartCondition);
+			AddAnyTransition(m_upSpecialAttackEnd, _anyToUpSpecialAttackEndCondition);
+			AddTransition(m_upSpecialAttackStart, m_upSpecialAttackEnd, m_upSpecialAttackStartToEndCondition);
+			AddTransition(m_upSpecialAttackEnd, _entry, m_upSpecialAttackEndToEntryCondition);
 			
-			AddAnyTransition(_downSpecialAttackStart, _anyToDownSpecialAttackStartCondition);
-			AddAnyTransition(_downSpecialAttackEnd, _anyToDownSpecialAttackEndCondition);
-			AddTransition(_downSpecialAttackStart, _downSpecialAttackEnd, _downSpecialAttackStartToEndCondition);
-			AddTransition(_downSpecialAttackEnd, _entry, _downSpecialAttackEndToEntryCondition);
+			AddAnyTransition(m_downSpecialAttackStart, _anyToDownSpecialAttackStartCondition);
+			AddAnyTransition(m_downSpecialAttackEnd, _anyToDownSpecialAttackEndCondition);
+			AddTransition(m_downSpecialAttackStart, m_downSpecialAttackEnd, m_downSpecialAttackStartToEndCondition);
+			AddTransition(m_downSpecialAttackEnd, _entry, m_downSpecialAttackEndToEntryCondition);
 			
-			AddAnyTransition(_knockBack, _anyToKnockBackCondition);
-			AddTransition(_knockBack, _entry, _knockBackToEntryCondition);
+			AddAnyTransition(m_knockBack, _anyToKnockBackCondition);
+			AddTransition(m_knockBack, _entry, _knockBackToEntryCondition);
 			
-			AddAnyTransition(_tossUpStart, _anyToTossUpStartCondition);
-			AddTransition(_tossUpStart, _tossUpEnd, _tossUpStartToEndCondition);
-			AddTransition(_tossUpEnd, _entry, _tossUpEndToEntryCondition);
+			AddAnyTransition(m_tossUpStart, m_anyToTossUpStartCondition);
+			AddTransition(m_tossUpStart, m_tossUpEnd, m_tossUpStartToEndCondition);
+			AddTransition(m_tossUpEnd, _entry, m_tossUpEndToEntryCondition);
 		}
 
 		public override void OnEnter()

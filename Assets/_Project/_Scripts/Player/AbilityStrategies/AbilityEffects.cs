@@ -1,5 +1,4 @@
 ﻿using System;
-using Smash.Player.Components;
 using UnityEngine;
 
 namespace Smash.Player.AbilityStrategies
@@ -25,8 +24,8 @@ namespace Smash.Player.AbilityStrategies
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
 			ModifyEffect();
-			if (collider.TryGetComponent<CharacterHealth>(out var health))
-				health.TakeDamage(m_maxDamage * _modifier);
+			if (collider.TryGetComponent<CharacterPawn>(out var pawn))
+				pawn.TakeDamage(m_maxDamage * _modifier);
 		}
 
 		protected override void ModifyEffect()

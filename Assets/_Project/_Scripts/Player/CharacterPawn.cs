@@ -20,6 +20,7 @@ namespace Smash.Player
 		[SerializeField] private CeilingDetector m_ceilingDetector;
 		[SerializeField] private WallDetector m_wallDetector;
 		[SerializeField] private PlayerGraphicsController m_graphicsController;
+		[SerializeField] private CharacterHealth m_health;
 		[SerializeField] private CharacterPropertiesSO m_properties;
 		
 		[Header("Control Values")]
@@ -108,18 +109,8 @@ namespace Smash.Player
 		
 		#region Unity Methods
 
-		private void Awake()
-		{
-			Initialise();
-		}
-
 		public override void Initialise()
 		{
-			// _inputHandler.SetCharacterPawn(this);
-			if (m_isInitialised)
-				return;
-			m_isInitialised = true;
-			
 			SetUpComponents();
 
 			SetUpVariables();
@@ -166,6 +157,12 @@ namespace Smash.Player
 		public void ResetTossUpBool() => m_isTossedUp = false;
 
 		#region AbilityEffects
+
+		public void TakeDamage(float damage)
+		{
+			if (CurrentState is HurtState) return;
+			m_health.TakeDamage(damage);
+		}
 
 		public void HandleJumpAbility(float power)
 		{
@@ -725,6 +722,11 @@ namespace Smash.Player
 
 		private void HandleRotation()
 		{
+			if (m_elapsedTime >= m_timeToRotate)
+			{
+				m_tr.rotation = m_targetRotation;
+				return;
+			}
 			m_elapsedTime += Time.deltaTime;
 			m_tr.rotation = Quaternion.Slerp(m_savedRotation, m_targetRotation, m_elapsedTime / m_timeToRotate);
 		}
@@ -878,6 +880,7 @@ namespace Smash.Player
 			m_wallDetector ??= GetComponent<WallDetector>();
 			m_ceilingDetector ??= GetComponent<CeilingDetector>();
 			m_graphicsController ??= GetComponent<PlayerGraphicsController>();
+			m_health ??= GetComponent<CharacterHealth>();
 			SetSelfLayer();
 			SetTargetLayers();
 		}

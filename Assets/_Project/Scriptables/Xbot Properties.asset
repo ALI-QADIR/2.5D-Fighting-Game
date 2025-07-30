@@ -22,14 +22,13 @@ MonoBehaviour:
       rid: 4153748571275657319
     <AbilityEffects>k__BackingField:
     - rid: 4153748571275657314
-    - rid: 4153748820480491611
+    - rid: 4153748843334205531
   sideMainAbilityStrategyData:
-    <AnimDuration>k__BackingField: 0.94
+    <AnimDuration>k__BackingField: 1
     <ScanningStrategy>k__BackingField:
       rid: 4153748571275657318
     <AbilityEffects>k__BackingField:
     - rid: 4153748571275657315
-    - rid: 4153748638621237334
     - rid: 4153748638621237344
   upMainAbilityStrategyData:
     <AnimDuration>k__BackingField: 0.9
@@ -180,7 +179,7 @@ MonoBehaviour:
         <CenterOffset>k__BackingField: {x: 0.5, y: 1, z: 0}
         m_prefab: {fileID: 3334382288930538699, guid: bb1381b38d36de144b4dea916edb02c8, type: 3}
         m_radius: 0.5
-        m_projectileSpeed: 20
+        m_projectileSpeed: 5
         m_maxDistance: 20
         m_projectilePrefab: {fileID: 3681310503184111825, guid: 4b865bd47d2a09046bea900c19347087, type: 3}
     - rid: 4153748571275657319
@@ -238,11 +237,6 @@ MonoBehaviour:
       data:
         <IsSelfEffect>k__BackingField: 0
         m_force: 25
-    - rid: 4153748638621237334
-      type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
-      data:
-        <IsSelfEffect>k__BackingField: 0
-        m_force: 15
     - rid: 4153748638621237341
       type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
@@ -263,8 +257,8 @@ MonoBehaviour:
       data:
         <CenterOffset>k__BackingField: {x: 0, y: 0, z: 0}
         m_prefab: {fileID: -5264158173422641984, guid: 7daa837439ef97c4a8cec1dec868b40f, type: 3}
-    - rid: 4153748820480491611
-      type: {class: TossUpEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+    - rid: 4153748843334205531
+      type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
         <IsSelfEffect>k__BackingField: 0
-        m_force: 30
+        m_force: 20

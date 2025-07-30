@@ -153,7 +153,6 @@ namespace Smash.Player.Components
 		
 		public void SetTossUpFinish()
 		{
-			Debug.Log("SetTossUpFinish");
 			m_animator.SetTrigger(m_tossUpEndTriggerHash);
 		}
 		

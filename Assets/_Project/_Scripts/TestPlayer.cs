@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Smash.Player;
+using UnityEngine;
 
 namespace Smash
 {
@@ -6,7 +7,9 @@ namespace Smash
 	{
 		private void Start()
 		{
-			gameObject.layer = LayerMask.NameToLayer("TestPlayer");
+			var pawn = GetComponent<CharacterPawn>();
+			pawn.SetIndex(-1);
+			pawn.Initialise();
 		}
 	}
 }
