@@ -151,6 +151,11 @@ namespace Smash.Player.States
 		private FuncPredicate m_anyToTossUpStartCondition;
 		private FuncPredicate m_tossUpStartToEndCondition;
 		private FuncPredicate m_tossUpEndToEntryCondition;
+
+		private Stun m_stun;
+		private FuncPredicate m_anyToStunCondition;
+		private FuncPredicate m_stunToEntryCondition;
+		public float stunDuration;
 		
 		#endregion Hurt States
 
@@ -196,6 +201,8 @@ namespace Smash.Player.States
 			
 			m_tossUpStart = new TossUpStart(_pawn, _graphicsController);
 			m_tossUpEnd = new TossUpEnd(_pawn, _graphicsController);
+			
+			m_stun = new Stun(_pawn, _graphicsController);
 		}
 
 		protected virtual void CreateTransitions()
@@ -227,6 +234,9 @@ namespace Smash.Player.States
 			m_anyToTossUpStartCondition = new FuncPredicate(() => _stateMachine.CurrentState is not (TossUpStart or TossUpEnd) && _pawn.IsTossedUp());
 			m_tossUpStartToEndCondition = new FuncPredicate(() => _pawn.IsGrounded() && m_tossUpStart.ElapseTime > k_Toss_Up_Sanity_Check);
 			m_tossUpEndToEntryCondition = new FuncPredicate(() => !_pawn.IsTossedUp());
+			
+			m_anyToStunCondition = new FuncPredicate(() => _stateMachine.CurrentState is not Stun && _pawn.IsStunned);
+			m_stunToEntryCondition = new FuncPredicate(() => !_pawn.IsStunned || m_stun.ElapsedTime >= stunDuration);
 		}
 
 		protected virtual void AddTransitions()
@@ -277,6 +287,9 @@ namespace Smash.Player.States
 			AddAnyTransition(m_tossUpStart, m_anyToTossUpStartCondition);
 			AddTransition(m_tossUpStart, m_tossUpEnd, m_tossUpStartToEndCondition);
 			AddTransition(m_tossUpEnd, _entry, m_tossUpEndToEntryCondition);
+			
+			AddAnyTransition(m_stun, m_anyToStunCondition);
+			AddTransition(m_stun, _entry, m_stunToEntryCondition);
 		}
 
 		public override void OnEnter()

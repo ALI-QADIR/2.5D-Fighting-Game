@@ -44,9 +44,11 @@ namespace Smash.Player.AbilityStrategies
 				}
 				otherAbilityEffects.Add(abilityEffect);
 			}
-			
+
 			selfAbilityEffects.Sort((x, y) => x.Priority.CompareTo(y.Priority));
+			selfAbilityEffects.Reverse();
 			otherAbilityEffects.Sort((x, y) => x.Priority.CompareTo(y.Priority));
+			otherAbilityEffects.Reverse();
 		}
 		
 		public void SetAbilityModifier(float heldTime)

@@ -55,13 +55,16 @@ namespace Smash.Player
 		private float m_gravity;
 		private float m_currentFallSpeed;
 		private float m_acceleration;
-		private float m_elapsedTime;
 		private float m_elapsedRotationTime;
+		private float m_stunDuration;
 		private float m_currentLookAngle;
 		private int m_numberOfJumps;
 		private bool m_isJumping;
 		private bool m_isKnockedBack;
 		private bool m_isTossedUp;
+
+		public bool IsStunned { get; set; }
+
 		// private bool m_isLaunching;
 		// private bool m_isClimbing;
 		private Vector3 m_velocity, m_savedVelocity;
@@ -164,8 +167,9 @@ namespace Smash.Player
 
 		public void TakeDamage(float damage)
 		{
-			if (CurrentState is HurtState) return;
+			if (CurrentState is HurtState and not Stun) return;
 			m_health.TakeDamage(damage);
+			IsStunned = false;
 		}
 
 		public void HandleJumpAbility(float power)
@@ -184,13 +188,19 @@ namespace Smash.Player
 			SetInAir();
 		}
 
-		public void HandleKnockBack(float force, float direction, float modifier)
+		public void HandleKnockBackAbility(float force, float direction, float modifier)
 		{
 			m_graphicsController.SetKnockBackParameters(direction, 1/modifier);
 			m_isKnockedBack = true;
 			var directionVector = direction > 0 ? Vector3.right : Vector3.left;
 			RemoveHorizontalVelocity();
 			m_savedVelocity += directionVector * force;
+		}
+
+		public void HandleStunAbility(float duration)
+		{
+			CurrentStateMachine.stunDuration = duration;
+			IsStunned = true;
 		}
 
 		#endregion AbilityEffects
@@ -660,7 +670,7 @@ namespace Smash.Player
 			m_currentLookAngle = lookAngle;
 			m_targetRotation = Quaternion.Euler(0f, lookAngle, 0f);
 			m_savedRotation = m_tr.rotation;
-			m_elapsedTime = 0;
+			m_elapsedRotationTime = 0;
 		}
 
 		/*private void HandleClimb()
@@ -726,13 +736,13 @@ namespace Smash.Player
 
 		private void HandleRotation()
 		{
-			if (m_elapsedTime >= m_timeToRotate)
+			if (m_elapsedRotationTime >= m_timeToRotate)
 			{
 				m_tr.rotation = m_targetRotation;
 				return;
 			}
-			m_elapsedTime += Time.deltaTime;
-			m_tr.rotation = Quaternion.Slerp(m_savedRotation, m_targetRotation, m_elapsedTime / m_timeToRotate);
+			m_elapsedRotationTime += Time.deltaTime;
+			m_tr.rotation = Quaternion.Slerp(m_savedRotation, m_targetRotation, m_elapsedRotationTime / m_timeToRotate);
 		}
 
 		private void CheckRotation()

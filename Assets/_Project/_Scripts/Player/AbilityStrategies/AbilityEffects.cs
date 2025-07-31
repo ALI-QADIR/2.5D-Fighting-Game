@@ -24,7 +24,7 @@ namespace Smash.Player.AbilityStrategies
 
 		public DamageEffect()
 		{
-			Priority = 10;
+			Priority = 0;
 		}
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
@@ -47,7 +47,7 @@ namespace Smash.Player.AbilityStrategies
 		public JumpEffect()
 		{
 			IsSelfEffect = true;
-			Priority = 10;
+			Priority = 0;
 		}
 		
 		public override void Execute(Collider collider, Collider effectOwner)
@@ -72,7 +72,7 @@ namespace Smash.Player.AbilityStrategies
 
 		public KnockBackEffect()
 		{
-			Priority = 9;
+			Priority = 9; // lower priority than toss up for animation to work
 		}
 
 		public override void Execute(Collider collider, Collider effectOwner)
@@ -81,7 +81,7 @@ namespace Smash.Player.AbilityStrategies
 			ModifyEffect();
 			if (collider.TryGetComponent(out CharacterPawn pawn))
 			{
-				pawn.HandleKnockBack(m_force * _modifier, directionX, _modifier);
+				pawn.HandleKnockBackAbility(m_force * _modifier, directionX, _modifier);
 			}
 			else if (collider.TryGetComponent<Rigidbody>(out var rb))
 			{
@@ -109,7 +109,7 @@ namespace Smash.Player.AbilityStrategies
 
 		public TossUpEffect()
 		{
-			Priority = 7;
+			Priority = 11; // higher priority than knock back for animation to work
 		}
 		
 		public override void Execute(Collider collider, Collider effectOwner)
@@ -138,6 +138,7 @@ namespace Smash.Player.AbilityStrategies
 		}
 	}
 
+	// is this needed? for now, a combination of toss up and knock back works, so, no
 	[Serializable]
 	public class LaunchBackEffect : AbilityEffect
 	{
@@ -146,14 +147,14 @@ namespace Smash.Player.AbilityStrategies
 
 		public LaunchBackEffect()
 		{
-			Priority = 5;
+			Priority = 13;
 		}
 		
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
 			CalculateDirection(collider.transform.position, effectOwner.transform.position, out var directionX);
 			ModifyEffect();
-			if (collider.TryGetComponent(out CharacterPawn pawn))
+			if (collider.TryGetComponent(out CharacterPawn _))
 			{
 				// pawn.HandleLaunchBackAbility(m_upForce, m_backForce, directionX, _modifier);
 			}
@@ -184,12 +185,21 @@ namespace Smash.Player.AbilityStrategies
 
 		public StunEffect()
 		{
-			Priority = 10;
+			Priority = -1; // lower priority than damage so that stun effect doesn't get overridden. See CharacterPawn.TakeDamage()
 		}
 		
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
-			Debug.Log("Stun");
+			ModifyEffect();
+			if (collider.TryGetComponent(out CharacterPawn pawn))
+			{
+				pawn.HandleStunAbility(m_stunDuration);
+			}
+		}
+		
+		protected override void ModifyEffect()
+		{
+			_modifier = Mathf.Lerp(0.5f, 1, HeldDuration / 3f);
 		}
 	}
 

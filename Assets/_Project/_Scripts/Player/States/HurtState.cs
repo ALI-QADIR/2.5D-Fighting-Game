@@ -5,7 +5,7 @@ namespace Smash.Player.States
 {
 	public class HurtState : PlayerBaseState
 	{
-		public HurtState(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn,
+		protected HurtState(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn,
 			graphicsController)
 		{
 		}
@@ -62,6 +62,7 @@ namespace Smash.Player.States
 	
 	public class Stun : HurtState
 	{
+		public float ElapsedTime { get; private set; }
 		public Stun(CharacterPawn pawn, PlayerGraphicsController graphicsController) : base(pawn, graphicsController)
 		{
 		}
@@ -70,6 +71,21 @@ namespace Smash.Player.States
 		{
 			base.OnEnter();
 			_pawn.CurrentState = this;
+			_graphicsController.SetStun(true);
+			ElapsedTime = 0f;
+		}
+
+		public override void OnUpdate()
+		{
+			base.OnUpdate();
+			ElapsedTime += Time.deltaTime;
+		}
+
+		public override void OnExit()
+		{
+			base.OnExit();
+			_graphicsController.SetStun(false);
+			_pawn.IsStunned = false;
 		}
 	}
 }
