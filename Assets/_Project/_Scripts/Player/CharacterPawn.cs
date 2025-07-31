@@ -154,7 +154,11 @@ namespace Smash.Player
 
 		public void ResetKnockBackBool() => m_isKnockedBack = false;
 
-		public void ResetTossUpBool() => m_isTossedUp = false;
+		public void ResetTossUpBool()
+		{
+			m_isKnockedBack = false;
+			m_isTossedUp = false;
+		}
 
 		#region AbilityEffects
 

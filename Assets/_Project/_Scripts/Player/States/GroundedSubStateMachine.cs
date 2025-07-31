@@ -114,7 +114,7 @@ namespace Smash.Player.States
 			_anyToDownSpecialAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownSpecialAttackTap);
 			
 			_anyToKnockBackCondition = new FuncPredicate(() => _stateMachine.CurrentState is not 
-				(TossUpStart or TossUpEnd or KnockBack) && _pawn.IsKnockedBack());
+				(TossUpStart or TossUpEnd or KnockBack) && _pawn.IsKnockedBack() && !_pawn.IsTossedUp());
 			_knockBackToEntryCondition = new FuncPredicate(() => !_pawn.IsKnockedBack());
 			
 			base.CreateTransitions();

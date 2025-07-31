@@ -6,6 +6,7 @@ namespace Smash.Player.AbilityStrategies
 	[Serializable]
 	public abstract class AbilityEffect
 	{
+		public int Priority { get; protected set; }
 		[field: SerializeField, InspectorReadOnly] public bool IsSelfEffect { get; protected set; }
 		public float HeldDuration { protected get; set; }
 		protected float _modifier;
@@ -21,6 +22,10 @@ namespace Smash.Player.AbilityStrategies
 		[SerializeField] private int m_maxDamage = 10;
 		[SerializeField] private AnimationCurve m_damageCurve;
 
+		public DamageEffect()
+		{
+			Priority = 10;
+		}
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
 			ModifyEffect();
@@ -42,6 +47,7 @@ namespace Smash.Player.AbilityStrategies
 		public JumpEffect()
 		{
 			IsSelfEffect = true;
+			Priority = 10;
 		}
 		
 		public override void Execute(Collider collider, Collider effectOwner)
@@ -63,6 +69,11 @@ namespace Smash.Player.AbilityStrategies
 	public class KnockBackEffect : AbilityEffect
 	{
 		[SerializeField] private float m_force;
+
+		public KnockBackEffect()
+		{
+			Priority = 9;
+		}
 
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
@@ -95,6 +106,11 @@ namespace Smash.Player.AbilityStrategies
 	public class TossUpEffect : AbilityEffect
 	{
 		[SerializeField] private float m_force;
+
+		public TossUpEffect()
+		{
+			Priority = 7;
+		}
 		
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
@@ -123,9 +139,53 @@ namespace Smash.Player.AbilityStrategies
 	}
 
 	[Serializable]
+	public class LaunchBackEffect : AbilityEffect
+	{
+		[SerializeField] private float m_upForce;
+		[SerializeField] private float m_backForce;
+
+		public LaunchBackEffect()
+		{
+			Priority = 5;
+		}
+		
+		public override void Execute(Collider collider, Collider effectOwner)
+		{
+			CalculateDirection(collider.transform.position, effectOwner.transform.position, out var directionX);
+			ModifyEffect();
+			if (collider.TryGetComponent(out CharacterPawn pawn))
+			{
+				// pawn.HandleLaunchBackAbility(m_upForce, m_backForce, directionX, _modifier);
+			}
+			else if (collider.TryGetComponent(out Rigidbody rb))
+			{
+				var force = (directionX > 0 ? Vector3.right : Vector3.left) * m_backForce;
+				force += Vector3.up * m_upForce;
+				rb.AddForce(force, ForceMode.Impulse);
+			}
+		}
+
+		private void CalculateDirection(Vector3 effectedColliderPos, Vector3 effectOwnerPos, out float directionX)
+		{
+			directionX = (effectedColliderPos - effectOwnerPos).x;
+			directionX = directionX > 0 ? 1 : -1;
+		}
+
+		protected override void ModifyEffect()
+		{
+			_modifier = Mathf.Lerp(0.5f, 1, HeldDuration / 3f);
+		}
+	}
+
+	[Serializable]
 	public class StunEffect : AbilityEffect
 	{
 		[SerializeField] private float m_stunDuration;
+
+		public StunEffect()
+		{
+			Priority = 10;
+		}
 		
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
@@ -138,6 +198,11 @@ namespace Smash.Player.AbilityStrategies
 	{
 		[SerializeField] private float m_slowDuration;
 		[SerializeField, Range(0, 1)] private float m_slowMultiplier;
+
+		public SlowEffect()
+		{
+			Priority = 10;
+		}
 		
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
@@ -148,6 +213,10 @@ namespace Smash.Player.AbilityStrategies
 	[Serializable]
 	public class NoEffect : AbilityEffect
 	{
+		public NoEffect()
+		{
+			Priority = Int32.MaxValue;
+		}
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
 			Debug.Log("No effect");
