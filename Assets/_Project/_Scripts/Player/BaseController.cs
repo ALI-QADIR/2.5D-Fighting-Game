@@ -6,12 +6,10 @@ using UnityEngine;
 namespace Smash.Player
 {
 	[RequireComponent(typeof(ComboActionQueueManager))]
-	public abstract class BaseController : MonoBehaviour
+	public abstract class BaseController : CommandEventInvoker
 	{
 		[Header("Components")]
 		[field: SerializeField] protected ComboActionQueueManager ComboQueueManager { get; private set; }
-
-		protected BasePawn _possessedPawn;
 		protected GameplayActionCommandInvoker GameplayCommandInvoker { get; private set; }
 
 		protected virtual void Awake()
@@ -26,8 +24,7 @@ namespace Smash.Player
 			GameplayCommandInvoker.OnCommandExecutionStarted -= OnGameplayCommandExecutionStarted;
 			GameplayCommandInvoker.OnCommandExecutionFinished -= OnGameplayCommandExecutionFinished;
 			
-			if (_possessedPawn)
-				Destroy(_possessedPawn.gameObject);
+			// disable pawn
 			
 			Destroy(gameObject);
 		}

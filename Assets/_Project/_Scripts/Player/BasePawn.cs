@@ -3,10 +3,21 @@ using UnityEngine;
 
 namespace Smash.Player
 {
-	public abstract class BasePawn : MonoBehaviour, IInputHandler
+	public abstract class BasePawn : CommandEventListener, IInputHandler
 	{
 		public abstract void Initialise();
 		public abstract void SetIndex(int index);
+
+		protected override void OnCommand(IGameplayActionCommand command)
+		{
+			if (command.PlayerIndex != PlayerIndex)
+			{
+				Debug.Log("command not for this player: " + command.ActionName, gameObject);
+				return;
+			}
+			if (command.IsFinished) command.FinishActionExecution(this);
+			else command.StartActionExecution(this);
+		}
 		
 		public int PlayerIndex { get; set; }
 		

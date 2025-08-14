@@ -1173,7 +1173,7 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
-  m_PlayerPrefab: {fileID: 0}
+  m_PlayerPrefab: {fileID: 4671264533724570, guid: 24f2b3bd33b539e4cbf9b12625f5d217, type: 3}
   m_SplitScreen: 0
   m_MaintainAspectRatioInSplitScreen: 0
   m_FixedNumberOfSplitScreens: -1
@@ -1803,6 +1803,10 @@ PrefabInstance:
     - target: {fileID: 2686585324151597656, guid: f540c158a155a4542b495a087d590539, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2686585324151597656, guid: f540c158a155a4542b495a087d590539, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

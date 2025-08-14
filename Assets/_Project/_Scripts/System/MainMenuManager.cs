@@ -14,7 +14,7 @@ namespace Smash.System
 			Debug.Log("Player Joined");
 			var uiPawn = Instantiate(m_playerPawnPrefab);
 			// Debug.Log(index);
-			var ctr = PlayerControllerManager.Instance.InitialisePawn(index, uiPawn);
+			// var ctr = PlayerControllerManager.Instance.InitialisePawn(index);
 			PlayerControllerManager.Instance.DisableAllPlayerInput();
 			PlayerControllerManager.Instance.DisableAllUiInput();
 			// ctr.EnableUiInputAndDisablePlayerInput();

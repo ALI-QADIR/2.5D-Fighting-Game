@@ -66,24 +66,10 @@ namespace Smash.System
 			m_controllers.Remove(index);
 		}
 
-		public PlayerController InitialisePawn(int index, BasePawn pawn)
+		public PlayerController InitialisePawn(int index)
 		{
 			var ctr = m_controllers[index];
-			ctr.Initialise(pawn);
-			return ctr;
-		}
-		
-		public PlayerController AssignCharPawnToController(CharacterPawn charPawn, int index)
-		{
-			var ctr = m_controllers[index];
-			// ctr.SetPawn(charPawn);
-			return ctr;
-		}
-		
-		public PlayerController AssignUiPawnToController(UiPawn uiPawn, int index)
-		{
-			var ctr = m_controllers[index];
-			// ctr.SetPawn(uiPawn);
+			ctr.Initialise();
 			return ctr;
 		}
 
@@ -125,8 +111,10 @@ namespace Smash.System
 			{
 				m_controllers.Add(playerIndex, ctr);
 				var pawn = Instantiate(m_pawnPrefab, Vector3.zero, Quaternion.identity);
-				ctr.Initialise(pawn);
+				ctr.Initialise();
 				ctr.EnablePlayerInputAndDisableUiInput();
+				pawn.SetIndex(playerIndex);
+				pawn.Initialise();
 			}
 		}
 		

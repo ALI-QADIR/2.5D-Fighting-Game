@@ -4,7 +4,9 @@
 	{
 		public string ActionName { get; } = "Cancel";
 		public float HeldDuration { get; set; }
-		
+		public int PlayerIndex { get; set; }
+		public bool IsFinished { get; set; }
+
 		public void StartActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleCancelButton();
@@ -20,7 +22,9 @@
 	{
 		public string ActionName { get; } = "Submit";
 		public float HeldDuration { get; set; }
-		
+		public int PlayerIndex { get; set; }
+		public bool IsFinished { get; set; }
+
 		public void StartActionExecution(IInputHandler inputHandler)
 		{
 		}
@@ -39,6 +43,8 @@
 		}
 		public string ActionName { get; } = "HorizontalScroll";
 		public float HeldDuration { get; set; }
+		public int PlayerIndex { get; set; }
+		public bool IsFinished { get; set; }
 
 		public readonly int direction;
 
@@ -60,6 +66,8 @@
 		}
 		public string ActionName { get; } = "VerticalScroll";
 		public float HeldDuration { get; set; }
+		public int PlayerIndex { get; set; }
+		public bool IsFinished { get; set; }
 
 		public readonly int direction;
 
@@ -81,6 +89,8 @@
 		}
 		public string ActionName { get; } = "ShoulderButton";
 		public float HeldDuration { get; set; }
+		public int PlayerIndex { get; set; }
+		public bool IsFinished { get; set; }
 
 		private readonly int m_direction;
 
@@ -102,6 +112,8 @@
 		}
 		public string ActionName { get; } = "ShoulderTrigger";
 		public float HeldDuration { get; set; }
+		public int PlayerIndex { get; set; }
+		public bool IsFinished { get; set; }
 
 		private readonly int m_direction;
 
@@ -119,7 +131,9 @@
 	{
 		public string ActionName { get; } = "Resume";
 		public float HeldDuration { get; set; }
-		
+		public int PlayerIndex { get; set; }
+		public bool IsFinished { get; set; }
+
 		public void StartActionExecution(IInputHandler inputHandler)
 		{
 		}

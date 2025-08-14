@@ -103,6 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d620cb71cab46978cbdee79764fe1ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_eventChannel: {fileID: 11400000, guid: 2aa647428da64c94ab1476c0890a22ae, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls: []
   m_motor: {fileID: 8875285976668337261}
   m_ceilingDetector: {fileID: 851043534711153540}
   m_wallDetector: {fileID: 1977780103577655877}
@@ -119,8 +123,6 @@ MonoBehaviour:
   m_jumpPower: 20
   m_maxNumberOfJumps: 2
   m_wallSlideSpeed: 10
-  m_climbUpSpeed: 32
-  m_climbSideSpeed: 25
   m_timeToRotate: 0.15
   m_jumpBufferTime: 0.2
   m_coyoteTime: 0.3

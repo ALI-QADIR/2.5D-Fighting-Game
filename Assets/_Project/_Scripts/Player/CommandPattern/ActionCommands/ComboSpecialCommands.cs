@@ -4,6 +4,8 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "Combo Side Special";
 		public float HeldDuration { get; set; }
+		public int PlayerIndex { get; set; }
+		public bool IsFinished { get; set; }
 		private readonly int direction;
 		
 		public ComboSideSpecialCommand(int direction)
@@ -26,7 +28,9 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "Combo Up Special";
 		public float HeldDuration { get; set; }
-		
+		public int PlayerIndex { get; set; }
+		public bool IsFinished { get; set; }
+
 		public void StartActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleUpSpecialAttackInputStart();
@@ -42,7 +46,9 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "Combo Down Special";
 		public float HeldDuration { get; set; }
-		
+		public int PlayerIndex { get; set; }
+		public bool IsFinished { get; set; }
+
 		public void StartActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleDownSpecialAttackInputStart();
@@ -58,6 +64,8 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "Combo Side Main";
 		public float HeldDuration { get; set; }
+		public int PlayerIndex { get; set; }
+		public bool IsFinished { get; set; }
 		private readonly int direction;
 		
 		public ComboSideMainCommand(int direction)
@@ -80,7 +88,9 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "Combo Up Main";
 		public float HeldDuration { get; set; }
-		
+		public int PlayerIndex { get; set; }
+		public bool IsFinished { get; set; }
+
 		public void StartActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleUpMainAttackInputStart();
@@ -96,7 +106,9 @@ namespace Smash.Player.CommandPattern.ActionCommands
 	{
 		public string ActionName { get; } = "Combo Down Main";
 		public float HeldDuration { get; set; }
-		
+		public int PlayerIndex { get; set; }
+		public bool IsFinished { get; set; }
+
 		public void StartActionExecution(IInputHandler inputHandler)
 		{
 			inputHandler.HandleDownMainAttackInputStart();

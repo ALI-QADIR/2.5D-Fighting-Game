@@ -26,7 +26,7 @@ namespace Smash.Player
 		protected PlayerInputActions _inputActions;
 		protected UiActionCommandInvoker UiCommandInvoker { get; private set; }
 		
-		public int PlayerIndex { get; private set; }
+		[field:SerializeField] public int PlayerIndex { get; private set; }
 
 		protected override void Awake()
 		{
@@ -60,13 +60,10 @@ namespace Smash.Player
 			_inputActionsController.SetPlayerInputEnabled(false);
 		}
 
-		public void Initialise(BasePawn pawn)
+		public void Initialise()
 		{
 			_inputActions = _inputActionsController.InitialiseInputActions();
-			_possessedPawn = pawn;
 			PlayerIndex = _playerInputComponent.playerIndex;
-			_possessedPawn.SetIndex(PlayerIndex);
-			_possessedPawn.Initialise();
 			InitialiseActionControllers();
 		}
 
@@ -101,17 +98,26 @@ namespace Smash.Player
 
 		protected override void OnGameplayCommandExecutionStarted(IGameplayActionCommand command)
 		{
-			command.StartActionExecution(_possessedPawn);
+			Debug.Log("Command started, player index: " + PlayerIndex, gameObject);
+			command.SetCommandParameters(PlayerIndex);
+			SetEventArgs(command);
+			InvokeEvent();
 		}
 
 		protected override void OnGameplayCommandExecutionFinished(IGameplayActionCommand command)
 		{
-			command.FinishActionExecution(_possessedPawn);
+			Debug.Log("Command finished, player index: " + PlayerIndex, gameObject);
+			command.SetCommandParameters(PlayerIndex, true);
+			SetEventArgs(command);
+			InvokeEvent();
 		}
 
 		private void UiCommandExecutionFinished(IGameplayActionCommand command)
 		{
-			command.FinishActionExecution(_possessedPawn);
+			Debug.Log("Command started, player index: " + PlayerIndex, gameObject);
+			command.SetCommandParameters(PlayerIndex, true);
+			SetEventArgs(command);
+			InvokeEvent();
 		}
 		
 		private void DeviceLost(PlayerInput _)

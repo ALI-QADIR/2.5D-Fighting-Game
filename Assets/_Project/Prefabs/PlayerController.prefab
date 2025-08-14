@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0e9f6f6dff740e79030ccda4c9543df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_eventChannel: {fileID: 11400000, guid: 2aa647428da64c94ab1476c0890a22ae, type: 2}
   <ComboQueueManager>k__BackingField: {fileID: 7066033461056179908}
   _inputActionsController: {fileID: 1289368125731603549}
   _playerInputComponent: {fileID: 6253768598967610822}

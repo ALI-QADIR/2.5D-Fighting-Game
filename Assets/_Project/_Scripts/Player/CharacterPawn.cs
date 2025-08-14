@@ -38,8 +38,8 @@ namespace Smash.Player
 		[SerializeField] private int m_maxNumberOfJumps = 2;
 		[Space(10)]
 		[SerializeField] private float m_wallSlideSpeed = 10f;
-		[SerializeField] private float m_climbUpSpeed = 32f;
-		[SerializeField] private float m_climbSideSpeed = 25f;
+		// [SerializeField] private float m_climbUpSpeed = 32f;
+		// [SerializeField] private float m_climbSideSpeed = 25f;
 		// [SerializeField] private float m_wallJumpSideSpeed = 50f;
 		[SerializeField] private float m_timeToRotate = 0.15f;
 		
@@ -107,8 +107,6 @@ namespace Smash.Player
 
 		#endregion AttackStrategies
 		public event Action<bool> OnDash = delegate { };
-		
-		private bool m_isInitialised;
 		
 		#region Unity Methods
 
