@@ -20,6 +20,7 @@ namespace Smash.Player
 		[SerializeField] private CeilingDetector m_ceilingDetector;
 		[SerializeField] private WallDetector m_wallDetector;
 		[SerializeField] private PlayerGraphicsController m_graphicsController;
+		[SerializeField] private CharacterHealth m_health;
 		[SerializeField] private CharacterPropertiesSO m_properties;
 		
 		[Header("Control Values")]
@@ -54,11 +55,16 @@ namespace Smash.Player
 		private float m_gravity;
 		private float m_currentFallSpeed;
 		private float m_acceleration;
-		private float m_elapsedTime;
 		private float m_elapsedRotationTime;
+		private float m_stunDuration;
 		private float m_currentLookAngle;
 		private int m_numberOfJumps;
 		private bool m_isJumping;
+		private bool m_isKnockedBack;
+		private bool m_isTossedUp;
+
+		public bool IsStunned { get; set; }
+
 		// private bool m_isLaunching;
 		// private bool m_isClimbing;
 		private Vector3 m_velocity, m_savedVelocity;
@@ -79,11 +85,12 @@ namespace Smash.Player
 		#region Properties
 		
 		public float CoyoteTime => m_coyoteTime;
-		public float ApexTime => m_apexTime; 
+		public float ApexTime => m_apexTime;
+		
+		private Vector3 Direction { get; set; }
+		
 		public IState CurrentState { get; set; }
 		public PlayerSubStateMachine CurrentStateMachine { get; set; }
-
-		private Vector3 Direction { get; set; }
 
 		#endregion Properties
 
@@ -105,18 +112,8 @@ namespace Smash.Player
 		
 		#region Unity Methods
 
-		private void Awake()
-		{
-			Initialise();
-		}
-
 		public override void Initialise()
 		{
-			// _inputHandler.SetCharacterPawn(this);
-			if (m_isInitialised)
-				return;
-			m_isInitialised = true;
-			
 			SetUpComponents();
 
 			SetUpVariables();
@@ -158,7 +155,22 @@ namespace Smash.Player
 
 		#region Public Methods
 
+		public void ResetKnockBackBool() => m_isKnockedBack = false;
+
+		public void ResetTossUpBool()
+		{
+			m_isKnockedBack = false;
+			m_isTossedUp = false;
+		}
+
 		#region AbilityEffects
+
+		public void TakeDamage(float damage)
+		{
+			if (CurrentState is HurtState and not Stun) return;
+			m_health.TakeDamage(damage);
+			IsStunned = false;
+		}
 
 		public void HandleJumpAbility(float power)
 		{
@@ -167,18 +179,28 @@ namespace Smash.Player
 			SetInAir();
 		}
 		
-		public void HandleTossUpAbility(float power)
+		public void HandleTossUpAbility(float power, float direction, float modifier)
 		{
+			m_graphicsController.SetTossUpParameters(direction, 1 / modifier);
+			m_isTossedUp = true;
 			m_motor.ShouldAdjustForGround = false;
 			HandleJump(power);
 			SetInAir();
 		}
 
-		public void HandleKnockBack(float force, float direction)
+		public void HandleKnockBackAbility(float force, float direction, float modifier)
 		{
+			m_graphicsController.SetKnockBackParameters(direction, 1/modifier);
+			m_isKnockedBack = true;
 			var directionVector = direction > 0 ? Vector3.right : Vector3.left;
 			RemoveHorizontalVelocity();
 			m_savedVelocity += directionVector * force;
+		}
+
+		public void HandleStunAbility(float duration)
+		{
+			CurrentStateMachine.stunDuration = duration;
+			IsStunned = true;
 		}
 
 		#endregion AbilityEffects
@@ -306,13 +328,13 @@ namespace Smash.Player
 
 		public override void HandleSpecialAttackInputStart()
 		{
-			Debug.Log("Special Attack Input Start");
+			// Debug.Log("Special Attack Input Start");
 			CurrentStateMachine.SpecialAttackHold = true;
 		}
 
 		public override void HandleSpecialAttackInputEnd(float heldTime)
 		{
-			Debug.Log("Special Attack Input End");
+			// Debug.Log("Special Attack Input End");
 			CurrentStateMachine.SpecialAttackTap = heldTime <= 0.2f; // TODO: remove magic number
 			CurrentStateMachine.SpecialAttackHold = false;
 			specialAbilityStrategy.SetAbilityModifier(heldTime);
@@ -385,7 +407,7 @@ namespace Smash.Player
 
 		public void SetMainAttackWindup()
 		{
-			Debug.Log("Main Attack Wind Up");
+			// Debug.Log("Main Attack Wind Up");
 			EnableMovement(false);
 			RemoveVerticalVelocity();
 			m_gravity = 0f;
@@ -393,13 +415,13 @@ namespace Smash.Player
 
 		public void SetMainAttackExecute()
 		{
-			Debug.Log("Main Attack End");
+			// Debug.Log("Main Attack End");
 			EnableMovement(false);
 		}
 
 		public void SetMainAttackFinish()
 		{
-			Debug.Log("Main Attack Finished");
+			// Debug.Log("Main Attack Finished");
 			EnableMovement(true);
 			CurrentStateMachine.MainAttackHold = false;
 			CurrentStateMachine.MainAttackTap = false;
@@ -408,19 +430,19 @@ namespace Smash.Player
 
 		public void SetSideMainAttackWindUp()
 		{
-			Debug.Log("Side Main Attack Windup");
+			// Debug.Log("Side Main Attack Windup");
 			EnableMovement(false);
 		}
 		
 		public void SetSideMainAttackExecute()
 		{
-			Debug.Log("Side Main Attack Execute");
+			// Debug.Log("Side Main Attack Execute");
 			EnableMovement(false);
 		}
 
 		public void SetSideMainAttackFinish()
 		{
-			Debug.Log("Side Main Attack Finish");
+			// Debug.Log("Side Main Attack Finish");
 			EnableMovement(true);
 			CurrentStateMachine.SideMainAttackHold = false;
 			CurrentStateMachine.SideMainAttackTap = false;
@@ -429,20 +451,20 @@ namespace Smash.Player
 		
 		public void SetUpMainAttackWindUp()
 		{
-			Debug.Log("Up Main Attack Windup");
+			// Debug.Log("Up Main Attack Windup");
 			EnableMovement(false);
 		}
 		
 		public void SetUpMainAttackExecute()
 		{
-			Debug.Log("up Main Attack Execute");
+			// Debug.Log("up Main Attack Execute");
 			EnableMovement(true);
 			
 		}
 
 		public void SetUpMainAttackFinish()
 		{
-			Debug.Log("Up Main Attack Finish");
+			// Debug.Log("Up Main Attack Finish");
 			EnableMovement(true);
 			CurrentStateMachine.UpMainAttackHold = false;
 			CurrentStateMachine.UpMainAttackTap = false;
@@ -451,19 +473,19 @@ namespace Smash.Player
 		
 		public void SetDownMainAttackWindUp()
 		{
-			Debug.Log("Down Main Attack Windup");
+			// Debug.Log("Down Main Attack Windup");
 			EnableMovement(false);
 		}
 		
 		public void SetDownMainAttackExecute()
 		{
-			Debug.Log("Down Main Attack Execute");
+			// Debug.Log("Down Main Attack Execute");
 			EnableMovement(false);
 		}
 
 		public void SetDownMainAttackFinish()
 		{
-			Debug.Log("Down Main Attack Finish");
+			// Debug.Log("Down Main Attack Finish");
 			EnableMovement(true);
 			CurrentStateMachine.DownMainAttackHold = false;
 			CurrentStateMachine.DownMainAttackTap = false;
@@ -472,7 +494,7 @@ namespace Smash.Player
 		
 		public void SetSpecialAttackWindup()
 		{
-			Debug.Log("Special Attack Wind Up");
+			// Debug.Log("Special Attack Wind Up");
 			EnableMovement(false);
 			RemoveVerticalVelocity();
 			m_gravity = 0f;
@@ -480,13 +502,13 @@ namespace Smash.Player
 
 		public void SetSpecialAttackExecute()
 		{
-			Debug.Log("Special Attack End");
+			// Debug.Log("Special Attack End");
 			EnableMovement(false);
 		}
 
 		public void SetSpecialAttackFinish()
 		{
-			Debug.Log("Special Attack Finished");
+			// Debug.Log("Special Attack Finished");
 			CurrentStateMachine.SpecialAttackHold = false;
 			CurrentStateMachine.SpecialAttackTap = false;
 			EnableMovement(true);
@@ -496,19 +518,19 @@ namespace Smash.Player
 
 		public void SetSideSpecialAttackWindUp()
 		{
-			Debug.Log("Side Special Attack Windup");
+			// Debug.Log("Side Special Attack Windup");
 			EnableMovement(false);
 		}
 		
 		public void SetSideSpecialAttackExecute()
 		{
-			Debug.Log("Side Special Attack Execute");
+			// Debug.Log("Side Special Attack Execute");
 			EnableMovement(false);
 		}
 
 		public void SetSideSpecialAttackFinish()
 		{
-			Debug.Log("Side Special Attack Finish");
+			// Debug.Log("Side Special Attack Finish");
 			EnableMovement(true);
 			CurrentStateMachine.SideSpecialAttackHold = false;
 			CurrentStateMachine.SideSpecialAttackTap = false;
@@ -517,19 +539,19 @@ namespace Smash.Player
 		
 		public void SetUpSpecialAttackWindUp()
 		{
-			Debug.Log("Up Special Attack Windup");
+			// Debug.Log("Up Special Attack Windup");
 			EnableMovement(false);
 		}
 		
 		public void SetUpSpecialAttackExecute()
 		{
-			Debug.Log("up Special Attack Execute");
+			// Debug.Log("up Special Attack Execute");
 			EnableMovement(false);
 		}
 
 		public void SetUpSpecialAttackFinish()
 		{
-			Debug.Log("Up Special Attack Finish");
+			// Debug.Log("Up Special Attack Finish");
 			EnableMovement(true);
 			CurrentStateMachine.UpSpecialAttackHold = false;
 			CurrentStateMachine.UpSpecialAttackTap = false;
@@ -538,19 +560,19 @@ namespace Smash.Player
 		
 		public void SetDownSpecialAttackWindUp()
 		{
-			Debug.Log("Down Special Attack Windup");
+			// Debug.Log("Down Special Attack Windup");
 			EnableMovement(false);
 		}
 		
 		public void SetDownSpecialAttackExecute()
 		{
-			Debug.Log("Down Special Attack Execute");
+			// Debug.Log("Down Special Attack Execute");
 			EnableMovement(false);
 		}
 
 		public void SetDownSpecialAttackFinish()
 		{
-			Debug.Log("Down Special Attack Finish");
+			// Debug.Log("Down Special Attack Finish");
 			EnableMovement(true);
 			CurrentStateMachine.DownSpecialAttackHold = false;
 			CurrentStateMachine.DownSpecialAttackTap = false;
@@ -619,6 +641,7 @@ namespace Smash.Player
 
 		#endregion State Setters
 		
+		public bool IsGrounded() => m_motor.IsGrounded();
 		public bool IsRising() => 
 			Vector3Math.GetDotProduct(m_savedVelocity, m_tr.up) > 0f && !m_motor.IsGrounded();
 		public bool IsFalling() => 
@@ -628,6 +651,9 @@ namespace Smash.Player
 		
 		// public bool IsLedgeGrab() => m_ledgeDetector.IsLedgeDetected();
 		public bool IsWallDetected() => m_wallDetector.IsWallDetected();
+
+		public bool IsKnockedBack() => m_isKnockedBack;
+		public bool IsTossedUp() => m_isTossedUp;
 
 		#endregion Public Methods
 
@@ -644,7 +670,7 @@ namespace Smash.Player
 			m_currentLookAngle = lookAngle;
 			m_targetRotation = Quaternion.Euler(0f, lookAngle, 0f);
 			m_savedRotation = m_tr.rotation;
-			m_elapsedTime = 0;
+			m_elapsedRotationTime = 0;
 		}
 
 		/*private void HandleClimb()
@@ -710,8 +736,13 @@ namespace Smash.Player
 
 		private void HandleRotation()
 		{
-			m_elapsedTime += Time.deltaTime;
-			m_tr.rotation = Quaternion.Slerp(m_savedRotation, m_targetRotation, m_elapsedTime / m_timeToRotate);
+			if (m_elapsedRotationTime >= m_timeToRotate)
+			{
+				m_tr.rotation = m_targetRotation;
+				return;
+			}
+			m_elapsedRotationTime += Time.deltaTime;
+			m_tr.rotation = Quaternion.Slerp(m_savedRotation, m_targetRotation, m_elapsedRotationTime / m_timeToRotate);
 		}
 
 		private void CheckRotation()
@@ -863,6 +894,7 @@ namespace Smash.Player
 			m_wallDetector ??= GetComponent<WallDetector>();
 			m_ceilingDetector ??= GetComponent<CeilingDetector>();
 			m_graphicsController ??= GetComponent<PlayerGraphicsController>();
+			m_health ??= GetComponent<CharacterHealth>();
 			SetSelfLayer();
 			SetTargetLayers();
 		}
@@ -886,11 +918,13 @@ namespace Smash.Player
 				upSpecialAttackDuration: m_properties.upSpecialAbilityStrategyData.AnimDuration);
 			
 			m_initState = new PlayerInit();
-			
-			FuncPredicate groundToAirborne = new(() => 
-				m_stateMachine.CurrentState is GroundedSubStateMachine && !m_motor.IsGrounded() && CurrentState is not AttackState);
+
+			FuncPredicate groundToAirborne = new(() =>
+				CurrentStateMachine is GroundedSubStateMachine && !m_motor.IsGrounded() &&
+				CurrentState is not (AttackState or HurtState));
 			FuncPredicate airborneToGround = new(() => 
-				m_stateMachine.CurrentState is AirborneSubStateMachine && m_motor.IsGrounded());
+				CurrentStateMachine is AirborneSubStateMachine && m_motor.IsGrounded() &&
+				CurrentState is not (AttackState or HurtState));
 			
 			AddTransition(m_initState, m_groundedState, 
 				new FuncPredicate(() => m_stateMachine.CurrentState is PlayerInit && m_motor.IsGrounded()));

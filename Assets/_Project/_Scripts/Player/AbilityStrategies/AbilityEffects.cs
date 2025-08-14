@@ -1,7 +1,4 @@
 ﻿using System;
-using JetBrains.Annotations;
-using Smash.Player.Components;
-using TripleA.Utils.Extensions;
 using UnityEngine;
 
 namespace Smash.Player.AbilityStrategies
@@ -9,6 +6,7 @@ namespace Smash.Player.AbilityStrategies
 	[Serializable]
 	public abstract class AbilityEffect
 	{
+		public int Priority { get; protected set; }
 		[field: SerializeField, InspectorReadOnly] public bool IsSelfEffect { get; protected set; }
 		public float HeldDuration { protected get; set; }
 		protected float _modifier;
@@ -24,11 +22,15 @@ namespace Smash.Player.AbilityStrategies
 		[SerializeField] private int m_maxDamage = 10;
 		[SerializeField] private AnimationCurve m_damageCurve;
 
+		public DamageEffect()
+		{
+			Priority = 0;
+		}
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
 			ModifyEffect();
-			if (collider.TryGetComponent<CharacterHealth>(out var health))
-				health.TakeDamage(m_maxDamage * _modifier);
+			if (collider.TryGetComponent<CharacterPawn>(out var pawn))
+				pawn.TakeDamage(m_maxDamage * _modifier);
 		}
 
 		protected override void ModifyEffect()
@@ -45,6 +47,7 @@ namespace Smash.Player.AbilityStrategies
 		public JumpEffect()
 		{
 			IsSelfEffect = true;
+			Priority = 0;
 		}
 		
 		public override void Execute(Collider collider, Collider effectOwner)
@@ -67,13 +70,18 @@ namespace Smash.Player.AbilityStrategies
 	{
 		[SerializeField] private float m_force;
 
+		public KnockBackEffect()
+		{
+			Priority = 9; // lower priority than toss up for animation to work
+		}
+
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
 			CalculateDirection(collider.transform.position, effectOwner.transform.position, out var directionX);
 			ModifyEffect();
 			if (collider.TryGetComponent(out CharacterPawn pawn))
 			{
-				pawn.HandleKnockBack(m_force, directionX);
+				pawn.HandleKnockBackAbility(m_force * _modifier, directionX, _modifier);
 			}
 			else if (collider.TryGetComponent<Rigidbody>(out var rb))
 			{
@@ -85,24 +93,88 @@ namespace Smash.Player.AbilityStrategies
 		private void CalculateDirection(Vector3 effectedColliderPos, Vector3 effectOwnerPos, out float directionX)
 		{
 			directionX = (effectedColliderPos - effectOwnerPos).x;
+			directionX = directionX > 0 ? 1 : -1;
+		}
+
+		protected override void ModifyEffect()
+		{
+			_modifier = Mathf.Lerp(0.5f, 1, HeldDuration / 3f);
 		}
 	}
 	
+	[Serializable]
 	public class TossUpEffect : AbilityEffect
 	{
 		[SerializeField] private float m_force;
+
+		public TossUpEffect()
+		{
+			Priority = 11; // higher priority than knock back for animation to work
+		}
 		
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
+			CalculateDirection(collider.transform.position, effectOwner.transform.position, out var directionX);
 			ModifyEffect();
 			if (collider.TryGetComponent(out CharacterPawn pawn))
 			{
-				pawn.HandleTossUpAbility(m_force);
+				pawn.HandleTossUpAbility(m_force, directionX, _modifier);
 			}
 			else if (collider.TryGetComponent(out Rigidbody rb))
 			{
 				rb.AddForce(Vector3.up * m_force, ForceMode.Impulse);
 			}
+		}
+
+		private void CalculateDirection(Vector3 effectedColliderPos, Vector3 effectOwnerPos, out float directionX)
+		{
+			directionX = (effectedColliderPos - effectOwnerPos).x;
+			directionX = directionX > 0 ? 1 : -1;
+		}
+
+		protected override void ModifyEffect()
+		{
+			_modifier = Mathf.Lerp(0.5f, 1, HeldDuration / 3f);
+		}
+	}
+
+	// is this needed? for now, a combination of toss up and knock back works, so, no
+	[Serializable]
+	public class LaunchBackEffect : AbilityEffect
+	{
+		[SerializeField] private float m_upForce;
+		[SerializeField] private float m_backForce;
+
+		public LaunchBackEffect()
+		{
+			Priority = 13;
+		}
+		
+		public override void Execute(Collider collider, Collider effectOwner)
+		{
+			CalculateDirection(collider.transform.position, effectOwner.transform.position, out var directionX);
+			ModifyEffect();
+			if (collider.TryGetComponent(out CharacterPawn _))
+			{
+				// pawn.HandleLaunchBackAbility(m_upForce, m_backForce, directionX, _modifier);
+			}
+			else if (collider.TryGetComponent(out Rigidbody rb))
+			{
+				var force = (directionX > 0 ? Vector3.right : Vector3.left) * m_backForce;
+				force += Vector3.up * m_upForce;
+				rb.AddForce(force, ForceMode.Impulse);
+			}
+		}
+
+		private void CalculateDirection(Vector3 effectedColliderPos, Vector3 effectOwnerPos, out float directionX)
+		{
+			directionX = (effectedColliderPos - effectOwnerPos).x;
+			directionX = directionX > 0 ? 1 : -1;
+		}
+
+		protected override void ModifyEffect()
+		{
+			_modifier = Mathf.Lerp(0.5f, 1, HeldDuration / 3f);
 		}
 	}
 
@@ -110,10 +182,24 @@ namespace Smash.Player.AbilityStrategies
 	public class StunEffect : AbilityEffect
 	{
 		[SerializeField] private float m_stunDuration;
+
+		public StunEffect()
+		{
+			Priority = -1; // lower priority than damage so that stun effect doesn't get overridden. See CharacterPawn.TakeDamage()
+		}
 		
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
-			Debug.Log("Stun");
+			ModifyEffect();
+			if (collider.TryGetComponent(out CharacterPawn pawn))
+			{
+				pawn.HandleStunAbility(m_stunDuration);
+			}
+		}
+		
+		protected override void ModifyEffect()
+		{
+			_modifier = Mathf.Lerp(0.5f, 1, HeldDuration / 3f);
 		}
 	}
 
@@ -122,6 +208,11 @@ namespace Smash.Player.AbilityStrategies
 	{
 		[SerializeField] private float m_slowDuration;
 		[SerializeField, Range(0, 1)] private float m_slowMultiplier;
+
+		public SlowEffect()
+		{
+			Priority = 10;
+		}
 		
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
@@ -132,6 +223,10 @@ namespace Smash.Player.AbilityStrategies
 	[Serializable]
 	public class NoEffect : AbilityEffect
 	{
+		public NoEffect()
+		{
+			Priority = Int32.MaxValue;
+		}
 		public override void Execute(Collider collider, Collider effectOwner)
 		{
 			Debug.Log("No effect");

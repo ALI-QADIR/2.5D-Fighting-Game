@@ -16,6 +16,17 @@ namespace Smash.Player.Components
 		private int m_isRisingBoolHash;
 		private int m_isFallingBoolHash;
 		
+		private int m_tossUpStartTriggerHash;
+		private int m_tossUpEndTriggerHash;
+		private int m_tossUpDirectionParamHash;
+		private int m_tossUpAnimSpeedParamHash;
+		
+		private int m_knockBackTriggerHash;
+		private int m_knockBackDirectionParamHash;
+		private int m_knockBackAnimSpeedParamHash;
+
+		private int m_isStunBoolHash;
+		
 		private int m_mainAttackStartTriggerHash;
 		private int m_mainAttackFinishTriggerHash;
 
@@ -40,6 +51,17 @@ namespace Smash.Player.Components
 			m_isMovingBoolHash = Animator.StringToHash("IsMoving");
 			m_isRisingBoolHash = Animator.StringToHash("IsRising");
 			m_isFallingBoolHash = Animator.StringToHash("IsFalling");
+			
+			m_tossUpStartTriggerHash = Animator.StringToHash("TossUpStart");
+			m_tossUpEndTriggerHash = Animator.StringToHash("TossUpEnd");
+			m_tossUpDirectionParamHash = Animator.StringToHash("TossUpDirection");
+			m_tossUpAnimSpeedParamHash = Animator.StringToHash("TossUpAnimSpeed");
+			
+			m_knockBackTriggerHash = Animator.StringToHash("KnockBack");
+			m_knockBackDirectionParamHash = Animator.StringToHash("KnockBackDirection");
+			m_knockBackAnimSpeedParamHash = Animator.StringToHash("KnockBackAnimSpeed");
+			
+			m_isStunBoolHash = Animator.StringToHash("IsStunned");
 			
 			m_mainAttackStartTriggerHash = Animator.StringToHash("MainAttackStart");
 			m_mainAttackFinishTriggerHash = Animator.StringToHash("MainAttackFinish");
@@ -169,6 +191,42 @@ namespace Smash.Player.Components
 		}
 
 		#endregion Attack State Setters
+
+		#region Hurt State Setters
+
+		public void SetKnockBackParameters(float direction, float animSpeed)
+		{
+			m_animator.SetFloat(m_knockBackDirectionParamHash, direction);
+			m_animator.SetFloat(m_knockBackAnimSpeedParamHash, animSpeed);
+		}
+		
+		public void SetKnockBack()
+		{
+			m_animator.SetTrigger(m_knockBackTriggerHash);
+		}
+		
+		public void SetTossUpParameters(float direction, float animSpeed)
+		{
+			m_animator.SetFloat(m_tossUpDirectionParamHash, direction);
+			m_animator.SetFloat(m_tossUpAnimSpeedParamHash, animSpeed);
+		}
+		
+		public void SetTossUpStart()
+		{
+			m_animator.SetTrigger(m_tossUpStartTriggerHash);
+		}
+		
+		public void SetTossUpFinish()
+		{
+			m_animator.SetTrigger(m_tossUpEndTriggerHash);
+		}
+		
+		public void SetStun(bool isStun)
+		{
+			m_animator.SetBool(m_isStunBoolHash, isStun);
+		}
+
+		#endregion Hurt State Setters
 	}
 
 	[Serializable]

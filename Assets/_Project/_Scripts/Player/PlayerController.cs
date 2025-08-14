@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using Smash.Player.CommandPattern;
+﻿using Smash.Player.CommandPattern;
 using Smash.Player.CommandPattern.ActionCommands;
 using Smash.Player.CommandPattern.Controllers;
 using Smash.Player.Input;
@@ -65,9 +64,9 @@ namespace Smash.Player
 		{
 			_inputActions = _inputActionsController.InitialiseInputActions();
 			_possessedPawn = pawn;
-			_possessedPawn.Initialise();
 			PlayerIndex = _playerInputComponent.playerIndex;
 			_possessedPawn.SetIndex(PlayerIndex);
+			_possessedPawn.Initialise();
 			InitialiseActionControllers();
 		}
 

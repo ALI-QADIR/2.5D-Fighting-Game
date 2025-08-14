@@ -18,5 +18,6 @@ namespace Smash.Player
         public AbilityStrategyData upMainAbilityStrategyData;
         public AbilityStrategyData specialAbilityStrategyData;
         public AbilityStrategyData upSpecialAbilityStrategyData;
+        public AbilityStrategyData sideSpecialAbilityStrategyData;
     }
 }
