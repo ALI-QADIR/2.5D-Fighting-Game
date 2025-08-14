@@ -22,15 +22,14 @@ MonoBehaviour:
       rid: 4153748571275657319
     <AbilityEffects>k__BackingField:
     - rid: 4153748571275657314
-    - rid: 4153748934687195225
+    - rid: 4153748934687195231
   sideMainAbilityStrategyData:
-    <AnimDuration>k__BackingField: 1
+    <AnimDuration>k__BackingField: 0.94
     <ScanningStrategy>k__BackingField:
       rid: 4153748571275657318
     <AbilityEffects>k__BackingField:
     - rid: 4153748571275657315
-    - rid: 4153748934687195224
-    - rid: 4153748638621237344
+    - rid: 2391469780382515291
   upMainAbilityStrategyData:
     <AnimDuration>k__BackingField: 0.9
     <ScanningStrategy>k__BackingField:
@@ -48,20 +47,48 @@ MonoBehaviour:
   upSpecialAbilityStrategyData:
     <AnimDuration>k__BackingField: 1.2
     <ScanningStrategy>k__BackingField:
-      rid: 4153748687172403288
+      rid: 2391469780382515203
     <AbilityEffects>k__BackingField:
     - rid: 4153748687172403287
+    - rid: 2391469780382515200
+    - rid: 2391469780382515201
+    - rid: 2391469780382515202
   sideSpecialAbilityStrategyData:
     <AnimDuration>k__BackingField: 0
     <ScanningStrategy>k__BackingField:
-      rid: -2
+      rid: 4153748934687195232
     <AbilityEffects>k__BackingField:
-    - rid: 4153748934687195223
+    - rid: 4153748934687195233
+    - rid: 4153748934687195235
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 2391469780382515200
+      type: {class: StunEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <IsSelfEffect>k__BackingField: 0
+        m_stunDuration: 5
+    - rid: 2391469780382515201
+      type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <IsSelfEffect>k__BackingField: 0
+        m_force: 30
+    - rid: 2391469780382515202
+      type: {class: TossUpEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <IsSelfEffect>k__BackingField: 0
+        m_force: 20
+    - rid: 2391469780382515203
+      type: {class: SphereScanningStrategy, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <CenterOffset>k__BackingField: {x: 0, y: 0.4, z: 0}
+        m_prefab: {fileID: 5135671406773843300, guid: 6d14f318ce054f74b80cb91291eddeba, type: 3}
+        m_radius: 1.5
+    - rid: 2391469780382515291
+      type: {class: StunEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <IsSelfEffect>k__BackingField: 0
+        m_stunDuration: 5
     - rid: 4153748571275657314
       type: {class: DamageEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
@@ -188,7 +215,7 @@ MonoBehaviour:
         <CenterOffset>k__BackingField: {x: 0.5, y: 1, z: 0}
         m_prefab: {fileID: 3334382288930538699, guid: bb1381b38d36de144b4dea916edb02c8, type: 3}
         m_radius: 0.5
-        m_projectileSpeed: 5
+        m_projectileSpeed: 20
         m_maxDistance: 20
         m_projectilePrefab: {fileID: 3681310503184111825, guid: 4b865bd47d2a09046bea900c19347087, type: 3}
     - rid: 4153748571275657319
@@ -246,39 +273,72 @@ MonoBehaviour:
       data:
         <IsSelfEffect>k__BackingField: 0
         m_force: 25
+    - rid: 4153748638621237334
+      type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <IsSelfEffect>k__BackingField: 0
+        m_force: 15
     - rid: 4153748638621237341
       type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
         <IsSelfEffect>k__BackingField: 0
         m_force: 40
-    - rid: 4153748638621237344
-      type: {class: TossUpEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
-      data:
-        <IsSelfEffect>k__BackingField: 0
-        m_force: 20
     - rid: 4153748687172403287
       type: {class: JumpEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
         <IsSelfEffect>k__BackingField: 1
         m_maxJumpForce: 50
-    - rid: 4153748687172403288
-      type: {class: NullScanningStrategy, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
-      data:
-        <CenterOffset>k__BackingField: {x: 0, y: 0, z: 0}
-        m_prefab: {fileID: -5264158173422641984, guid: 7daa837439ef97c4a8cec1dec868b40f, type: 3}
-    - rid: 4153748934687195223
-      type: {class: LaunchBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
-      data:
-        <IsSelfEffect>k__BackingField: 0
-        m_upForce: 0
-        m_backForce: 0
-    - rid: 4153748934687195224
+    - rid: 4153748934687195231
       type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
         <IsSelfEffect>k__BackingField: 0
         m_force: 20
-    - rid: 4153748934687195225
+    - rid: 4153748934687195232
+      type: {class: BoxScanningStrategy, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <CenterOffset>k__BackingField: {x: 0.7, y: 1, z: 0}
+        m_prefab: {fileID: 3392012914999762302, guid: ebbc42508f193544aba1a44bb6aad690, type: 3}
+        m_halfExtents: {x: 0.5, y: 0.3, z: 0.5}
+    - rid: 4153748934687195233
       type: {class: StunEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
         <IsSelfEffect>k__BackingField: 0
-        m_stunDuration: 5
+        m_stunDuration: 3
+    - rid: 4153748934687195235
+      type: {class: DamageEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+      data:
+        <IsSelfEffect>k__BackingField: 0
+        m_maxDamage: 10
+        m_damageCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0.2
+            inSlope: 0.0800798
+            outSlope: 0.0800798
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.30119058
+          - serializedVersion: 3
+            time: 0.6
+            value: 0.4
+            inSlope: 0.8582238
+            outSlope: 0.8582238
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.13065445
+            outWeight: 0.24597181
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 2.311814
+            outSlope: 2.311814
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.11940748
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
