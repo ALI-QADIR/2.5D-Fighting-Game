@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TripleA.Utils.Singletons;
 using UnityEngine;
@@ -77,10 +76,6 @@ namespace Smash.System
 		{
 			if (m_activeInputDevices.Count > CurrentAllowedPlayerCount)
 			{
-				for (int i = m_activeInputDevices.Count - 1; i >= CurrentAllowedPlayerCount; i--)
-				{
-					PlayerControllerManager.Instance.RemoveInputDeviceAndPlayerControllerWithIndex(i);
-				}
 			}
 		}
 

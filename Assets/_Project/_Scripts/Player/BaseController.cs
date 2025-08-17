@@ -1,6 +1,5 @@
 ﻿using Smash.Player.CommandPattern;
 using Smash.Player.CommandPattern.ActionCommands;
-using TripleA.Utils.Extensions;
 using UnityEngine;
 
 namespace Smash.Player
@@ -28,8 +27,6 @@ namespace Smash.Player
 			
 			Destroy(gameObject);
 		}
-		
-		// public void SetPawn(CharacterPawn pawn) => _possessedPawn = pawn;
 
 		protected virtual void InitialiseCommandInvoker()
 		{
@@ -40,5 +37,6 @@ namespace Smash.Player
 
 		protected abstract void OnGameplayCommandExecutionStarted(IGameplayActionCommand command);
 		protected abstract void OnGameplayCommandExecutionFinished(IGameplayActionCommand command);
+		protected abstract void OnUiCommandExecutionFinished(IGameplayActionCommand command);
 	}
 }

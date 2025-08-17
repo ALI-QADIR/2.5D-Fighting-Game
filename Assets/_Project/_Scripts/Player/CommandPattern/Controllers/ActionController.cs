@@ -1,16 +1,17 @@
 using Smash.Player.CommandPattern.ActionCommands;
+using Smash.Player.Input;
 using UnityEngine;
 
 namespace Smash.Player.CommandPattern.Controllers
 {
 	public abstract class ActionController : MonoBehaviour
 	{
-		protected PlayerInputActions InputActions { get; private set; }
 		protected ComboActionQueueManager _comboActionQueueManager;
-
-		public void Initialise(PlayerInputActions inputActions, ComboActionQueueManager comboActionQueueManager)
+		protected PlayerInputActionsController _inputActionsController;
+		
+		public void Initialise(PlayerInputActionsController inputActionsController, ComboActionQueueManager comboActionQueueManager)
 		{
-			InputActions = inputActions;
+			_inputActionsController = inputActionsController;
 			_comboActionQueueManager = comboActionQueueManager;
 			SetupActions();
 		}

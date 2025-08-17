@@ -43,62 +43,62 @@ namespace Smash.Player
 			
 			GameplayCommandInvoker.Debugging = m_enableInvokerDebug;
 			ComboQueueManager.Debugging = m_enableQueueDebug;
+			
+			Initialise();
 		}
 
 		protected override void InitialiseCommandInvoker()
 		{
 			base.InitialiseCommandInvoker();
 			UiCommandInvoker ??= new UiActionCommandInvoker();
-			UiCommandInvoker.OnCommandExecutionFinished += UiCommandExecutionFinished;
+			UiCommandInvoker.OnCommandExecutionStarted += OnUiCommandExecutionFinished;
+		}
+
+		public override void Dispose()
+		{
+			UiCommandInvoker.OnCommandExecutionStarted -= OnUiCommandExecutionFinished;
+			base.Dispose();
 		}
 
 		private void OnDisable()
 		{
 			_playerInputComponent.onDeviceLost -= DeviceLost;
 			_playerInputComponent.onDeviceRegained -= DeviceRegained;
-			_inputActionsController.SetUiInputEnabled(false);
-			_inputActionsController.SetPlayerInputEnabled(false);
 		}
 
-		public void Initialise()
+		private void Initialise()
 		{
-			_inputActions = _inputActionsController.InitialiseInputActions();
+			_inputActionsController.InitialiseInputActions(_playerInputComponent);
 			PlayerIndex = _playerInputComponent.playerIndex;
+			Debug.Log("Initialising player " + PlayerIndex);
 			InitialiseActionControllers();
 		}
 
-		public void EnablePlayerInputAndDisableUiInput()
+		public void EnablePlayerInput()
 		{
-			_inputActionsController.SetUiInputEnabled(false);
-			_inputActionsController.SetPlayerInputEnabled(true);
+			_inputActionsController.SetPlayerInputEnabled();
 		}
 
-		public void EnableUiInputAndDisablePlayerInput()
+		public void EnableUiInput()
 		{
-			_inputActionsController.SetPlayerInputEnabled(false);
-			_inputActionsController.SetUiInputEnabled(true);
+			_inputActionsController.SetUiInputEnabled();
 		}
 
-		public void DisableUiInput()
+		public void DisableAllInput()
 		{
-			_inputActionsController.SetUiInputEnabled(false);
-		}
-
-		public void DisablePlayerInput()
-		{
-			_inputActionsController.SetPlayerInputEnabled(false);
+			_inputActionsController.DisableAllInput();
 		}
 		
 		private void InitialiseActionControllers()
 		{
-			ButtonActionControllerComponent.Initialise(_inputActions, ComboQueueManager);
-			DPadActionControllerComponent.Initialise(_inputActions, ComboQueueManager);
-			UiActionControllerComponent.Initialise(_inputActions, ComboQueueManager);
+			ButtonActionControllerComponent.Initialise(_inputActionsController, ComboQueueManager);
+			DPadActionControllerComponent.Initialise(_inputActionsController, ComboQueueManager);
+			UiActionControllerComponent.Initialise(_inputActionsController, ComboQueueManager);
 		}
 
 		protected override void OnGameplayCommandExecutionStarted(IGameplayActionCommand command)
 		{
-			Debug.Log("Command started, player index: " + PlayerIndex, gameObject);
+			// Debug.Log("Command " + command.ActionName + " started.\nPlayer index: " + PlayerIndex, gameObject);
 			command.SetCommandParameters(PlayerIndex);
 			SetEventArgs(command);
 			InvokeEvent();
@@ -106,15 +106,15 @@ namespace Smash.Player
 
 		protected override void OnGameplayCommandExecutionFinished(IGameplayActionCommand command)
 		{
-			Debug.Log("Command finished, player index: " + PlayerIndex, gameObject);
+			// Debug.Log("Command " + command.ActionName + " finished.\nPlayer index: " + PlayerIndex, gameObject);
 			command.SetCommandParameters(PlayerIndex, true);
 			SetEventArgs(command);
 			InvokeEvent();
 		}
 
-		private void UiCommandExecutionFinished(IGameplayActionCommand command)
+		protected override void OnUiCommandExecutionFinished(IGameplayActionCommand command)
 		{
-			Debug.Log("Command started, player index: " + PlayerIndex, gameObject);
+			Debug.Log("Command " + command.ActionName + " finished.\nPlayer index: " + PlayerIndex, gameObject);
 			command.SetCommandParameters(PlayerIndex, true);
 			SetEventArgs(command);
 			InvokeEvent();

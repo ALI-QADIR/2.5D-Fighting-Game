@@ -19,7 +19,7 @@ namespace Smash.System
 		
 		public event Action<int> OnPlayerJoined; 
 		public event Action<int> OnPlayerRegained; 
-		public event Action<int> OnPlayerLeft; 
+		public event Action<int> OnPlayerLeft;
 
 		#region Unity Methods
 
@@ -56,28 +56,16 @@ namespace Smash.System
 		
 		public void AddInputDeviceAndJoinPlayer(int index, InputDevice device)
 		{
-			m_playerInputManager.JoinPlayer(index, -1, null, device);
+			string controlScheme = device is Keyboard ? "Keyboard" : "Gamepad";
+			m_playerInputManager.JoinPlayer(index, -1, controlScheme, device);
 			OnPlayerJoined?.Invoke(index);
-		}
-		
-		public void RemoveInputDeviceAndPlayerControllerWithIndex(int index)
-		{
-			m_controllers[index].Dispose();
-			m_controllers.Remove(index);
-		}
-
-		public PlayerController InitialisePawn(int index)
-		{
-			var ctr = m_controllers[index];
-			ctr.Initialise();
-			return ctr;
 		}
 
 		public void DisableAllUiInput()
 		{
 			foreach (var ctr in m_controllers.Values)
 			{
-				ctr.DisableUiInput();
+				ctr.DisableAllInput();
 			}
 		}
 
@@ -85,8 +73,23 @@ namespace Smash.System
 		{
 			foreach (var ctr in m_controllers.Values)
 			{
-				ctr.DisablePlayerInput();
+				ctr.DisableAllInput();
 			}
+		}
+
+		public void DisableControllerInputWithPlayerIndex(int playerIndex)
+		{
+			m_controllers[playerIndex].DisableAllInput();
+		}
+
+		public void EnableControllerPlayerInputWithPlayerIndex(int playerIndex)
+		{
+			m_controllers[playerIndex].EnablePlayerInput();
+		}
+
+		public void EnableControllerUiInputWithPlayerIndex(int playerIndex)
+		{
+			m_controllers[playerIndex].EnableUiInput();
 		}
 		
 		public void PlayerDeviceRegained(int index)
@@ -110,11 +113,11 @@ namespace Smash.System
 			if (!m_controllers.ContainsValue(ctr))
 			{
 				m_controllers.Add(playerIndex, ctr);
-				var pawn = Instantiate(m_pawnPrefab, Vector3.zero, Quaternion.identity);
-				ctr.Initialise();
-				ctr.EnablePlayerInputAndDisableUiInput();
-				pawn.SetIndex(playerIndex);
-				pawn.Initialise();
+				// var pawn = Instantiate(m_pawnPrefab, Vector3.zero, Quaternion.identity);
+				// ctr.Initialise();
+				// ctr.EnablePlayerInputAndDisableUiInput();
+				// pawn.SetIndex(playerIndex);
+				// pawn.Initialise();
 			}
 		}
 		
@@ -123,7 +126,6 @@ namespace Smash.System
 			Debug.Log("Player Left");
 			int playerIndex = input.playerIndex;
 			m_controllers.Remove(playerIndex);
-			PlayerDevicesManager.Instance.RemoveDevice(playerIndex);
 		}
 
 		#endregion Private Methods

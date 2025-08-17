@@ -16,16 +16,14 @@ namespace Smash.Player.CommandPattern.Controllers
 			m_currentDPadHorizontalDirection = DPadDirection.None;
 			m_currentDPadVerticalDirection = DPadDirection.None;
 			
-			InputActions.Player.Horizontal.performed += HandleHorizontal;
-			InputActions.Player.Horizontal.canceled += HandleHorizontal;
-			InputActions.Player.Vertical.performed += HandleVertical;
+			_inputActionsController.Horizontal += HandleHorizontal;
+			_inputActionsController.Vertical += HandleVertical;
 		}
 		
 		protected override void RemoveActions()
 		{
-			InputActions.Player.Horizontal.performed -= HandleHorizontal;
-			InputActions.Player.Horizontal.canceled -= HandleHorizontal;
-			InputActions.Player.Vertical.performed -= HandleVertical;
+			_inputActionsController.Horizontal -= HandleHorizontal;
+			_inputActionsController.Vertical -= HandleVertical;
 		}
 
 		private void HandleHorizontal(InputAction.CallbackContext ctx)

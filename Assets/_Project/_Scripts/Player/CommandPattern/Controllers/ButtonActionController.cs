@@ -7,28 +7,28 @@ namespace Smash.Player.CommandPattern.Controllers
 	{
 		protected override void SetupActions()
 		{
-			InputActions.Player.North.performed += HandleNorthInputPerformed;
+			_inputActionsController.NorthPerformed += HandleNorthInputPerformed;
 			
-			InputActions.Player.South.performed += HandleSouthInputPerformed;
-			InputActions.Player.South.canceled += HandleSouthInputCanceled;
+			_inputActionsController.SouthPerformed += HandleSouthInputPerformed;
+			_inputActionsController.SouthCanceled += HandleSouthInputCanceled;
+
+			_inputActionsController.EastPerformed += HandleEastInputPerformed;
+			_inputActionsController.EastCanceled += HandleEastInputCanceled;
 			
-			InputActions.Player.East.performed += HandleEastInputPerformed;
-			InputActions.Player.East.canceled += HandleEastInputCanceled;
-			
-			InputActions.Player.West.performed += HandleWestInputPerformed;
+			_inputActionsController.WestPerformed += HandleWestInputPerformed;
 		}
 
 		protected override void RemoveActions()
 		{
-			InputActions.Player.North.performed -= HandleNorthInputPerformed;
+			_inputActionsController.NorthPerformed -= HandleNorthInputPerformed;
 			
-			InputActions.Player.South.performed -= HandleSouthInputPerformed;
-			InputActions.Player.South.canceled -= HandleSouthInputCanceled;
+			_inputActionsController.SouthPerformed -= HandleSouthInputPerformed;
+			_inputActionsController.SouthCanceled -= HandleSouthInputCanceled;
+
+			_inputActionsController.EastPerformed -= HandleEastInputPerformed;
+			_inputActionsController.EastCanceled -= HandleEastInputCanceled;
 			
-			InputActions.Player.East.performed -= HandleEastInputPerformed;
-			InputActions.Player.East.canceled -= HandleEastInputCanceled;
-			
-			InputActions.Player.West.performed -= HandleWestInputPerformed;
+			_inputActionsController.WestPerformed -= HandleWestInputPerformed;
 		}
 
 		private void HandleNorthInputPerformed(InputAction.CallbackContext _)

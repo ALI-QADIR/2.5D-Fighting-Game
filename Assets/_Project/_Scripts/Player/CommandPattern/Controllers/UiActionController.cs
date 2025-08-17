@@ -7,24 +7,24 @@ namespace Smash.Player.CommandPattern.Controllers
 	{
 		protected override void SetupActions()
 		{
-			InputActions.UI.Cancel.performed += HandleCancelInputPerformed;
-			InputActions.UI.Submit.performed += HandleSubmitInputPerformed;
-			InputActions.UI.HorizontalScroll.performed += HandleHorizontalScrollInputPerformed;
-			InputActions.UI.VerticalScroll.performed += HandleVerticalScrollInputPerformed;
-			InputActions.UI.ShoulderButton.performed += HandleShoulderButtonInputPerformed;
-			InputActions.UI.ShoulderTrigger.performed += HandleShoulderTriggerInputPerformed;
-			InputActions.UI.Resume.performed += HandleResumeInputPerformed;
+			_inputActionsController.CancelInputPerformed += HandleCancelInputPerformed;
+			_inputActionsController.SubmitInputPerformed += HandleSubmitInputPerformed;
+			_inputActionsController.HorizontalScrollPerformed += HandleHorizontalScrollInputPerformed;
+			_inputActionsController.VerticalScrollPerformed += HandleVerticalScrollInputPerformed;
+			_inputActionsController.ShoulderButtonPerformed += HandleShoulderButtonInputPerformed;
+			_inputActionsController.ShoulderTriggerPerformed += HandleShoulderTriggerInputPerformed;
+			_inputActionsController.ResumePerformed += HandleResumeInputPerformed;
 		}
 
 		protected override void RemoveActions()
 		{
-			InputActions.UI.Cancel.performed -= HandleCancelInputPerformed;
-			InputActions.UI.Submit.performed -= HandleSubmitInputPerformed;
-			InputActions.UI.HorizontalScroll.performed -= HandleHorizontalScrollInputPerformed;
-			InputActions.UI.VerticalScroll.performed -= HandleVerticalScrollInputPerformed;
-			InputActions.UI.ShoulderButton.performed -= HandleShoulderButtonInputPerformed;
-			InputActions.UI.ShoulderTrigger.performed -= HandleShoulderTriggerInputPerformed;
-			InputActions.UI.Resume.performed -= HandleResumeInputPerformed;
+			_inputActionsController.CancelInputPerformed -= HandleCancelInputPerformed;
+			_inputActionsController.SubmitInputPerformed -= HandleSubmitInputPerformed;
+			_inputActionsController.HorizontalScrollPerformed -= HandleHorizontalScrollInputPerformed;
+			_inputActionsController.VerticalScrollPerformed -= HandleVerticalScrollInputPerformed;
+			_inputActionsController.ShoulderButtonPerformed -= HandleShoulderButtonInputPerformed;
+			_inputActionsController.ShoulderTriggerPerformed -= HandleShoulderTriggerInputPerformed;
+			_inputActionsController.ResumePerformed -= HandleResumeInputPerformed;
 		}
 
 		private void HandleCancelInputPerformed(InputAction.CallbackContext ctx)

@@ -23,9 +23,10 @@ namespace Smash.World.Test
 
 		private void PlayerJoined(int index)
 		{
-			/*var characterPawn = Instantiate(m_characterPawnPrefab);
-			var ctr = PlayerControllerManager.Instance.InitialisePawn(index, characterPawn);
-			ctr.EnablePlayerInputAndDisableUiInput();*/
+			var characterPawn = Instantiate(m_characterPawnPrefab);
+			characterPawn.SetIndex(index);
+			characterPawn.Initialise();
+			PlayerControllerManager.Instance.EnableControllerPlayerInputWithPlayerIndex(index);
 		}
 	}
 }

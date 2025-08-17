@@ -48,7 +48,6 @@ namespace Smash.System
 		protected override void SceneLoaded()
 		{
 			// Debug.Log("Scene Loaded");
-			PlayerDevicesManager.Instance.EnablePlayerJoining(6);
 		}
 
 		private void PlayerRegained(int index)

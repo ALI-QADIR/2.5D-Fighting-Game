@@ -10,11 +10,7 @@ namespace Smash.Player
 
 		protected override void OnCommand(IGameplayActionCommand command)
 		{
-			if (command.PlayerIndex != PlayerIndex)
-			{
-				Debug.Log("command not for this player: " + command.ActionName, gameObject);
-				return;
-			}
+			if (command.PlayerIndex != PlayerIndex) return;
 			if (command.IsFinished) command.FinishActionExecution(this);
 			else command.StartActionExecution(this);
 		}
