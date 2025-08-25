@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5445210663998481378}
   - component: {fileID: 321380537449590929}
   - component: {fileID: 2668702313979549357}
-  - component: {fileID: 890173103760553382}
   m_Layer: 5
   m_Name: LeaderBoardEntry
   m_TagString: Untagged
@@ -79,22 +78,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &890173103760553382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2104437115755038946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85cf32cc57714b3a95da7bedf6e57a95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_position: {fileID: 5911568669218253641}
-  m_name: {fileID: 3873694100851998962}
-  m_score: {fileID: 7835129229095209414}
-  m_bgImage: {fileID: 2668702313979549357}
 --- !u!1 &4764070503686210086
 GameObject:
   m_ObjectHideFlags: 0

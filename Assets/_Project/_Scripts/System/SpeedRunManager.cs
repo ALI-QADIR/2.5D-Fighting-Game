@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Threading.Tasks;
 using Smash.Player.Input;
-using Smash.Services;
 using Smash.Ui.Panels;
 using TripleA.StateMachine.FSM;
 using TripleA.Timers.ImprovedTimers;
@@ -88,8 +87,6 @@ namespace Smash.System
 			m_stopwatchTimer.Reset();
 			
 			m_optionsPanel.EndGame(time.ToString("F3"));
-			PlayerAuthentication.Instance.SetPlayerScore(time * 1000f);
-			SetPlayerScore();
 			
 			m_stopwatchTimer.onTimerUpdate -= OnTimerUpdate;
 			m_stopwatchTimer.Dispose();
@@ -102,17 +99,6 @@ namespace Smash.System
 				m_stopwatchTimer.Pause();
 			else 
 				m_stopwatchTimer.Resume();
-		}
-		
-		private async void SetPlayerScore()
-		{
-			if (!PlayerAuthentication.Instance.IsSignedIn())
-			{
-				Debug.Log("Could not update leaderboard");
-				return;
-			}
-			await Task.Delay(500);
-			await LeaderboardServicesHandler.Instance.TryGetOrSetPlayerDetails();
 		}
 		
 		public void ShouldBeginCountdown() => m_shouldBeginCountdown = true;

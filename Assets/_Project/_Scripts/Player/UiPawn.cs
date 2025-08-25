@@ -36,6 +36,7 @@ namespace Smash.Player
 
 		public override void HandleSubmitButton(IGameplayActionCommand command)
 		{
+			Debug.Log("Submit Button Pressed");
 		}
 
 		public override void HandleHorizontalScrollInput(IGameplayActionCommand command)

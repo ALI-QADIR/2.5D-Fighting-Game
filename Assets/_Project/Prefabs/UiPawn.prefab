@@ -1065,6 +1065,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5de6d87ae654851a4a31f73e4b0e573, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_eventChannel: {fileID: 11400000, guid: 2aa647428da64c94ab1476c0890a22ae, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls: []
   m_statusImage: {fileID: 699564470763277009}
   m_statusText: {fileID: 7243511310608612411}
   m_indexText: {fileID: 8294801548910640505}

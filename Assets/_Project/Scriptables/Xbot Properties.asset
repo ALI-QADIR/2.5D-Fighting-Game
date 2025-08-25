@@ -29,7 +29,7 @@ MonoBehaviour:
       rid: 4153748571275657318
     <AbilityEffects>k__BackingField:
     - rid: 4153748571275657315
-    - rid: 2391469780382515291
+    - rid: 2391470117147377664
   upMainAbilityStrategyData:
     <AnimDuration>k__BackingField: 0.9
     <ScanningStrategy>k__BackingField:
@@ -84,11 +84,11 @@ MonoBehaviour:
         <CenterOffset>k__BackingField: {x: 0, y: 0.4, z: 0}
         m_prefab: {fileID: 5135671406773843300, guid: 6d14f318ce054f74b80cb91291eddeba, type: 3}
         m_radius: 1.5
-    - rid: 2391469780382515291
-      type: {class: StunEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
+    - rid: 2391470117147377664
+      type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
         <IsSelfEffect>k__BackingField: 0
-        m_stunDuration: 5
+        m_force: 20
     - rid: 4153748571275657314
       type: {class: DamageEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:
@@ -273,11 +273,6 @@ MonoBehaviour:
       data:
         <IsSelfEffect>k__BackingField: 0
         m_force: 25
-    - rid: 4153748638621237334
-      type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
-      data:
-        <IsSelfEffect>k__BackingField: 0
-        m_force: 15
     - rid: 4153748638621237341
       type: {class: KnockBackEffect, ns: Smash.Player.AbilityStrategies, asm: com.TripleA.Smash}
       data:

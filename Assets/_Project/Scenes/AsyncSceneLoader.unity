@@ -315,51 +315,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &37032320
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 37032322}
-  - component: {fileID: 37032321}
-  m_Layer: 0
-  m_Name: PlayerAuth
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &37032321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 37032320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07c12117f54147e5af175add857a6394, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  autoUnparentOnAwake: 1
---- !u!4 &37032322
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 37032320}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &100098226
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,7 +501,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -973675023468209554, guid: 34bf4e889e787f74facb77603d140ccd, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 981c4f82f29c55c40bd7cd16acb27446, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 981c4f82f29c55c40bd7cd16acb27446, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1342,8 +1297,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoUnparentOnAwake: 1
   m_playerInputManager: {fileID: 1520902692}
-  m_pawnPrefab: {fileID: 5991776475819307800, guid: f540c158a155a4542b495a087d590539, type: 3}
   m_controllerPrefab: {fileID: 449515351122987479, guid: 24f2b3bd33b539e4cbf9b12625f5d217, type: 3}
+  m_pawnPrefab: {fileID: 5991776475819307800, guid: f540c158a155a4542b495a087d590539, type: 3}
 --- !u!114 &1520902692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1445,7 +1400,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -973675023468209554, guid: 34bf4e889e787f74facb77603d140ccd, type: 2}
-  m_audioClip: {fileID: 8300000, guid: db82dc9c84568b14dab74d9fabeeeb44, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: db82dc9c84568b14dab74d9fabeeeb44, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1807,51 +1762,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974451034}
   m_CullTransparentMesh: 1
---- !u!1 &2063585304
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2063585305}
-  - component: {fileID: 2063585306}
-  m_Layer: 0
-  m_Name: LeaderboardService
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2063585305
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2063585304}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2063585306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2063585304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 183e0157055f4ef9884555a4a23fc9e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  autoUnparentOnAwake: 1
 --- !u!1 &2090710060
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,8 +1814,6 @@ SceneRoots:
   - {fileID: 1704147657}
   - {fileID: 8899377}
   - {fileID: 215076583}
-  - {fileID: 37032322}
-  - {fileID: 2063585305}
   - {fileID: 1307655498}
   - {fileID: 2090710062}
   - {fileID: 1520902693}

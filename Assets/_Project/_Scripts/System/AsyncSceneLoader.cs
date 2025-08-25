@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Smash.Services;
 using Smash.StructsAndEnums;
 using TripleA.Utils.Singletons;
 using UnityEngine;
@@ -32,17 +31,9 @@ namespace Smash.System
             OnSceneLoadComplete += () => Debug.Log("Scene Loaded");
         }
 
-        private async void Start()
+        private void Start()
         {
             EnableLoadingCanvas();
-            int count = 0;
-            bool isInitialised = false;
-            do
-            {
-                // Debug.Log($"Initializing Authentication - {count}");
-                count++;
-                isInitialised = await PlayerAuthentication.Instance.InitializeUnityAuthentication();
-            } while (count < 3 && !isInitialised); 
             LoadSceneByIndex(0);
         }
         
@@ -75,7 +66,7 @@ namespace Smash.System
             // await UnloadScene();
             // Debug.Log("Loading Scene");
             
-            m_sceneLoadOperationHandle = Addressables.LoadSceneAsync(m_scenes[index].sceneReference.Path, LoadSceneMode.Single, true);
+            m_sceneLoadOperationHandle = Addressables.LoadSceneAsync(m_scenes[index].sceneReference.Path);
 
             while (m_sceneLoadOperationHandle.PercentComplete < 0.9f)
             {

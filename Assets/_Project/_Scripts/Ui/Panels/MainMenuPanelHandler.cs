@@ -41,23 +41,6 @@ namespace Smash.Ui.Panels
 				action?.Invoke();
 		}
 
-		public override void OpenPanel()
-		{
-			// Debug.Log("Open Menu Panel");
-			base.OpenPanel();
-			/*_input.UI.Cancel.Enable();
-			_input.UI.Retry.Enable();
-			_input.UI.Cancel.started += BackButtonPressed;*/
-			
-			m_mainMenuHandler.OnOpen();
-		}
-
-		public override void ClosePanel()
-		{
-			base.ClosePanel();
-			// _input.UI.Cancel.started -= BackButtonPressed;
-		}
-
 		#region On-Click Methods
 
 		public void OnClickPlayButton()

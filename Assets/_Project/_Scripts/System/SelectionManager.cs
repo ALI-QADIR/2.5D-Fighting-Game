@@ -47,7 +47,7 @@ namespace Smash.System
 		
 		protected override void SceneLoaded()
 		{
-			// Debug.Log("Scene Loaded");
+			PlayerDevicesManager.Instance.EnablePlayerJoining(6);
 		}
 
 		private void PlayerRegained(int index)
@@ -85,7 +85,7 @@ namespace Smash.System
 			int i = 0;
 			foreach (var rectTransform in transformList)
 			{
-				var gotPawn = false;
+				bool gotPawn;
 				do
 				{
 					gotPawn = m_uiPawns.TryGetValue(i, out UiPawn uiPawn);
