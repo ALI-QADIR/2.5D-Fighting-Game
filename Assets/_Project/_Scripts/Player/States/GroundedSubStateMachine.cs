@@ -89,11 +89,14 @@ namespace Smash.Player.States
 			
 			m_movingToIdleCondition = new FuncPredicate(() => !_pawn.IsMoving());
 
-			_anyToMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && MainAttackHold);
-			_anyToMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && MainAttackTap);
+			_idleToMainAttackStartCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && MainAttackHold);
+			_idleToMainAttackEndCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && MainAttackTap);
 			
-			_anyToSideMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && SideMainAttackHold);
-			_anyToSideMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && SideMainAttackTap);
+			_idleToSideMainAttackStartCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && SideMainAttackHold);
+			_idleToSideMainAttackEndCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && SideMainAttackTap);
+			
+			_movingToSideMainAttackStartCondition = new FuncPredicate(() => _stateMachine.CurrentState is Moving && MainAttackHold);
+			_movingToSideMainAttackEndCondition = new FuncPredicate(() => _stateMachine.CurrentState is Moving && MainAttackTap);
 			
 			_anyToUpMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackHold);
 			_anyToUpMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackTap);
@@ -101,11 +104,14 @@ namespace Smash.Player.States
 			_anyToDownMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownMainAttackHold);
 			_anyToDownMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownMainAttackTap);
 			
-			_anyToSpecialAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && SpecialAttackHold);
-			_anyToSpecialAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && SpecialAttackTap);
+			_idleToSpecialAttackStartCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && SpecialAttackHold);
+			_idleToSpecialAttackEndCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && SpecialAttackTap);
 			
-			_anyToSideSpecialAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && SideSpecialAttackHold);
-			_anyToSideSpecialAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && SideSpecialAttackTap);
+			_idleToSideSpecialAttackStartCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && SideSpecialAttackHold);
+			_idleToSideSpecialAttackEndCondition = new FuncPredicate(() => _stateMachine.CurrentState is Idle && SideSpecialAttackTap);
+			
+			_movingToSideSpecialAttackStartCondition = new FuncPredicate(() => _stateMachine.CurrentState is Moving && SpecialAttackHold);
+			_movingToSideSpecialAttackEndCondition = new FuncPredicate(() => _stateMachine.CurrentState is Moving && SpecialAttackTap);
 			
 			_anyToUpSpecialAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpSpecialAttackHold);
 			_anyToUpSpecialAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpSpecialAttackTap);

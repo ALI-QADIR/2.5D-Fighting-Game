@@ -38,11 +38,7 @@ namespace Smash.System
 			var uiPawn = index >= 2 ? InstantiateUiPawn(index) : m_uiPawns[index];
 			uiPawn.SetIndex(index);
 			uiPawn.SetStatus(PlayerStatus.Selecting);
-			// Debug.Log(index);
-			// var ctr = PlayerControllerManager.Instance.InitialisePawn(index);
-			PlayerControllerManager.Instance.DisableAllPlayerInput();
-			PlayerControllerManager.Instance.DisableAllUiInput();
-			// ctr.EnableUiInputAndDisablePlayerInput();
+			PlayerControllerManager.Instance.EnableControllerUiInputWithPlayerIndex(index);
 		}
 		
 		protected override void SceneLoaded()

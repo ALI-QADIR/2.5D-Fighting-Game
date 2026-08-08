@@ -46,8 +46,8 @@ namespace Smash.Player.States
 		private MainAttackStart m_mainAttackStart;
 		private MainAttackEnd m_mainAttackEnd;
 
-		protected FuncPredicate _anyToMainAttackStartCondition;
-		protected FuncPredicate _anyToMainAttackEndCondition;
+		protected FuncPredicate _idleToMainAttackStartCondition;
+		protected FuncPredicate _idleToMainAttackEndCondition;
 		private FuncPredicate m_mainAttackStartToEndCondition;
 		private FuncPredicate m_mainAttackEndToEntryCondition;
 
@@ -58,8 +58,10 @@ namespace Smash.Player.States
 		private SideMainAttackStart m_sideMainAttackStart;
 		private SideMainAttackEnd m_sideMainAttackEnd;
 
-		protected FuncPredicate _anyToSideMainAttackStartCondition;
-		protected FuncPredicate _anyToSideMainAttackEndCondition;
+		protected FuncPredicate _idleToSideMainAttackStartCondition;
+		protected FuncPredicate _idleToSideMainAttackEndCondition;
+		protected FuncPredicate _movingToSideMainAttackStartCondition;
+		protected FuncPredicate _movingToSideMainAttackEndCondition;
 		private FuncPredicate m_sideMainAttackStartToEndCondition;
 		private FuncPredicate m_sideMainAttackEndToEntryCondition;
 
@@ -94,8 +96,8 @@ namespace Smash.Player.States
 		private SpecialAttackStart m_specialAttackStart;
 		private SpecialAttackEnd m_specialAttackEnd;
 
-		protected FuncPredicate _anyToSpecialAttackStartCondition;
-		protected FuncPredicate _anyToSpecialAttackEndCondition;
+		protected FuncPredicate _idleToSpecialAttackStartCondition;
+		protected FuncPredicate _idleToSpecialAttackEndCondition;
 		private FuncPredicate m_specialAttackStartToEndCondition;
 		private FuncPredicate m_specialAttackEndToEntryCondition;
 
@@ -106,8 +108,10 @@ namespace Smash.Player.States
 		private SideSpecialAttackStart m_sideSpecialAttackStart;
 		private SideSpecialAttackEnd m_sideSpecialAttackEnd;
 
-		protected FuncPredicate _anyToSideSpecialAttackStartCondition;
-		protected FuncPredicate _anyToSideSpecialAttackEndCondition;
+		protected FuncPredicate _idleToSideSpecialAttackStartCondition;
+		protected FuncPredicate _idleToSideSpecialAttackEndCondition;
+		protected FuncPredicate _movingToSideSpecialAttackStartCondition;
+		protected FuncPredicate _movingToSideSpecialAttackEndCondition;
 		private FuncPredicate m_sideSpecialAttackStartToEndCondition;
 		private FuncPredicate m_sideSpecialAttackEndToEntryCondition;
 
@@ -241,13 +245,25 @@ namespace Smash.Player.States
 
 		protected virtual void AddTransitions()
 		{
-			AddAnyTransition(m_mainAttackStart, _anyToMainAttackStartCondition);
-			AddAnyTransition(m_mainAttackEnd, _anyToMainAttackEndCondition);
+			AddAnyTransition(m_knockBack, _anyToKnockBackCondition);
+			AddTransition(m_knockBack, _entry, _knockBackToEntryCondition);
+			
+			AddAnyTransition(m_tossUpStart, m_anyToTossUpStartCondition);
+			AddTransition(m_tossUpStart, m_tossUpEnd, m_tossUpStartToEndCondition);
+			AddTransition(m_tossUpEnd, _entry, m_tossUpEndToEntryCondition);
+			
+			AddAnyTransition(m_stun, m_anyToStunCondition);
+			AddTransition(m_stun, _entry, m_stunToEntryCondition);
+			
+			AddAnyTransition(m_mainAttackStart, _idleToMainAttackStartCondition);
+			AddAnyTransition(m_mainAttackEnd, _idleToMainAttackEndCondition);
 			AddTransition(m_mainAttackStart, m_mainAttackEnd, m_mainAttackStartToEndCondition);
 			AddTransition(m_mainAttackEnd, _entry, m_mainAttackEndToEntryCondition);
 			
-			AddAnyTransition(m_sideMainAttackStart, _anyToSideMainAttackStartCondition);
-			AddAnyTransition(m_sideMainAttackEnd, _anyToSideMainAttackEndCondition);
+			AddAnyTransition(m_sideMainAttackStart, _idleToSideMainAttackStartCondition);
+			AddAnyTransition(m_sideMainAttackEnd, _idleToSideMainAttackEndCondition);
+			AddAnyTransition(m_sideMainAttackStart, _movingToSideMainAttackStartCondition);
+			AddAnyTransition(m_sideMainAttackEnd, _movingToSideMainAttackEndCondition);
 			AddTransition(m_sideMainAttackStart, m_sideMainAttackEnd, m_sideMainAttackStartToEndCondition);
 			AddTransition(m_sideMainAttackEnd, _entry, m_sideMainAttackEndToEntryCondition);
 			
@@ -261,13 +277,15 @@ namespace Smash.Player.States
 			AddTransition(m_downMainAttackStart, m_downMainAttackEnd, m_downMainAttackStartToEndCondition);
 			AddTransition(m_downMainAttackEnd, _entry, m_downMainAttackEndToEntryCondition);
 			
-			AddAnyTransition(m_specialAttackStart, _anyToSpecialAttackStartCondition);
-			AddAnyTransition(m_specialAttackEnd, _anyToSpecialAttackEndCondition);
+			AddAnyTransition(m_specialAttackStart, _idleToSpecialAttackStartCondition);
+			AddAnyTransition(m_specialAttackEnd, _idleToSpecialAttackEndCondition);
 			AddTransition(m_specialAttackStart, m_specialAttackEnd, m_specialAttackStartToEndCondition);
 			AddTransition(m_specialAttackEnd, _entry, m_specialAttackEndToEntryCondition);
 			
-			AddAnyTransition(m_sideSpecialAttackStart, _anyToSideSpecialAttackStartCondition);
-			AddAnyTransition(m_sideSpecialAttackEnd, _anyToSideSpecialAttackEndCondition);
+			AddAnyTransition(m_sideSpecialAttackStart, _idleToSideSpecialAttackStartCondition);
+			AddAnyTransition(m_sideSpecialAttackEnd, _idleToSideSpecialAttackEndCondition);
+			AddAnyTransition(m_sideSpecialAttackStart, _movingToSideMainAttackEndCondition);
+			AddAnyTransition(m_sideSpecialAttackEnd, _movingToSideMainAttackEndCondition);
 			AddTransition(m_sideSpecialAttackStart, m_sideSpecialAttackEnd, m_sideSpecialAttackStartToEndCondition);
 			AddTransition(m_sideSpecialAttackEnd, _entry, m_sideSpecialAttackEndToEntryCondition);
 			
@@ -280,16 +298,6 @@ namespace Smash.Player.States
 			AddAnyTransition(m_downSpecialAttackEnd, _anyToDownSpecialAttackEndCondition);
 			AddTransition(m_downSpecialAttackStart, m_downSpecialAttackEnd, m_downSpecialAttackStartToEndCondition);
 			AddTransition(m_downSpecialAttackEnd, _entry, m_downSpecialAttackEndToEntryCondition);
-			
-			AddAnyTransition(m_knockBack, _anyToKnockBackCondition);
-			AddTransition(m_knockBack, _entry, _knockBackToEntryCondition);
-			
-			AddAnyTransition(m_tossUpStart, m_anyToTossUpStartCondition);
-			AddTransition(m_tossUpStart, m_tossUpEnd, m_tossUpStartToEndCondition);
-			AddTransition(m_tossUpEnd, _entry, m_tossUpEndToEntryCondition);
-			
-			AddAnyTransition(m_stun, m_anyToStunCondition);
-			AddTransition(m_stun, _entry, m_stunToEntryCondition);
 		}
 
 		public override void OnEnter()

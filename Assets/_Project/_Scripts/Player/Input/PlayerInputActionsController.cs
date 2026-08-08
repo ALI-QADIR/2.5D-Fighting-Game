@@ -117,6 +117,7 @@ namespace Smash.Player.Input
         public void OnCancel(InputAction.CallbackContext context)
         {
             if (context.started) CancelInputPerformed?.Invoke(context);
+            if (context.canceled) CancelInputPerformed?.Invoke(context);
         }
         
         public void OnSubmit(InputAction.CallbackContext context)

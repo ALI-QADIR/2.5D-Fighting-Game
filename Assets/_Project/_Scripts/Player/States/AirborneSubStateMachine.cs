@@ -126,11 +126,14 @@ namespace Smash.Player.States
 			m_coyoteToFallingCondition = new FuncPredicate(() =>
 				_stateMachine.CurrentState is Coyote && _pawn.IsFalling() && m_coyote.ElapsedTime >= _pawn.CoyoteTime);
 
-			_anyToMainAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && MainAttackHold);
-			_anyToMainAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && MainAttackTap);
+			_idleToMainAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && MainAttackHold);
+			_idleToMainAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && MainAttackTap);
 			
-			_anyToSideMainAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideMainAttackHold);
-			_anyToSideMainAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideMainAttackTap);
+			_idleToSideMainAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideMainAttackHold);
+			_idleToSideMainAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideMainAttackTap);
+
+			_movingToSideMainAttackStartCondition = new FuncPredicate(() => false);
+			_movingToSideMainAttackEndCondition = new FuncPredicate(() => false);
 			
 			_anyToUpMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackHold);
 			_anyToUpMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpMainAttackTap);
@@ -138,11 +141,14 @@ namespace Smash.Player.States
 			_anyToDownMainAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownMainAttackHold);
 			_anyToDownMainAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && DownMainAttackTap);
 			
-			_anyToSpecialAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && SpecialAttackHold);
-			_anyToSpecialAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && SpecialAttackTap);
+			_idleToSpecialAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && SpecialAttackHold);
+			_idleToSpecialAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && SpecialAttackTap);
 			
-			_anyToSideSpecialAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideSpecialAttackHold);
-			_anyToSideSpecialAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideSpecialAttackTap);
+			_idleToSideSpecialAttackStartCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideSpecialAttackHold);
+			_idleToSideSpecialAttackEndCondition = new FuncPredicate(() => IsNotStationaryInAir() && SideSpecialAttackTap);
+
+			_movingToSideSpecialAttackStartCondition = new FuncPredicate(() => false);
+			_movingToSideSpecialAttackEndCondition = new FuncPredicate(() => false);
 			
 			_anyToUpSpecialAttackStartCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpSpecialAttackHold);
 			_anyToUpSpecialAttackEndCondition = new FuncPredicate(() => IsAnyNonAttackState() && UpSpecialAttackTap);
